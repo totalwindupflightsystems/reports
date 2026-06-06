@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paris Briefing — June 5, 2026</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #222532;
+    --border: rgba(255,255,255,0.06);
+    --text: #e4e6ef;
+    --text2: #9ca0b0;
+    --red: #f87171;
+    --amber: #fbbf24;
+    --green: #4ade80;
+    --blue: #60a5fa;
+    --purple: #a78bfa;
+    --radius: 10px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 0;
+  }
+  .container { max-width: 780px; margin: 0 auto; padding: 20px 16px 60px; }
+
+  /* Hero */
+  .hero {
+    text-align: center;
+    padding: 40px 0 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 28px;
+  }
+  .hero .flag { font-size: 48px; margin-bottom: 12px; }
+  .hero h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.5px; }
+  .hero .date { color: var(--text2); font-size: 14px; margin-top: 6px; }
+  .hero .tagline { font-size: 15px; color: var(--amber); margin-top: 8px; }
+
+  /* Status bar */
+  .status-bar {
+    display: flex; gap: 10px; margin-bottom: 28px;
+    flex-wrap: wrap;
+  }
+  .status-pill {
+    flex: 1; min-width: 140px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    text-align: center;
+  }
+  .status-pill .icon { font-size: 24px; margin-bottom: 4px; }
+  .status-pill .label { font-size: 12px; color: var(--text2); text-transform: uppercase; letter-spacing: 0.5px; }
+  .status-pill .value { font-size: 15px; font-weight: 600; margin-top: 2px; }
+  .status-pill .value.green { color: var(--green); }
+  .status-pill .value.amber { color: var(--amber); }
+  .status-pill .value.red { color: var(--red); }
+
+  /* Sections */
+  section { margin-bottom: 32px; }
+  h2 {
+    font-size: 20px; font-weight: 700; margin-bottom: 16px;
+    padding-bottom: 8px; border-bottom: 1px solid var(--border);
+    letter-spacing: -0.3px;
+  }
+  h3 {
+    font-size: 16px; font-weight: 600; margin: 18px 0 10px;
+    color: var(--text);
+  }
+  p { margin-bottom: 12px; font-size: 15px; color: var(--text2); }
+  strong { color: var(--text); }
+
+  /* Alert cards */
+  .alert {
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    margin-bottom: 16px;
+    border-left: 4px solid;
+  }
+  .alert.red { background: rgba(248,113,113,0.08); border-color: var(--red); }
+  .alert.amber { background: rgba(251,191,36,0.08); border-color: var(--amber); }
+  .alert.green { background: rgba(74,222,128,0.08); border-color: var(--green); }
+  .alert.blue { background: rgba(96,165,250,0.08); border-color: var(--blue); }
+  .alert .alert-title { font-weight: 700; font-size: 15px; margin-bottom: 6px; }
+  .alert.red .alert-title { color: var(--red); }
+  .alert.amber .alert-title { color: var(--amber); }
+  .alert.green .alert-title { color: var(--green); }
+  .alert.blue .alert-title { color: var(--blue); }
+  .alert p { margin: 0; font-size: 14px; }
+
+  /* Data grid */
+  .data-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .data-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    text-align: center;
+  }
+  .data-card .num {
+    font-size: 28px; font-weight: 800; letter-spacing: -1px;
+    line-height: 1.1;
+  }
+  .data-card .num.red { color: var(--red); }
+  .data-card .num.amber { color: var(--amber); }
+  .data-card .num.blue { color: var(--blue); }
+  .data-card .desc {
+    font-size: 12px; color: var(--text2); margin-top: 4px;
+    text-transform: uppercase; letter-spacing: 0.3px;
+  }
+
+  /* Tables */
+  .table-wrap {
+    overflow-x: auto;
+    margin-bottom: 16px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+  }
+  table {
+    width: 100%; border-collapse: collapse;
+    font-size: 14px;
+  }
+  th {
+    text-align: left; padding: 10px 14px;
+    background: var(--surface2);
+    color: var(--text2); font-size: 11px;
+    text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;
+  }
+  td { padding: 10px 14px; border-top: 1px solid var(--border); }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+  .tag {
+    display: inline-block; padding: 2px 8px; border-radius: 4px;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.3px;
+  }
+  .tag.open { background: rgba(74,222,128,0.15); color: var(--green); }
+  .tag.closed { background: rgba(248,113,113,0.15); color: var(--red); }
+  .tag.warn { background: rgba(251,191,36,0.15); color: var(--amber); }
+
+  /* Scam cards */
+  .scam-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .scam-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+  }
+  .scam-card .scam-num {
+    font-size: 11px; color: var(--amber); font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;
+  }
+  .scam-card .scam-name { font-weight: 700; font-size: 15px; margin-bottom: 8px; }
+  .scam-card .scam-desc { font-size: 13px; color: var(--text2); line-height: 1.5; }
+  .scam-card .scam-def {
+    margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border);
+    font-size: 13px; color: var(--green);
+  }
+  .scam-card .scam-def strong { color: var(--green); }
+
+  /* Checklist */
+  .checklist {
+    list-style: none; padding: 0;
+  }
+  .checklist li {
+    padding: 10px 0; border-bottom: 1px solid var(--border);
+    font-size: 14px; color: var(--text2);
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist .chk { color: var(--green); margin-right: 8px; font-weight: 700; }
+
+  /* Footer */
+  footer {
+    margin-top: 40px; padding-top: 20px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    font-size: 12px; color: var(--text2);
+  }
+  footer a { color: var(--blue); text-decoration: none; }
+
+  /* Nav */
+  .top-nav {
+    display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; background: var(--bg);
+    z-index: 10;
+  }
+  .top-nav a {
+    font-size: 12px; color: var(--text2); text-decoration: none;
+    padding: 4px 10px; border-radius: 6px;
+    transition: background 0.15s;
+  }
+  .top-nav a:hover { background: var(--surface); color: var(--text); }
+
+  @media (max-width: 500px) {
+    .hero h1 { font-size: 22px; }
+    .data-grid { grid-template-columns: repeat(2, 1fr); }
+    .scam-grid { grid-template-columns: 1fr; }
+    .status-bar { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="flag">🇫🇷</div>
+    <h1>Paris Safety & Security Briefing</h1>
+    <div class="date">Friday, June 5, 2026 · 22:00 CET</div>
+    <div class="tagline">⚡ Post-riot normalization · Airport strike on June 18</div>
+  </div>
+
+  <!-- Quick Status -->
+  <div class="status-bar">
+    <div class="status-pill">
+      <div class="icon">🟢</div>
+      <div class="label">City Status</div>
+      <div class="value green">Normalized</div>
+    </div>
+    <div class="status-pill">
+      <div class="icon">🟡</div>
+      <div class="label">Terror Alert</div>
+      <div class="value amber">Urgence Attentat</div>
+    </div>
+    <div class="status-pill">
+      <div class="icon">🟢</div>
+      <div class="label">Transport Today</div>
+      <div class="value green">All Running</div>
+    </div>
+    <div class="status-pill">
+      <div class="icon">🟡</div>
+      <div class="label">Next Strike</div>
+      <div class="value amber">June 18 (Airports)</div>
+    </div>
+  </div>
+
+  <!-- Nav -->
+  <nav class="top-nav">
+    <a href="#riots">Riots</a>
+    <a href="#crime">Crime Trend</a>
+    <a href="#terror">Terror Alert</a>
+    <a href="#strikes">Strikes</a>
+    <a href="#advisories">Advisories</a>
+    <a href="#monday">Monday Landing</a>
+    <a href="#scams">Scams</a>
+    <a href="#neighborhoods">Areas</a>
+    <a href="#verdict">Verdict</a>
+  </nav>
+
+  <!-- 🔴 RIOTS -->
+  <section id="riots">
+    <h2>🔴 Major Incident: PSG Champions League Riots</h2>
+
+    <div class="alert red">
+      <div class="alert-title">May 30–31, 2026 · One-Night Flash Event</div>
+      <p>PSG defeated Arsenal in a penalty shootout to win their second consecutive Champions League title. Victory celebrations in Paris rapidly escalated into widespread rioting across <strong>15 French cities</strong>. The situation is now <strong>fully normalized</strong>.</p>
+    </div>
+
+    <div class="data-grid">
+      <div class="data-card">
+        <div class="num red">890+</div>
+        <div class="desc">Arrests Nationwide</div>
+      </div>
+      <div class="data-card">
+        <div class="num red">219</div>
+        <div class="desc">Injured (8 serious)</div>
+      </div>
+      <div class="data-card">
+        <div class="num red">178</div>
+        <div class="desc">Security Forces Injured</div>
+      </div>
+      <div class="data-card">
+        <div class="num red">1</div>
+        <div class="desc">Fatality (motorcyclist)</div>
+      </div>
+      <div class="data-card">
+        <div class="num blue">6,000</div>
+        <div class="desc">Police Deployed</div>
+      </div>
+      <div class="data-card">
+        <div class="num blue">15</div>
+        <div class="desc">Cities Affected</div>
+      </div>
+    </div>
+
+    <h3>What Happened</h3>
+    <p>Fans swarmed the <strong>Champs-Élysées</strong> after the match. Celebrations turned destructive: flares set off, electric bikes burned in streets, shopfronts smashed. Police fired tear gas to disperse crowds. Bus, train, and rail services were disrupted in central Paris.</p>
+    <p>A 24-year-old motorcyclist died near <strong>Porte Maillot</strong> on the Paris ring road after crashing into concrete blocks placed by rioters. A teenager was also critically injured in a separate brawl — unclear if connected to the football riots.</p>
+    <p>Interior Minister Laurent Nuñez: <em>"The vast majority go out to celebrate and it goes very well. But other individuals, who are not PSG supporters, who don't even watch the match, come to cause trouble and disturbances."</em></p>
+
+    <h3>Paris Arrests Breakdown</h3>
+    <div class="data-grid">
+      <div class="data-card">
+        <div class="num amber">480</div>
+        <div class="desc">Arrested in Paris</div>
+      </div>
+      <div class="data-card">
+        <div class="num amber">277</div>
+        <div class="desc">Taken Into Custody</div>
+      </div>
+      <div class="data-card">
+        <div class="num amber">82</div>
+        <div class="desc">Minors</div>
+      </div>
+      <div class="data-card">
+        <div class="num amber">57</div>
+        <div class="desc">Police Injured (Paris)</div>
+      </div>
+    </div>
+
+    <div class="alert green">
+      <div class="alert-title">Current Status: Normalized</div>
+      <p>Cleanup was completed over the weekend. The Sunday victory parade at the Eiffel Tower proceeded peacefully with 6,000 police on hand. No ongoing unrest. The city is back to normal operations.</p>
+    </div>
+  </section>
+
+  <!-- 🟡 CRIME -->
+  <section id="crime">
+    <h2>🟡 Crime Trend: Measured Uptick</h2>
+    <p>Paris has seen a <strong>~10% year-on-year increase</strong> in reported crimes (Police Prefecture data). Contributing factors cited: post-COVID economic disparities, youth unemployment, and organized gang presence. Police have responded with increased visibility in high-crime zones and community policing initiatives.</p>
+    <p>In 2025, Paris recorded <strong>~18,500 tourist-targeted thefts</strong> — roughly <strong>150 reports per day</strong>. The vast majority are non-violent pickpocketing and scams, not muggings or armed robbery.</p>
+
+    <div class="alert amber">
+      <div class="alert-title">Key Insight</div>
+      <p>Serious violent crime against tourists — muggings, attacks, armed robbery — is <strong>rare in Paris</strong>. The crimes that affect visitors are almost always non-violent. Sneaky, not aggressive. Know the scams and you eliminate 95% of the risk.</p>
+    </div>
+  </section>
+
+  <!-- 🟠 TERROR -->
+  <section id="terror">
+    <h2>🟠 Terror Alert: Vigipirate — Urgence Attentat</h2>
+
+    <div class="alert amber">
+      <div class="alert-title">Highest Alert Level Since March 14, 2024</div>
+      <p>France remains at <strong>"Urgence Attentat"</strong> (Attack Emergency), the highest tier of the Vigipirate national security system. Elevated after the March 2024 Moscow terrorist attack. Opération Sentinelle soldiers patrol major transit hubs and tourist sites.</p>
+    </div>
+
+    <p><strong>What this means on the ground:</strong></p>
+    <ul class="checklist">
+      <li><span class="chk">✓</span> Visible military patrols at train stations, airports, major landmarks</li>
+      <li><span class="chk">✓</span> Bag checks at major attractions and museums</li>
+      <li><span class="chk">✓</span> Random security stops</li>
+      <li><span class="chk">✓</span> Heightened security at schools, places of worship, shopping centers</li>
+    </ul>
+
+    <div class="alert red">
+      <div class="alert-title">April 1, 2026: Specific Threat</div>
+      <p>Goldman Sachs Paris HQ was placed under police surveillance after US authorities warned of an <strong>Iranian group threatening explosive attacks</strong> on American bank buildings in the capital. No attack materialized.</p>
+    </div>
+  </section>
+
+  <!-- 🟡 STRIKES -->
+  <section id="strikes">
+    <h2>🟡 Strikes & Transport Disruptions</h2>
+
+    <h3>⚠️ Upcoming: Airport Strike — June 18</h3>
+    <div class="alert amber">
+      <div class="alert-title">24-Hour Ground Staff Strike at CDG, Orly, Le Bourget</div>
+      <p>Ground staff unions called a strike over tougher security-badge rules. Air traffic control is <strong>NOT involved</strong> — flights should operate but expect slower turnarounds, potential baggage pile-ups, and risk of missed connections.</p>
+    </div>
+
+    <h3>This Week (June 1–7): Minor Works</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Line</th><th>Status</th><th>Details</th></tr>
+        <tr><td><strong>Line 7bis</strong></td><td><span class="tag open">Resolved</span></td><td>Closed through June 3 — now fully back in service</td></tr>
+        <tr><td><strong>Line 12</strong></td><td><span class="tag warn">Partial</span></td><td>Wed & Sun after 22:00, June 3–17</td></tr>
+        <tr><td><strong>Line 13</strong></td><td><span class="tag warn">Sunday Only</span></td><td>June 7 until noon — full line closure</td></tr>
+        <tr><td><strong>RER C</strong></td><td><span class="tag warn">Long-term Works</span></td><td>New works starting — check RATP for specific segments</td></tr>
+        <tr><td><strong>RER D</strong></td><td><span class="tag warn">Weekend</span></td><td>Closed between Gare du Nord and Gare de Lyon this weekend</td></tr>
+        <tr><td><strong>T1</strong></td><td><span class="tag warn">3-Month Project</span></td><td>Noisy-le-Sec ↔ Bobigny suspended through August 31</td></tr>
+        <tr><td><strong>T4</strong></td><td><span class="tag warn">Evenings</span></td><td>Mon–Fri after 21:15 until July 17</td></tr>
+      </table>
+    </div>
+
+    <div class="alert green">
+      <div class="alert-title">June 8 (Monday): All Clear</div>
+      <p>No strikes scheduled. Metro, RER, buses, SNCF trains all running normally. RER B from CDG airport to city: normal service.</p>
+    </div>
+  </section>
+
+  <!-- ADVISORIES -->
+  <section id="advisories">
+    <h2>🟢 Official Travel Advisories</h2>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>Country</th><th>Level</th><th>Key Warning</th></tr>
+        <tr>
+          <td>🇺🇸 United States</td>
+          <td><strong>Level 2</strong> — Exercise Increased Caution</td>
+          <td>Terrorism threat</td>
+        </tr>
+        <tr>
+          <td>🇬🇧 United Kingdom</td>
+          <td>Exercise Caution</td>
+          <td>Terrorism threat remains</td>
+        </tr>
+        <tr>
+          <td>🇦🇺 Australia</td>
+          <td>Exercise a High Degree of Caution</td>
+          <td>High terrorist alert, nationwide security</td>
+        </tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- 🟢 MONDAY LANDING -->
+  <section id="monday">
+    <h2>🟢 Landing Monday June 8 — What's Open?</h2>
+
+    <p>June 8 is a <strong>regular Monday</strong> — no public holiday. Many museums use Monday as their closure day, but the big ones that matter are open.</p>
+
+    <h3>✅ OPEN on Monday</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Attraction</th><th>Hours</th><th>Note</th></tr>
+        <tr><td><strong>Louvre</strong></td><td>9:00–18:00</td><td>Closed Tuesdays (not Mondays!) · €32 non-EU</td></tr>
+        <tr><td><strong>Eiffel Tower</strong></td><td>9:00–23:45</td><td>Last entry 22:30 · Book ahead</td></tr>
+        <tr><td><strong>Notre-Dame</strong></td><td>Daily</td><td>FREE entry · Timed slot online · Reopened Dec 2024</td></tr>
+        <tr><td><strong>Musée de l'Orangerie</strong></td><td>9:00–18:00</td><td>Monet's Water Lilies · Closed Tuesdays</td></tr>
+        <tr><td><strong>Sacré-Cœur</strong></td><td>6:00–22:30</td><td>Free basilica · Dome 10:30–20:30 (fee)</td></tr>
+        <tr><td><strong>Arc de Triomphe</strong></td><td>10:00–22:30</td><td>Open daily · Panoramic views</td></tr>
+        <tr><td><strong>Sainte-Chapelle</strong></td><td>9:00–17:00</td><td>Stunning stained glass · Open daily</td></tr>
+      </table>
+    </div>
+
+    <h3>❌ CLOSED on Monday</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Attraction</th><th>Closure Day</th><th>Alternative</th></tr>
+        <tr><td><strong>Musée d'Orsay</strong></td><td>Mondays</td><td>Louvre + Orangerie cover similar ground</td></tr>
+        <tr><td><strong>Versailles Palace</strong></td><td>Mondays</td><td>Needs a full day anyway — save for Tuesday</td></tr>
+        <tr><td><strong>Musée Rodin</strong></td><td>Mondays</td><td>Sculpture gardens are a loss, but minor</td></tr>
+        <tr><td><strong>Paris Catacombs</strong></td><td>Mondays</td><td>Niche attraction</td></tr>
+        <tr><td><strong>Centre Pompidou</strong></td><td>Closed until 2030</td><td>Full renovation — not a Monday issue</td></tr>
+      </table>
+    </div>
+
+    <div class="alert green">
+      <div class="alert-title">Verdict: Paris on Monday works fine</div>
+      <p>The Louvre, Eiffel Tower, Notre-Dame, and Orangerie are all open. That's a full day of world-class sights. If Orsay or Versailles are must-haves, stay into Tuesday. Otherwise — one solid Monday in Paris, then onward to Spain is a clean plan.</p>
+    </div>
+  </section>
+
+  <!-- SCAMS -->
+  <section id="scams">
+    <h2>🎯 The 6 Active Scams (Know These, Stay Safe)</h2>
+
+    <div class="scam-grid">
+      <div class="scam-card">
+        <div class="scam-num">Scam 1</div>
+        <div class="scam-name">Bracelet Scam</div>
+        <div class="scam-desc">Men near Sacré-Cœur grab your wrist and quickly tie a bracelet, then demand €10–20. Multiple accomplices surround you.</div>
+        <div class="scam-def"><strong>Defense:</strong> Hands in pockets near Sacré-Cœur. Walk past without eye contact or slowing down.</div>
+      </div>
+
+      <div class="scam-card">
+        <div class="scam-num">Scam 2</div>
+        <div class="scam-name">Petition / Clipboard</div>
+        <div class="scam-desc">Someone approaches with a clipboard asking you to sign a petition for deaf children. While you read, an accomplice picks your pocket.</div>
+        <div class="scam-def"><strong>Defense:</strong> Firm "non" without stopping. Never touch the clipboard.</div>
+      </div>
+
+      <div class="scam-card">
+        <div class="scam-num">Scam 3</div>
+        <div class="scam-name">Gold Ring Scam</div>
+        <div class="scam-desc">A person "finds" a gold ring and asks if you dropped it. While chatting, accomplices lift your wallet. 47 police reports near Eiffel Tower in Feb 2026 alone.</div>
+        <div class="scam-def"><strong>Defense:</strong> Ignore anyone who claims to have found something.</div>
+      </div>
+
+      <div class="scam-card">
+        <div class="scam-num">Scam 4</div>
+        <div class="scam-name">Fake Ticket Sellers</div>
+        <div class="scam-desc">Near Notre-Dame and Louvre, people sell "skip-the-line" tickets. There is no skip-the-line for the free cathedral. In Feb 2026, 10 people (including Louvre employees) were arrested for a €10 million decade-long fake-ticket scheme targeting Chinese tour groups.</div>
+        <div class="scam-def"><strong>Defense:</strong> Only buy from official museum websites.</div>
+      </div>
+
+      <div class="scam-card">
+        <div class="scam-num">Scam 5</div>
+        <div class="scam-name">Metro Pickpockets</div>
+        <div class="scam-desc">Lines 1, 6, 9 and RER B (CDG ↔ Gare du Nord) are the worst. Châtelet-Les Halles is the single most targeted station. 18,500 tourist thefts in 2025.</div>
+        <div class="scam-def"><strong>Defense:</strong> Cross-body bag, clasp at front. Phone in inside pocket, never back pocket.</div>
+      </div>
+
+      <div class="scam-card">
+        <div class="scam-num">Scam 6</div>
+        <div class="scam-name">Taxi Overcharge</div>
+        <div class="scam-desc">Unofficial "taxis" at CDG approach you inside the terminal. They charge 2–3x the fixed fare.</div>
+        <div class="scam-def"><strong>Defense:</strong> Fixed fares: €53 Left Bank, €60 Right Bank. Use official taxi stands only. Uber/Bolt are reliable.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEIGHBORHOODS -->
+  <section id="neighborhoods">
+    <h2>🗺️ Neighborhood Safety at a Glance</h2>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>Area</th><th>Day</th><th>Night (post-midnight)</th></tr>
+        <tr><td><strong>Le Marais</strong></td><td>🟢 Excellent</td><td>🟢 Very comfortable</td></tr>
+        <tr><td><strong>Saint-Germain</strong></td><td>🟢 Excellent</td><td>🟢 Very comfortable</td></tr>
+        <tr><td><strong>Latin Quarter</strong></td><td>🟢 Excellent</td><td>🟢 Safe, lively</td></tr>
+        <tr><td><strong>Montmartre</strong></td><td>🟢 Good (watch for bracelet scammers)</td><td>🟡 Caution near Pigalle border</td></tr>
+        <tr><td><strong>Champs-Élysées</strong></td><td>🟢 Good</td><td>🟡 Higher pickpocket risk</td></tr>
+        <tr><td><strong>Eiffel Tower / Trocadéro</strong></td><td>🟢 Good</td><td>🟡 Ring scam hotspot</td></tr>
+        <tr><td><strong>Châtelet-Les Halles</strong></td><td>🟡 High pickpocket risk</td><td>🟡 Be alert in station</td></tr>
+        <tr><td><strong>Gare du Nord area</strong></td><td>🟡 Be alert</td><td>🔴 Caution after midnight</td></tr>
+        <tr><td><strong>Pigalle</strong></td><td>🟡 Fine during day</td><td>🔴 Caution after midnight</td></tr>
+      </table>
+    </div>
+
+    <h3>Practical Rules</h3>
+    <ul class="checklist">
+      <li><span class="chk">✓</span> Cross-body bag, clasp at front — always</li>
+      <li><span class="chk">✓</span> Phone in inside pocket, never back pocket or on café tables</li>
+      <li><span class="chk">✓</span> RER B from CDG: keep luggage close, phone secured — highest-risk transit for theft</li>
+      <li><span class="chk">✓</span> Start every interaction with <strong>"Bonjour"</strong> — it genuinely changes how locals respond</li>
+      <li><span class="chk">✓</span> Navigo Easy card (tap-and-go) or SNCF Connect app — paper tickets phased out</li>
+      <li><span class="chk">✓</span> Travel insurance strongly recommended for non-EU visitors</li>
+    </ul>
+  </section>
+
+  <!-- VERDICT -->
+  <section id="verdict">
+    <h2>📋 Bottom Line</h2>
+
+    <div class="alert green">
+      <div class="alert-title">Paris Is Open, Safe, and Worth the Stop</div>
+      <p>The May 30–31 riots were a one-night flash event — not an ongoing situation. The city is fully normalized. The real day-to-day risks are the same as always: pickpocketing and scams, not violent crime. A Monday landing gives you the Louvre, Eiffel Tower, Notre-Dame, and Orangerie — more than enough for an excellent first day.</p>
+    </div>
+
+    <div class="alert amber">
+      <div class="alert-title">Only Watchpoint</div>
+      <p>If you're flying out of Paris on June 18, the airport ground staff strike could cause delays and baggage issues. If you're continuing to Spain before that date, it won't affect you at all.</p>
+    </div>
+
+    <div style="text-align:center; padding: 20px 0;">
+      <p style="font-size:18px;">🇫🇷 → 🇪🇸</p>
+      <p style="font-size:14px;">Paris Monday, then onward to Spain. No reason to skip.</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>Sources: BBC News, Reuters, The Guardian, The Athletic/NY Times, TripGuards, Sortiraparis, London Daily, Paris Police Prefecture, US State Department, SGDSN Vigipirate, WorldInParis</p>
+    <p>Compiled by Hermes Agent · June 5, 2026</p>
+  </footer>
+
+</div>
+
+</body>
+</html>
