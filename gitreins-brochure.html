@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GitReins — Git-Native Agent Co-Harness</title>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface-2: #161622;
+    --border: #252535;
+    --text: #e0e0ea;
+    --text-muted: #8888a0;
+    --text-dim: #555568;
+    --accent: #00d4aa;
+    --accent-glow: #00ffcc;
+    --warn: #ff9944;
+    --fail: #ff4466;
+    --pass: #00d4aa;
+    --code-bg: #0d0d16;
+    --radius: 8px;
+    --radius-lg: 16px;
+    --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'SF Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+    background: var(--bg);
+    color: var(--text);
+  }
+
+  body {
+    font-family: var(--font);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Layout ── */
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  section {
+    padding: 80px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  section:last-of-type { border-bottom: none; }
+
+  /* ── Typography ── */
+  h1, h2, h3, h4 {
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+
+  h1 { font-size: 3.2rem; }
+  h2 { font-size: 2rem; margin-bottom: 40px; color: #fff; }
+  h3 { font-size: 1.2rem; margin-bottom: 8px; }
+  p { color: var(--text-muted); margin-bottom: 16px; }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  /* ── Hero ── */
+  .hero {
+    padding: 120px 0 80px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,212,170,0.06) 0%, transparent 60%);
+  }
+
+  .hero-badge {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--accent);
+    background: rgba(0,212,170,0.1);
+    border: 1px solid rgba(0,212,170,0.2);
+    border-radius: 100px;
+    padding: 4px 14px;
+    margin-bottom: 24px;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.4rem, 5vw, 3.8rem);
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, #fff 30%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-subtitle {
+    font-size: 1.25rem;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto 40px;
+  }
+
+  .hero-cta {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    color: var(--accent);
+    background: transparent;
+    border: 1px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 10px 24px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .hero-cta:hover {
+    background: rgba(0,212,170,0.1);
+    box-shadow: 0 0 20px rgba(0,212,170,0.15);
+  }
+
+  /* ── How It Works ── */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    counter-reset: step;
+  }
+
+  .step {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px 20px;
+    position: relative;
+    counter-increment: step;
+  }
+
+  .step::before {
+    content: counter(step);
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--accent);
+    background: rgba(0,212,170,0.1);
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    margin-bottom: 12px;
+  }
+
+  .step h4 { font-size: 0.95rem; margin-bottom: 6px; }
+  .step p { font-size: 0.8rem; line-height: 1.5; margin: 0; }
+
+  .step-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-dim);
+    font-size: 1.2rem;
+  }
+
+  /* ── Feature Grid ── */
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .feature {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+  }
+
+  .feature-icon {
+    font-family: var(--mono);
+    font-size: 1.5rem;
+    margin-bottom: 16px;
+    color: var(--accent);
+  }
+
+  .feature h3 { font-size: 1.1rem; }
+  .feature p { font-size: 0.9rem; margin-bottom: 12px; }
+
+  .feature-code {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--accent);
+    background: var(--code-bg);
+    padding: 3px 8px;
+    border-radius: 4px;
+  }
+
+  .feature-stat {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    margin-top: 12px;
+  }
+
+  /* ── What It Doesn't Do ── */
+  .doesnt-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .doesnt-item {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+  }
+
+  .doesnt-item .icon {
+    font-size: 1.2rem;
+    color: var(--warn);
+    margin-bottom: 10px;
+  }
+
+  .doesnt-item h4 {
+    font-size: 0.9rem;
+    color: var(--warn);
+    margin-bottom: 6px;
+  }
+
+  .doesnt-item p {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* ── Numbers ── */
+  .numbers {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+
+  .number-card {
+    text-align: center;
+    padding: 32px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+  }
+
+  .number-value {
+    font-family: var(--mono);
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .number-value .unit {
+    font-size: 1rem;
+    color: var(--accent);
+    font-weight: 400;
+  }
+
+  .number-label {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+  }
+
+  /* ── Code Block ── */
+  .code-block {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px 32px;
+    overflow-x: auto;
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    line-height: 1.7;
+  }
+
+  .code-block .comment { color: var(--text-dim); }
+  .code-block .cmd { color: var(--accent); }
+  .code-block .arg { color: var(--warn); }
+
+  /* ── Architecture ── */
+  .arch-modules {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .arch-module {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    font-family: var(--mono);
+    font-size: 0.8rem;
+  }
+
+  .arch-module .name {
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .arch-module .path {
+    color: var(--text-dim);
+    font-size: 0.7rem;
+  }
+
+  .arch-module .lines {
+    color: var(--text-muted);
+    font-size: 0.7rem;
+  }
+
+  /* ── Footer ── */
+  footer {
+    text-align: center;
+    padding: 60px 0;
+    color: var(--text-dim);
+    font-size: 0.8rem;
+    border-top: 1px solid var(--border);
+  }
+
+  footer a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  footer a:hover { text-decoration: underline; }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    .steps { grid-template-columns: 1fr; }
+    .feature-grid { grid-template-columns: 1fr; }
+    .doesnt-grid { grid-template-columns: 1fr; }
+    .numbers { grid-template-columns: repeat(2, 1fr); }
+    .arch-modules { grid-template-columns: 1fr; }
+    h1 { font-size: 2rem; }
+    .hero { padding: 80px 0 60px; }
+    section { padding: 60px 0; }
+  }
+
+  /* ── Motion ── */
+  @media (prefers-reduced-motion: no-preference) {
+    .feature, .step, .doesnt-item, .number-card, .arch-module {
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+    .feature:hover, .step:hover, .doesnt-item:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent);
+      box-shadow: 0 4px 24px rgba(0,212,170,0.06);
+    }
+    .number-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 32px rgba(0,212,170,0.08);
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<header class="hero">
+  <div class="container">
+    <span class="hero-badge">v0.1.0 — Proof of Concept</span>
+    <h1>GitReins</h1>
+    <p class="hero-subtitle">
+      A git-native co-harness that gives your AI agent guardrails. Define tasks, let the agent code, and GitReins judges the result — automatically.
+    </p>
+    <a href="#quickstart" class="hero-cta">Quick Start →</a>
+  </div>
+</header>
+
+<!-- ═══════════════ HOW IT WORKS ═══════════════ -->
+<section>
+  <div class="container">
+    <p class="section-label">Workflow</p>
+    <h2>How It Works</h2>
+    <div class="steps">
+      <div class="step">
+        <h4>Create Tasks</h4>
+        <p>Define criteria via CLI or MCP tools. Each task lists exactly what "done" means: file exists, function present, tests pass, no secrets.</p>
+      </div>
+      <div class="step">
+        <h4>Agent Codes</h4>
+        <p>Your AI agent — Claude, Hermes, Codex, Pi — writes the code. GitReins stays out of the way until it's time to verify.</p>
+      </div>
+      <div class="step">
+        <h4>Agent Completes</h4>
+        <p>Agent calls <span class="feature-code">task.complete</span>. GitReins takes over — the agent's job is done, the harness's begins.</p>
+      </div>
+      <div class="step">
+        <h4>Two-Tier Evaluation</h4>
+        <p><strong>Tier 1:</strong> Static guards — secrets, lint, tests — run instantly. <strong>Tier 2:</strong> An LLM-powered evaluator reads files, checks criteria, returns per-item PASS/FAIL with line numbers.</p>
+      </div>
+      <div class="step">
+        <h4>Commit or Block</h4>
+        <p>Code that passes all gates gets through. Code that doesn't gets blocked — with specific reasons the agent can use to fix it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ WHAT IT DOES ═══════════════ -->
+<section>
+  <div class="container">
+    <p class="section-label">Capabilities</p>
+    <h2>What GitReins Does</h2>
+    <div class="feature-grid">
+      <div class="feature">
+        <div class="feature-icon">⚙️</div>
+        <h3>MCP Server — 9 Tools</h3>
+        <p>Your AI agent connects via stdio and discovers a full tool suite: task lifecycle, guard execution, evaluation triggers, and sandbox read/write. Standard JSON-RPC 2.0. No custom SDK needed.</p>
+        <span class="feature-code">tools/list → 9 tools</span>
+        <div class="feature-stat">gitreins_mcp/server.py — 407 lines</div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🛡️</div>
+        <h3>Tier 1 — Static Guards</h3>
+        <p>Three guards run in milliseconds before any code reaches the evaluator. Secrets scanner catches API keys and tokens. Lint runner flags syntax issues. Test runner executes your existing suite.</p>
+        <span class="feature-code">guard.run → PASS / FAIL</span>
+        <div class="feature-stat">engine/guard_manager.py — 241 lines</div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🧠</div>
+        <h3>Tier 2 — Agentic Evaluator</h3>
+        <p>Not a single-shot LLM call. The evaluator is an agentic loop: it reads files with read_file, searches patterns, runs commands, and iterates until it can deliver a structured verdict. 7 tools at its disposal. Per-criterion evidence with line numbers.</p>
+        <span class="feature-code">evaluate() → COMPLETE / INCOMPLETE</span>
+        <div class="feature-stat">engine/evaluator.py — 572 lines</div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🔗</div>
+        <h3>Git Hooks — Pre-Commit</h3>
+        <p>Install in under 10 seconds. The pre-commit hook ensures no code bypasses the guard manager. If guards fail, the commit is blocked with specific reasons.</p>
+        <span class="feature-code">./gitreins/install</span>
+        <div class="feature-stat">gitreins/install — shell script</div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">⌨️</div>
+        <h3>CLI — 10 Commands</h3>
+        <p>Full control from the terminal: create, start, complete, list, and delete tasks. Run guards. Trigger evaluation. Everything the MCP server exposes, also available for humans.</p>
+        <span class="feature-code">gitreins/cli.py task create|start|complete|list|delete|guard</span>
+        <div class="feature-stat">gitreins/cli.py — 218 lines</div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📋</div>
+        <h3>Pipeline Engine</h3>
+        <p>Configurable evaluation pipeline in YAML. Tier 1 stages run in parallel. Tier 2 runs the agentic evaluator against surviving criteria. Pipeline results feed into the judge for a final verdict.</p>
+        <span class="feature-code">.gitreins/config.yaml</span>
+        <div class="feature-stat">engine/pipeline.py — 428 lines</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ WHAT IT DOESN'T DO ═══════════════ -->
+<section>
+  <div class="container">
+    <p class="section-label">Boundaries</p>
+    <h2>What GitReins Doesn't Do</h2>
+    <p style="max-width: 640px; margin-bottom: 32px;">Honest boundaries matter. GitReins is a focused tool — it does one thing well and stays out of the way for everything else.</p>
+    <div class="doesnt-grid">
+      <div class="doesnt-item">
+        <div class="icon">✗</div>
+        <h4>Doesn't Write Code</h4>
+        <p>GitReins judges code. Your AI agent writes it. There is no code generation, no autocomplete, no refactoring engine.</p>
+      </div>
+      <div class="doesnt-item">
+        <div class="icon">✗</div>
+        <h4>Not a CI/CD Pipeline</h4>
+        <p>It runs pre-commit, not post-push. It won't deploy your app, run integration tests against staging, or manage releases.</p>
+      </div>
+      <div class="doesnt-item">
+        <div class="icon">✗</div>
+        <h4>Not a Linter</h4>
+        <p>It coordinates your existing linters — it doesn't replace them. Bring your own ESLint, ruff, or pylint config.</p>
+      </div>
+      <div class="doesnt-item">
+        <div class="icon">✗</div>
+        <h4>Not a Test Runner</h4>
+        <p>It runs your existing test suite. It won't generate tests, measure coverage, or decide what to test. That's your job.</p>
+      </div>
+      <div class="doesnt-item">
+        <div class="icon">✗</div>
+        <h4>No Filesystem Sandbox</h4>
+        <p>The evaluator's sandbox is an in-memory dict today. Persistent sandbox with auto-commit to git is designed but not yet built.</p>
+      </div>
+      <div class="doesnt-item">
+        <div class="icon">✗</div>
+        <h4>No Persistent History</h4>
+        <p>Evaluation results are ephemeral — returned to the caller, not stored. A <span class="feature-code">.gitreins/history/</span> design exists but isn't implemented.</p>
+      </div>
+      <div class="doesnt-item">
+        <div class="icon">✗</div>
+        <h4>No Web UI</h4>
+        <p>CLI and MCP only. No dashboard, no admin panel, no browser interface. It's a tool for terminals and agents.</p>
+      </div>
+      <div class="doesnt-item">
+        <div class="icon">✗</div>
+        <h4>Not Multi-Repo Aware</h4>
+        <p>GitReins lives in one repo. It doesn't coordinate across repos, monorepos, or submodules. Single-repo focus.</p>
+      </div>
+      <div class="doesnt-item">
+        <div class="icon">✗</div>
+        <h4>Doesn't Replace Your Agent</h4>
+        <p>It's a harness FOR your AI agent — not a replacement. Your agent still thinks, codes, and decides. GitReins verifies.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ BY THE NUMBERS ═══════════════ -->
+<section>
+  <div class="container">
+    <p class="section-label">By The Numbers</p>
+    <h2>PoC Stats</h2>
+    <div class="numbers">
+      <div class="number-card">
+        <div class="number-value">5,041</div>
+        <div class="number-label">Lines of Python</div>
+      </div>
+      <div class="number-card">
+        <div class="number-value">221</div>
+        <div class="number-label">Tests — All Passing</div>
+      </div>
+      <div class="number-card">
+        <div class="number-value">3</div>
+        <div class="number-label">Dependencies</div>
+      </div>
+      <div class="number-card">
+        <div class="number-value">10<span class="unit">s</span></div>
+        <div class="number-label">Install Time</div>
+      </div>
+      <div class="number-card">
+        <div class="number-value">6</div>
+        <div class="number-label">Engine Modules</div>
+      </div>
+      <div class="number-card">
+        <div class="number-value">9</div>
+        <div class="number-label">MCP Tools</div>
+      </div>
+      <div class="number-card">
+        <div class="number-value">10</div>
+        <div class="number-label">CLI Commands</div>
+      </div>
+      <div class="number-card">
+        <div class="number-value">~$0.001</div>
+        <div class="number-label">Per Evaluation (LLM)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ ARCHITECTURE ═══════════════ -->
+<section>
+  <div class="container">
+    <p class="section-label">Architecture</p>
+    <h2>Engine Modules</h2>
+    <div class="arch-modules">
+      <div class="arch-module">
+        <div class="name">AgenticEvaluator</div>
+        <div class="path">engine/evaluator.py</div>
+        <div class="lines">572 lines — 7-tool agentic loop</div>
+      </div>
+      <div class="arch-module">
+        <div class="name">PipelineEngine</div>
+        <div class="path">engine/pipeline.py</div>
+        <div class="lines">428 lines — configurable stages</div>
+      </div>
+      <div class="arch-module">
+        <div class="name">MCPServer</div>
+        <div class="path">gitreins_mcp/server.py</div>
+        <div class="lines">407 lines — 9 tools, stdio</div>
+      </div>
+      <div class="arch-module">
+        <div class="name">LLMClient</div>
+        <div class="path">engine/llm.py</div>
+        <div class="lines">298 lines — multi-provider</div>
+      </div>
+      <div class="arch-module">
+        <div class="name">GuardManager</div>
+        <div class="path">engine/guard_manager.py</div>
+        <div class="lines">241 lines — secrets/lint/tests</div>
+      </div>
+      <div class="arch-module">
+        <div class="name">TaskManager</div>
+        <div class="path">engine/task_manager.py</div>
+        <div class="lines">149 lines — CRUD + YAML</div>
+      </div>
+      <div class="arch-module">
+        <div class="name">Judge</div>
+        <div class="path">engine/judge.py</div>
+        <div class="lines">136 lines — pipeline orchestrator</div>
+      </div>
+      <div class="arch-module">
+        <div class="name">CLI</div>
+        <div class="path">gitreins/cli.py</div>
+        <div class="lines">218 lines — 10 commands</div>
+      </div>
+      <div class="arch-module">
+        <div class="name">Tests</div>
+        <div class="path">tests/ — 10 files</div>
+        <div class="lines">2,491 lines — 221 tests</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ QUICK START ═══════════════ -->
+<section id="quickstart">
+  <div class="container">
+    <p class="section-label">Get Started</p>
+    <h2>Quick Start</h2>
+    <div class="code-block">
+<span class="comment"># Clone and install — hooks active in under 10 seconds</span>
+<span class="cmd">cd</span> gitreins-poc
+<span class="cmd">./gitreins/install</span>
+
+<span class="comment"># Create a task with specific criteria</span>
+<span class="cmd">python3 gitreins/cli.py task create</span> <span class="arg">login-endpoint</span> \
+  <span class="arg">"Implement POST /login"</span> \
+  <span class="arg">"Accepts JSON body"</span> \
+  <span class="arg">"Returns JWT"</span> \
+  <span class="arg">"Has tests"</span> \
+  <span class="arg">"No hardcoded secrets"</span>
+
+<span class="comment"># Your AI agent writes the code, then completes the task</span>
+<span class="comment"># GitReins evaluates automatically:</span>
+<span class="comment">#   Tier 1: secrets scan → lint → tests</span>
+<span class="comment">#   Tier 2: LLM reads files, checks each criterion → COMPLETE / INCOMPLETE</span>
+
+<span class="comment"># Start the MCP server for your AI agent</span>
+<span class="cmd">python3 gitreins_mcp/server.py</span>
+    </div>
+    <p style="margin-top: 24px; font-size: 0.85rem; color: var(--text-dim);">
+      <strong>Requirements:</strong> Python 3.10+ · <span class="feature-code">pip install mcp pyyaml requests</span> · An LLM API key for Tier 2 evaluation (DeepSeek, OpenAI, or compatible)
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer>
+  <div class="container">
+    <p>
+      GitReins v0.1.0 · Proof of Concept · Git-Native Agent Co-Harness<br>
+      Built with Python · 3 dependencies · 5,041 lines · 221 tests<br>
+      <a href="https://github.com/totalwindup/gitreins-poc">github.com/totalwindup/gitreins-poc</a>
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
