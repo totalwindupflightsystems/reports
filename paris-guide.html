@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Paris Guide — Things to Do, See & Eat (June 2026)</title>
+<title>Paris Guide — Things to Do, See &amp; Eat (June 2026)</title>
 <style>
   :root {
     --bg: #0f1117;
@@ -18,7 +18,6 @@
     --red: #f87171;
     --blue: #60a5fa;
     --purple: #a78bfa;
-    --pink: #f472b6;
     --radius: 10px;
   }
   * { margin:0; padding:0; box-sizing:border-box; }
@@ -28,152 +27,113 @@
     color: var(--text);
     line-height: 1.6;
   }
+  body.modal-open { overflow: hidden; }
   .container { max-width: 860px; margin: 0 auto; padding: 20px 16px 60px; }
 
-  /* Hero */
-  .hero {
-    text-align: center;
-    padding: 48px 0 36px;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 32px;
-  }
-  .hero .flag { font-size: 56px; margin-bottom: 12px; }
-  .hero h1 { font-size: 30px; font-weight: 800; letter-spacing: -0.5px; }
-  .hero .subtitle { color: var(--text2); font-size: 15px; margin-top: 6px; }
-  .hero .tagline { font-size: 14px; color: var(--amber); margin-top: 10px; }
+  .hero { text-align:center; padding:48px 0 36px; border-bottom:1px solid var(--border); margin-bottom:32px; }
+  .hero .flag { font-size:56px; margin-bottom:12px; }
+  .hero h1 { font-size:30px; font-weight:800; letter-spacing:-0.5px; }
+  .hero .subtitle { color:var(--text2); font-size:15px; margin-top:6px; }
+  .hero .tagline { font-size:14px; color:var(--amber); margin-top:10px; }
 
-  /* Top Nav */
   .top-nav {
-    display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px;
-    padding: 12px 0;
-    border-bottom: 1px solid var(--border);
-    position: sticky; top: 0; background: var(--bg); z-index: 10;
+    display:flex; gap:8px; flex-wrap:wrap; margin-bottom:28px;
+    padding:12px 0; border-bottom:1px solid var(--border);
+    position:sticky; top:0; background:var(--bg); z-index:10;
   }
-  .top-nav a {
-    font-size: 12px; color: var(--text2); text-decoration: none;
-    padding: 4px 10px; border-radius: 6px;
-    transition: background 0.15s;
-  }
-  .top-nav a:hover { background: var(--surface); color: var(--text); }
+  .top-nav a { font-size:12px; color:var(--text2); text-decoration:none; padding:4px 10px; border-radius:6px; transition:background 0.15s; }
+  .top-nav a:hover { background:var(--surface); color:var(--text); }
 
-  /* Sections */
-  section { margin-bottom: 40px; }
-  h2 {
-    font-size: 22px; font-weight: 700; margin-bottom: 18px;
-    padding-bottom: 10px; border-bottom: 1px solid var(--border);
-    letter-spacing: -0.3px;
-  }
-  h3 { font-size: 17px; font-weight: 600; margin: 24px 0 14px; color: var(--text); }
-  p { margin-bottom: 14px; font-size: 15px; color: var(--text2); }
-  strong { color: var(--text); }
-  em { color: var(--blue); font-style: normal; }
+  section { margin-bottom:40px; }
+  h2 { font-size:22px; font-weight:700; margin-bottom:18px; padding-bottom:10px; border-bottom:1px solid var(--border); letter-spacing:-0.3px; }
+  h3 { font-size:17px; font-weight:600; margin:24px 0 14px; color:var(--text); }
+  p { margin-bottom:14px; font-size:15px; color:var(--text2); }
+  strong { color:var(--text); }
 
-  /* Tables */
-  .table-wrap {
-    overflow-x: auto;
-    margin-bottom: 20px;
-    border-radius: var(--radius);
-    border: 1px solid var(--border);
-  }
-  table { width: 100%; border-collapse: collapse; font-size: 14px; }
-  th {
-    text-align: left; padding: 10px 14px;
-    background: var(--surface2);
-    color: var(--text2); font-size: 11px;
-    text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;
-  }
-  td { padding: 10px 14px; border-top: 1px solid var(--border); vertical-align: top; }
-  tr:hover td { background: rgba(255,255,255,0.02); }
+  .table-wrap { overflow-x:auto; margin-bottom:20px; border-radius:var(--radius); border:1px solid var(--border); }
+  table { width:100%; border-collapse:collapse; font-size:14px; }
+  th { text-align:left; padding:10px 14px; background:var(--surface2); color:var(--text2); font-size:11px; text-transform:uppercase; letter-spacing:0.5px; font-weight:600; }
+  td { padding:10px 14px; border-top:1px solid var(--border); vertical-align:top; }
+  tr:hover td { background:rgba(255,255,255,0.02); }
 
-  /* Cards */
-  .card-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 12px;
-    margin-bottom: 20px;
-  }
+  .card-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:12px; margin-bottom:20px; }
   .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 18px;
-    position: relative;
+    background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
+    padding:18px; cursor:pointer; transition:border-color 0.2s, background 0.2s; position:relative;
   }
-  .card .card-icon { font-size: 28px; margin-bottom: 8px; }
-  .card .card-name { font-weight: 700; font-size: 15px; margin-bottom: 6px; }
-  .card .card-desc { font-size: 13px; color: var(--text2); line-height: 1.5; }
-  .card .card-meta { font-size: 12px; color: var(--purple); margin-top: 8px; }
+  .card:hover { border-color:var(--blue); background:var(--surface2); }
+  .card .card-icon { font-size:28px; margin-bottom:8px; }
+  .card .card-name { font-weight:700; font-size:15px; margin-bottom:6px; }
+  .card .card-desc { font-size:13px; color:var(--text2); line-height:1.5; }
+  .card .card-hint { font-size:11px; color:var(--blue); margin-top:10px; opacity:0; transition:opacity 0.2s; }
+  .card:hover .card-hint { opacity:1; }
 
-  /* Mobility badge */
-  .mob {
-    display: inline-block; padding: 2px 8px; border-radius: 4px;
-    font-size: 11px; font-weight: 700; letter-spacing: 0.4px;
-    margin-top: 10px;
-  }
-  .mob.low { background: rgba(74,222,128,0.15); color: var(--green); }
-  .mob.mod { background: rgba(251,191,36,0.15); color: var(--amber); }
-  .mob.high { background: rgba(251,146,60,0.15); color: var(--orange); }
-  .mob.vhigh { background: rgba(248,113,113,0.15); color: var(--red); }
+  .mob { display:inline-block; padding:2px 8px; border-radius:4px; font-size:11px; font-weight:700; letter-spacing:0.4px; margin-top:10px; }
+  .mob.low { background:rgba(74,222,128,0.15); color:var(--green); }
+  .mob.mod { background:rgba(251,191,36,0.15); color:var(--amber); }
+  .mob.high { background:rgba(251,146,60,0.15); color:var(--orange); }
+  .mob.vhigh { background:rgba(248,113,113,0.15); color:var(--red); }
+  .mob-notes { font-size:11px; color:var(--text2); margin-top:4px; line-height:1.4; }
 
-  .mob-notes { font-size: 11px; color: var(--text2); margin-top: 4px; line-height: 1.4; }
+  .tip { border-radius:var(--radius); padding:14px 18px; margin-bottom:14px; border-left:4px solid; font-size:14px; }
+  .tip.green { background:rgba(74,222,128,0.08); border-color:var(--green); }
+  .tip.amber { background:rgba(251,191,36,0.08); border-color:var(--amber); }
+  .tip.blue { background:rgba(96,165,250,0.08); border-color:var(--blue); }
+  .tip.purple { background:rgba(167,139,250,0.08); border-color:var(--purple); }
+  .tip.orange { background:rgba(251,146,60,0.08); border-color:var(--orange); }
+  .tip .tip-title { font-weight:700; margin-bottom:4px; }
+  .tip.green .tip-title { color:var(--green); }
+  .tip.amber .tip-title { color:var(--amber); }
+  .tip.blue .tip-title { color:var(--blue); }
+  .tip.purple .tip-title { color:var(--purple); }
+  .tip.orange .tip-title { color:var(--orange); }
 
-  /* Tip alerts */
-  .tip {
-    border-radius: var(--radius);
-    padding: 14px 18px;
-    margin-bottom: 14px;
-    border-left: 4px solid;
-    font-size: 14px;
-  }
-  .tip.green { background: rgba(74,222,128,0.08); border-color: var(--green); }
-  .tip.amber { background: rgba(251,191,36,0.08); border-color: var(--amber); }
-  .tip.blue { background: rgba(96,165,250,0.08); border-color: var(--blue); }
-  .tip.purple { background: rgba(167,139,250,0.08); border-color: var(--purple); }
-  .tip.orange { background: rgba(251,146,60,0.08); border-color: var(--orange); }
-  .tip .tip-title { font-weight: 700; margin-bottom: 4px; }
-  .tip.green .tip-title { color: var(--green); }
-  .tip.amber .tip-title { color: var(--amber); }
-  .tip.blue .tip-title { color: var(--blue); }
-  .tip.purple .tip-title { color: var(--purple); }
-  .tip.orange .tip-title { color: var(--orange); }
+  .food-list { list-style:none; padding:0; }
+  .food-list li { padding:12px 0; border-bottom:1px solid var(--border); font-size:14px; color:var(--text2); display:flex; align-items:flex-start; gap:10px; }
+  .food-list li:last-child { border-bottom:none; }
+  .food-list .emoji { font-size:20px; flex-shrink:0; }
 
-  /* Food list */
-  .food-list {
-    list-style: none; padding: 0;
-  }
-  .food-list li {
-    padding: 12px 0; border-bottom: 1px solid var(--border);
-    font-size: 14px; color: var(--text2);
-    display: flex; align-items: flex-start; gap: 10px;
-  }
-  .food-list li:last-child { border-bottom: none; }
-  .food-list .emoji { font-size: 20px; flex-shrink: 0; }
+  .legend { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:24px; padding:14px 18px; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); }
+  .legend-item { display:flex; align-items:center; gap:6px; font-size:12px; color:var(--text2); }
 
-  /* Legend */
-  .legend {
-    display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 24px;
-    padding: 14px 18px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
+  /* Modal */
+  .modal-overlay {
+    display:none; position:fixed; top:0; left:0; width:100%; height:100%;
+    background:rgba(0,0,0,0.75); z-index:100; align-items:center; justify-content:center;
+    padding:20px; overflow-y:auto;
   }
-  .legend-item {
-    display: flex; align-items: center; gap: 6px;
-    font-size: 12px; color: var(--text2);
+  .modal-overlay.open { display:flex; }
+  .modal {
+    background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
+    max-width:520px; width:100%; padding:28px 24px 24px; position:relative;
+    animation:modalIn 0.2s ease-out;
   }
+  @keyframes modalIn { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+  .modal-close {
+    position:absolute; top:12px; right:16px; background:none; border:none;
+    color:var(--text2); font-size:22px; cursor:pointer; padding:4px 8px; border-radius:6px;
+  }
+  .modal-close:hover { background:var(--surface2); color:var(--text); }
+  .modal h3 { font-size:22px; margin:0 0 6px; padding-right:30px; }
+  .modal .modal-mob { margin-bottom:16px; }
+  .modal .detail-row { margin-bottom:16px; }
+  .modal .detail-label { font-size:11px; color:var(--text2); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px; }
+  .modal .detail-value { font-size:14px; color:var(--text); }
+  .modal .detail-value a { color:var(--blue); text-decoration:none; }
+  .modal .detail-value a:hover { text-decoration:underline; }
+  .modal .price-tier { display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--border); font-size:13px; }
+  .modal .price-tier:last-child { border-bottom:none; }
+  .modal .price-tier .tier-name { color:var(--text); }
+  .modal .price-tier .tier-cost { color:var(--green); font-weight:600; }
+  .modal .modal-desc { font-size:14px; color:var(--text2); line-height:1.6; margin-bottom:16px; }
 
-  /* Footer */
-  footer {
-    margin-top: 48px; padding-top: 24px;
-    border-top: 1px solid var(--border);
-    text-align: center;
-    font-size: 12px; color: var(--text2);
-  }
-  footer a { color: var(--blue); text-decoration: none; }
+  footer { margin-top:48px; padding-top:24px; border-top:1px solid var(--border); text-align:center; font-size:12px; color:var(--text2); }
+  footer a { color:var(--blue); text-decoration:none; }
 
   @media (max-width: 500px) {
-    .hero h1 { font-size: 22px; }
-    .card-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size:22px; }
+    .card-grid { grid-template-columns:1fr; }
+    .modal { padding:20px 16px; }
   }
 </style>
 </head>
@@ -181,698 +141,867 @@
 
 <div class="container">
 
-  <!-- Hero -->
-  <div class="hero">
-    <div class="flag">🇫🇷</div>
-    <h1>Paris — Things to Do, See & Eat</h1>
-    <div class="subtitle">Curated by Hermes · June 2026</div>
-    <div class="tagline">🗼 Landmarks · 🎨 Museums · 🏘️ Neighborhoods · 🍽️ Where Locals Eat · ♿ Mobility-Aware</div>
+<div class="hero">
+  <div class="flag">🇫🇷</div>
+  <h1>Paris — Things to Do, See &amp; Eat</h1>
+  <div class="subtitle">Curated by Hermes · June 2026</div>
+  <div class="tagline">🗼 Landmarks · 🎨 Museums · 🏘️ Neighborhoods · 🍽️ Where Locals Eat · ♿ Mobility-Aware</div>
+  <p style="margin-top:14px;font-size:13px;color:var(--blue);">👆 Click any card for address, pricing, tickets &amp; booking links</p>
+</div>
+
+<nav class="top-nav">
+  <a href="#mobility">Mobility Guide</a>
+  <a href="#landmarks">Landmarks</a>
+  <a href="#museums">Museums</a>
+  <a href="#neighborhoods">Neighborhoods</a>
+  <a href="#hidden">Hidden Gems</a>
+  <a href="#gardens">Parks &amp; Gardens</a>
+  <a href="#cruise">Seine Cruise</a>
+  <a href="#bistros">Bistros</a>
+  <a href="#casual">Casual Eats</a>
+  <a href="#foods">Must-Try Foods</a>
+  <a href="#tips">Local Tips</a>
+  <a href="#stay">Where to Stay</a>
+  <a href="#low-mobility">Best Low-Mobility Picks</a>
+</nav>
+
+<!-- ===== MOBILITY GUIDE ===== -->
+<section id="mobility">
+  <h2>♿ Mobility Guide</h2>
+  <p>One member of the group recently had a fall and is recovering — can walk but <strong>should avoid strain</strong>: long distances, steep hills, lots of stairs. Every attraction is rated for physical demand.</p>
+  <div class="legend">
+    <div class="legend-item"><span class="mob low">🟢 LOW</span> Flat, seated, or elevator. Minimal walking.</div>
+    <div class="legend-item"><span class="mob mod">🟡 MOD</span> Some walking or a few stairs. Benches available.</div>
+    <div class="legend-item"><span class="mob high">🟠 HIGH</span> Significant walking, stairs, or hills.</div>
+    <div class="legend-item"><span class="mob vhigh">🔴 VERY HIGH</span> Stairs only, no elevator. Skip or take very slow.</div>
   </div>
+  <div class="tip orange"><div class="tip-title">🦯 Paris Accessibility Reality</div><p style="margin:0;">Paris is <strong>old</strong> — many buildings predate elevators. Cobblestones in historic neighborhoods are uneven. Métro stations often stairs-only (only Line 14 is fully step-free). <strong>Buses are best for limited mobility</strong> — all have ramps. Plan around buses + taxis/Uber, not the Métro.</p></div>
+  <div class="tip green"><div class="tip-title">💡 Strategy: Sight-See, Then Sit</div><p style="margin:0;">Almost every attraction has a café nearby or inside. The Parisian way: <strong>do one thing, then sit at a café terrace for 30–45 minutes</strong>. This isn't laziness — it's how locals tour their own city. Build café stops between every landmark.</p></div>
+</section>
 
-  <!-- Nav -->
-  <nav class="top-nav">
-    <a href="#mobility">Mobility Guide</a>
-    <a href="#landmarks">Landmarks</a>
-    <a href="#museums">Museums</a>
-    <a href="#neighborhoods">Neighborhoods</a>
-    <a href="#hidden">Hidden Gems</a>
-    <a href="#gardens">Parks & Gardens</a>
-    <a href="#bistros">Bistros</a>
-    <a href="#casual">Casual Eats</a>
-    <a href="#foods">Must-Try Foods</a>
-    <a href="#tips">Local Tips</a>
-    <a href="#stay">Where to Stay</a>
-    <a href="#low-mobility">Best Low-Mobility Picks</a>
-  </nav>
+<!-- ===== LANDMARKS ===== -->
+<section id="landmarks">
+  <h2>🏛️ Iconic Landmarks</h2>
 
-  <!-- MOBILITY GUIDE -->
-  <section id="mobility">
-    <h2>♿ Mobility Guide</h2>
-
-    <p>One member of the group recently had a fall and is recovering — can walk but <strong>should avoid strain</strong>: long distances, steep hills, and lots of stairs. Every attraction below is rated for physical demand.</p>
-
-    <div class="legend">
-      <div class="legend-item"><span class="mob low">🟢 LOW</span> Flat, seated, or elevator available. Minimal walking.</div>
-      <div class="legend-item"><span class="mob mod">🟡 MOD</span> Some walking or a few stairs. Benches usually available.</div>
-      <div class="legend-item"><span class="mob high">🟠 HIGH</span> Significant walking, stairs, or hills. Pace yourself.</div>
-      <div class="legend-item"><span class="mob vhigh">🔴 VERY HIGH</span> Stairs only, no elevator, steep terrain. Skip or take very slow.</div>
+  <div class="card-grid">
+    <div class="card" data-modal="eiffel">
+      <div class="card-icon">🗼</div><div class="card-name">Eiffel Tower</div>
+      <div class="card-desc">Best viewed from Champ de Mars or Trocadéro. Elevator to all levels — no stairs required. Go at sunset.</div>
+      <span class="mob mod">🟡 MOD</span>
+      <div class="mob-notes">Elevator available. Walking around base/Champ de Mars is 🟢 flat. Queuing = standing ~30min.</div>
+      <div class="card-hint">👆 Click for prices &amp; booking</div>
     </div>
 
-    <div class="tip orange">
-      <div class="tip-title">🦯 General Paris Accessibility Notes</div>
-      <p style="margin:0;">Paris is <strong>old</strong> — many buildings predate elevators. Cobblestones in historic neighborhoods are uneven. Métro stations often have stairs-only access (only Line 14 is fully step-free). Buses are the best public transport for limited mobility — all have ramps and dedicated wheelchair spaces. <strong>Plan around buses + taxis/Uber</strong> rather than the Métro if walking is a concern.</p>
+    <div class="card" data-modal="arc">
+      <div class="card-icon">🏛️</div><div class="card-name">Arc de Triomphe</div>
+      <div class="card-desc">284-step spiral staircase. NO elevator for visitors. Underground tunnel (flat) to reach the base.</div>
+      <span class="mob vhigh">🔴 VERY HIGH</span>
+      <div class="mob-notes">284 steps, no lift. Ground-level viewing is 🟢 — skip the climb for your friend.</div>
+      <div class="card-hint">👆 Click for prices &amp; booking</div>
     </div>
 
-    <div class="tip green">
-      <div class="tip-title">💡 Strategy: Sight-See, Then Sit</div>
-      <p style="margin:0;">Almost every attraction has a café nearby or inside. The Parisian way is to <strong>do one thing, then sit at a café terrace for 30–45 minutes</strong> before the next. This isn't laziness — it's how locals tour their own city. Build café stops between every landmark.</p>
-    </div>
-  </section>
-
-  <!-- LANDMARKS -->
-  <section id="landmarks">
-    <h2>🏛️ Iconic Landmarks</h2>
-
-    <div class="card-grid">
-      <div class="card">
-        <div class="card-icon">🗼</div>
-        <div class="card-name">Eiffel Tower</div>
-        <div class="card-desc">Best viewed from Champ de Mars (flat park with benches) or Trocadéro plaza. Go up at sunset. <strong>Elevator</strong> to all levels — no stairs required. Long queues for the lift; book ahead online to skip the worst of it.</div>
-        <span class="mob mod">🟡 MOD</span>
-        <div class="mob-notes">Elevator available. Walking around base/Champ de Mars is 🟢 flat. Queuing for lift = standing ~30min — bring a cane seat if needed.</div>
-        <div class="card-meta">9:00–23:45 daily · Book ahead · €12–28</div>
-      </div>
-
-      <div class="card">
-        <div class="card-icon">🏛️</div>
-        <div class="card-name">Arc de Triomphe</div>
-        <div class="card-desc">284-step spiral staircase to the top. <strong>NO elevator for visitors.</strong> The view is incredible — but it's earned. Underground tunnel from Champs-Élysées (flat) to reach the base. Viewing from outside at ground level is still impressive and 🟢 no-stairs.</div>
-        <span class="mob vhigh">🔴 VERY HIGH</span>
-        <div class="mob-notes">284 steps, no lift. Ground-level viewing is 🟢 — skip the climb for your friend.</div>
-        <div class="card-meta">10:00–22:30 · Open daily · €16</div>
-      </div>
-
-      <div class="card">
-        <div class="card-icon">⛪</div>
-        <div class="card-name">Notre-Dame</div>
-        <div class="card-desc">Fully reopened December 2024. Flat entry, smooth stone floors, seating in the nave. FREE with timed reservation online. The towers (387 steps, no lift) are a separate ticket — skip those.</div>
-        <span class="mob low">🟢 LOW</span>
-        <div class="mob-notes">Flat access, benches inside. Timed entry avoids standing in line. Towers are 🔴 stairs-only — skip.</div>
-        <div class="card-meta">Daily · Free · Reserve slot online · Towers: 🔴 387 steps, no lift</div>
-      </div>
-
-      <div class="card">
-        <div class="card-icon">⛪</div>
-        <div class="card-name">Sacré-Cœur</div>
-        <div class="card-desc">Montmartre's white basilica on the highest point in Paris. The <strong>funicular</strong> (cable car) goes up the hill — use it, don't walk the stairs. Regular Métro ticket works. Basilica interior is flat with seating. Dome climb is 300 steps — skip it.</div>
-        <span class="mob mod">🟡 MOD</span>
-        <div class="mob-notes"><strong>Take the funicular up</strong> (Métro ticket, runs every 6min). Basilica = 🟢 flat. Skip the dome (300 steps 🔴).</div>
-        <div class="card-meta">6:00–22:30 · Free basilica · Funicular: standard Métro ticket</div>
-      </div>
-
-      <div class="card">
-        <div class="card-icon">🪟</div>
-        <div class="card-name">Sainte-Chapelle</div>
-        <div class="card-desc">15 stained-glass windows, 1,113 biblical scenes. <strong>Upper chapel requires climbing a narrow spiral staircase</strong> — no elevator. The lower chapel (flat entry) is also beautiful but the glass is upstairs. Worth it if your friend can manage ~40 steps slowly with a handrail.</div>
-        <span class="mob high">🟠 HIGH</span>
-        <div class="mob-notes">Narrow spiral stairs to upper chapel (~40 steps), no lift. Lower chapel is 🟢 flat but the glass is upstairs.</div>
-        <div class="card-meta">9:00–17:00 · Open daily · €13</div>
-      </div>
-
-      <div class="card">
-        <div class="card-icon">🏛️</div>
-        <div class="card-name">Panthéon</div>
-        <div class="card-desc">Foucault's pendulum, vast nave, crypt of France's greats. Main floor is flat and spacious. <strong>Crypt is down stairs</strong> (handrail, ~50 steps). Dome is 🔴 206 steps — skip entirely.</div>
-        <span class="mob mod">🟡 MOD</span>
-        <div class="mob-notes">Main floor 🟢 flat. Crypt: ~50 steps down with handrail. Dome: 🔴 206 steps — skip.</div>
-        <div class="card-meta">10:00–18:30 · €13</div>
-      </div>
-
-      <div class="card">
-        <div class="card-icon">🏰</div>
-        <div class="card-name">Hôtel des Invalides</div>
-        <div class="card-desc">Napoleon's tomb under a golden dome. The Army Museum on-site is world-class. <strong>Elevator available.</strong> Flat courtyard, wide galleries. One of the most accessible major attractions in Paris. Napoleon's tomb viewing is wheelchair-friendly.</div>
-        <span class="mob low">🟢 LOW</span>
-        <div class="mob-notes">Elevator to all levels. Wide, flat galleries. Excellent accessibility overall.</div>
-        <div class="card-meta">10:00–18:00 daily · €15 · Closed 1st Monday monthly</div>
-      </div>
-
-      <div class="card">
-        <div class="card-icon">🎭</div>
-        <div class="card-name">Palais Garnier (Opéra)</div>
-        <div class="card-desc">The Phantom of the Opera's real home. Chagall ceiling, Grand Foyer, marble staircase. <strong>Elevator available for most areas.</strong> Self-guided or guided tours. The auditorium itself may have steps depending on route — ask at the entrance for the step-free path.</div>
-        <span class="mob low">🟢 LOW</span>
-        <div class="mob-notes">Elevator access to most areas. Ask for the accessible route at entry. Some upper balcony areas may require stairs.</div>
-        <div class="card-meta">10:00–17:00 · €15 · Closed days with matinees</div>
-      </div>
-
-      <div class="card">
-        <div class="card-icon">🚢</div>
-        <div class="card-name">Seine River Cruise</div>
-        <div class="card-desc"><strong>The ultimate low-mobility activity.</strong> See the Eiffel Tower, Notre-Dame, Louvre, Musée d'Orsay, and 10+ bridges — all while sitting down. 1-hour loop. Most boats have ramps and accessible boarding. Go at sunset.</div>
-        <span class="mob low">🟢 LOW</span>
-        <div class="mob-notes">Sit the whole time. Most companies have ramp boarding. Vedettes du Pont Neuf and Bateaux Mouches are wheelchair-friendly.</div>
-        <div class="card-meta">~€15–20 · Hourly departures · No booking needed for daytime</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- MUSEUMS -->
-  <section id="museums">
-    <h2>🎨 Museums — Pick Your Vibe</h2>
-    <div class="table-wrap">
-      <table>
-        <tr><th>Museum</th><th>Why Go</th><th>Mobility</th><th>Details</th></tr>
-        <tr>
-          <td><strong>Louvre</strong></td>
-          <td>Mona Lisa, Winged Victory, Venus de Milo. 35,000 pieces across 73,000 m². <strong>Warning: enormous.</strong> Walking the full museum is 12+ km.</td>
-          <td><span class="mob high">🟠 HIGH</span></td>
-          <td>Elevators available. Wheelchairs loaned free. Pick ONE wing — don't try to see it all. The distance between galleries is the real strain. Go Wed/Fri evening (less crowded). Closed <em>Tuesdays</em>.</td>
-        </tr>
-        <tr>
-          <td><strong>Musée d'Orsay</strong></td>
-          <td>World's best Impressionist collection in a converted train station. Van Gogh, Monet, Renoir, Degas. More manageable than the Louvre.</td>
-          <td><span class="mob mod">🟡 MOD</span></td>
-          <td>Elevators + escalators. Flat main hall. Benches throughout. Much better for limited mobility than the Louvre. Closed <strong>Mondays</strong>.</td>
-        </tr>
-        <tr>
-          <td><strong>Musée de l'Orangerie</strong></td>
-          <td>Monet's Water Lilies in two oval rooms built to his specs. <em>Meditative.</em> Small, intimate — 1 hour is enough.</td>
-          <td><span class="mob low">🟢 LOW</span></td>
-          <td>Single floor, flat, benches in the Water Lilies rooms. Elevator available. <strong>Best museum pick for limited mobility.</strong> Closed Tuesdays.</td>
-        </tr>
-        <tr>
-          <td><strong>Musée Rodin</strong></td>
-          <td>The Thinker, The Gates of Hell, gorgeous sculpture garden. Indoor galleries + outdoor garden.</td>
-          <td><span class="mob mod">🟡 MOD</span></td>
-          <td>Indoor: elevator, flat. Garden: gravel paths, flat but uneven. Benches throughout the garden. Closed Mondays.</td>
-        </tr>
-        <tr>
-          <td><strong>Musée Carnavalet</strong></td>
-          <td>History of Paris — from Roman Lutetia to Revolution to today. <strong>FREE permanent collection.</strong> Gorgeous 16th-century mansion setting.</td>
-          <td><span class="mob mod">🟡 MOD</span></td>
-          <td>Elevator available. Some narrow historic doorways. Free, so you can leave whenever without guilt. Closed Mondays.</td>
-        </tr>
-        <tr>
-          <td><strong>Musée Picasso</strong></td>
-          <td>5,000+ Picasso works in a beautiful Marais mansion. His personal collection — paintings, sculptures, sketches.</td>
-          <td><span class="mob mod">🟡 MOD</span></td>
-          <td>Elevator available in parts. Some stairs between levels. Intimate scale — 1.5 hours covers it. Closed Mondays.</td>
-        </tr>
-        <tr>
-          <td><strong>Musée Marmottan Monet</strong></td>
-          <td>The largest Monet collection in the world — including <em>Impression, Sunrise</em>, the painting that named Impressionism. Quiet, off the tourist track.</td>
-          <td><span class="mob low">🟢 LOW</span></td>
-          <td>Small, mainly single floor. Elevator available. Far fewer crowds than d'Orsay. Closed Mondays.</td>
-        </tr>
-        <tr>
-          <td><strong>Centre Pompidou</strong></td>
-          <td>Modern art, inside-out building, best rooftop views</td>
-          <td><span class="mob vhigh">🔴 SKIP</span></td>
-          <td><strong>CLOSED until 2030</strong> — full renovation. Not a mobility issue, just not an option.</td>
-        </tr>
-      </table>
+    <div class="card" data-modal="notredame">
+      <div class="card-icon">⛪</div><div class="card-name">Notre-Dame</div>
+      <div class="card-desc">Reopened Dec 2024. Flat entry, smooth floors, seating in the nave. FREE with timed reservation.</div>
+      <span class="mob low">🟢 LOW</span>
+      <div class="mob-notes">Flat access, benches inside. Towers are 🔴 387 steps — skip.</div>
+      <div class="card-hint">👆 Click for prices &amp; booking</div>
     </div>
 
-    <div class="tip green">
-      <div class="tip-title">🎟️ Museum Pass Strategy</div>
-      <p style="margin:0;">The Paris Museum Pass (2-day: €55, 4-day: €70) covers most of these. With limited mobility, <strong>the 4-day pass is better</strong> — do one museum per morning, café lunch, one more sight, then rest. Don't cram 3 museums in a day.</p>
-    </div>
-  </section>
-
-  <!-- NEIGHBORHOODS -->
-  <section id="neighborhoods">
-    <h2>🏘️ Neighborhoods to Wander</h2>
-
-    <div class="card-grid">
-      <div class="card">
-        <div class="card-icon">🏳️‍🌈</div>
-        <div class="card-name">Le Marais</div>
-        <div class="card-desc">Trendy, historic, LGBTQ+ hub. Best falafel in Paris (L'As du Fallafel), boutique shopping, Place des Vosges (flat park with benches under arcades). Mostly flat — pre-Haussmann streets are narrow but level.</div>
-        <span class="mob low">🟢 LOW</span>
-        <div class="mob-notes">Flat terrain, many cafés for rest stops. Place des Vosges has shaded benches.</div>
-        <div class="card-meta">3rd & 4th arr.</div>
-      </div>
-
-      <div class="card">
-        <div class="card-icon">🎨</div>
-        <div class="card-name">Montmartre</div>
-        <div class="card-desc">Village-on-a-hill feel. Skip touristy Place du Tertre — go behind Sacré-Cœur to <em>rue de l'Abreuvoir</em> and <em>La Maison Rose</em>. <strong>Steep cobblestone streets.</strong></div>
-        <span class="mob high">🟠 HIGH</span>
-        <div class="mob-notes">Very hilly, cobblestones, few benches on slopes. Take funicular to Sacré-Cœur, explore the flat summit area, taxi back down.</div>
-        <div class="card-meta">18th arr. · Funicular from Anvers Métro</div>
-      </div>
-
-      <div class="card">
-        <div class="card-icon">🧑‍🎨</div>
-        <div class="card-name">Canal Saint-Martin</div>
-        <div class="card-desc">Grab wine, cheese, baguette from a nearby shop. Sit by the canal at golden hour. <strong>Pure Paris.</strong> Flat towpaths, iron footbridges. Benches along the water.</div>
-        <span class="mob low">🟢 LOW</span>
-        <div class="mob-notes">Completely flat, benches everywhere. Park near République or Jacques Bonsergent Métro for shortest walk to the water.</div>
-        <div class="card-meta">10th arr. · Perfect for a picnic</div>
-      </div>
-
-      <div class="card">
-        <div class="card-icon">📚</div>
-        <div class="card-name">Saint-Germain-des-Prés</div>
-        <div class="card-desc">Literary Paris. Café de Flore, Les Deux Magots, bookshops, jazz. Flat boulevards, wide sidewalks. The café terraces ARE the attraction — sit and watch.</div>
-        <span class="mob low">🟢 LOW</span>
-        <div class="mob-notes">Flat, wide sidewalks, cafés every 10 meters. The ideal neighborhood for café-hopping with limited walking.</div>
-        <div class="card-meta">6th arr.</div>
-      </div>
-
-      <div class="card">
-        <div class="card-icon">📖</div>
-        <div class="card-name">Latin Quarter</div>
-        <div class="card-desc">Shakespeare & Company bookshop, Sorbonne, narrow medieval streets, cheap student eats. Some streets slope toward the Seine — mild inclines, not Montmartre-steep.</div>
-        <span class="mob mod">🟡 MOD</span>
-        <div class="mob-notes">Mild slopes, some cobblestones. Plenty of cafés and bookshop seating. Stick to rue Saint-Jacques (flat) and the riverbank.</div>
-        <div class="card-meta">5th arr.</div>
-      </div>
-
-      <div class="card">
-        <div class="card-icon">🍸</div>
-        <div class="card-name">South Pigalle (SoPi)</div>
-        <div class="card-desc">Nightlife central. Cocktail bars, natural wine, where Parisians go out. Rue des Martyrs is the artery. Some incline but manageable.</div>
-        <span class="mob mod">🟡 MOD</span>
-        <div class="mob-notes">Gentle slope up rue des Martyrs. Bars have seating. Go by taxi in the evening to save steps.</div>
-        <div class="card-meta">9th arr. · After dark</div>
-      </div>
-
-      <div class="card">
-        <div class="card-icon">🏘️</div>
-        <div class="card-name">Île Saint-Louis</div>
-        <div class="card-desc">The smaller of Paris's two islands. Berthillon ice cream, 17th-century architecture, no major sights — just beautiful streets. Flat, quiet, one main street with benches.</div>
-        <span class="mob low">🟢 LOW</span>
-        <div class="mob-notes">Flat, short distances, benches along the quays. Combine with Notre-Dame (next door on Île de la Cité).</div>
-        <div class="card-meta">4th arr. · Walk from Notre-Dame</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PARKS & GARDENS -->
-  <section id="gardens">
-    <h2>🌳 Parks & Gardens — Rest Your Legs</h2>
-
-    <div class="card-grid">
-      <div class="card">
-        <div class="card-icon">🌳</div>
-        <div class="card-name">Jardin du Luxembourg</div>
-        <div class="card-desc">The most beautiful park in Paris. Medici Fountain, orchard, tennis courts, iconic green chairs. Flat gravel paths, benches everywhere, shaded. The green chairs are free — grab one and park yourself for an hour.</div>
-        <span class="mob low">🟢 LOW</span>
-        <div class="mob-notes">Flat, chairs everywhere, café inside the park. Enter from the Odéon side for the flattest approach.</div>
-        <div class="card-meta">6th arr. · Free · Opens 7:30am</div>
-      </div>
-
-      <div class="card">
-        <div class="card-icon">🌷</div>
-        <div class="card-name">Jardin des Tuileries</div>
-        <div class="card-desc">Between the Louvre and Place de la Concorde. Formal French gardens, fountains, sculptures. Flat, wide gravel paths, green chairs around the fountains. Perfect rest stop between Louvre and Orangerie.</div>
-        <span class="mob low">🟢 LOW</span>
-        <div class="mob-notes">Flat, chairs, cafés. Directly between Louvre and Orangerie — ideal mid-day rest.</div>
-        <div class="card-meta">1st arr. · Free · Always open</div>
-      </div>
-
-      <div class="card">
-        <div class="card-icon">🌸</div>
-        <div class="card-name">Jardin des Plantes</div>
-        <div class="card-desc">Botanical garden with a zoo, natural history museum, rose garden, and alpine garden. Flat paths, benches, less crowded than Luxembourg. The rose garden in June is spectacular.</div>
-        <span class="mob low">🟢 LOW</span>
-        <div class="mob-notes">Flat, many benches, café. Combine with the Grande Mosquée de Paris next door for mint tea in their courtyard.</div>
-        <div class="card-meta">5th arr. · Free gardens · Museum has entry fee</div>
-      </div>
-
-      <div class="card">
-        <div class="card-icon">🏞️</div>
-        <div class="card-name">Parc Monceau</div>
-        <div class="card-desc">English-style garden in the 8th. Roman columns, picturesque bridge, duck pond. Flat, winding paths, benches, carousel. A local secret — almost zero tourists.</div>
-        <span class="mob low">🟢 LOW</span>
-        <div class="mob-notes">Flat, benches, very compact — you can see it all in 30 minutes of gentle walking.</div>
-        <div class="card-meta">8th arr. · Free · Opens 7:00am</div>
-      </div>
-
-      <div class="card">
-        <div class="card-icon">🏛️</div>
-        <div class="card-name">Place des Vosges</div>
-        <div class="card-desc">Paris's oldest planned square (1605). Perfect red-brick symmetry, arcades, fountain, grass. Sit under the arcades — shaded benches — or on the lawn. Victor Hugo's house is here (free museum).</div>
-        <span class="mob low">🟢 LOW</span>
-        <div class="mob-notes">Flat, arcade benches shaded, cafés on the square. Combine with a Marais walk.</div>
-        <div class="card-meta">4th arr. · Free · Always open</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- HIDDEN GEMS -->
-  <section id="hidden">
-    <h2>🔍 Hidden Gems</h2>
-
-    <div class="card-grid">
-      <div class="card">
-        <div class="card-icon">🛒</div>
-        <div class="card-name">Marché des Enfants Rouges</div>
-        <div class="card-desc">Oldest covered market in Paris, est. 1615. Moroccan, Japanese, French stalls at communal tables. Eat anything — it's all good.</div>
-        <span class="mob low">🟢 LOW</span>
-        <div class="mob-notes">Flat, seating available, compact. Perfect lunch stop in the Marais.</div>
-        <div class="card-meta">3rd arr. · Tue–Sat until 8:30pm, Sun until 5pm</div>
-      </div>
-
-      <div class="card">
-        <div class="card-icon">🏛️</div>
-        <div class="card-name">Covered Passages</div>
-        <div class="card-desc">19th-century glass-roofed shopping arcades. Galerie Vivienne, Passage des Panoramas, Passage Jouffroy. Time capsules with bookshops and cafés. <strong>Flat, sheltered from rain, seating in cafés.</strong></div>
-        <span class="mob low">🟢 LOW</span>
-        <div class="mob-notes">Fully flat, indoors-ish, cafés with seating. Start at Galerie Vivienne (most beautiful).</div>
-        <div class="card-meta">2nd & 9th arr.</div>
-      </div>
-
-      <div class="card">
-        <div class="card-icon">🌹</div>
-        <div class="card-name">Musée de la Vie Romantique</div>
-        <div class="card-desc">Free, tiny, charming museum in a former artist's home. Tearoom garden at the back — perfect quiet escape. Flat entry, garden seating.</div>
-        <span class="mob low">🟢 LOW</span>
-        <div class="mob-notes">Flat, garden with seating, small scale. The tearoom is the real draw.</div>
-        <div class="card-meta">9th arr. · Free entry · Closed Mondays</div>
-      </div>
-
-      <div class="card">
-        <div class="card-icon">🪦</div>
-        <div class="card-name">Père Lachaise Cemetery</div>
-        <div class="card-desc">Jim Morrison, Oscar Wilde, Chopin, Edith Piaf. 44 hectares of tree-lined paths. <strong>Hilly, cobblestone paths, very spread out.</strong> Get a map and target specific graves — don't wander aimlessly.</div>
-        <span class="mob high">🟠 HIGH</span>
-        <div class="mob-notes">Hilly, cobblestones, huge area. Enter at Gambetta (top) and walk <em>downhill</em>. Target 2–3 graves, not the whole cemetery.</div>
-        <div class="card-meta">20th arr. · Free · Maps at entrance</div>
-      </div>
-
-      <div class="card">
-        <div class="card-icon">☕</div>
-        <div class="card-name">Grande Mosquée de Paris</div>
-        <div class="card-desc">Beautiful Hispano-Moorish architecture from 1926. Courtyard café serving mint tea and North African pastries. Tiled courtyard with fountains — an oasis of calm. Flat, seated.</div>
-        <span class="mob low">🟢 LOW</span>
-        <div class="mob-notes">Flat courtyard, seated café. Combine with Jardin des Plantes next door.</div>
-        <div class="card-meta">5th arr. · Café open Tue–Sun 9:00–18:00</div>
-      </div>
-
-      <div class="card">
-        <div class="card-icon">🌆</div>
-        <div class="card-name">Belleville Park</div>
-        <div class="card-desc">Best free skyline view. Zero tourists. Bring a beer from the corner store. <strong>On a hill.</strong> The park itself has benches at the viewpoint, but getting there is uphill.</div>
-        <span class="mob high">🟠 HIGH</span>
-        <div class="mob-notes">Uphill to reach. Take a taxi to the park entrance, then it's a short flat walk to the viewpoint benches. Don't walk up from the Métro.</div>
-        <div class="card-meta">20th arr. · Free · Open until dusk</div>
-      </div>
-
-      <div class="card">
-        <div class="card-icon">🏠</div>
-        <div class="card-name">La Maison Rose</div>
-        <div class="card-desc">That pink corner house on rue de l'Abreuvoir in Montmartre. Instagram-famous for good reason — especially in golden hour.</div>
-        <span class="mob high">🟠 HIGH</span>
-        <div class="mob-notes">Requires walking Montmartre's hilly streets to reach. Taxi as close as possible, or view from the Petit Train de Montmartre (tourist train, seated).</div>
-        <div class="card-meta">18th arr. · Montmartre</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- BISTROS -->
-  <section id="bistros">
-    <h2>🍽️ Where Locals Actually Eat — Bistros</h2>
-    <p>Classic French, affordable, where Parisians go for steak frites and a glass of red. All have seating — no standing required.</p>
-
-    <div class="table-wrap">
-      <table>
-        <tr><th>Place</th><th>Arr.</th><th>Vibe</th><th>What to Order</th></tr>
-        <tr>
-          <td><strong>Bouillon Pigalle</strong></td>
-          <td>18th</td>
-          <td>300-seat brasserie, always buzzing. True <em>bouillon</em> — quality food at mass prices. Flat entry, spacious. Can reserve online to skip the line (which can be long).</td>
-          <td>Egg mayo (€3!), steak frites, onion soup</td>
-        </tr>
-        <tr>
-          <td><strong>Les Arlots</strong></td>
-          <td>10th</td>
-          <td>SoPi gem. Daily changing menu, hearty comfort food, <strong>under €30</strong>. Small — reserve ahead. Flat street-level entry.</td>
-          <td>Whatever's on the board — trust the kitchen</td>
-        </tr>
-        <tr>
-          <td><strong>Le Bon Georges</strong></td>
-          <td>9th</td>
-          <td>Wine List of the Year 2024. Corner bistro that transforms into a wine-lover's evening spot. Flat entry.</td>
-          <td>Chef's tartare, chocolate mousse, côte de boeuf for two</td>
-        </tr>
-        <tr>
-          <td><strong>Bouillon Chartier</strong></td>
-          <td>9th</td>
-          <td>Historic 1896 dining hall. Waiters in waistcoats write your order on the paper tablecloth. Flat entry from the street. Can be noisy.</td>
-          <td>Escargots, confit de canard, crème brûlée</td>
-        </tr>
-        <tr>
-          <td><strong>Bouillon République</strong></td>
-          <td>11th</td>
-          <td>Sister to Pigalle, same concept, newer. Larger space, easier to get a table. Flat entry, accessible restroom. Less chaotic than Pigalle.</td>
-          <td>Same bouillon classics — egg mayo, steak frites</td>
-        </tr>
-        <tr>
-          <td><strong>Chez Janou</strong></td>
-          <td>3rd</td>
-          <td>Provençal bistro near Place des Vosges. Chocolate mousse served from a giant bowl — they scoop as much as you want. Flat entry, tight interior — request a ground-floor table when booking.</td>
-          <td>Chocolate mousse (famous), ratatouille, pastis</td>
-        </tr>
-      </table>
-    </div>
-  </section>
-
-  <!-- CASUAL EATS -->
-  <section id="casual">
-    <h2>🍜 Casual & Unique Eats</h2>
-    <p>Not strictly French — these are the neighborhood spots locals frequent for lunch.</p>
-
-    <div class="table-wrap">
-      <table>
-        <tr><th>Place</th><th>Arr.</th><th>Vibe</th><th>What to Order</th></tr>
-        <tr>
-          <td><strong>Mokonuts</strong></td>
-          <td>11th</td>
-          <td>Japanese-Lebanese couple, only 12 tables, near Bastille. Small daily menu, massive reputation. Flat entry, tight space.</td>
-          <td>Labne, seasonal specials, their famous cookies</td>
-        </tr>
-        <tr>
-          <td><strong>Afendi</strong></td>
-          <td>10th</td>
-          <td>Father-son duo doing Lebanese street food. Bright, casual, affordable. Flat entry.</td>
-          <td>Mezze platter, falafel, manakish</td>
-        </tr>
-        <tr>
-          <td><strong>Marché des Enfants Rouges</strong></td>
-          <td>3rd</td>
-          <td>Market with food stalls. Pick a stall, grab a communal table. Lebanese, Moroccan, Japanese, burgers.</td>
-          <td>Whatever smells best</td>
-        </tr>
-        <tr>
-          <td><strong>L'As du Fallafel</strong></td>
-          <td>4th</td>
-          <td>The famous falafel window in the Marais. Takeaway or sit inside. The line moves fast. Worth it. Not accessible inside (narrow, small) — get takeaway and sit in Place des Vosges (3 min walk).</td>
-          <td>Falafel spécial (with grilled eggplant)</td>
-        </tr>
-        <tr>
-          <td><strong>Breizh Café</strong></td>
-          <td>3rd</td>
-          <td>Buckwheat galettes (savory crêpes) from Brittany. Cider on tap. Flat entry, decent space. Multiple locations — the Marais original is the best.</td>
-          <td>Complète galette (ham, cheese, egg), dry cider</td>
-        </tr>
-      </table>
-    </div>
-  </section>
-
-  <!-- MUST-TRY FOODS -->
-  <section id="foods">
-    <h2>🥐 Must-Try Foods</h2>
-
-    <ul class="food-list">
-      <li>
-        <span class="emoji">🥐</span>
-        <span><strong>Croissant au beurre</strong> — From any proper <em>boulangerie</em> (not a chain). Look for "Artisan Boulanger" on the window. A real croissant shatters when you bite it.</span>
-      </li>
-      <li>
-        <span class="emoji">🥖</span>
-        <span><strong>Baguette tradition</strong> — The crust should crackle audibly when you squeeze it. A good baguette needs no butter.</span>
-      </li>
-      <li>
-        <span class="emoji">🥩</span>
-        <span><strong>Steak frites</strong> — Avec sauce au poivre (peppercorn sauce), at any proper bistro with a glass of Côtes du Rhône.</span>
-      </li>
-      <li>
-        <span class="emoji">🧅</span>
-        <span><strong>Soupe à l'oignon</strong> — French onion soup under bubbling melted gruyère. Winter essential, summer acceptable.</span>
-      </li>
-      <li>
-        <span class="emoji">🐌</span>
-        <span><strong>Escargots</strong> — Six or twelve, swimming in garlic-parsley butter. Soak up the leftover butter with bread. Just do it.</span>
-      </li>
-      <li>
-        <span class="emoji">🍮</span>
-        <span><strong>Crème brûlée</strong> — The crack of the caramelized top is the sound of vacation. Vanilla, not flavored — keep it classic.</span>
-      </li>
-      <li>
-        <span class="emoji">🧀</span>
-        <span><strong>Cheese board</strong> — Go to a <em>fromagerie</em>, ask "qu'est-ce que vous recommandez aujourd'hui?" Let them build you a plate. Pair with a Sancerre.</span>
-      </li>
-      <li>
-        <span class="emoji">🌈</span>
-        <span><strong>Macarons</strong> — Pierre Hermé > Ladurée. Try the Ispahan (rose, lychee, raspberry) at Hermé. The Mogador (milk chocolate, passion fruit) is also transcendent.</span>
-      </li>
-      <li>
-        <span class="emoji">🦆</span>
-        <span><strong>Confit de canard</strong> — Duck leg slow-cooked in its own fat until the meat falls off the bone. Crispy skin, tender flesh. Order it anywhere it's on the menu.</span>
-      </li>
-      <li>
-        <span class="emoji">🥞</span>
-        <span><strong>Galette complète</strong> — Buckwheat crêpe with ham, gruyère, and a fried egg. From Brittany, perfected in Paris. Best eaten with dry Breton cider.</span>
-      </li>
-    </ul>
-
-    <div class="tip amber" style="margin-top: 20px;">
-      <div class="tip-title">🥐 Boulangerie vs. Pâtisserie</div>
-      <p style="margin:0;">Boulangerie = bread, croissants, savory. Pâtisserie = pastries, cakes, tarts, macarons. Many are both, but the best specialize. Get your morning croissant at a boulangerie, your afternoon éclair at a pâtisserie.</p>
-    </div>
-  </section>
-
-  <!-- LOCAL TIPS -->
-  <section id="tips">
-    <h2>🍷 Local Tips — Don't Look Like a Tourist</h2>
-
-    <div class="tip green">
-      <div class="tip-title">☕ Coffee</div>
-      <p style="margin:0;">Stand at the bar (comptoir) — it's <strong>half the price</strong> of sitting. But with mobility concerns: <strong>sit. Pay the extra €2.</strong> Your friend needs the rest. An espresso at a table is €3–4 and you get to stay as long as you want — that's cheap rent for a Parisian terrace.</p>
+    <div class="card" data-modal="sacrecoeur">
+      <div class="card-icon">⛪</div><div class="card-name">Sacré-Cœur</div>
+      <div class="card-desc">Montmartre's white basilica. Take the <strong>funicular</strong> up (Métro ticket). Basilica is flat with seating.</div>
+      <span class="mob mod">🟡 MOD</span>
+      <div class="mob-notes"><strong>Take the funicular up</strong> (Métro ticket). Basilica = 🟢 flat. Skip dome (300 steps 🔴).</div>
+      <div class="card-hint">👆 Click for prices &amp; details</div>
     </div>
 
-    <div class="tip blue">
-      <div class="tip-title">💧 Water</div>
-      <p style="margin:0;">Tap water is free and excellent. Ask for <em>"une carafe d'eau"</em>. Restaurants are legally required to provide it. Don't pay €6 for bottled.</p>
+    <div class="card" data-modal="chapelle">
+      <div class="card-icon">🪟</div><div class="card-name">Sainte-Chapelle</div>
+      <div class="card-desc">15 stained-glass windows, 1,113 biblical scenes. Upper chapel requires ~40-step spiral staircase.</div>
+      <span class="mob high">🟠 HIGH</span>
+      <div class="mob-notes">Narrow spiral stairs (~40 steps), no lift. Lower chapel 🟢 flat but the glass is upstairs.</div>
+      <div class="card-hint">👆 Click for prices &amp; booking</div>
     </div>
 
-    <div class="tip green">
-      <div class="tip-title">💰 Tipping</div>
-      <p style="margin:0;">Service is <strong>included</strong> (15% service compris). Tips not expected. Round up or leave €1–2 for great service.</p>
+    <div class="card" data-modal="pantheon">
+      <div class="card-icon">🏛️</div><div class="card-name">Panthéon</div>
+      <div class="card-desc">Foucault's pendulum, crypt of France's greats. Main floor flat and spacious.</div>
+      <span class="mob mod">🟡 MOD</span>
+      <div class="mob-notes">Main floor 🟢 flat. Crypt: ~50 steps down with handrail. Dome: 🔴 206 steps — skip.</div>
+      <div class="card-hint">👆 Click for prices &amp; booking</div>
     </div>
 
-    <div class="tip amber">
-      <div class="tip-title">🕖 Dinner Time</div>
-      <p style="margin:0;">Restaurants open at <strong>7:00–7:30 PM</strong>. Eating at 6pm marks you as a tourist (kitchens won't be ready). Peak dinner: 8:30–9:30pm. Book ahead for any bistro on this list — they fill up.</p>
+    <div class="card" data-modal="invalides">
+      <div class="card-icon">🏰</div><div class="card-name">Hôtel des Invalides</div>
+      <div class="card-desc">Napoleon's tomb under a golden dome. Army Museum is world-class. Elevator available.</div>
+      <span class="mob low">🟢 LOW</span>
+      <div class="mob-notes">Elevator to all levels. Wide, flat galleries. Excellent accessibility overall.</div>
+      <div class="card-hint">👆 Click for prices &amp; booking</div>
     </div>
 
-    <div class="tip purple">
-      <div class="tip-title">🥖 Bread Rules</div>
-      <p style="margin:0;">Bread is refilled free. It goes on the table, not a bread plate. Never bite the baguette on the way home — you'll eat the whole thing.</p>
+    <div class="card" data-modal="opera">
+      <div class="card-icon">🎭</div><div class="card-name">Palais Garnier (Opéra)</div>
+      <div class="card-desc">Phantom of the Opera's home. Chagall ceiling, Grand Foyer. Elevator available for most areas.</div>
+      <span class="mob low">🟢 LOW</span>
+      <div class="mob-notes">Elevator access. Ask for accessible route. Some upper balconies may require stairs.</div>
+      <div class="card-hint">👆 Click for prices &amp; booking</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SEINE CRUISE ===== -->
+<section id="cruise">
+  <h2>🚢 Seine River Cruise</h2>
+
+  <div class="card-grid">
+    <div class="card" data-modal="cruise">
+      <div class="card-icon">🚢</div><div class="card-name">Seine River Cruise</div>
+      <div class="card-desc"><strong>The ultimate low-mobility activity.</strong> See Eiffel Tower, Notre-Dame, Louvre, Musée d'Orsay, and 10+ bridges — all while sitting. Go at sunset.</div>
+      <span class="mob low">🟢 LOW</span>
+      <div class="mob-notes">Sit the whole time. Ramps for boarding. Vedettes du Pont Neuf and Bateaux Mouches are wheelchair-friendly.</div>
+      <div class="card-hint">👆 Click for prices &amp; booking</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MUSEUMS ===== -->
+<section id="museums">
+  <h2>🎨 Museums — Pick Your Vibe</h2>
+  <div class="card-grid">
+    <div class="card" data-modal="louvre">
+      <div class="card-icon">🏛️</div><div class="card-name">Louvre</div>
+      <div class="card-desc">Mona Lisa, Winged Victory, 35,000 pieces. <strong>12+ km walking to see it all.</strong> Pick ONE wing.</div>
+      <span class="mob high">🟠 HIGH</span>
+      <div class="mob-notes">Elevators. Wheelchairs loaned free. Distance between galleries is the real strain. Closed Tuesdays.</div>
+      <div class="card-hint">👆 Click for prices &amp; booking</div>
     </div>
 
-    <div class="tip blue">
-      <div class="tip-title">🚌 Getting Around with Limited Mobility</div>
-      <p style="margin:0;"><strong>Use buses, not the Métro.</strong> Paris buses are excellent — all have ramps, designated seats, and you see the city while you ride. Bus lines 69, 72, and 87 pass most major sights. Uber/Bolt are plentiful and reasonably priced. Only Métro Line 14 is fully step-free — the other 15 lines all have significant stairs.</p>
+    <div class="card" data-modal="orsay">
+      <div class="card-icon">🖼️</div><div class="card-name">Musée d'Orsay</div>
+      <div class="card-desc">World's best Impressionist collection in a converted train station. More manageable than the Louvre.</div>
+      <span class="mob mod">🟡 MOD</span>
+      <div class="mob-notes">Elevators + escalators. Flat main hall. Benches. Better for mobility than Louvre. Closed Mondays.</div>
+      <div class="card-hint">👆 Click for prices &amp; booking</div>
     </div>
 
-    <div class="tip green">
-      <div class="tip-title">👋 Greetings Matter</div>
-      <p style="margin:0;">Always say <em>"Bonjour"</em> entering a shop or restaurant, <em>"Merci, au revoir"</em> leaving. Skipping this is genuinely rude. It opens doors — literally and figuratively.</p>
+    <div class="card" data-modal="orangerie">
+      <div class="card-icon">🌸</div><div class="card-name">Musée de l'Orangerie</div>
+      <div class="card-desc">Monet's Water Lilies in two oval rooms. <em>Meditative.</em> Small — 1 hour is enough.</div>
+      <span class="mob low">🟢 LOW</span>
+      <div class="mob-notes">Single floor, flat, benches in Water Lilies rooms. Elevator. <strong>Best museum for limited mobility.</strong> Closed Tuesdays.</div>
+      <div class="card-hint">👆 Click for prices &amp; booking</div>
     </div>
 
-    <div class="tip orange">
-      <div class="tip-title">🦯 Public Toilets</div>
-      <p style="margin:0;">Paris has free public <em>sanisettes</em> (self-cleaning pods) throughout the city — flat entry, accessible. Every café also has a toilet for customers (buy an espresso = toilet access). Museums all have accessible restrooms. Plan toilet stops — don't assume you'll find one on a random street corner.</p>
-    </div>
-  </section>
-
-  <!-- WHERE TO STAY -->
-  <section id="stay">
-    <h2>📍 Where to Stay</h2>
-
-    <div class="table-wrap">
-      <table>
-        <tr><th>Hotel</th><th>Area</th><th>Vibe</th><th>Mobility</th></tr>
-        <tr>
-          <td><strong>Hotel de Londres</strong></td>
-          <td>Near Eiffel Tower (7th)</td>
-          <td>Classic Parisian, Eiffel Tower views, walk to Champ de Mars</td>
-          <td>Elevator, flat neighborhood</td>
-        </tr>
-        <tr>
-          <td><strong>La Chambre du Marais</strong></td>
-          <td>Le Marais (3rd)</td>
-          <td>Trendy, boutique, heart of the best walking/shopping/eating neighborhood</td>
-          <td>Elevator — confirm when booking. Flat streets.</td>
-        </tr>
-        <tr>
-          <td><strong>Le Meurice</strong></td>
-          <td>Tuileries (1st)</td>
-          <td>Palace-level luxury. Dalí lived here. Overlooks Tuileries Garden.</td>
-          <td>Full accessibility, elevator, step-free entry, accessible rooms</td>
-        </tr>
-        <tr>
-          <td><strong>Hôtel Duc de Saint-Simon</strong></td>
-          <td>Saint-Germain (7th)</td>
-          <td>Quiet, elegant townhouse. Hidden courtyard. Old Paris charm.</td>
-          <td>No elevator (historic building). <strong>Skip</strong> for your friend.</td>
-        </tr>
-      </table>
+    <div class="card" data-modal="rodin">
+      <div class="card-icon">🗿</div><div class="card-name">Musée Rodin</div>
+      <div class="card-desc">The Thinker, The Gates of Hell, gorgeous sculpture garden.</div>
+      <span class="mob mod">🟡 MOD</span>
+      <div class="mob-notes">Indoor: elevator, flat. Garden: gravel paths, flat but uneven. Benches. Closed Mondays.</div>
+      <div class="card-hint">👆 Click for prices &amp; booking</div>
     </div>
 
-    <div class="tip amber">
-      <div class="tip-title">Arrondissement Cheat Sheet</div>
-      <p style="margin:0;">Paris spirals — 1st is center, 20th is outer. Lower numbers = more central. <strong>Stay in 1st–7th for flat terrain and short distances.</strong> The 10th/11th/18th offer value but more hills. <strong>Always confirm elevator and step-free entry</strong> — many charming Parisian hotels are in historic buildings without lifts.</p>
+    <div class="card" data-modal="carnavalet">
+      <div class="card-icon">📜</div><div class="card-name">Musée Carnavalet</div>
+      <div class="card-desc">History of Paris — Roman Lutetia to Revolution. <strong>FREE permanent collection.</strong> Gorgeous mansion.</div>
+      <span class="mob mod">🟡 MOD</span>
+      <div class="mob-notes">Elevator available. Some narrow historic doorways. Free — leave whenever. Closed Mondays.</div>
+      <div class="card-hint">👆 Click for details</div>
     </div>
 
-    <div class="tip blue">
-      <div class="tip-title">📱 Book Hotels on Booking.com with "Elevator" and "Ground Floor" Filters</div>
-      <p style="margin:0;">Paris hotels are legally required to disclose accessibility features. Filter for elevator + ground-floor rooms available. Message the hotel before booking to confirm — "Mon ami a des difficultés à marcher. Avez-vous une chambre accessible sans escaliers?"</p>
-    </div>
-  </section>
-
-  <!-- BEST LOW-MOBILITY PICKS -->
-  <section id="low-mobility">
-    <h2>🟢 Best Low-Mobility Itinerary — One Perfect Day</h2>
-    <p>If you only had one day with your friend and wanted zero strain, here's the plan:</p>
-
-    <div class="table-wrap">
-      <table>
-        <tr><th>Time</th><th>Activity</th><th>Why It Works</th></tr>
-        <tr>
-          <td><strong>9:00 AM</strong></td>
-          <td>Notre-Dame (free, timed entry)</td>
-          <td>Flat, benches, 30 minutes, no strain</td>
-        </tr>
-        <tr>
-          <td><strong>9:45 AM</strong></td>
-          <td>Walk to Île Saint-Louis (5 min, flat)</td>
-          <td>Berthillon ice cream opens at 10. Sit by the quay.</td>
-        </tr>
-        <tr>
-          <td><strong>10:30 AM</strong></td>
-          <td>Taxi to Musée de l'Orangerie</td>
-          <td>Flat, benches in Water Lilies rooms, 1 hour max</td>
-        </tr>
-        <tr>
-          <td><strong>12:00 PM</strong></td>
-          <td>Lunch at Café de Flore or Les Deux Magots</td>
-          <td>Iconic, seated, people-watching. Yes, it's touristy — that's the point.</td>
-        </tr>
-        <tr>
-          <td><strong>2:00 PM</strong></td>
-          <td>Jardin du Luxembourg</td>
-          <td>Green chairs, Medici Fountain, flat. Stay as long as you want.</td>
-        </tr>
-        <tr>
-          <td><strong>4:00 PM</strong></td>
-          <td>Seine River Cruise (Vedettes du Pont Neuf)</td>
-          <td>1 hour, seated, see everything. Do the 4:30 sailing — you'll catch golden hour.</td>
-        </tr>
-        <tr>
-          <td><strong>6:30 PM</strong></td>
-          <td>Apéro at a Marais café terrace</td>
-          <td>Glass of wine, watch the neighborhood walk by</td>
-        </tr>
-        <tr>
-          <td><strong>8:00 PM</strong></td>
-          <td>Dinner at Bouillon République or Chez Janou</td>
-          <td>Booked ahead, flat entry, proper French meal</td>
-        </tr>
-      </table>
+    <div class="card" data-modal="picasso">
+      <div class="card-icon">🎨</div><div class="card-name">Musée Picasso</div>
+      <div class="card-desc">5,000+ Picasso works in a beautiful Marais mansion. Intimate — 1.5 hours covers it.</div>
+      <span class="mob mod">🟡 MOD</span>
+      <div class="mob-notes">Elevator in parts. Some stairs between levels. Small scale. Closed Mondays.</div>
+      <div class="card-hint">👆 Click for prices &amp; booking</div>
     </div>
 
-    <div class="tip green" style="margin-top: 16px;">
-      <div class="tip-title">📋 Quick Low-Mobility Checklist</div>
-      <p style="margin:0;">
-        <strong>Best:</strong> Seine cruise, Notre-Dame, Invalides, Opéra Garnier, Orangerie, Luxembourg/Tuileries gardens, covered passages, Marché des Enfants Rouges<br>
-        <strong>Good with care:</strong> Sacré-Cœur (funicular), Louvre (one wing), Musée d'Orsay, Rodin garden, Panthéon (main floor), Canal Saint-Martin<br>
-        <strong>Skip entirely:</strong> Arc de Triomphe (284 steps, no lift), Notre-Dame towers (387 steps), Sacré-Cœur dome (300 steps), Centre Pompidou (closed anyway)
-      </p>
+    <div class="card" data-modal="marmottan">
+      <div class="card-icon">🖌️</div><div class="card-name">Musée Marmottan Monet</div>
+      <div class="card-desc">Largest Monet collection in the world — including <em>Impression, Sunrise</em>. Quiet, off-track.</div>
+      <span class="mob low">🟢 LOW</span>
+      <div class="mob-notes">Small, mainly single floor. Elevator. Far fewer crowds. Closed Mondays.</div>
+      <div class="card-hint">👆 Click for prices &amp; booking</div>
     </div>
-  </section>
+  </div>
+  <div class="tip green"><div class="tip-title">🎟️ Museum Pass Strategy</div><p style="margin:0;">Paris Museum Pass (2-day: ~€55, 4-day: ~€70) covers most of these. With limited mobility, <strong>the 4-day pass is better</strong> — one museum per morning, café lunch, one more sight, then rest.</p></div>
+</section>
 
-  <!-- Footer -->
-  <footer>
-    <p>Curated by Hermes · <a href="index.html">← Back to Paris Safety Briefing</a></p>
-    <p style="margin-top: 6px;">Last updated: June 9, 2026 · <a href="https://github.com/totalwindupflightsystems/reports">totalwindupflightsystems/reports</a></p>
-  </footer>
+<!-- ===== NEIGHBORHOODS ===== -->
+<section id="neighborhoods">
+  <h2>🏘️ Neighborhoods to Wander</h2>
+  <div class="card-grid">
+    <div class="card" data-modal="marais"><div class="card-icon">🏳️‍🌈</div><div class="card-name">Le Marais</div><div class="card-desc">Trendy, historic, best falafel. Place des Vosges has shaded benches. Mostly flat.</div><span class="mob low">🟢 LOW</span><div class="card-hint">👆 Click for details</div></div>
+    <div class="card" data-modal="montmartre"><div class="card-icon">🎨</div><div class="card-name">Montmartre</div><div class="card-desc">Village-on-a-hill. <strong>Steep cobblestone streets.</strong> Take funicular, explore flat summit, taxi down.</div><span class="mob high">🟠 HIGH</span><div class="card-hint">👆 Click for details</div></div>
+    <div class="card" data-modal="canal"><div class="card-icon">🧑‍🎨</div><div class="card-name">Canal Saint-Martin</div><div class="card-desc">Flat towpaths, iron footbridges. Wine + cheese + baguette by the water. Pure Paris.</div><span class="mob low">🟢 LOW</span><div class="card-hint">👆 Click for details</div></div>
+    <div class="card" data-modal="stgermain"><div class="card-icon">📚</div><div class="card-name">Saint-Germain-des-Prés</div><div class="card-desc">Literary Paris. Café de Flore, jazz clubs. Flat boulevards. The café terraces ARE the attraction.</div><span class="mob low">🟢 LOW</span><div class="card-hint">👆 Click for details</div></div>
+    <div class="card" data-modal="latin"><div class="card-icon">📖</div><div class="card-name">Latin Quarter</div><div class="card-desc">Shakespeare &amp; Company, Sorbonne, medieval streets. Mild slopes toward the Seine.</div><span class="mob mod">🟡 MOD</span><div class="card-hint">👆 Click for details</div></div>
+    <div class="card" data-modal="sopi"><div class="card-icon">🍸</div><div class="card-name">South Pigalle (SoPi)</div><div class="card-desc">Nightlife, cocktail bars, natural wine. Where Parisians go out. Gentle slope.</div><span class="mob mod">🟡 MOD</span><div class="card-hint">👆 Click for details</div></div>
+    <div class="card" data-modal="stlouis"><div class="card-icon">🏘️</div><div class="card-name">Île Saint-Louis</div><div class="card-desc">Berthillon ice cream, 17th-century streets. Flat, quiet, short. Combine with Notre-Dame.</div><span class="mob low">🟢 LOW</span><div class="card-hint">👆 Click for details</div></div>
+  </div>
+</section>
+
+<!-- ===== HIDDEN GEMS ===== -->
+<section id="hidden">
+  <h2>🔍 Hidden Gems</h2>
+  <div class="card-grid">
+    <div class="card" data-modal="marche"><div class="card-icon">🛒</div><div class="card-name">Marché des Enfants Rouges</div><div class="card-desc">Oldest covered market in Paris, est. 1615. Food stalls, communal tables.</div><span class="mob low">🟢 LOW</span><div class="card-hint">👆 Click for details</div></div>
+    <div class="card" data-modal="passages"><div class="card-icon">🏛️</div><div class="card-name">Covered Passages</div><div class="card-desc">Glass-roofed 19th-century arcades. Galerie Vivienne, Passage des Panoramas.</div><span class="mob low">🟢 LOW</span><div class="card-hint">👆 Click for details</div></div>
+    <div class="card" data-modal="romantique"><div class="card-icon">🌹</div><div class="card-name">Musée de la Vie Romantique</div><div class="card-desc">Free, tiny museum. Tearoom garden — perfect quiet escape.</div><span class="mob low">🟢 LOW</span><div class="card-hint">👆 Click for details</div></div>
+    <div class="card" data-modal="perelachaise"><div class="card-icon">🪦</div><div class="card-name">Père Lachaise Cemetery</div><div class="card-desc">Jim Morrison, Oscar Wilde, Chopin. 44 hectares. <strong>Hilly, cobblestones.</strong></div><span class="mob high">🟠 HIGH</span><div class="card-hint">👆 Click for details</div></div>
+    <div class="card" data-modal="mosquee"><div class="card-icon">☕</div><div class="card-name">Grande Mosquée de Paris</div><div class="card-desc">Moorish architecture, mint tea, tiled courtyard. Oasis of calm.</div><span class="mob low">🟢 LOW</span><div class="card-hint">👆 Click for details</div></div>
+    <div class="card" data-modal="belleville"><div class="card-icon">🌆</div><div class="card-name">Belleville Park</div><div class="card-desc">Best free skyline view. Zero tourists. <strong>On a hill.</strong> Taxi to entrance.</div><span class="mob high">🟠 HIGH</span><div class="card-hint">👆 Click for details</div></div>
+    <div class="card" data-modal="maisonrose"><div class="card-icon">🏠</div><div class="card-name">La Maison Rose</div><div class="card-desc">Pink corner house, rue de l'Abreuvoir. Instagram-famous for good reason.</div><span class="mob high">🟠 HIGH</span><div class="card-hint">👆 Click for details</div></div>
+  </div>
+</section>
+
+<!-- ===== PARKS & GARDENS ===== -->
+<section id="gardens">
+  <h2>🌳 Parks &amp; Gardens — Rest Your Legs</h2>
+  <div class="card-grid">
+    <div class="card" data-modal="luxembourg"><div class="card-icon">🌳</div><div class="card-name">Jardin du Luxembourg</div><div class="card-desc">Most beautiful park in Paris. Medici Fountain, green chairs, flat paths.</div><span class="mob low">🟢 LOW</span><div class="card-hint">👆 Click for details</div></div>
+    <div class="card" data-modal="tuileries"><div class="card-icon">🌷</div><div class="card-name">Jardin des Tuileries</div><div class="card-desc">Between Louvre and Concorde. Fountains, green chairs. Perfect rest stop.</div><span class="mob low">🟢 LOW</span><div class="card-hint">👆 Click for details</div></div>
+    <div class="card" data-modal="plantes"><div class="card-icon">🌸</div><div class="card-name">Jardin des Plantes</div><div class="card-desc">Botanical garden, rose garden (spectacular in June), zoo. Flat, benches.</div><span class="mob low">🟢 LOW</span><div class="card-hint">👆 Click for details</div></div>
+    <div class="card" data-modal="monceau"><div class="card-icon">🏞️</div><div class="card-name">Parc Monceau</div><div class="card-desc">English garden, Roman columns, duck pond. Local secret, zero tourists.</div><span class="mob low">🟢 LOW</span><div class="card-hint">👆 Click for details</div></div>
+    <div class="card" data-modal="vosges"><div class="card-icon">🏛️</div><div class="card-name">Place des Vosges</div><div class="card-desc">Oldest planned square (1605). Arcades, fountain, grass. Shaded benches.</div><span class="mob low">🟢 LOW</span><div class="card-hint">👆 Click for details</div></div>
+  </div>
+</section>
+
+<!-- ===== BISTROS ===== -->
+<section id="bistros">
+  <h2>🍽️ Where Locals Actually Eat — Bistros</h2>
+  <p>Classic French, affordable, where Parisians go. All have seating — no standing required.</p>
+  <div class="card-grid">
+    <div class="card" data-modal="pigalle"><div class="card-icon">🍷</div><div class="card-name">Bouillon Pigalle</div><div class="card-desc">300-seat brasserie, quality food at mass prices. Near Montmartre.</div><span class="mob low">🟢 LOW</span><div class="card-hint">👆 Click for details &amp; menu</div></div>
+    <div class="card" data-modal="arlots"><div class="card-icon">🥩</div><div class="card-name">Les Arlots</div><div class="card-desc">SoPi gem. Daily changing menu, hearty comfort food, <strong>under €30</strong>.</div><span class="mob low">🟢 LOW</span><div class="card-hint">👆 Click for details</div></div>
+    <div class="card" data-modal="bongeorges"><div class="card-icon">🍾</div><div class="card-name">Le Bon Georges</div><div class="card-desc">Wine List of the Year 2024. Corner bistro, wine-lover's evening spot.</div><span class="mob low">🟢 LOW</span><div class="card-hint">👆 Click for details</div></div>
+    <div class="card" data-modal="chartier"><div class="card-icon">🕯️</div><div class="card-name">Bouillon Chartier</div><div class="card-desc">Historic 1896 dining hall. Waiters in waistcoats write on the tablecloth.</div><span class="mob low">🟢 LOW</span><div class="card-hint">👆 Click for details</div></div>
+    <div class="card" data-modal="republique"><div class="card-icon">🍽️</div><div class="card-name">Bouillon République</div><div class="card-desc">Sister to Pigalle, larger, less chaotic. Flat entry, accessible restroom.</div><span class="mob low">🟢 LOW</span><div class="card-hint">👆 Click for details</div></div>
+    <div class="card" data-modal="janou"><div class="card-icon">🍫</div><div class="card-name">Chez Janou</div><div class="card-desc">Provençal bistro near Place des Vosges. Chocolate mousse from a giant bowl.</div><span class="mob mod">🟡 MOD</span><div class="card-hint">👆 Click for details</div></div>
+  </div>
+</section>
+
+<!-- ===== CASUAL EATS ===== -->
+<section id="casual">
+  <h2>🍜 Casual &amp; Unique Eats</h2>
+  <div class="card-grid">
+    <div class="card" data-modal="mokonuts"><div class="card-icon">🍪</div><div class="card-name">Mokonuts</div><div class="card-desc">Japanese-Lebanese couple, 12 tables. Famous cookies, daily specials.</div><span class="mob mod">🟡 MOD</span><div class="card-hint">👆 Click for details</div></div>
+    <div class="card" data-modal="afendi"><div class="card-icon">🧆</div><div class="card-name">Afendi</div><div class="card-desc">Father-son Lebanese street food. Bright, casual, affordable.</div><span class="mob low">🟢 LOW</span><div class="card-hint">👆 Click for details</div></div>
+    <div class="card" data-modal="fallafel"><div class="card-icon">🥙</div><div class="card-name">L'As du Fallafel</div><div class="card-desc">The famous falafel window in the Marais. Takeaway → eat in Place des Vosges.</div><span class="mob low">🟢 LOW</span><div class="card-hint">👆 Click for details</div></div>
+    <div class="card" data-modal="breizh"><div class="card-icon">🥞</div><div class="card-name">Breizh Café</div><div class="card-desc">Buckwheat galettes from Brittany. Cider on tap. Multiple locations.</div><span class="mob low">🟢 LOW</span><div class="card-hint">👆 Click for details</div></div>
+  </div>
+</section>
+
+<!-- ===== MUST-TRY FOODS ===== -->
+<section id="foods">
+  <h2>🥐 Must-Try Foods</h2>
+  <ul class="food-list">
+    <li><span class="emoji">🥐</span><span><strong>Croissant au beurre</strong> — From any proper <em>boulangerie</em> (not a chain). Look for "Artisan Boulanger" on the window.</span></li>
+    <li><span class="emoji">🥖</span><span><strong>Baguette tradition</strong> — The crust should crackle audibly when you squeeze it.</span></li>
+    <li><span class="emoji">🥩</span><span><strong>Steak frites</strong> — Avec sauce au poivre, at any proper bistro with Côtes du Rhône.</span></li>
+    <li><span class="emoji">🧅</span><span><strong>Soupe à l'oignon</strong> — Under bubbling melted gruyère. Winter essential, summer acceptable.</span></li>
+    <li><span class="emoji">🐌</span><span><strong>Escargots</strong> — Swimming in garlic-parsley butter. Just do it.</span></li>
+    <li><span class="emoji">🍮</span><span><strong>Crème brûlée</strong> — Vanilla, not flavored. Keep it classic.</span></li>
+    <li><span class="emoji">🧀</span><span><strong>Cheese board</strong> — Ask the fromager: "qu'est-ce que vous recommandez?"</span></li>
+    <li><span class="emoji">🌈</span><span><strong>Macarons</strong> — Pierre Hermé > Ladurée. Try Ispahan (rose, lychee, raspberry).</span></li>
+    <li><span class="emoji">🦆</span><span><strong>Confit de canard</strong> — Duck leg slow-cooked in its own fat. Crispy skin, tender flesh.</span></li>
+    <li><span class="emoji">🥞</span><span><strong>Galette complète</strong> — Buckwheat crêpe with ham, gruyère, fried egg. Pair with dry cider.</span></li>
+  </ul>
+</section>
+
+<!-- ===== LOCAL TIPS ===== -->
+<section id="tips">
+  <h2>🍷 Local Tips</h2>
+  <div class="tip green"><div class="tip-title">☕ Coffee</div><p style="margin:0;">Stand at bar = half price. But with mobility concerns: <strong>sit, pay the extra €2, rest.</strong> A terrace seat is cheap rent for a Parisian afternoon.</p></div>
+  <div class="tip blue"><div class="tip-title">💧 Water</div><p style="margin:0;">Tap water is free and excellent. Ask for <em>"une carafe d'eau"</em> — restaurants must provide it.</p></div>
+  <div class="tip green"><div class="tip-title">💰 Tipping</div><p style="margin:0;">Service is <strong>included</strong> (15%). Tips not expected. Round up or leave €1–2 for great service.</p></div>
+  <div class="tip amber"><div class="tip-title">🕖 Dinner Time</div><p style="margin:0;">Restaurants open 7:00–7:30 PM. Peak: 8:30–9:30pm. Book ahead for any bistro on this list.</p></div>
+  <div class="tip blue"><div class="tip-title">🚌 Getting Around</div><p style="margin:0;"><strong>Use buses, not Métro.</strong> All Paris buses have ramps. Only Métro Line 14 is fully step-free. Bus lines 69, 72, 87 pass most sights. Uber/Bolt are plentiful.</p></div>
+  <div class="tip green"><div class="tip-title">👋 Greetings</div><p style="margin:0;">Always <em>"Bonjour"</em> entering, <em>"Merci, au revoir"</em> leaving. Skipping this is genuinely rude.</p></div>
+  <div class="tip orange"><div class="tip-title">🦯 Public Toilets</div><p style="margin:0;">Free <em>sanisettes</em> (self-cleaning pods) throughout the city. Museums all have accessible restrooms. Every café toilet is yours for the price of an espresso.</p></div>
+</section>
+
+<!-- ===== WHERE TO STAY ===== -->
+<section id="stay">
+  <h2>📍 Where to Stay</h2>
+  <div class="table-wrap"><table>
+    <tr><th>Hotel</th><th>Area</th><th>Vibe</th><th>Mobility</th></tr>
+    <tr><td><strong>Hotel de Londres</strong></td><td>Near Eiffel Tower (7th)</td><td>Classic, Eiffel Tower views</td><td>Elevator, flat neighborhood</td></tr>
+    <tr><td><strong>La Chambre du Marais</strong></td><td>Le Marais (3rd)</td><td>Trendy, boutique, best area</td><td>Elevator — confirm. Flat streets.</td></tr>
+    <tr><td><strong>Le Meurice</strong></td><td>Tuileries (1st)</td><td>Palace-level luxury</td><td>Full accessibility, step-free</td></tr>
+  </table></div>
+  <div class="tip amber"><div class="tip-title">⚠️ Always Confirm Elevator</div><p style="margin:0;">Many charming Parisian hotels are in historic buildings without lifts. Filter for elevator + step-free on Booking.com. Message the hotel: "Mon ami a des difficultés à marcher. Avez-vous une chambre accessible sans escaliers?"</p></div>
+</section>
+
+<!-- ===== BEST LOW-MOBILITY PICKS ===== -->
+<section id="low-mobility">
+  <h2>🟢 Best Low-Mobility Itinerary — One Perfect Day</h2>
+  <div class="table-wrap"><table>
+    <tr><th>Time</th><th>Activity</th><th>Why</th></tr>
+    <tr><td><strong>9:00 AM</strong></td><td>Notre-Dame (free, timed)</td><td>Flat, benches, 30 min, no strain</td></tr>
+    <tr><td><strong>9:45 AM</strong></td><td>Walk to Île Saint-Louis (5 min flat)</td><td>Berthillon ice cream at 10</td></tr>
+    <tr><td><strong>10:30 AM</strong></td><td>Taxi to Musée de l'Orangerie</td><td>Flat, benches, Water Lilies, 1 hour</td></tr>
+    <tr><td><strong>12:00 PM</strong></td><td>Lunch at Café de Flore</td><td>Seated, people-watching, iconic</td></tr>
+    <tr><td><strong>2:00 PM</strong></td><td>Jardin du Luxembourg</td><td>Green chairs, flat, stay as long as you want</td></tr>
+    <tr><td><strong>4:00 PM</strong></td><td>Seine River Cruise (Vedettes du Pont Neuf)</td><td>1 hour seated, see everything, golden hour</td></tr>
+    <tr><td><strong>6:30 PM</strong></td><td>Apéro at a Marais café terrace</td><td>Wine, watch the neighborhood</td></tr>
+    <tr><td><strong>8:00 PM</strong></td><td>Dinner at Bouillon République</td><td>Flat entry, booked ahead, French classics</td></tr>
+  </table></div>
+  <div class="tip green" style="margin-top:16px;"><div class="tip-title">📋 Quick Low-Mobility Checklist</div><p style="margin:0;"><strong>Best:</strong> Seine cruise, Notre-Dame, Invalides, Opéra Garnier, Orangerie, Luxembourg/Tuileries, covered passages<br><strong>Good with care:</strong> Sacré-Cœur (funicular), Louvre (one wing), Orsay, Rodin garden, Panthéon (main floor), Canal Saint-Martin<br><strong>Skip:</strong> Arc de Triomphe (284 steps), Notre-Dame towers (387 steps), Sacré-Cœur dome (300 steps)</p></div>
+</section>
+
+<footer>
+  <p>Curated by Hermes · <a href="index.html">← Back to Paris Safety Briefing</a></p>
+  <p style="margin-top:6px;">Updated June 9, 2026 · <a href="https://github.com/totalwindupflightsystems/reports">totalwindupflightsystems/reports</a></p>
+</footer>
 
 </div>
+
+<!-- ============ MODALS ============ -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modalContent"></div>
+</div>
+
+<script>
+// ── DATA ──────────────────────────────────────────────
+const DATA = {
+  eiffel: {
+    name:"Eiffel Tower", icon:"🗼",
+    desc:"Best viewed from Champ de Mars (flat park with benches) or Trocadéro plaza. <strong>Elevator to all levels</strong> — no stairs required. Go at sunset for golden hour. Long queues for the lift; book online ahead to skip the worst of it. The Champagne Bar at the top is a splurge worth doing once.",
+    address:"Champ de Mars, 5 Av. Anatole France, 75007 Paris",
+    maps:"https://maps.google.com/?q=Eiffel+Tower+Paris",
+    prices:[
+      {name:"2nd Floor — Stairs", cost:"€11.30"},
+      {name:"2nd Floor — Elevator", cost:"€18.80"},
+      {name:"Summit — Elevator (top floor)", cost:"€29.40"},
+      {name:"Summit — Stairs + Lift combo", cost:"€22.40"},
+      {name:"Child (4–11) / Youth (12–24)", cost:"50% off adult rates"}
+    ],
+    bookLabel:"Official booking — toureiffel.paris",
+    bookUrl:"https://www.toureiffel.paris/en/rates-opening-times",
+    mob:"🟡 MOD — Elevator available. Walking around base/Champ de Mars is 🟢 flat. Queuing = standing ~30min. Bring a cane seat."
+  },
+  arc: {
+    name:"Arc de Triomphe", icon:"🏛️",
+    desc:"284-step spiral staircase to the rooftop terrace. <strong>NO elevator for visitors.</strong> The panoramic view of the 12 radiating avenues is incredible — but it's earned. Underground tunnel (flat, accessible) from the Champs-Élysées to reach the base. Viewing from outside at ground level is still impressive, 🟢 no-stairs, and free.",
+    address:"Place Charles de Gaulle, 75008 Paris",
+    maps:"https://maps.google.com/?q=Arc+de+Triomphe+Paris",
+    prices:[
+      {name:"Adult — Rooftop Access (stairs only)", cost:"€16"},
+      {name:"EU Resident 18–25", cost:"Free"},
+      {name:"Under 18", cost:"Free"},
+      {name:"Ground-Level Viewing Only", cost:"Free"}
+    ],
+    bookLabel:"Official booking — paris-arc-de-triomphe.fr",
+    bookUrl:"https://www.paris-arc-de-triomphe.fr/en/",
+    mob:"🔴 VERY HIGH — 284 steps, no lift. Ground-level viewing is 🟢 free. Skip the climb for your friend."
+  },
+  notredame: {
+    name:"Notre-Dame de Paris", icon:"⛪",
+    desc:"Fully reopened December 2024 after the devastating 2019 fire. Stunning restoration — the limestone glows white again. Flat entry, smooth stone floors, seating in the nave. <strong>FREE</strong> with timed reservation online. The <strong>towers</strong> (387 steps, no lift, narrow spiral) are a separate ticket — skip those entirely.",
+    address:"6 Parvis Notre-Dame — Pl. Jean-Paul II, 75004 Paris",
+    maps:"https://maps.google.com/?q=Notre+Dame+de+Paris",
+    prices:[
+      {name:"Cathedral Entry", cost:"Free"},
+      {name:"Timed Reservation (required)", cost:"Free"},
+      {name:"Towers — 387 steps, no lift", cost:"€13 — SKIP for mobility"}
+    ],
+    bookLabel:"Reserve free slot — notredamedeparis.fr",
+    bookUrl:"https://www.notredamedeparis.fr/en/",
+    mob:"🟢 LOW — Flat access, benches inside, timed entry avoids queuing. Towers are 🔴 stairs-only."
+  },
+  sacrecoeur: {
+    name:"Sacré-Cœur Basilica", icon:"⛪",
+    desc:"Montmartre's white basilica on Paris's highest point. The <strong>funicular</strong> (cable car) goes up the hill from Anvers Métro — use it, don't walk the 300 steps. Regular Métro ticket works, runs every 6 minutes. Basilica interior is flat with seating. The <strong>dome</strong> (300 more steps, no lift, tight spiral) — skip it.",
+    address:"35 Rue du Chevalier de la Barre, 75018 Paris",
+    maps:"https://maps.google.com/?q=Sacre+Coeur+Paris",
+    prices:[
+      {name:"Basilica Entry", cost:"Free"},
+      {name:"Funicular (cable car up the hill)", cost:"Standard Métro ticket (€2.15)"},
+      {name:"Dome — 300 steps, no lift", cost:"€7 — SKIP for mobility"}
+    ],
+    bookLabel:"No booking needed for basilica",
+    bookUrl:"https://www.sacre-coeur-montmartre.com/",
+    mob:"🟡 MOD — Take the funicular up. Basilica is 🟢 flat with seating. Dome is 🔴 300 steps."
+  },
+  chapelle: {
+    name:"Sainte-Chapelle", icon:"🪟",
+    desc:"15 massive stained-glass windows depicting 1,113 biblical scenes. A jewel of Gothic Rayonnant architecture. <strong>The upper chapel requires climbing a narrow spiral staircase</strong> (~40 steps) — no elevator. The lower chapel (flat entry) is also beautiful but the glass is all upstairs. Worth it if your friend can manage ~40 steps slowly with a handrail.",
+    address:"10 Boulevard du Palais, 75001 Paris",
+    maps:"https://maps.google.com/?q=Sainte+Chapelle+Paris",
+    prices:[
+      {name:"Adult", cost:"€13"},
+      {name:"EU Resident 18–25", cost:"Free"},
+      {name:"Under 18", cost:"Free"},
+      {name:"Combined with Conciergerie (next door)", cost:"€20"}
+    ],
+    bookLabel:"Official booking — sainte-chapelle.fr",
+    bookUrl:"https://www.sainte-chapelle.fr/en/",
+    mob:"🟠 HIGH — Narrow spiral stairs to upper chapel (~40 steps), no lift. Lower chapel is 🟢 flat."
+  },
+  pantheon: {
+    name:"Panthéon", icon:"🏛️",
+    desc:"Foucault's pendulum swinging in the vast nave. Crypt holds France's greats: Voltaire, Rousseau, Victor Hugo, Marie Curie. Main floor is flat and spacious. Crypt is down ~50 steps with a handrail. The dome (206 steps, narrow, no lift) — skip it.",
+    address:"Place du Panthéon, 75005 Paris",
+    maps:"https://maps.google.com/?q=Pantheon+Paris",
+    prices:[
+      {name:"Adult", cost:"€13"},
+      {name:"EU Resident 18–25", cost:"Free"},
+      {name:"Under 18", cost:"Free"}
+    ],
+    bookLabel:"Official booking — paris-pantheon.fr",
+    bookUrl:"https://www.paris-pantheon.fr/en/",
+    mob:"🟡 MOD — Main floor 🟢 flat. Crypt: ~50 steps with handrail. Dome: 🔴 206 steps — skip."
+  },
+  invalides: {
+    name:"Hôtel des Invalides", icon:"🏰",
+    desc:"Napoleon's tomb under a magnificent golden dome. The Army Museum (Musée de l'Armée) on-site is world-class — medieval armor through WWII. <strong>Elevator available to all levels.</strong> Flat courtyard, wide galleries. One of the most accessible major attractions in Paris. Napoleon's tomb viewing gallery is wheelchair-friendly.",
+    address:"129 Rue de Grenelle, 75007 Paris",
+    maps:"https://maps.google.com/?q=Hotel+des+Invalides+Paris",
+    prices:[
+      {name:"Adult — Museum + Tomb", cost:"€15"},
+      {name:"EU Resident 18–25", cost:"Free"},
+      {name:"Under 18", cost:"Free"},
+      {name:"Combined ticket with Musée Rodin", cost:"€26"}
+    ],
+    bookLabel:"Official booking — musee-armee.fr",
+    bookUrl:"https://www.musee-armee.fr/en/your-visit/opening-times-and-prices-1.html",
+    mob:"🟢 LOW — Elevator to all levels. Wide, flat galleries. Excellent accessibility."
+  },
+  opera: {
+    name:"Palais Garnier (Opéra)", icon:"🎭",
+    desc:"The Phantom of the Opera's real home. Marc Chagall's painted ceiling in the auditorium, the Grand Foyer (rivals Versailles' Hall of Mirrors), and the marble Grand Staircase. Self-guided or guided tours available. <strong>Elevator available for most areas.</strong> Ask at the entrance for the step-free path — some upper balcony areas may still require stairs.",
+    address:"Place de l'Opéra, 75009 Paris",
+    maps:"https://maps.google.com/?q=Palais+Garnier+Paris",
+    prices:[
+      {name:"Adult — Self-guided tour", cost:"€15"},
+      {name:"Adult — Guided tour (90 min)", cost:"€23"},
+      {name:"EU Resident 18–25 / Under 18", cost:"Free self-guided / €15 guided"}
+    ],
+    bookLabel:"Official booking — operadeparis.fr",
+    bookUrl:"https://www.operadeparis.fr/en/visits/palais-garnier",
+    mob:"🟢 LOW — Elevator to most areas. Ask for accessible route at entry."
+  },
+  cruise: {
+    name:"Seine River Cruise", icon:"🚢",
+    desc:"<strong>The ultimate low-mobility activity.</strong> See the Eiffel Tower, Notre-Dame, Louvre, Musée d'Orsay, and 10+ bridges — all while sitting down. 1-hour loop, open-air top deck or enclosed lower deck. Live or audio commentary in multiple languages. Go at sunset for the golden glow on the monuments. Vedettes du Pont Neuf (oldest company, 1959) and Bateaux Mouches are the two classic operators.",
+    address:"Multiple boarding points — Vedettes du Pont Neuf: Square du Vert-Galant, 75001 Paris",
+    maps:"https://maps.google.com/?q=Vedettes+du+Pont+Neuf+Paris",
+    prices:[
+      {name:"1-Hour Sightseeing Cruise — Adult", cost:"€15–18"},
+      {name:"1-Hour — Child (4–12)", cost:"€7–9"},
+      {name:"Lunch Cruise (1.5–2hr, 3 courses)", cost:"€59–75"},
+      {name:"Dinner Cruise (2–3hr, 4 courses + wine)", cost:"€89–130"},
+      {name:"Batobus — Hop-on hop-off day pass", cost:"€17–19"}
+    ],
+    bookLabel:"Vedettes du Pont Neuf — vedettesdupontneuf.com",
+    bookUrl:"https://www.vedettesdupontneuf.com/",
+    mob:"🟢 LOW — Sit the whole time. Ramp boarding. Both Vedettes du Pont Neuf and Bateaux Mouches are wheelchair-friendly."
+  },
+  louvre: {
+    name:"Musée du Louvre", icon:"🏛️",
+    desc:"Mona Lisa, Winged Victory, Venus de Milo. 35,000 pieces across 73,000 m². <strong>Warning: enormous.</strong> Walking the full museum is 12+ km. Elevators available, wheelchairs loaned free. Pick ONE wing — don't try to see it all. The distance between galleries is the real physical strain, not stairs. Go Wed/Fri evening — less crowded, and there's a reduced evening rate.",
+    address:"Rue de Rivoli, 75001 Paris",
+    maps:"https://maps.google.com/?q=Musee+du+Louvre+Paris",
+    prices:[
+      {name:"Adult — Online", cost:"€22"},
+      {name:"Adult — Evening (Wed/Fri after 6pm)", cost:"€15"},
+      {name:"EU Resident 18–25", cost:"Free"},
+      {name:"Under 18", cost:"Free"},
+      {name:"First Friday of month after 6pm", cost:"Free (all visitors)"}
+    ],
+    bookLabel:"Official booking — ticket.louvre.fr",
+    bookUrl:"https://ticket.louvre.fr/en",
+    mob:"🟠 HIGH — Elevators available. Wheelchairs loaned free. Distance between galleries is the strain. Pick ONE wing."
+  },
+  orsay: {
+    name:"Musée d'Orsay", icon:"🖼️",
+    desc:"World's best Impressionist collection in a converted Beaux-Arts train station. Van Gogh, Monet, Renoir, Degas, Cézanne. The building itself is a masterpiece — the old station clock is an icon. More manageable than the Louvre. Elevators and escalators throughout. Flat main hall with benches.",
+    address:"Esplanade Valéry Giscard d'Estaing, 75007 Paris",
+    maps:"https://maps.google.com/?q=Musee+d+Orsay+Paris",
+    prices:[
+      {name:"Adult — Online", cost:"€16"},
+      {name:"Adult — Thursday evening (after 6pm)", cost:"€12"},
+      {name:"EU Resident 18–25", cost:"Free"},
+      {name:"Under 18", cost:"Free"}
+    ],
+    bookLabel:"Official booking — musee-orsay.fr",
+    bookUrl:"https://billetterie.musee-orsay.fr/",
+    mob:"🟡 MOD — Elevators + escalators. Flat main hall. Benches throughout. Better for mobility than Louvre."
+  },
+  orangerie: {
+    name:"Musée de l'Orangerie", icon:"🌸",
+    desc:"Monet's Water Lilies in two oval rooms purpose-built to his exact specifications after WWI. <strong>Meditative.</strong> Also holds the Jean Walter-Paul Guillaume collection (Cézanne, Renoir, Picasso, Modigliani). Small, intimate museum — 1 hour is enough. <strong>Single floor, flat, benches in the Water Lilies rooms.</strong> Elevator available. Located in the Tuileries Garden — combine with a garden rest.",
+    address:"Jardin des Tuileries, 75001 Paris",
+    maps:"https://maps.google.com/?q=Musee+de+l+Orangerie+Paris",
+    prices:[
+      {name:"Adult — Online", cost:"€12.50"},
+      {name:"EU Resident 18–25 / Under 18", cost:"Free"}
+    ],
+    bookLabel:"Official booking — musee-orangerie.fr",
+    bookUrl:"https://www.musee-orangerie.fr/en",
+    mob:"🟢 LOW — Single floor, flat, benches. Elevator. <strong>Best museum for limited mobility.</strong>"
+  },
+  rodin: {
+    name:"Musée Rodin", icon:"🗿",
+    desc:"The Thinker, The Gates of Hell, The Kiss. Indoor galleries in an 18th-century mansion (Hôtel Biron) + outdoor sculpture garden. Garden has gravel paths — flat but slightly uneven. Benches throughout the garden, many shaded by rose trellises. Café in the garden with outdoor seating.",
+    address:"77 Rue de Varenne, 75007 Paris",
+    maps:"https://maps.google.com/?q=Musee+Rodin+Paris",
+    prices:[
+      {name:"Adult — Museum + Garden", cost:"€14"},
+      {name:"Adult — Garden Only", cost:"€10"},
+      {name:"EU Resident 18–25", cost:"Free"},
+      {name:"Under 18", cost:"Free"}
+    ],
+    bookLabel:"Official booking — musee-rodin.fr",
+    bookUrl:"https://www.musee-rodin.fr/en",
+    mob:"🟡 MOD — Indoor: elevator, flat. Garden: flat gravel paths, benches. Closed Mondays."
+  },
+  carnavalet: {
+    name:"Musée Carnavalet", icon:"📜",
+    desc:"History of Paris from Roman Lutetia through the Revolution to today. Set in two connected 16th-century Marais mansions. <strong>FREE permanent collection.</strong> Highlights: Marcel Proust's cork-lined bedroom (reconstructed), original Revolutionary artifacts, gorgeous period rooms. Far fewer tourists than the big museums. Free means zero guilt about leaving after 30 minutes if your friend is tired.",
+    address:"23 Rue de Sévigné, 75003 Paris",
+    maps:"https://maps.google.com/?q=Musee+Carnavalet+Paris",
+    prices:[
+      {name:"Permanent Collection", cost:"Free"},
+      {name:"Temporary Exhibitions", cost:"€11–13"},
+      {name:"Under 18", cost:"Free (all)"}
+    ],
+    bookLabel:"Official site — carnavalet.paris.fr",
+    bookUrl:"https://www.carnavalet.paris.fr/en",
+    mob:"🟡 MOD — Elevator. Some narrow historic doorways. Free — leave whenever. Closed Mondays."
+  },
+  picasso: {
+    name:"Musée Picasso", icon:"🎨",
+    desc:"5,000+ Picasso works — paintings, sculptures, ceramics, sketches — from his personal collection. Housed in the Hôtel Salé, a beautiful 17th-century Marais mansion. Intimate scale — 1.5 hours covers it well. Less overwhelming than the big museums. Elevator available in parts; some stairs between certain levels.",
+    address:"5 Rue de Thorigny, 75003 Paris",
+    maps:"https://maps.google.com/?q=Musee+Picasso+Paris",
+    prices:[
+      {name:"Adult — Online", cost:"€14"},
+      {name:"EU Resident 18–25 / Under 18", cost:"Free"}
+    ],
+    bookLabel:"Official booking — museepicassoparis.fr",
+    bookUrl:"https://www.museepicassoparis.fr/en",
+    mob:"🟡 MOD — Elevator in parts. Some stairs between levels. Small scale — manageable. Closed Mondays."
+  },
+  marmottan: {
+    name:"Musée Marmottan Monet", icon:"🖌️",
+    desc:"The <strong>largest Monet collection in the world</strong> — including <em>Impression, Sunrise</em> (1872), the painting that gave Impressionism its name. Also holds works by Berthe Morisot, Gauguin, and an important collection of medieval illuminated manuscripts. Quiet, off the main tourist track in the residential 16th. Small, mainly single floor. Elevator available.",
+    address:"2 Rue Louis Boilly, 75016 Paris",
+    maps:"https://maps.google.com/?q=Musee+Marmottan+Monet+Paris",
+    prices:[
+      {name:"Adult", cost:"€14"},
+      {name:"Under 18 / Students", cost:"€9"},
+      {name:"Under 7", cost:"Free"}
+    ],
+    bookLabel:"Official booking — marmottan.fr",
+    bookUrl:"https://www.marmottan.fr/en/",
+    mob:"🟢 LOW — Small, mainly single floor. Elevator. Quiet. Closed Mondays."
+  },
+  // Neighborhoods
+  marais: {
+    name:"Le Marais", icon:"🏳️‍🌈",
+    desc:"Trendy, historic, LGBTQ+ hub spanning the 3rd &amp; 4th arrondissements. Best falafel in Paris (L'As du Fallafel, see Casual Eats). Boutique shopping, art galleries, the beautiful Place des Vosges (Paris's oldest planned square). <strong>Mostly flat</strong> — pre-Haussmann streets are narrow but level. Many cafés for rest stops. The Jewish Quarter (Pletzl) has incredible bakeries.",
+    address:"Le Marais, 75003–75004 Paris",
+    maps:"https://maps.google.com/?q=Le+Marais+Paris",
+    prices:[{name:"Wandering — Free", cost:"€0"}],
+    mob:"🟢 LOW — Flat terrain, many cafés. Place des Vosges has shaded benches."
+  },
+  montmartre: {
+    name:"Montmartre", icon:"🎨",
+    desc:"Village-on-a-hill with cobblestone streets, artists, and the Sacré-Cœur basilica at the summit. Skip touristy Place du Tertre (overpriced portrait artists) — go behind Sacré-Cœur to <em>rue de l'Abreuvoir</em> and <em>La Maison Rose</em>. <strong>Very steep</strong> — take the funicular from Anvers Métro up to the basilica, explore the flat summit area around Place du Tertre, then taxi or funicular back down.",
+    address:"Montmartre, 75018 Paris",
+    maps:"https://maps.google.com/?q=Montmartre+Paris",
+    prices:[{name:"Wandering — Free", cost:"€0"}],
+    mob:"🟠 HIGH — Very hilly, cobblestones. Take funicular up/down. Taxi for door-to-door."
+  },
+  canal: {
+    name:"Canal Saint-Martin", icon:"🧑‍🎨",
+    desc:"Flat towpaths, iconic iron footbridges, tree-lined banks. Grab wine, cheese, and a baguette from a nearby shop and sit by the water. Watch the boats navigate the locks. The quintessential Parisian picnic spot. République and Jacques Bonsergent Métro stations are closest. Benches along the water. In the evening, the quays fill with young Parisians — bring supplies by 6pm to claim a good spot.",
+    address:"Canal Saint-Martin, 75010 Paris",
+    maps:"https://maps.google.com/?q=Canal+Saint+Martin+Paris",
+    prices:[{name:"Picnic supplies from a shop", cost:"~€12–18 for two"}],
+    mob:"🟢 LOW — Completely flat. Benches. Park near République for shortest walk to water."
+  },
+  stgermain: {
+    name:"Saint-Germain-des-Prés", icon:"📚",
+    desc:"Literary Paris. Café de Flore, Les Deux Magots — Hemingway, Sartre, and de Beauvoir's old haunts. Bookshops, art galleries, jazz clubs. The neighborhood <strong>is</strong> the attraction — the café terraces are the point. Sit at Flore for an overpriced espresso (€5–6) and people-watch. It's worth it once. Flat boulevards, wide sidewalks, cafés every 10 meters.",
+    address:"Saint-Germain-des-Prés, 75006 Paris",
+    maps:"https://maps.google.com/?q=Saint+Germain+des+Pres+Paris",
+    prices:[{name:"Café crème at Café de Flore", cost:"€5–6"}],
+    mob:"🟢 LOW — Flat, wide sidewalks. Ideal for café-hopping with limited walking."
+  },
+  latin: {
+    name:"Latin Quarter", icon:"📖",
+    desc:"Shakespeare &amp; Company bookshop (iconic, cramped, worth a browse), the Sorbonne university, narrow medieval streets. Cheap student eats on rue Mouffetard. Some streets slope toward the Seine — mild inclines, not Montmartre-steep. Plenty of cafés and bookshop seating. Stick to rue Saint-Jacques (flat) and the riverbank for the easiest walking.",
+    address:"Latin Quarter, 75005 Paris",
+    maps:"https://maps.google.com/?q=Latin+Quarter+Paris",
+    prices:[{name:"Wandering + bookshop browsing", cost:"Free"}],
+    mob:"🟡 MOD — Mild slopes, some cobblestones. Stick to rue Saint-Jacques and the riverbank."
+  },
+  sopi: {
+    name:"South Pigalle (SoPi)", icon:"🍸",
+    desc:"Nightlife central. Cocktail bars, natural wine shops, experimental restaurants. Rue des Martyrs is the main artery — a food-lover's street with cheesemongers, bakers, and wine bars. Where Parisians actually go out after dark, away from tourist zones. <strong>Gentle slope</strong> heading up the hill. Go by taxi in the evening to save steps. Most bars have seating.",
+    address:"South Pigalle, 75009 Paris",
+    maps:"https://maps.google.com/?q=Rue+des+Martyrs+Paris",
+    prices:[{name:"Cocktail", cost:"€12–15"}, {name:"Glass of natural wine", cost:"€6–9"}],
+    mob:"🟡 MOD — Gentle slope up rue des Martyrs. Bars have seating. Go by taxi at night."
+  },
+  stlouis: {
+    name:"Île Saint-Louis", icon:"🏘️",
+    desc:"The smaller, quieter of Paris's two natural islands. 17th-century architecture, narrow streets, no major sights — just beautiful, peaceful wandering. The legendary <strong>Berthillon</strong> ice cream shop (since 1954) is here. Flat, short distances, benches along the quays. Combine with Notre-Dame on the neighboring Île de la Cité (3-minute walk).",
+    address:"Île Saint-Louis, 75004 Paris",
+    maps:"https://maps.google.com/?q=Ile+Saint+Louis+Paris",
+    prices:[{name:"Berthillon ice cream (2 scoops)", cost:"€5"}, {name:"Wandering", cost:"Free"}],
+    mob:"🟢 LOW — Flat, short distances, benches along quays."
+  },
+  // Hidden Gems
+  marche: {
+    name:"Marché des Enfants Rouges", icon:"🛒",
+    desc:"Oldest covered market in Paris, established 1615. Named after a nearby 16th-century orphanage where children wore red uniforms. Moroccan tagines, Japanese bento, Lebanese mezze, French crêpes, burgers — all at communal tables. Perfect lunch stop in the Marais. Flat entry, plenty of seating.",
+    address:"39 Rue de Bretagne, 75003 Paris",
+    maps:"https://maps.google.com/?q=Marche+des+Enfants+Rouges+Paris",
+    prices:[{name:"Meal from a stall", cost:"€10–15"}, {name:"Coffee + pastry", cost:"€5"}],
+    mob:"🟢 LOW — Flat, seating available, compact. Tue–Sat until 8:30pm, Sun until 5pm."
+  },
+  passages: {
+    name:"Covered Passages", icon:"🏛️",
+    desc:"19th-century glass-roofed shopping arcades — Paris's original malls. Galerie Vivienne (the most beautiful, with mosaic floors), Passage des Panoramas (oldest, 1799), Passage Jouffroy (wax museum, vintage toy shop). Time capsules with antiquarian bookshops, old cafés, and curiosity shops. <strong>Fully flat, sheltered from rain, cafés with seating.</strong> Start at Galerie Vivienne.",
+    address:"Galerie Vivienne, 75002 Paris",
+    maps:"https://maps.google.com/?q=Galerie+Vivienne+Paris",
+    prices:[{name:"Wandering + window shopping", cost:"Free"}],
+    mob:"🟢 LOW — Fully flat, indoors-ish, cafés. Best on a rainy day."
+  },
+  romantique: {
+    name:"Musée de la Vie Romantique", icon:"🌹",
+    desc:"Free, tiny, charming museum in a former artist's home at the end of a cobbled courtyard. Dedicated to George Sand and the Romantic era. The real draw is the <strong>tearoom garden</strong> at the back — wisteria, roses, quiet. Perfect escape from the city. Flat entry, garden seating. A hidden courtyard of calm that most tourists never find.",
+    address:"16 Rue Chaptal, 75009 Paris",
+    maps:"https://maps.google.com/?q=Musee+de+la+Vie+Romantique+Paris",
+    prices:[{name:"Permanent Collection", cost:"Free"}, {name:"Tea + pastry in garden", cost:"€6–10"}],
+    mob:"🟢 LOW — Flat, garden with seating. Small scale. Closed Mondays."
+  },
+  perelachaise: {
+    name:"Père Lachaise Cemetery", icon:"🪦",
+    desc:"Jim Morrison (The Doors), Oscar Wilde, Frédéric Chopin, Edith Piaf, Marcel Proust. 44 hectares of overgrown tombs, tree-lined cobblestone paths. Weirdly peaceful. <strong>Hilly, cobblestones, very spread out.</strong> Get a free map at the entrance and target 2–3 specific graves — don't wander aimlessly or you'll walk 5+ km. Enter at <strong>Gambetta</strong> (upper entrance) and walk <em>downhill</em>.",
+    address:"16 Rue du Repos, 75020 Paris",
+    maps:"https://maps.google.com/?q=Pere+Lachaise+Cemetery+Paris",
+    prices:[{name:"Entry + Map", cost:"Free"}],
+    mob:"🟠 HIGH — Hilly, cobblestones, huge area. Enter at Gambetta for downhill. Target 2–3 graves."
+  },
+  mosquee: {
+    name:"Grande Mosquée de Paris", icon:"☕",
+    desc:"Beautiful Hispano-Moorish architecture from 1926. Tiled courtyard with fountains, carved cedar ceilings, lush garden patio. The courtyard café serves <strong>mint tea and North African pastries</strong> (baklava, makroud, cornes de gazelle). An oasis of calm in the 5th arrondissement. Flat, seated. Combine with Jardin des Plantes next door.",
+    address:"2bis Place du Puits de l'Ermite, 75005 Paris",
+    maps:"https://maps.google.com/?q=Grande+Mosquee+de+Paris",
+    prices:[{name:"Mint tea + pastries", cost:"€5–8"}, {name:"Hammam (spa)", cost:"€19–32"}],
+    mob:"🟢 LOW — Flat courtyard, seated café. Tue–Sun 9:00–18:00."
+  },
+  belleville: {
+    name:"Belleville Park", icon:"🌆",
+    desc:"Best free skyline view in Paris. Eiffel Tower, Montparnasse Tower, Sacré-Cœur — all visible from one bench at the top. Zero tourists, local families, graffiti artists. Bring a beer from the corner store. <strong>On a hill</strong> — but the park itself has benches at the viewpoint. <strong>Take a taxi to the park entrance</strong> and then it's a short flat walk to the viewpoint. Don't walk up from the Métro.",
+    address:"47 Rue des Couronnes, 75020 Paris",
+    maps:"https://maps.google.com/?q=Parc+de+Belleville+Paris",
+    prices:[{name:"View + park", cost:"Free"}, {name:"Beer from corner store", cost:"€2–3"}],
+    mob:"🟠 HIGH — Uphill to reach. Take taxi to entrance, then flat to viewpoint benches."
+  },
+  maisonrose: {
+    name:"La Maison Rose", icon:"🏠",
+    desc:"That pink corner house you've seen all over Instagram, at the intersection of rue de l'Abreuvoir and rue des Saules in Montmartre. Actually worth the photo — especially in golden hour when the pink façade glows. Requires walking Montmartre's hilly streets. <strong>Alternative</strong>: the <strong>Petit Train de Montmartre</strong> (tourist train, fully seated) passes by it with commentary.",
+    address:"2 Rue de l'Abreuvoir, 75018 Paris",
+    maps:"https://maps.google.com/?q=La+Maison+Rose+Montmartre+Paris",
+    prices:[{name:"Viewing", cost:"Free"}, {name:"Petit Train de Montmartre", cost:"€6.50"}],
+    mob:"🟠 HIGH — Hilly streets to reach. Petit Train is a seated alternative."
+  },
+  // Parks
+  luxembourg: {
+    name:"Jardin du Luxembourg", icon:"🌳",
+    desc:"The most beautiful park in Paris. Created in 1612 for Marie de' Medici. Medici Fountain, grand basin (rent a tiny sailboat), orchard, tennis courts, puppet theater. The iconic dark green chairs are free — grab one and park yourself for an hour. Flat gravel paths, shaded by chestnut trees. Café inside the park near the Medici Fountain. Enter from the Odéon side for the flattest approach.",
+    address:"Jardin du Luxembourg, 75006 Paris",
+    maps:"https://maps.google.com/?q=Jardin+du+Luxembourg+Paris",
+    prices:[{name:"Park entry", cost:"Free"}, {name:"Sailboat rental (30 min)", cost:"€4"}],
+    mob:"🟢 LOW — Flat, chairs everywhere, café inside. Opens 7:30am."
+  },
+  tuileries: {
+    name:"Jardin des Tuileries", icon:"🌷",
+    desc:"Formal French gardens stretching from the Louvre to Place de la Concorde. Fountains, sculptures by Maillol, green chairs. The perfect rest stop <strong>between the Louvre and Musée de l'Orangerie</strong> (the Orangerie is literally at the end of the garden). Flat, wide gravel paths, chairs around the fountains for feet-in-the-water sitting. Cafés kiosks throughout.",
+    address:"Jardin des Tuileries, 75001 Paris",
+    maps:"https://maps.google.com/?q=Jardin+des+Tuileries+Paris",
+    prices:[{name:"Park entry", cost:"Free"}],
+    mob:"🟢 LOW — Flat, chairs, cafés. Perfect rest between Louvre and Orangerie."
+  },
+  plantes: {
+    name:"Jardin des Plantes", icon:"🌸",
+    desc:"Botanical garden with rose garden, alpine garden, natural history museum, and a small zoo. The <strong>rose garden in June is spectacular</strong> — hundreds of varieties in peak bloom. Flat paths, many benches, café. Far fewer tourists than Luxembourg. Combine with mint tea at the Grande Mosquée de Paris next door (separate entrance, 2 min walk).",
+    address:"57 Rue Cuvier, 75005 Paris",
+    maps:"https://maps.google.com/?q=Jardin+des+Plantes+Paris",
+    prices:[{name:"Gardens", cost:"Free"}, {name:"Natural History Museum", cost:"€10"}, {name:"Zoo (Ménagerie)", cost:"€13"}],
+    mob:"🟢 LOW — Flat, many benches, café. Rose garden peak in June."
+  },
+  monceau: {
+    name:"Parc Monceau", icon:"🏞️",
+    desc:"English-style garden in the elegant 8th arrondissement. Roman colonnade (a folly), picturesque bridge over a duck pond, carousel, weeping willows. Flat, winding paths, benches everywhere. A genuine local secret — almost zero tourists. Very compact — you can experience it all in 30 minutes of gentle walking. Surrounded by beautiful Haussmann townhouses.",
+    address:"35 Boulevard de Courcelles, 75008 Paris",
+    maps:"https://maps.google.com/?q=Parc+Monceau+Paris",
+    prices:[{name:"Entry", cost:"Free"}],
+    mob:"🟢 LOW — Flat, benches, very compact. Opens 7:00am."
+  },
+  vosges: {
+    name:"Place des Vosges", icon:"🏛️",
+    desc:"Paris's oldest planned square (1605), in the heart of the Marais. Perfect red-brick symmetry, arcaded ground floor, central fountain, manicured lawns. Sit under the arcades on shaded benches, or on the grass. Victor Hugo's house is here — a free museum dedicated to the author of Les Misérables. Art galleries under the arcades. Cafés on the square.",
+    address:"Place des Vosges, 75004 Paris",
+    maps:"https://maps.google.com/?q=Place+des+Vosges+Paris",
+    prices:[{name:"Square + Victor Hugo's House", cost:"Free"}],
+    mob:"🟢 LOW — Flat, arcade benches, shaded, cafés."
+  },
+  // Restaurants — Bistros
+  pigalle: {
+    name:"Bouillon Pigalle", icon:"🍷",
+    desc:"300-seat brasserie in the 18th, near Montmartre. A true Parisian <em>bouillon</em> — quality traditional food at prices for the masses. Always buzzing with a mix of locals and in-the-know tourists. Egg mayo for under €3. No reservations for small groups — show up and queue (the line moves fast, 15–25 min typical). Flat street-level entry, spacious interior.",
+    address:"22 Boulevard de Clichy, 75018 Paris",
+    maps:"https://maps.google.com/?q=Bouillon+Pigalle+Paris",
+    prices:[{name:"Starters", cost:"€1.90–5"}, {name:"Mains", cost:"€10–15"}, {name:"Desserts", cost:"€3.50–6"}, {name:"Full meal + wine per person", cost:"~€20–28"}],
+    bookLabel:"No reservation needed for small groups — queue at the door",
+    mob:"🟢 LOW — Flat entry, spacious. Can reserve online for groups."
+  },
+  arlots: {
+    name:"Les Arlots", icon:"🥩",
+    desc:"SoPi (South Pigalle) gem on a quiet street off rue des Martyrs. Daily changing menu, hearty comfort food, <strong>under €30 for a full meal.</strong> Small and intimate — reserve ahead (essential). Always full of locals for both lunch and dinner. Flat street-level entry. Known for exceptional sausages and mashed potatoes (sounds simple, is transcendent).",
+    address:"3 Rue des Arlots, 75010 Paris",
+    maps:"https://maps.google.com/?q=Les+Arlots+Paris",
+    prices:[{name:"Lunch formula (starter+main or main+dessert)", cost:"€19"}, {name:"Dinner à la carte", cost:"~€25–35"}],
+    bookLabel:"Call to reserve — +33 1 42 82 08 14",
+    mob:"🟢 LOW — Flat entry."
+  },
+  bongeorges: {
+    name:"Le Bon Georges", icon:"🍾",
+    desc:"Corner bistro in the 9th's Saint-Georges neighborhood. Won <strong>Wine List of the Year 2024</strong> — exceptional selection. Transforms from a casual daytime bistro into an upscale wine-lover's evening spot. They nail the classics: chef's tartare, chocolate mousse, and the côte de boeuf for two. Flat entry.",
+    address:"45 Rue Saint-Georges, 75009 Paris",
+    maps:"https://maps.google.com/?q=Le+Bon+Georges+Paris",
+    prices:[{name:"Starters", cost:"€9–16"}, {name:"Mains", cost:"€22–34"}, {name:"Côte de boeuf for 2", cost:"€68"}, {name:"Full meal + wine per person", cost:"~€40–55"}],
+    bookLabel:"Reserve online — lebongeorges.com",
+    bookUrl:"https://www.lebongeorges.com/",
+    mob:"🟢 LOW — Flat entry."
+  },
+  chartier: {
+    name:"Bouillon Chartier", icon:"🕯️",
+    desc:"Historic 1896 dining hall in the 9th. Listed as a historic monument. Waiters in black waistcoats and white aprons write your order directly on the paper tablecloth. Classic French dishes at old-world prices. The Belle Époque decor — brass racks, globe lights, wood paneling — is worth the visit alone. Can be noisy and chaotic. Flat entry from the street.",
+    address:"7 Rue du Faubourg Montmartre, 75009 Paris",
+    maps:"https://maps.google.com/?q=Bouillon+Chartier+Paris",
+    prices:[{name:"Starters", cost:"€1.90–6"}, {name:"Mains", cost:"€9–14.50"}, {name:"Desserts", cost:"€3–6"}, {name:"Full meal + wine per person", cost:"~€20–28"}],
+    bookLabel:"No reservations — queue. Go before 7pm or after 9:30pm for shorter wait.",
+    mob:"🟢 LOW — Flat entry. Can be noisy."
+  },
+  republique: {
+    name:"Bouillon République", icon:"🍽️",
+    desc:"Sister restaurant to Bouillon Pigalle, same concept, newer and larger space. Same great-value traditional French food — egg mayo, leeks vinaigrette, steak frites, profiteroles — in a grand Art Deco setting overlooking Place de la République. Easier to get a table than Pigalle. Flat entry, accessible restroom. Less chaotic atmosphere.",
+    address:"39 Boulevard de Magenta, 75010 Paris",
+    maps:"https://maps.google.com/?q=Bouillon+Republique+Paris",
+    prices:[{name:"Starters", cost:"€1.90–5"}, {name:"Mains", cost:"€10–15"}, {name:"Full meal + wine per person", cost:"~€20–28"}],
+    bookLabel:"Reserve online — bouillonlesite.com",
+    bookUrl:"https://www.bouillonlesite.com/",
+    mob:"🟢 LOW — Flat entry, accessible restroom, larger space."
+  },
+  janou: {
+    name:"Chez Janou", icon:"🍫",
+    desc:"Provençal bistro tucked behind Place des Vosges in the Marais. The famous <strong>chocolate mousse</strong> is served from a giant ceramic bowl — the waiter scoops as much as you want directly onto your plate. Also excellent ratatouille, pastis (50+ varieties), and southern French wines. Flat entry but <strong>tight interior</strong> — request a ground-floor table when booking.",
+    address:"2 Rue Roger Verlomme, 75003 Paris",
+    maps:"https://maps.google.com/?q=Chez+Janou+Paris",
+    prices:[{name:"Mains", cost:"€18–28"}, {name:"Chocolate mousse (unlimited)", cost:"€9.50"}, {name:"Full meal + wine per person", cost:"~€35–45"}],
+    bookLabel:"Reserve by phone — +33 1 42 72 28 41 (essential, books out days ahead)",
+    mob:"🟡 MOD — Flat entry, tight interior. Request ground-floor table."
+  },
+  // Casual
+  mokonuts: {
+    name:"Mokonuts", icon:"🍪",
+    desc:"Japanese-Lebanese couple's tiny 12-table restaurant near Bastille. Small daily menu of creative, seasonal dishes with Middle Eastern flair. The <strong>cookies</strong> are legendary — miso-sesame, olive oil-white chocolate. Only open breakfast and lunch (no dinner). Flat entry, tight space. Almost always full — go at opening (8:30am for breakfast, noon for lunch) or be prepared to wait.",
+    address:"53 Rue du Faubourg Saint-Antoine, 75011 Paris",
+    maps:"https://maps.google.com/?q=Mokonuts+Paris",
+    prices:[{name:"Lunch (daily special + cookie)", cost:"~€15–20"}, {name:"Cookies (takeaway)", cost:"€3 each"}],
+    mob:"🟡 MOD — Flat entry, tight space. 12 tables."
+  },
+  afendi: {
+    name:"Afendi", icon:"🧆",
+    desc:"Father-son duo bringing Lebanese street food to the 10th arrondissement with passion. Bright, casual, affordable. Mezze platters, falafel, manakish (Lebanese flatbreads), shawarma. Fresh ingredients, generous portions. Flat entry, casual counter-service style — order at the counter, food brought to your table.",
+    address:"11 Rue de Mazagran, 75010 Paris",
+    maps:"https://maps.google.com/?q=Afendi+Paris",
+    prices:[{name:"Mezze platter", cost:"€12–16"}, {name:"Manakish", cost:"€5–8"}, {name:"Full meal per person", cost:"~€12–18"}],
+    mob:"🟢 LOW — Flat entry, counter service, casual."
+  },
+  fallafel: {
+    name:"L'As du Fallafel", icon:"🥙",
+    desc:"<strong>The</strong> falafel in Paris. A Marais institution since 1979. The line stretching down rue des Rosiers moves fast — 10–15 minutes. Get the <em>falafel spécial</em> (with grilled eggplant, hummus, tahini, and pickled cabbage). Takeaway is the move — the interior is tiny and cramped. Walk 3 minutes to Place des Vosges and eat on a shaded bench.",
+    address:"34 Rue des Rosiers, 75004 Paris",
+    maps:"https://maps.google.com/?q=L+As+du+Fallafel+Paris",
+    prices:[{name:"Falafel Spécial (takeaway)", cost:"€8–10"}, {name:"Sit-down menu", cost:"~€15–18"}],
+    mob:"🟢 LOW — Takeaway. Eat in Place des Vosges (3 min walk)."
+  },
+  breizh: {
+    name:"Breizh Café", icon:"🥞",
+    desc:"Buckwheat galettes (savory crêpes) from Brittany, served with dry cider on tap. The <strong>Complète</strong> (ham, gruyère, fried egg) is the classic. Also sweet crêpes for dessert — salted butter caramel is the move. Multiple locations; the Marais original (rue Vieille du Temple) is the best. Flat entry, decent space, accessible.",
+    address:"109 Rue Vieille du Temple, 75003 Paris",
+    maps:"https://maps.google.com/?q=Breizh+Cafe+Marais+Paris",
+    prices:[{name:"Galette (savory main)", cost:"€9–14"}, {name:"Sweet crêpe (dessert)", cost:"€6–10"}, {name:"Bowl of dry cider", cost:"€5–8"}, {name:"Full meal per person", cost:"~€20–30"}],
+    bookLabel:"Reserve online — breizhcafe.com",
+    bookUrl:"https://www.breizhcafe.com/",
+    mob:"🟢 LOW — Flat entry, decent space."
+  }
+};
+
+// ── MODAL LOGIC ─────────────────────────────────────
+const overlay = document.getElementById('modalOverlay');
+const content = document.getElementById('modalContent');
+
+function openModal(id) {
+  const d = DATA[id];
+  if (!d) return;
+  let pricesHtml = '';
+  if (d.prices) {
+    pricesHtml = d.prices.map(p =>
+      `<div class="price-tier"><span class="tier-name">${p.name}</span><span class="tier-cost">${p.cost}</span></div>`
+    ).join('');
+  }
+  let bookHtml = '';
+  if (d.bookUrl) {
+    bookHtml = `<div class="detail-row"><div class="detail-label">🎟️ BOOKING</div><div class="detail-value"><a href="${d.bookUrl}" target="_blank" rel="noopener">${d.bookLabel || d.bookUrl} ↗</a></div></div>`;
+  } else if (d.bookLabel) {
+    bookHtml = `<div class="detail-row"><div class="detail-label">🎟️ BOOKING</div><div class="detail-value">${d.bookLabel}</div></div>`;
+  }
+
+  content.innerHTML = `
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h3>${d.icon} ${d.name}</h3>
+    <div class="modal-mob"><span class="mob ${d.mob.includes('LOW')?'low':d.mob.includes('MOD')?'mod':d.mob.includes('HIGH')?'high':'vhigh'}">${d.mob}</span></div>
+    <div class="modal-desc">${d.desc}</div>
+    <div class="detail-row"><div class="detail-label">📍 ADDRESS</div><div class="detail-value">${d.address}</div></div>
+    <div class="detail-row"><div class="detail-label">🗺️ MAPS</div><div class="detail-value"><a href="${d.maps}" target="_blank" rel="noopener">Open in Google Maps ↗</a></div></div>
+    ${d.prices ? `<div class="detail-row"><div class="detail-label">💰 PRICES</div>${pricesHtml}</div>` : ''}
+    ${bookHtml}
+  `;
+  overlay.classList.add('open');
+  document.body.classList.add('modal-open');
+}
+
+function closeModal() {
+  overlay.classList.remove('open');
+  document.body.classList.remove('modal-open');
+}
+
+// Click on cards
+document.querySelectorAll('.card[data-modal]').forEach(card => {
+  card.addEventListener('click', () => openModal(card.dataset.modal));
+});
+
+// Click overlay background to close
+overlay.addEventListener('click', (e) => {
+  if (e.target === overlay) closeModal();
+});
+
+// ESC to close
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal();
+});
+</script>
 
 </body>
 </html>
