@@ -161,6 +161,8 @@
   <a href="#hidden">Hidden Gems</a>
   <a href="#gardens">Parks &amp; Gardens</a>
   <a href="#cruise">Seine Cruise</a>
+  <a href="#versailles">👑 Versailles</a>
+  <a href="#fashion">👗 Fashion Museums</a>
   <a href="#bistros">Bistros</a>
   <a href="#casual">Casual Eats</a>
   <a href="#views">✨ View Restaurants</a>
@@ -371,6 +373,38 @@
     <div class="card" data-modal="monceau"><div class="card-icon">🏞️</div><div class="card-name">Parc Monceau</div><div class="card-desc">English garden, Roman columns, duck pond. Local secret, zero tourists.</div><span class="mob low">🟢 LOW</span><div class="card-hint">👆 Click for details</div></div>
     <div class="card" data-modal="vosges"><div class="card-icon">🏛️</div><div class="card-name">Place des Vosges</div><div class="card-desc">Oldest planned square (1605). Arcades, fountain, grass. Shaded benches.</div><span class="mob low">🟢 LOW</span><div class="card-hint">👆 Click for details</div></div>
   </div>
+</section>
+
+<!-- ===== VERSAILLES ===== -->
+<section id="versailles">
+  <h2>👑 Day Trip — Palace of Versailles &amp; Marie Antoinette's Estate</h2>
+  <p>The ultimate Paris day trip. <strong>Book a full day — you need it.</strong> 35 minutes by RER C train from central Paris.</p>
+
+  <div class="card-grid">
+    <div class="card" data-modal="versaillesPalace"><div class="card-icon">🏰</div><div class="card-name">Palace of Versailles</div><div class="card-desc">The most opulent palace in Europe. Hall of Mirrors, King's State Apartments, 2,300 rooms. Go Tuesday–Sunday (closed Mondays).</div><span class="mob high">🟠 HIGH</span><div class="mob-notes">Enormous — hours of walking. Wheelchairs available. Skip the crowds: book the 9am first slot.</div><div class="card-hint">👆 Click for prices &amp; booking</div></div>
+
+    <div class="card" data-modal="trianon"><div class="card-icon">🌸</div><div class="card-name">Petit Trianon &amp; Marie Antoinette's Hamlet</div><div class="card-desc">Marie Antoinette's private escape from court life. The Hamlet is a faux-rustic village she built to play shepherdess. The most romantic part of Versailles.</div><span class="mob mod">🟡 MOD</span><div class="mob-notes">Gravel paths, some walking between buildings. Benches in the Hamlet gardens. The Petit Train shuttle connects the palace to Trianon — USE IT to save steps.</div><div class="card-hint">👆 Click for prices &amp; booking</div></div>
+
+    <div class="card" data-modal="versaillesGardens"><div class="card-icon">🌿</div><div class="card-name">Versailles Gardens</div><div class="card-desc">800 hectares of formal French gardens. Musical Fountains Show (weekends spring–summer). Rent a golf cart or take the Petit Train — the gardens are vast.</div><span class="mob mod">🟡 MOD</span><div class="mob-notes">Massive — use a golf cart (€38/hr) or the Petit Train. Fountains show is magical. Weekends only for fountains.</div><div class="card-hint">👆 Click for details</div></div>
+  </div>
+
+  <div class="tip purple"><div class="tip-title">📋 Versailles Mobility Strategy</div><p style="margin:0;"><strong>Rent a golf cart for the gardens</strong> — it's the single best thing you can do. Take the Petit Train from the palace to Petit Trianon (saves 2km of walking each way). Book the <strong>Passport with Timed Entry</strong> (€32) — covers everything. Go on a Tuesday or Wednesday (fewer crowds than weekends, and the fountains show runs Tuesdays too in summer).</p></div>
+</section>
+
+<!-- ===== FASHION MUSEUMS ===== -->
+<section id="fashion">
+  <h2>👗 Paris Fashion Museums — Star's Dream Day</h2>
+  <p>Paris is the world's fashion capital. These are the museums and experiences that make a fashion lover's heart stop.</p>
+
+  <div class="card-grid">
+    <div class="card" data-modal="dior"><div class="card-icon">✨</div><div class="card-name">La Galerie Dior</div><div class="card-desc"><strong>⭐ The crown jewel.</strong> A museum inside Dior's original atelier at 30 Avenue Montaigne. The iconic staircase dressed in Dior creations, the Bar Suit, rooms dedicated to each Creative Director. Pure fashion heaven.</div><span class="mob low">🟢 LOW</span><div class="card-hint">👆 Click for prices &amp; booking</div></div>
+
+    <div class="card" data-modal="galliera"><div class="card-icon">🏛️</div><div class="card-name">Palais Galliera — Fashion Museum</div><div class="card-desc">Paris's official fashion museum in a stunning 19th-century palace. Rotating exhibitions covering the history of fashion from the 18th century to today.</div><span class="mob low">🟢 LOW</span><div class="card-hint">👆 Click for prices &amp; booking</div></div>
+
+    <div class="card" data-modal="montaigne"><div class="card-icon">🛍️</div><div class="card-name">Avenue Montaigne</div><div class="card-desc">Paris's most elegant shopping street. Dior, Chanel, Louis Vuitton, Valentino flagship stores. Window shopping here is an experience — the window displays are art installations.</div><span class="mob low">🟢 LOW</span><div class="card-hint">👆 Click for details</div></div>
+  </div>
+
+  <div class="tip purple"><div class="tip-title">💡 Star's Fashion Day Itinerary</div><p style="margin:0"><strong>Morning:</strong> La Galerie Dior (book 10am slot, €15). <strong>Late morning:</strong> Walk Avenue Montaigne — window shop the flagships (all within 5 min walk). <strong>Lunch:</strong> L'Avenue (see-and-be-seen terrace, €40–60, book ahead). <strong>Afternoon:</strong> Palais Galliera (€14, 15 min walk or 5 min taxi). <strong>Evening:</strong> Cocktails at Café de l'Homme with the Eiffel Tower.</p></div>
 </section>
 
 <!-- ===== BISTROS ===== -->
@@ -1130,7 +1164,17 @@ const DATA = {
     bookLabel:"Reserve — lesombres-restaurant.com (book evening slot that includes the sparkle)",
     bookUrl:"https://www.lesombres-restaurant.com/",
     mob:"🟢 LOW — Elevator to rooftop. Flat, spacious, accessible."
-  }
+  },
+
+  // 👑 VERSAILLES
+  versaillesPalace:{name:"Palace of Versailles",desc:"The most opulent palace in Europe — the seat of French royalty from Louis XIV to Louis XVI. <strong>Hall of Mirrors</strong> (73m long, 357 mirrors, where the Treaty of Versailles was signed in 1919), King's Grand Apartments, Queen's Bedchamber, and the Royal Chapel. <strong>Book the Passport with Timed Entry (€32) — includes everything.</strong> Go at 9am (first slot) and head straight to the Hall of Mirrors before it fills up. 35 min by RER C from central Paris (€7.30 round trip). Closed Mondays.",address:"Place d'Armes, 78000 Versailles",maps:"https://maps.google.com/?q=Palace+of+Versailles",prices:[{name:"Passport with Timed Entry (palace + gardens + Trianon)",cost:"€32"},{name:"Palace only",cost:"€21"},{name:"EU residents under 26",cost:"Free"},{name:"RER C train round trip from Paris",cost:"€7.30"}],bookLabel:"Official — chateauversailles.fr (book Passport days ahead, especially for weekends)",bookUrl:"https://www.chateauversailles.fr/"},
+  trianon:{name:"Petit Trianon & Marie Antoinette's Hamlet",desc:"Marie Antoinette's private escape from the suffocating formality of court life. The <strong>Petit Trianon</strong> is a neoclassical château given to her by Louis XVI with the words \"To you who love flowers, I offer this bouquet.\" The <strong>Queen's Hamlet</strong> is a faux-rustic village with a working farm, mill, dairy, and cottage garden — she played shepherdess here with her closest friends. The most romantic, least crowded part of Versailles. <strong>Take the Petit Train</strong> from the palace (€8.50 round trip) — saves 2km of walking each way.",address:"Le Petit Trianon, 78000 Versailles",maps:"https://maps.google.com/?q=Petit+Trianon+Versailles",prices:[{name:"Included in Passport ticket",cost:"—"},{name:"Petit Train shuttle (round trip)",cost:"€8.50"},{name:"Trianon only ticket",cost:"€12"}],bookLabel:"Included in Passport. Petit Train tickets at the palace entrance."},
+  versaillesGardens:{name:"Versailles Gardens",desc:"800 hectares of formal French gardens designed by André Le Nôtre. The <strong>Musical Fountains Show</strong> (weekends + some Tuesdays, spring–summer) is magical — the fountains dance to Baroque music. The Grand Canal (where Louis XIV held naval battle reenactments). <strong>Rent a golf cart</strong> (€38/hour) — the gardens are vast and this is a game-changer for limited mobility. Or take the Petit Train (€8.50) that loops through the gardens stopping at the Grand Trianon and Petit Trianon.",address:"Gardens of Versailles, 78000 Versailles",maps:"https://maps.google.com/?q=Gardens+of+Versailles",prices:[{name:"Gardens (non-fountain days)",cost:"Free"},{name:"Musical Fountains Show days",cost:"€10.50"},{name:"Golf cart rental (per hour)",cost:"€38"},{name:"Petit Train (round trip)",cost:"€8.50"}],bookLabel:"No booking for gardens. Golf carts first-come at the garden entrance."},
+
+  // 👗 FASHION
+  dior:{name:"La Galerie Dior",desc:"<strong>⭐ Star's #1 fashion destination in Paris.</strong> A museum inside Dior's original atelier at 30 Avenue Montaigne — the legendary address where Christian Dior founded the house in 1946. The iconic <strong>staircase</strong> is dressed in miniature Dior creations from floor to ceiling — the most Instagrammable fashion moment in Paris. The Bar Suit (1947), rooms dedicated to each Creative Director (Yves Saint Laurent, Marc Bohan, Gianfranco Ferré, John Galliano, Raf Simons, Maria Grazia Chiuri), and the enchanted garden room. The café-restaurant <strong>Monsieur Dior</strong> on-site is superb. <strong>Book 1–2 weeks ahead.</strong>",address:"30 Avenue Montaigne, 75008 Paris",maps:"https://maps.google.com/?q=La+Galerie+Dior+Paris",prices:[{name:"Adult",cost:"€15"},{name:"Under 26",cost:"€10"},{name:"Monsieur Dior café (lunch)",cost:"€40–60"}],bookLabel:"Official — galeriedior.com (book 1–2 weeks ahead)",bookUrl:"https://www.galeriedior.com/"},
+  galliera:{name:"Palais Galliera — Fashion Museum",desc:"Paris's official fashion museum, housed in a stunning 19th-century Italian Renaissance palace with a garden. Rotating exhibitions — past shows have covered Chanel, Lanvin, Margiela, and the history of underwear. The permanent collection holds 200,000+ items from the 18th century to today: Marie Antoinette's era garments, Worth, Poiret, Chanel, Dior, Balenciaga. The building itself is worth the visit. 15 min walk or 5 min taxi from Avenue Montaigne. Check the current exhibition before going — it changes. Closed Mondays.",address:"10 Avenue Pierre 1er de Serbie, 75116 Paris",maps:"https://maps.google.com/?q=Palais+Galliera+Paris",prices:[{name:"Adult",cost:"€14"},{name:"Under 18 / EU 18–25",cost:"Free"}],bookLabel:"Official — palaisgalliera.paris.fr (check current exhibition)",bookUrl:"https://www.palaisgalliera.paris.fr/"},
+  montaigne:{name:"Avenue Montaigne",desc:"Paris's most elegant shopping street in the Golden Triangle (8th arrondissement). Flagship stores within 500m: <strong>Dior</strong> (30 Avenue Montaigne — the original, now with La Galerie Dior museum), <strong>Chanel</strong> (42 Avenue Montaigne), <strong>Louis Vuitton</strong> (22 Avenue Montaigne), <strong>Valentino</strong>, <strong>Prada</strong>, <strong>Fendi</strong>. The window displays are art installations — world-class visual merchandisers compete here. Even without buying, the walk is stunning. Flat, wide sidewalks, benches at the Rond-Point des Champs-Élysées (3 min walk).",address:"Avenue Montaigne, 75008 Paris",maps:"https://maps.google.com/?q=Avenue+Montaigne+Paris",prices:[{name:"Window shopping",cost:"Free"},cost:{name:"Lunch at L'Avenue (see-and-be-seen terrace)",cost:"€40–60"}],bookLabel:"No booking for walking. L'Avenue restaurant: reserve ahead."}
 };
 
 // ── MODAL LOGIC ─────────────────────────────────────
