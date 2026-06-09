@@ -37,11 +37,15 @@
   .hero .tagline { font-size:14px; color:var(--amber); margin-top:10px; }
 
   .top-nav {
-    display:flex; gap:8px; flex-wrap:wrap; margin-bottom:28px;
-    padding:12px 0; border-bottom:1px solid var(--border);
+    display:flex; gap:6px; flex-wrap:nowrap; margin-bottom:28px;
+    padding:10px 0; border-bottom:1px solid var(--border);
     position:sticky; top:0; background:var(--bg); z-index:10;
+    overflow-x:auto; scroll-behavior:smooth;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
   }
-  .top-nav a { font-size:12px; color:var(--text2); text-decoration:none; padding:4px 10px; border-radius:6px; transition:background 0.15s; }
+  .top-nav::-webkit-scrollbar { display:none; }
+  .top-nav a { font-size:11px; color:var(--text2); text-decoration:none; padding:4px 9px; border-radius:6px; transition:background 0.15s; white-space:nowrap; flex-shrink:0; }
   .top-nav a:hover { background:var(--surface); color:var(--text); }
 
   section { margin-bottom:40px; }
