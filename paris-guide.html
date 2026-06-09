@@ -1186,6 +1186,61 @@ overlay.addEventListener('click', (e) => {
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal();
 });
+
+// ── SCROLLSPY: Highlight active nav + auto-scroll nav ──
+const nav = document.querySelector('.top-nav');
+const navLinks = nav.querySelectorAll('a');
+
+// Build a map of section id → link element
+const sectionMap = {};
+navLinks.forEach(link => {
+  const href = link.getAttribute('href');
+  if (href && href.startsWith('#')) {
+    const id = href.slice(1);
+    const section = document.getElementById(id);
+    if (section) sectionMap[id] = { link, section };
+  }
+});
+
+// Active link style (injected via a class to avoid !important wars)
+const activeStyle = document.createElement('style');
+activeStyle.textContent = '.top-nav a.active { color: #60a5fa !important; background: rgba(96,165,250,0.12); }';
+document.head.appendChild(activeStyle);
+
+function setActive(id) {
+  navLinks.forEach(l => l.classList.remove('active'));
+  const entry = sectionMap[id];
+  if (!entry) return;
+  entry.link.classList.add('active');
+  // Scroll the nav horizontally to keep the active link visible
+  const linkLeft = entry.link.offsetLeft;
+  const linkRight = linkLeft + entry.link.offsetWidth;
+  const navScroll = nav.scrollLeft;
+  const navWidth = nav.offsetWidth;
+  if (linkRight > navScroll + navWidth) {
+    nav.scrollTo({ left: linkRight - navWidth + 16, behavior: 'smooth' });
+  } else if (linkLeft < navScroll + 8) {
+    nav.scrollTo({ left: linkLeft - 16, behavior: 'smooth' });
+  }
+}
+
+// IntersectionObserver: fires when sections enter/leave viewport
+const observer = new IntersectionObserver((entries) => {
+  // Collect all sections currently intersecting
+  const visible = entries
+    .filter(e => e.isIntersecting)
+    .map(e => e.target.id);
+  if (visible.length > 0) {
+    // Use the first visible section (topmost in DOM)
+    setActive(visible[0]);
+  }
+}, {
+  rootMargin: '-20% 0px -70% 0px', // triggers when section is in the upper 30% of screen
+  threshold: 0
+});
+
+// Observe all sections
+Object.values(sectionMap).forEach(({ section }) => observer.observe(section));
 </script>
 
 </body>
