@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>European Destinations Guide — Summer 2026</title>
+<style>
+  :root {
+    --bg: #0f1117; --surface: #1a1d27; --surface2: #222532;
+    --border: rgba(255,255,255,0.06); --text: #e4e6ef; --text2: #9ca0b0;
+    --green: #4ade80; --amber: #fbbf24; --orange: #fb923c; --red: #f87171;
+    --blue: #60a5fa; --purple: #a78bfa; --pink: #f472b6; --radius: 10px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Inter',-apple-system,BlinkMacSystemFont,system-ui,sans-serif; background:var(--bg); color:var(--text); line-height:1.6; }
+  body.modal-open { overflow:hidden; }
+  .container { max-width:880px; margin:0 auto; padding:20px 16px 60px; }
+  .hero { text-align:center; padding:48px 0 36px; border-bottom:1px solid var(--border); margin-bottom:28px; }
+  .hero .flag { font-size:56px; margin-bottom:12px; }
+  .hero h1 { font-size:30px; font-weight:800; }
+  .hero .subtitle { color:var(--text2); font-size:15px; margin-top:6px; }
+
+  .top-nav { display:flex; gap:6px; flex-wrap:nowrap; margin-bottom:28px; padding:10px 0; border-bottom:1px solid var(--border); position:sticky; top:0; background:var(--bg); z-index:10; overflow-x:auto; scroll-behavior:smooth; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
+  .top-nav::-webkit-scrollbar { display:none; }
+  .top-nav a { font-size:11px; color:var(--text2); text-decoration:none; padding:4px 9px; border-radius:6px; white-space:nowrap; flex-shrink:0; transition:background 0.15s; }
+  .top-nav a:hover { background:var(--surface); color:var(--text); }
+  .top-nav a.active { color:#60a5fa !important; background:rgba(96,165,250,0.12); }
+
+  section { margin-bottom:44px; }
+  h2 { font-size:22px; font-weight:700; margin-bottom:8px; padding-bottom:10px; border-bottom:1px solid var(--border); }
+  h3 { font-size:17px; font-weight:600; margin:24px 0 12px; color:var(--text); }
+  p { margin-bottom:14px; font-size:15px; color:var(--text2); }
+  strong { color:var(--text); }
+
+  .city-banner { width:100%; height:180px; border-radius:var(--radius); object-fit:cover; margin-bottom:18px; border:1px solid var(--border); }
+  .city-intro { font-size:14px; color:var(--text2); margin-bottom:16px; line-height:1.6; }
+
+  .card-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:12px; margin-bottom:18px; }
+  .card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:0 0 14px 0; cursor:pointer; transition:border-color 0.2s,background 0.2s; overflow:hidden; }
+  .card:hover { border-color:var(--blue); background:var(--surface2); }
+  .card-img { width:100%; height:130px; object-fit:cover; }
+  .card-body { padding:14px 16px 0; }
+  .card .card-icon { font-size:24px; margin-bottom:4px; display:inline-block; }
+  .card .card-name { font-weight:700; font-size:14px; margin-bottom:4px; }
+  .card .card-desc { font-size:12px; color:var(--text2); line-height:1.5; }
+  .card .card-hint { font-size:10px; color:var(--blue); margin-top:8px; opacity:0; transition:opacity 0.2s; }
+  .card:hover .card-hint { opacity:1; }
+
+  .table-wrap { overflow-x:auto; margin-bottom:16px; border-radius:var(--radius); border:1px solid var(--border); }
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  th { text-align:left; padding:8px 12px; background:var(--surface2); color:var(--text2); font-size:10px; text-transform:uppercase; letter-spacing:0.5px; font-weight:600; }
+  td { padding:8px 12px; border-top:1px solid var(--border); vertical-align:top; }
+
+  .tip { border-radius:var(--radius); padding:12px 16px; margin-bottom:12px; border-left:4px solid; font-size:13px; }
+  .tip.green { background:rgba(74,222,128,0.08); border-color:var(--green); }
+  .tip.amber { background:rgba(251,191,36,0.08); border-color:var(--amber); }
+  .tip.purple { background:rgba(167,139,250,0.08); border-color:var(--purple); }
+  .tip .tip-title { font-weight:700; margin-bottom:4px; }
+  .tip.green .tip-title { color:var(--green); }
+  .tip.amber .tip-title { color:var(--amber); }
+  .tip.purple .tip-title { color:var(--purple); }
+
+  /* Modal */
+  .modal-overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.75); z-index:100; align-items:center; justify-content:center; padding:20px; overflow-y:auto; }
+  .modal-overlay.open { display:flex; }
+  .modal { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); max-width:520px; width:100%; padding:28px 24px 24px; position:relative; animation:modalIn 0.2s ease-out; }
+  @keyframes modalIn { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+  .modal-close { position:absolute; top:12px; right:16px; background:none; border:none; color:var(--text2); font-size:22px; cursor:pointer; padding:4px 8px; border-radius:6px; }
+  .modal-close:hover { background:var(--surface2); color:var(--text); }
+  .modal h3 { font-size:20px; margin:0 0 14px; padding-right:30px; }
+  .modal .detail-row { margin-bottom:14px; }
+  .modal .detail-label { font-size:10px; color:var(--text2); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:3px; }
+  .modal .detail-value { font-size:13px; color:var(--text); }
+  .modal .detail-value a { color:var(--blue); text-decoration:none; }
+  .modal .price-tier { display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid var(--border); font-size:12px; }
+  .modal .price-tier .tier-name { color:var(--text); }
+  .modal .price-tier .tier-cost { color:var(--green); font-weight:600; }
+  .modal .modal-desc { font-size:13px; color:var(--text2); line-height:1.6; margin-bottom:14px; }
+
+  footer { margin-top:40px; padding-top:20px; border-top:1px solid var(--border); text-align:center; font-size:11px; color:var(--text2); }
+  footer a { color:var(--blue); text-decoration:none; }
+
+  @media(max-width:500px) { .hero h1{font-size:22px} .card-grid{grid-template-columns:1fr} .modal{padding:20px 16px} .city-banner{height:130px} }
+</style>
+</head>
+<body>
+<div class="container">
+<div class="hero">
+  <div class="flag">🇪🇺</div>
+  <h1>European Destinations Guide</h1>
+  <div class="subtitle">Curated by Hermes · Summer 2026</div>
+  <p style="margin-top:12px;font-size:12px;color:var(--blue)">👆 Click any card for full details — address, pricing, Google Maps &amp; booking</p>
+</div>
+
+<nav class="top-nav">
+  <a href="#rome">🇮🇹 Rome</a><a href="#venice">🇮🇹 Venice</a><a href="#florence">🇮🇹 Florence</a>
+  <a href="#madrid">🇪🇸 Madrid</a><a href="#barcelona">🇪🇸 Barcelona</a>
+  <a href="#rijeka">🇭🇷 Rijeka</a>
+  <a href="#berlin">🇩🇪 Berlin</a><a href="#munich">🇩🇪 Munich</a>
+  <a href="#prague">🇨🇿 Prague</a>
+  <a href="#copenhagen">🇩🇰 Copenhagen</a><a href="#stockholm">🇸🇪 Stockholm</a><a href="#oslo">🇳🇴 Oslo</a>
+  <a href="#budapest">🇭🇺 Budapest</a><a href="#vienna">🇦🇹 Vienna</a>
+  <a href="#amsterdam">🇳🇱 Amsterdam</a><a href="#lisbon">🇵🇹 Lisbon</a>
+</nav>
+
+<!-- ===== DESTINATIONS ===== -->
+
+<!-- ROME -->
+<article id="rome"><section>
+  <img class="city-banner" src="https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=880&q=80" alt="Rome Colosseum" loading="lazy">
+  <h2>🇮🇹 Rome — The Eternal City</h2>
+  <p class="city-intro">Ancient ruins, Vatican grandeur, and pasta that will ruin Italian food everywhere else. Rome is loud, chaotic, and absolutely intoxicating. Give it at least 3 days — anything less and you'll feel robbed.</p>
+  <h3>🌟 Top Sights</h3>
+  <div class="card-grid">
+    <div class="card" data-modal="colosseum"><img class="card-img" src="https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=400&q=80" alt="Colosseum" loading="lazy"><div class="card-body"><div class="card-name">Colosseum</div><div class="card-desc">The iconic Roman amphitheater. Book the underground + arena floor tour.</div><div class="card-hint">👆 Click for details</div></div></div>
+    <div class="card" data-modal="vatican"><img class="card-img" src="https://images.unsplash.com/photo-1519996529934-28241f3067f0?w=400&q=80" alt="Vatican" loading="lazy"><div class="card-body"><div class="card-name">Vatican Museums &amp; St. Peter's</div><div class="card-desc">Sistine Chapel ceiling. Book early morning before public hours.</div><div class="card-hint">👆 Click for details</div></div></div>
+    <div class="card" data-modal="trevi"><img class="card-img" src="https://images.unsplash.com/photo-1529154036614-a60975f5c760?w=400&q=80" alt="Trevi Fountain" loading="lazy"><div class="card-body"><div class="card-name">Trevi Fountain &amp; Pantheon</div><div class="card-desc">Toss a coin. Then walk 5 min to the Pantheon — free, 2000 years old, still standing.</div><div class="card-hint">👆 Click for details</div></div></div>
+  </div>
+  <h3>🍝 Where to Eat</h3>
+  <div class="card-grid">
+    <div class="card" data-modal="armando"><div class="card-body"><span class="card-icon">🍝</span><div class="card-name">Armando al Pantheon</div><div class="card-desc">Classic Roman dishes since 1961. Cacio e pepe, carbonara, amatriciana. Book weeks ahead.</div><div class="card-hint">👆 Click for details</div></div></div>
+    <div class="card" data-modal="roscioli"><div class="card-body"><span class="card-icon">🧀</span><div class="card-name">Roscioli Salumeria</div><div class="card-desc">Deli-restaurant hybrid. Burrata, carbonara, wine cellar. The best lunch in Rome.</div><div class="card-hint">👆 Click for details</div></div></div>
+  </div>
+</section></article>
+
+<!-- VENICE -->
+<article id="venice"><section>
+  <img class="city-banner" src="https://images.unsplash.com/photo-1514890542723-e31e4e71c1ba?w=880&q=80" alt="Venice canals" loading="lazy">
+  <h2>🇮🇹 Venice — The Floating City</h2>
+  <p class="city-intro">No roads, just canals. It's exactly as magical as you've heard — and as crowded. Go early morning or late evening to have it to yourself. Get lost on purpose — every dead-end reveals something beautiful.</p>
+  <h3>🌟 Top Sights</h3>
+  <div class="card-grid">
+    <div class="card" data-modal="sanmarco"><img class="card-img" src="https://images.unsplash.com/photo-1529260833999-45068b1f5817?w=400&q=80" alt="St Mark's Square" loading="lazy"><div class="card-body"><div class="card-name">St. Mark's Square &amp; Basilica</div><div class="card-desc">Golden mosaics, soaring domes. Doge's Palace next door. Book skip-the-line.</div><div class="card-hint">👆 Click for details</div></div></div>
+    <div class="card" data-modal="rialto"><img class="card-img" src="https://images.unsplash.com/photo-1533928299284-99f8e0a54cbd?w=400&q=80" alt="Rialto Bridge" loading="lazy"><div class="card-body"><div class="card-name">Rialto Bridge &amp; Grand Canal</div><div class="card-desc">The iconic white marble bridge. Take a vaporetto (water bus) down the Grand Canal at sunset.</div><div class="card-hint">👆 Click for details</div></div></div>
+    <div class="card" data-modal="burano"><img class="card-img" src="https://images.unsplash.com/photo-1540214605129-50f82bd3ce2f?w=400&q=80" alt="Burano" loading="lazy"><div class="card-body"><div class="card-name">Murano &amp; Burano Islands</div><div class="card-desc">Murano = glassblowing. Burano = rainbow-colored houses. The most photogenic spot in Italy.</div><div class="card-hint">👆 Click for details</div></div></div>
+  </div>
+  <h3>🍷 Where to Eat</h3>
+  <div class="card-grid">
+    <div class="card" data-modal="alleTestiere"><div class="card-body"><span class="card-icon">🐟</span><div class="card-name">Alle Testiere</div><div class="card-desc">Tiny 22-seat seafood spot. Market-fresh daily menu. The best meal in Venice. Book well ahead.</div><div class="card-hint">👆 Click for details</div></div></div>
+  </div>
+</section></article>
+
+<!-- FLORENCE -->
+<article id="florence"><section>
+  <img class="city-banner" src="https://images.unsplash.com/photo-1543429257-3eb0b65d4c58?w=880&q=80" alt="Florence Duomo" loading="lazy">
+  <h2>🇮🇹 Florence — The Cradle of the Renaissance</h2>
+  <p class="city-intro">Michelangelo's David, Brunelleschi's dome, the Uffizi. Florence is an open-air museum — but also home to the best steak in Italy. Compact and walkable; 2–3 days is enough.</p>
+  <h3>🌟 Top Sights</h3>
+  <div class="card-grid">
+    <div class="card" data-modal="duomo"><img class="card-img" src="https://images.unsplash.com/photo-1543429257-3eb0b65d4c58?w=400&q=80" alt="Duomo" loading="lazy"><div class="card-body"><div class="card-name">Duomo &amp; Brunelleschi's Dome</div><div class="card-desc">463 steps to the top. The view of Florence's terracotta roofs is worth every one.</div><div class="card-hint">👆 Click for details</div></div></div>
+    <div class="card" data-modal="uffizi"><div class="card-body"><span class="card-icon">🎨</span><div class="card-name">Uffizi Gallery</div><div class="card-desc">Botticelli's Birth of Venus, da Vinci, Raphael. Book the first slot of the day.</div><div class="card-hint">👆 Click for details</div></div></div>
+    <div class="card" data-modal="vecchio"><div class="card-body"><span class="card-icon">🌉</span><div class="card-name">Ponte Vecchio</div><div class="card-desc">The medieval bridge lined with jewelry shops. Best viewed from Ponte Santa Trinità at sunset.</div><div class="card-hint">👆 Click for details</div></div></div>
+  </div>
+  <h3>🥩 Where to Eat</h3>
+  <div class="card-grid">
+    <div class="card" data-modal="trattoriaMario"><div class="card-body"><span class="card-icon">🥩</span><div class="card-name">Trattoria Mario</div><div class="card-desc">No-frills since 1953. Lunch only, communal tables. Bistecca alla Fiorentina — the real deal.</div><div class="card-hint">👆 Click for details</div></div></div>
+  </div>
+</section></article>
+
+<!-- MADRID -->
+<article id="madrid"><section>
+  <img class="city-banner" src="https://images.unsplash.com/photo-1539037116278-57f73530f622?w=880&q=80" alt="Madrid" loading="lazy">
+  <h2>🇪🇸 Madrid — Art, Tapas &amp; Late Nights</h2>
+  <p class="city-intro">Spain's capital runs on art museums by day and tapas bars by night. Dinner at 10pm is normal. The Prado, Reina Sofía, and Thyssen form the "Golden Triangle of Art."</p>
+  <h3>🌟 Top Sights</h3>
+  <div class="card-grid">
+    <div class="card" data-modal="prado"><div class="card-body"><span class="card-icon">🖼️</span><div class="card-name">Prado Museum</div><div class="card-desc">Velázquez, Goya, El Greco. One of the world's greatest collections. Free entry 6–8pm Mon–Sat.</div><div class="card-hint">👆 Click for details</div></div></div>
+    <div class="card" data-modal="palacioReal"><div class="card-body"><span class="card-icon">👑</span><div class="card-name">Royal Palace</div><div class="card-desc">The largest functioning royal palace in Europe. 3,418 rooms. Opulent beyond belief.</div><div class="card-hint">👆 Click for details</div></div></div>
+    <div class="card" data-modal="retiro"><div class="card-body"><span class="card-icon">🌳</span><div class="card-name">El Retiro Park</div><div class="card-desc">Madrid's green lung. Row a boat on the lake, visit the Crystal Palace. Perfect afternoon rest.</div><div class="card-hint">👆 Click for details</div></div></div>
+  </div>
+  <h3>🍤 Where to Eat</h3>
+  <div class="card-grid">
+    <div class="card" data-modal="botin"><div class="card-body"><span class="card-icon">🐷</span><div class="card-name">Sobrino de Botín</div><div class="card-desc">Oldest restaurant in the world (1725). Hemingway's spot. Roast suckling pig. Book ahead.</div><div class="card-hint">👆 Click for details</div></div></div>
+  </div>
+</section></article>
+
+<!-- BARCELONA -->
+<article id="barcelona"><section>
+  <img class="city-banner" src="https://images.unsplash.com/photo-1583422409516-2895a77efded?w=880&q=80" alt="Barcelona" loading="lazy">
+  <h2>🇪🇸 Barcelona — Gaudí, Beaches &amp; Catalan Soul</h2>
+  <p class="city-intro">Antoni Gaudí's architectural fantasies define this Mediterranean city. Add a Gothic Quarter, world-class food, and actual beaches — Barcelona has it all.</p>
+  <h3>🌟 Top Sights</h3>
+  <div class="card-grid">
+    <div class="card" data-modal="sagrada"><img class="card-img" src="https://images.unsplash.com/photo-1583779457094-ab6f77f7bf4f?w=400&q=80" alt="Sagrada Familia" loading="lazy"><div class="card-body"><div class="card-name">Sagrada Família</div><div class="card-desc">Gaudí's unfinished masterpiece — 140 years in the making. The interior forest of columns is transcendent.</div><div class="card-hint">👆 Click for details</div></div></div>
+    <div class="card" data-modal="parkguell"><div class="card-body"><span class="card-icon">🦎</span><div class="card-name">Park Güell</div><div class="card-desc">Gaudí's whimsical garden city. Mosaic salamander, gingerbread houses, sweeping city views.</div><div class="card-hint">👆 Click for details</div></div></div>
+  </div>
+  <h3>🥘 Where to Eat</h3>
+  <div class="card-grid">
+    <div class="card" data-modal="calpep"><div class="card-body"><span class="card-icon">🦐</span><div class="card-name">Cal Pep</div><div class="card-desc">Legendary tapas counter in El Born. No menu — point at what looks good. Arrive early or queue.</div><div class="card-hint">👆 Click for details</div></div></div>
+  </div>
+</section></article>
+
+<!-- RIJEKA -->
+<article id="rijeka"><section>
+  <img class="city-banner" src="https://images.unsplash.com/photo-1591287083773-9a52ebbbf693?w=880&q=80" alt="Rijeka Croatia" loading="lazy">
+  <h2>🇭🇷 Rijeka — Croatia's Underrated Coastal Gem</h2>
+  <p class="city-intro">Croatia's third-largest city, often overlooked for Dubrovnik and Split. Austro-Hungarian architecture, a lively café culture, and easy access to the stunning Kvarner Gulf islands. Gritty, authentic, cool.</p>
+  <h3>🌟 Top Sights</h3>
+  <div class="card-grid">
+    <div class="card" data-modal="trsat"><div class="card-body"><span class="card-icon">🏰</span><div class="card-name">Trsat Castle</div><div class="card-desc">Hilltop fortress with panoramic views over Rijeka and the Adriatic. 13th century. Free entry.</div><div class="card-hint">👆 Click for details</div></div></div>
+    <div class="card" data-modal="korzo"><div class="card-body"><span class="card-icon">☕</span><div class="card-name">Korzo Promenade</div><div class="card-desc">The city's main pedestrian street. Cafés, Habsburg buildings, city clock tower. Rijeka's living room.</div><div class="card-hint">👆 Click for details</div></div></div>
+    <div class="card" data-modal="opatija"><div class="card-body"><span class="card-icon">🌊</span><div class="card-name">Opatija (Day Trip)</div><div class="card-desc">20 min away. Belle Époque seaside resort. Lungomare coastal promenade, 12km of Adriatic views.</div><div class="card-hint">👆 Click for details</div></div></div>
+  </div>
+</section></article>
+
+<!-- BERLIN -->
+<article id="berlin"><section>
+  <img class="city-banner" src="https://images.unsplash.com/photo-1560969184-10fe8719e047?w=880&q=80" alt="Berlin Brandenburg Gate" loading="lazy">
+  <h2>🇩🇪 Berlin — History, Art &amp; Beer Gardens</h2>
+  <p class="city-intro">A city shaped by its 20th-century scars and 21st-century creativity. The Wall is gone but everywhere remembered. World-class museums by day, legendary nightlife after dark, beer gardens in between.</p>
+  <h3>🌟 Top Sights</h3>
+  <div class="card-grid">
+    <div class="card" data-modal="brandenburg"><img class="card-img" src="https://images.unsplash.com/photo-1560969184-10fe8719e047?w=400&q=80" alt="Brandenburg Gate" loading="lazy"><div class="card-body"><div class="card-name">Brandenburg Gate &amp; Reichstag</div><div class="card-desc">Berlin's icon. Reichstag dome (free, book ahead) — glass spiral ramp with city views.</div><div class="card-hint">👆 Click for details</div></div></div>
+    <div class="card" data-modal="eastside"><div class="card-body"><span class="card-icon">🎨</span><div class="card-name">East Side Gallery</div><div class="card-desc">1.3km of the Berlin Wall covered in murals. Open-air, free, deeply moving.</div><div class="card-hint">👆 Click for details</div></div></div>
+    <div class="card" data-modal="museumIsland"><div class="card-body"><span class="card-icon">🏛️</span><div class="card-name">Museum Island</div><div class="card-desc">Five world-class museums on one island. Pergamon Altar, Nefertiti bust, Ishtar Gate.</div><div class="card-hint">👆 Click for details</div></div></div>
+  </div>
+  <h3>🍺 Where to Eat &amp; Drink</h3>
+  <div class="card-grid">
+    <div class="card" data-modal="prater"><div class="card-body"><span class="card-icon">🍺</span><div class="card-name">Prater Garten</div><div class="card-desc">Berlin's oldest beer garden (1837). 600 seats under chestnut trees. Pretzels, bratwurst, cold pilsner.</div><div class="card-hint">👆 Click for details</div></div></div>
+  </div>
+</section></article>
+
+<!-- MUNICH -->
+<article id="munich"><section>
+  <img class="city-banner" src="https://images.unsplash.com/photo-1595867818082-083862f3d630?w=880&q=80" alt="Munich" loading="lazy">
+  <h2>🇩🇪 Munich — Bavarian Charm &amp; Alpine Views</h2>
+  <p class="city-intro">Lederhosen aren't just for tourists — Bavarians actually wear them. Beer halls, Baroque palaces, and the Alps an hour away. The most livable big city in Germany.</p>
+  <h3>🌟 Top Sights</h3>
+  <div class="card-grid">
+    <div class="card" data-modal="marienplatz"><div class="card-body"><span class="card-icon">🕰️</span><div class="card-name">Marienplatz &amp; Glockenspiel</div><div class="card-desc">The central square. The Rathaus-Glockenspiel performs daily at 11am &amp; noon. Tourist trap? Yes. Worth it? Also yes.</div><div class="card-hint">👆 Click for details</div></div></div>
+    <div class="card" data-modal="englischer"><div class="card-body"><span class="card-icon">🌊</span><div class="card-name">English Garden</div><div class="card-desc">Bigger than Central Park. Surfers on the Eisbach wave. Nude sunbathers (yes, really). Chinese Tower beer garden.</div><div class="card-hint">👆 Click for details</div></div></div>
+  </div>
+  <h3>🍻 Where to Eat</h3>
+  <div class="card-grid">
+    <div class="card" data-modal="hofbrauhaus"><div class="card-body"><span class="card-icon">🍺</span><div class="card-name">Hofbräuhaus</div><div class="card-desc">The world's most famous beer hall. Touristy, loud, and absolutely essential. Maß (1L) of Helles + Schweinshaxe.</div><div class="card-hint">👆 Click for details</div></div></div>
+  </div>
+</section></article>
+
+<!-- PRAGUE -->
+<article id="prague"><section>
+  <img class="city-banner" src="https://images.unsplash.com/photo-1519677100202-a0e7e5f7b9b5?w=880&q=80" alt="Prague" loading="lazy">
+  <h2>🇨🇿 Prague — The City of a Hundred Spires</h2>
+  <p class="city-intro">One of Europe's best-preserved medieval cities. Charles Bridge at dawn, Prague Castle looming above, cheap excellent beer. It's fairy-tale beautiful and surprisingly affordable.</p>
+  <h3>🌟 Top Sights</h3>
+  <div class="card-grid">
+    <div class="card" data-modal="charlesBridge"><img class="card-img" src="https://images.unsplash.com/photo-1519677100202-a0e7e5f7b9b5?w=400&q=80" alt="Charles Bridge" loading="lazy"><div class="card-body"><div class="card-name">Charles Bridge</div><div class="card-desc">14th-century stone bridge lined with baroque statues. Go at sunrise — you'll have it almost to yourself.</div><div class="card-hint">👆 Click for details</div></div></div>
+    <div class="card" data-modal="castle"><div class="card-body"><span class="card-icon">🏰</span><div class="card-name">Prague Castle &amp; St. Vitus</div><div class="card-desc">Largest ancient castle in the world. St. Vitus Cathedral inside is a Gothic masterpiece.</div><div class="card-hint">👆 Click for details</div></div></div>
+  </div>
+  <h3>🍺 Where to Eat</h3>
+  <div class="card-grid">
+    <div class="card" data-modal="lokal"><div class="card-body"><span class="card-icon">🍺</span><div class="card-name">Lokál Dlouhááá</div><div class="card-desc">Fresh Pilsner Urquell tank beer + classic Czech dishes. Svíčková (beef in cream sauce) is the move.</div><div class="card-hint">👆 Click for details</div></div></div>
+  </div>
+</section></article>
+
+<!-- COPENHAGEN -->
+<article id="copenhagen"><section>
+  <img class="city-banner" src="https://images.unsplash.com/photo-1513622470522-26c51c93a354?w=880&q=80" alt="Copenhagen Nyhavn" loading="lazy">
+  <h2>🇩🇰 Copenhagen — Design, Hygge &amp; World-Class Food</h2>
+  <p class="city-intro">The happiest capital in Europe. Colorful Nyhavn waterfront, cutting-edge design, and more Michelin stars per capita than almost anywhere. Expensive but worth every krone.</p>
+  <h3>🌟 Top Sights</h3>
+  <div class="card-grid">
+    <div class="card" data-modal="nyhavn"><img class="card-img" src="https://images.unsplash.com/photo-1513622470522-26c51c93a354?w=400&q=80" alt="Nyhavn" loading="lazy"><div class="card-body"><div class="card-name">Nyhavn</div><div class="card-desc">The iconic colorful harbor. Old wooden ships, canal-side cafés. Tourist central — but the photos don't lie.</div><div class="card-hint">👆 Click for details</div></div></div>
+    <div class="card" data-modal="tivoli"><div class="card-body"><span class="card-icon">🎢</span><div class="card-name">Tivoli Gardens</div><div class="card-desc">Second-oldest amusement park in the world (1843). Walt Disney visited and got inspired to build Disneyland.</div><div class="card-hint">👆 Click for details</div></div></div>
+  </div>
+  <h3>🍽️ Where to Eat</h3>
+  <div class="card-grid">
+    <div class="card" data-modal="torvehallerne"><div class="card-body"><span class="card-icon">🛒</span><div class="card-name">Torvehallerne Market</div><div class="card-desc">Upscale food hall. Smørrebrød (open-faced sandwiches), fresh seafood, Danish pastries. Great for lunch.</div><div class="card-hint">👆 Click for details</div></div></div>
+  </div>
+</section></article>
+
+<!-- STOCKHOLM -->
+<article id="stockholm"><section>
+  <img class="city-banner" src="https://images.unsplash.com/photo-1508184500596-2a06fdcc8174?w=880&q=80" alt="Stockholm" loading="lazy">
+  <h2>🇸🇪 Stockholm — Beauty on Water</h2>
+  <p class="city-intro">Built across 14 islands on Lake Mälaren and the Baltic Sea. Gamla Stan (Old Town) is one of Europe's best-preserved medieval centers. Clean, stylish, effortlessly cool.</p>
+  <h3>🌟 Top Sights</h3>
+  <div class="card-grid">
+    <div class="card" data-modal="gamlaStan"><img class="card-img" src="https://images.unsplash.com/photo-1508184500596-2a06fdcc8174?w=400&q=80" alt="Gamla Stan" loading="lazy"><div class="card-body"><div class="card-name">Gamla Stan (Old Town)</div><div class="card-desc">Cobblestone streets, ochre buildings, the Royal Palace. Narrowest alley in Stockholm: Mårten Trotzigs Gränd.</div><div class="card-hint">👆 Click for details</div></div></div>
+    <div class="card" data-modal="vasa"><div class="card-body"><span class="card-icon">🚢</span><div class="card-name">Vasa Museum</div><div class="card-desc">A 17th-century warship that sank on its maiden voyage, perfectly preserved. The most visited museum in Scandinavia.</div><div class="card-hint">👆 Click for details</div></div></div>
+  </div>
+</section></article>
+
+<!-- OSLO -->
+<article id="oslo"><section>
+  <img class="city-banner" src="https://images.unsplash.com/photo-1600164242236-fce8d7c2831b?w=880&q=80" alt="Oslo" loading="lazy">
+  <h2>🇳🇴 Oslo — Fjords, Vikings &amp; Modern Architecture</h2>
+  <p class="city-intro">Surrounded by forest and fjord. The opera house you can walk on, Viking ships from the 9th century, and a sauna culture that ends with a jump in the freezing Oslofjord.</p>
+  <h3>🌟 Top Sights</h3>
+  <div class="card-grid">
+    <div class="card" data-modal="opera"><img class="card-img" src="https://images.unsplash.com/photo-1600164242236-fce8d7c2831b?w=400&q=80" alt="Oslo Opera House" loading="lazy"><div class="card-body"><div class="card-name">Oslo Opera House</div><div class="card-desc">Walk up the angled white marble roof. Panoramic views of the fjord and islands. Free, always open.</div><div class="card-hint">👆 Click for details</div></div></div>
+    <div class="card" data-modal="vikings"><div class="card-body"><span class="card-icon">⚔️</span><div class="card-name">Viking Ship Museum</div><div class="card-desc">Three actual Viking ships from the 9th century. Burial chambers, sleds, tools. Pure Norse history.</div><div class="card-hint">👆 Click for details</div></div></div>
+  </div>
+</section></article>
+
+<!-- BUDAPEST -->
+<article id="budapest"><section>
+  <img class="city-banner" src="https://images.unsplash.com/photo-1565008576549-57569c0576f7?w=880&q=80" alt="Budapest" loading="lazy">
+  <h2>🇭🇺 Budapest — Thermal Baths &amp; Ruin Bars</h2>
+  <p class="city-intro">The Danube splits Buda (hilly, historic) from Pest (flat, vibrant). Thermal baths in grand 16th-century buildings, ruin bars in abandoned courtyards, and some of the best value dining in Europe.</p>
+  <h3>🌟 Top Sights</h3>
+  <div class="card-grid">
+    <div class="card" data-modal="parliament"><img class="card-img" src="https://images.unsplash.com/photo-1565008576549-57569c0576f7?w=400&q=80" alt="Parliament" loading="lazy"><div class="card-body"><div class="card-name">Hungarian Parliament</div><div class="card-desc">Neo-Gothic masterpiece on the Danube. Book a guided tour inside — the crown jewels are there.</div><div class="card-hint">👆 Click for details</div></div></div>
+    <div class="card" data-modal="szechenyi"><div class="card-body"><span class="card-icon">♨️</span><div class="card-name">Széchenyi Thermal Bath</div><div class="card-desc">Largest medicinal bath in Europe. Outdoor pools, chess-playing old men, 38°C water. Pure Budapest.</div><div class="card-hint">👆 Click for details</div></div></div>
+  </div>
+  <h3>🍽️ Where to Eat</h3>
+  <div class="card-grid">
+    <div class="card" data-modal="gundel"><div class="card-body"><span class="card-icon">🥞</span><div class="card-name">Gundel</div><div class="card-desc">Budapest's most famous restaurant since 1894. Gundel palacsinta (flambéed crêpe). Splurge territory.</div><div class="card-hint">👆 Click for details</div></div></div>
+  </div>
+</section></article>
+
+<!-- VIENNA -->
+<article id="vienna"><section>
+  <img class="city-banner" src="https://images.unsplash.com/photo-1516550893926-f5c6f57685d3?w=880&q=80" alt="Vienna" loading="lazy">
+  <h2>🇦🇹 Vienna — Imperial Grandeur &amp; Coffee Houses</h2>
+  <p class="city-intro">The former capital of the Habsburg Empire. Schönbrunn Palace, world-class opera, and UNESCO-listed coffee house culture. Elegant, clean, and surprisingly warm.</p>
+  <h3>🌟 Top Sights</h3>
+  <div class="card-grid">
+    <div class="card" data-modal="schonbrunn"><img class="card-img" src="https://images.unsplash.com/photo-1516550893926-f5c6f57685d3?w=400&q=80" alt="Schönbrunn" loading="lazy"><div class="card-body"><div class="card-name">Schönbrunn Palace</div><div class="card-desc">The Habsburg summer palace. 1,441 rooms, gardens that rival Versailles. The Imperial Tour is essential.</div><div class="card-hint">👆 Click for details</div></div></div>
+    <div class="card" data-modal="central"><div class="card-body"><span class="card-icon">☕</span><div class="card-name">Café Central</div><div class="card-desc">The cathedral of Viennese coffee houses. Freud, Trotsky, and Lenin were regulars. Melange + Sachertorte.</div><div class="card-hint">👆 Click for details</div></div></div>
+  </div>
+</section></article>
+
+<!-- AMSTERDAM -->
+<article id="amsterdam"><section>
+  <img class="city-banner" src="https://images.unsplash.com/photo-1534351590666-13e3e96b5017?w=880&q=80" alt="Amsterdam" loading="lazy">
+  <h2>🇳🇱 Amsterdam — Canals, Bikes &amp; Golden Age Art</h2>
+  <p class="city-intro">More canals than Venice, more bikes than people. Rijksmuseum for Rembrandt, Van Gogh Museum, canal boat rides, and brown cafés (bruin cafés) — cozy pubs unchanged for centuries.</p>
+  <h3>🌟 Top Sights</h3>
+  <div class="card-grid">
+    <div class="card" data-modal="rijks"><div class="card-body"><span class="card-icon">🖼️</span><div class="card-name">Rijksmuseum</div><div class="card-desc">Rembrandt's Night Watch, Vermeer, Dutch Masters. The grandest museum in the Netherlands.</div><div class="card-hint">👆 Click for details</div></div></div>
+    <div class="card" data-modal="annefrank"><div class="card-body"><span class="card-icon">📖</span><div class="card-name">Anne Frank House</div><div class="card-desc">The hidden annex where Anne wrote her diary. Deeply moving. <strong>Book 6 weeks ahead.</strong></div><div class="card-hint">👆 Click for details</div></div></div>
+    <div class="card" data-modal="canalCruise"><div class="card-body"><span class="card-icon">🚤</span><div class="card-name">Canal Cruise</div><div class="card-desc">See the canal ring (UNESCO World Heritage) from the water. Evening cruises with wine are the move.</div><div class="card-hint">👆 Click for details</div></div></div>
+  </div>
+</section></article>
+
+<!-- LISBON -->
+<article id="lisbon"><section>
+  <img class="city-banner" src="https://images.unsplash.com/photo-1585208798174-6cedd86e019a?w=880&q=80" alt="Lisbon" loading="lazy">
+  <h2>🇵🇹 Lisbon — Seven Hills, Pastéis de Nata &amp; Fado</h2>
+  <p class="city-intro">Built on seven hills overlooking the Tagus River. Pastel-colored buildings, vintage trams, melancholic fado music, and the best-value dining in Western Europe. Bring good walking shoes — those hills are real.</p>
+  <h3>🌟 Top Sights</h3>
+  <div class="card-grid">
+    <div class="card" data-modal="belem"><div class="card-body"><span class="card-icon">🗼</span><div class="card-name">Belém Tower &amp; Jerónimos</div><div class="card-desc">UNESCO World Heritage. Manueline architecture. Get pastéis de nata at Pastéis de Belém — the original since 1837.</div><div class="card-hint">👆 Click for details</div></div></div>
+    <div class="card" data-modal="alfama"><div class="card-body"><span class="card-icon">🎵</span><div class="card-name">Alfama District</div><div class="card-desc">The oldest neighborhood. Narrow alleys, fado music drifting from taverns, miradouros (viewpoints).</div><div class="card-hint">👆 Click for details</div></div></div>
+    <div class="card" data-modal="tram28"><div class="card-body"><span class="card-icon">🚋</span><div class="card-name">Tram 28</div><div class="card-desc">The vintage yellow tram rattling through the city's prettiest streets. Go early morning to avoid crowds.</div><div class="card-hint">👆 Click for details</div></div></div>
+  </div>
+  <h3>🍽️ Where to Eat</h3>
+  <div class="card-grid">
+    <div class="card" data-modal="cervesaria"><div class="card-body"><span class="card-icon">🦞</span><div class="card-name">Cervejaria Ramiro</div><div class="card-desc">The temple of seafood. Garlic shrimp, percebes (goose barnacles), prego steak sandwich for dessert. Queue or book.</div><div class="card-hint">👆 Click for details</div></div></div>
+  </div>
+</section></article>
+
+<footer>
+  <p>Curated by Hermes · <a href="paris-guide.html">← Paris Guide</a> · <a href="index.html">← Safety Briefing</a></p>
+  <p style="margin-top:4px">Photos via Unsplash · <a href="https://github.com/totalwindupflightsystems/reports">totalwindupflightsystems/reports</a></p>
+</footer>
+</div>
+
+<!-- ===== MODAL OVERLAY ===== -->
+<div class="modal-overlay" id="modalOverlay"><div class="modal" id="modalContent"></div></div>
+
+<script>
+const DATA = {
+  // ITALY
+  colosseum:{name:"Colosseum",desc:"The iconic Roman amphitheater, completed in 80 AD. Could hold 50,000 spectators. <strong>Book the underground + arena floor + upper tier tour</strong> — you'll see the hypogeum (underground chambers where gladiators and animals waited) and stand where they fought. Standard tickets skip these areas. Go at opening (8:30am) or late afternoon.",address:"Piazza del Colosseo, 1, 00184 Roma",maps:"https://maps.google.com/?q=Colosseum+Rome",prices:[{name:"Standard adult",cost:"€18"},{name:"Underground + Arena + Upper Tier tour",cost:"€32"},{name:"EU citizens 18–25",cost:"€4"},{name:"Under 18",cost:"Free"}],bookLabel:"Official — coopculture.it (releases 30 days ahead)",bookUrl:"https://www.coopculture.it/"},
+  vatican:{name:"Vatican Museums & St. Peter's",desc:"The Sistine Chapel (Michelangelo's ceiling and Last Judgment), Raphael Rooms, Gallery of Maps, and St. Peter's Basilica. <strong>Book the early morning Prime Tour (7:30am)</strong> — you enter before the public and see the Sistine Chapel almost empty. St. Peter's Basilica is free (separate entrance). Dress code: covered shoulders and knees.",address:"Viale Vaticano, 00165 Roma",maps:"https://maps.google.com/?q=Vatican+Museums",prices:[{name:"Standard adult",cost:"€17"},{name:"Prime Tour (early morning, before opening)",cost:"€68"},{name:"St. Peter's Basilica",cost:"Free"},{name:"St. Peter's Dome (elevator + stairs)",cost:"€10"}],bookLabel:"Official — museivaticani.va",bookUrl:"https://www.museivaticani.va/"},
+  trevi:{name:"Trevi Fountain & Pantheon",desc:"Toss a coin over your left shoulder into the Trevi Fountain — legend says it guarantees a return to Rome. Then walk 5 minutes to the <strong>Pantheon</strong> — a 2000-year-old temple turned church, with the world's largest unreinforced concrete dome. The oculus in the center is open to the sky. Free entry (€5 on weekends/holidays for the Pantheon).",address:"Piazza di Trevi, 00187 Roma",maps:"https://maps.google.com/?q=Trevi+Fountain+Rome",prices:[{name:"Trevi Fountain",cost:"Free"},{name:"Pantheon",cost:"Free (€5 weekends)"}],bookLabel:"Pantheon — portaleservizi.pantheonroma.it (weekends)"},
+  armando:{name:"Armando al Pantheon",desc:"Classic Roman trattoria since 1961, a stone's throw from the Pantheon. Family-run, tiny, and fiercely traditional. <strong>Cacio e pepe</strong> (pecorino + black pepper), <strong>carbonara</strong> (no cream — ever), <strong>amatriciana</strong>. The holy trinity of Roman pasta done perfectly. Only 8–10 tables — book 3+ weeks ahead or try for a lunch walk-in at opening.",address:"Salita dei Crescenzi, 31, 00186 Roma",maps:"https://maps.google.com/?q=Armando+al+Pantheon+Rome",prices:[{name:"Pasta dishes",cost:"€14–18"},{name:"Full meal + wine per person",cost:"~€35–45"}],bookLabel:"Book by phone — +39 06 6880 3034 (3+ weeks ahead)"},
+  roscioli:{name:"Roscioli Salumeria",desc:"Part deli, part restaurant, part wine bar — all exceptional. The burrata is flown in daily from Puglia. The carbonara is widely considered the best in Rome. 3,000+ wine labels in the cellar. Sit at the counter facing the hanging salumi. Book for lunch (easier) or dinner (weeks ahead).",address:"Via dei Giubbonari, 21, 00186 Roma",maps:"https://maps.google.com/?q=Roscioli+Rome",prices:[{name:"Pasta",cost:"€16–22"},{name:"Burrata",cost:"€15"},{name:"Full meal + wine per person",cost:"~€45–60"}],bookLabel:"Book online — roscioli.com",bookUrl:"https://www.roscioli.com/"},
+  // VENICE
+  sanmarco:{name:"St. Mark's Square & Basilica",desc:"The heart of Venice. The Basilica's golden mosaics cover 8,000 m². <strong>Book skip-the-line entry</strong> — the queue in summer can be 1+ hours. Doge's Palace next door (the Bridge of Sighs) is equally essential. Go early (before 9am) or late (after 5pm) to avoid cruise ship crowds.",address:"Piazza San Marco, 30124 Venezia",maps:"https://maps.google.com/?q=Piazza+San+Marco+Venice",prices:[{name:"St. Mark's Basilica — Skip-the-line",cost:"€6"},{name:"Doge's Palace",cost:"€30"},{name:"Combined Museum Pass (Palace + 3 museums)",cost:"€40"}],bookLabel:"Official — veneziaunica.it",bookUrl:"https://www.veneziaunica.it/"},
+  rialto:{name:"Rialto Bridge & Grand Canal",desc:"The oldest of the four bridges spanning the Grand Canal (1591). The arcaded ramp lined with shops is pure Venice. <strong>Take the No. 1 vaporetto</strong> (water bus) from Piazzale Roma to San Marco at sunset — it's a €9.50 Grand Canal cruise. The Rialto Market nearby (fish + produce, mornings only) is a local institution.",address:"Rialto Bridge, 30125 Venezia",maps:"https://maps.google.com/?q=Rialto+Bridge+Venice",prices:[{name:"Vaporetto single ticket (75 min)",cost:"€9.50"},{name:"24-hour vaporetto pass",cost:"€25"}],bookLabel:"No booking needed for bridge/market. Vaporetto pass — veneziaunica.it"},
+  burano:{name:"Murano & Burano Islands",desc:"<strong>Murano</strong> = glassblowing demonstrations (free at most factories, you just need to get there). <strong>Burano</strong> = a fishing village of rainbow-colored houses — the single most photogenic spot in Italy. The lace-making tradition here dates back to the 16th century. Take vaporetto line 12 from Fondamente Nove (~45 min). Go early — by 11am it's packed.",address:"Burano, 30142 Venezia",maps:"https://maps.google.com/?q=Burano+Island+Venice",prices:[{name:"Vaporetto to Burano (round trip)",cost:"€19"},count:{name:"Glassblowing demo (Murano)",cost:"Free"}]},
+  alleTestiere:{name:"Alle Testiere",desc:"Tiny 22-seat seafood restaurant in a quiet alley near Campo Santa Maria Formosa. No written menu — the waiter recites what's fresh from the Rialto market that morning. Expect: soft-shell crab, razor clams, Adriatic fish simply grilled. Two seatings (7pm and 9pm). <strong>Book weeks ahead</strong> — this is the hardest reservation in Venice for good reason.",address:"Calle del Mondo Novo, 5801, 30122 Venezia",maps:"https://maps.google.com/?q=Alle+Testiere+Venice",prices:[{name:"Fixed menu (3 courses)",cost:"€55–65"},{name:"À la carte + wine per person",cost:"~€70–85"}],bookLabel:"Book by phone — +39 041 522 7220 (essential, weeks ahead)"},
+  // FLORENCE
+  duomo:{name:"Duomo & Brunelleschi's Dome",desc:"The Cathedral of Santa Maria del Fiore dominates Florence's skyline. Brunelleschi's dome (1436) was the largest in the world and built without scaffolding — still an engineering marvel. <strong>463 steps to the top, no elevator.</strong> The view of terracotta roofs and Tuscan hills is worth every step. Book the combined ticket (includes Baptistery, Giotto's Bell Tower, and the Duomo Museum).",address:"Piazza del Duomo, 50122 Firenze",maps:"https://maps.google.com/?q=Duomo+Florence",prices:[{name:"Combined ticket (all monuments)",cost:"€30"},{name:"Dome climb — 463 steps",cost:"Included in combined"},{name:"Cathedral entry only",cost:"Free"}],bookLabel:"Official — duomo.firenze.it (book dome climb days ahead)",bookUrl:"https://duomo.firenze.it/"},
+  uffizi:{name:"Uffizi Gallery",desc:"One of the world's greatest art museums. Botticelli's <em>Birth of Venus</em> and <em>Primavera</em>, Leonardo da Vinci's <em>Annunciation</em>, works by Raphael, Caravaggio, Titian. The building itself is a 16th-century Medici office complex (uffizi = offices). <strong>Book the 8:15am first slot</strong> and go straight to the Botticelli room before the crowds arrive.",address:"Piazzale degli Uffizi, 6, 50122 Firenze",maps:"https://maps.google.com/?q=Uffizi+Gallery+Florence",prices:[{name:"Adult high season (Mar–Oct)",cost:"€25"},{name:"Adult low season (Nov–Feb)",cost:"€12"}],bookLabel:"Official — uffizi.it (book 2+ weeks ahead)",bookUrl:"https://www.uffizi.it/"},
+  vecchio:{name:"Ponte Vecchio",desc:"The medieval stone bridge lined with jewelry shops — a Florence icon since 1345. Above the shops runs the Vasari Corridor, a secret passage the Medici used to walk between palaces without mixing with commoners. Best viewed from <strong>Ponte Santa Trinità</strong> (the next bridge west) at sunset — that's the postcard shot. Free to cross, free to photograph.",address:"Ponte Vecchio, 50125 Firenze",maps:"https://maps.google.com/?q=Ponte+Vecchio+Florence",prices:[{name:"Crossing/viewing",cost:"Free"}],bookLabel:"No booking needed"},
+  trattoriaMario:{name:"Trattoria Mario",desc:"No-frills Florentine institution since 1953. <strong>Lunch only</strong> (12–3:30pm, Mon–Sat). Communal tables, paper placemats, cash only. The <strong>bistecca alla Fiorentina</strong> — a massive T-bone steak from local Chianina cattle, charred outside, rare inside — is the reason you're here. Also: ribollita (Tuscan bread soup), pappa al pomodoro. Arrive by 11:45am or join the queue.",address:"Via delle Rosina, 2r, 50123 Firenze",maps:"https://maps.google.com/?q=Trattoria+Mario+Florence",prices:[{name:"Bistecca alla Fiorentina (per kg)",cost:"€45/kg"},{name:"Pasta/soup",cost:"€8–12"},{name:"Full meal + wine per person",cost:"~€30–40"}],bookLabel:"No reservations — arrive by 11:45am or queue. Cash only."},
+  // SPAIN
+  prado:{name:"Prado Museum",desc:"Spain's national art museum. Velázquez's <em>Las Meninas</em>, Goya's <em>Third of May 1808</em> and his haunting <em>Black Paintings</em>, Bosch's <em>Garden of Earthly Delights</em>. One of the world's greatest collections of European art. <strong>Free entry Mon–Sat 6–8pm and Sundays 5–7pm</strong> — line up 30 min early.",address:"Calle de Ruiz de Alarcón, 23, 28014 Madrid",maps:"https://maps.google.com/?q=Prado+Museum+Madrid",prices:[{name:"General admission",cost:"€15"},{name:"Mon–Sat 6–8pm / Sun 5–7pm",cost:"Free"},cost:{name:"Audio guide",cost:"€5"}],bookLabel:"Official — museodelprado.es",bookUrl:"https://www.museodelprado.es/"},
+  palacioReal:{name:"Royal Palace of Madrid",desc:"The largest functioning royal palace in Europe. 3,418 rooms — only a fraction are open. Throne room, Royal Armory, Stradivarius room (the world's only matching quartet of Stradivarius instruments). The opulence is staggering. The current king doesn't live here (he's at Zarzuela Palace outside the city) — it's used for state ceremonies.",address:"Calle de Bailén, s/n, 28071 Madrid",maps:"https://maps.google.com/?q=Royal+Palace+Madrid",prices:[{name:"Adult",cost:"€14"},{name:"EU citizens 18–25 / Under 18",cost:"Free"}],bookLabel:"Official — patrimonionacional.es",bookUrl:"https://www.patrimonionacional.es/"},
+  retiro:{name:"El Retiro Park",desc:"Madrid's 125-hectare green lung. The <strong>Crystal Palace</strong> (Palacio de Cristal) — a glass pavilion on a lake — is stunning. Row a boat on the Grand Pond (€6 for 45 min). The <strong>Rose Garden</strong> blooms May–June. Street performers, puppet shows, book stalls. The perfect afternoon escape — shady, flat, benches everywhere.",address:"Plaza de la Independencia, 7, 28001 Madrid",maps:"https://maps.google.com/?q=El+Retiro+Park+Madrid",prices:[{name:"Park entry",cost:"Free"},{name:"Row boat (45 min)",cost:"€6"}]},
+  botin:{name:"Sobrino de Botín",desc:"<strong>The oldest restaurant in the world</strong> (Guinness World Record, est. 1725). Hemingway's favorite (mentioned in <em>The Sun Also Rises</em>). The roast suckling pig (cochinillo asado) and roast lamb are cooked in the original 300-year-old wood-fired oven. Four floors of old-world charm. Book at least a week ahead for dinner.",address:"Calle de Cuchilleros, 17, 28005 Madrid",maps:"https://maps.google.com/?q=Sobrino+de+Botín+Madrid",prices:[{name:"Cochinillo asado (roast suckling pig)",cost:"€28"},{name:"Full meal + wine per person",cost:"~€45–60"}],bookLabel:"Book online — botin.es",bookUrl:"https://www.botin.es/"},
+  sagrada:{name:"Sagrada Família",desc:"Gaudí's unfinished masterpiece — under construction since 1882, target completion 2026 (the centenary of Gaudí's death). The Nativity façade (east) is pure Gaudí; the Passion façade (west) is stark and angular. The <strong>interior forest of branching columns</strong> — designed to feel like trees reaching toward heaven — is transcendent, especially when sunlight streams through the stained glass. <strong>Book 2+ weeks ahead.</strong>",address:"Carrer de Mallorca, 401, 08013 Barcelona",maps:"https://maps.google.com/?q=Sagrada+Familia+Barcelona",prices:[{name:"Basic entry + audio guide",cost:"€26"},{name:"Entry + tower (Nativity or Passion)",cost:"€36"},{name:"Guided tour",cost:"€30"}],bookLabel:"Official — sagradafamilia.org (2+ weeks ahead)",bookUrl:"https://sagradafamilia.org/"},
+  parkguell:{name:"Park Güell",desc:"Gaudí's whimsical garden city — originally planned as a 60-house luxury estate, only 2 were built, now a public park. The mosaic salamander ('El Drac'), the undulating serpentine bench, the gingerbread gatehouses. <strong>Book timed entry</strong> for the Monumental Zone (the famous part). The free section is still beautiful but misses the icons.",address:"Carrer d'Olot, 08024 Barcelona",maps:"https://maps.google.com/?q=Park+Guell+Barcelona",prices:[{name:"Monumental Zone",cost:"€10"},{name:"Free zone",cost:"Free"}],bookLabel:"Official — parkguell.barcelona (book days ahead)",bookUrl:"https://parkguell.barcelona/"},
+  calpep:{name:"Cal Pep",desc:"Legendary tapas counter in El Born. <strong>No menu</strong> — you point at the fresh seafood, vegetables, and meats displayed on the counter and the chef cooks it right in front of you. Gambas al ajillo (garlic shrimp), baby squid with beans, tortilla española. Sit at the counter (the best seats). Arrive at opening (1pm lunch, 7:30pm dinner) or queue. Cash only.",address:"Plaça de les Olles, 8, 08003 Barcelona",maps:"https://maps.google.com/?q=Cal+Pep+Barcelona",prices:[{name:"Tapas (per plate)",cost:"€5–15"},{name:"Full meal + wine per person",cost:"~€35–50"}],bookLabel:"No reservations for counter — arrive at opening. Cash only."},
+  // CROATIA
+  trsat:{name:"Trsat Castle",desc:"13th-century hilltop fortress overlooking Rijeka and the Adriatic. The views stretch to the islands of Krk and Cres on clear days. Climb the 561 steps of the <strong>Petar Kružić Stairway</strong> from the city center (pilgrimage route) or take bus 2 or 8 to the top. Free entry. Café with a view inside the castle walls.",address:"Trsat, 51000 Rijeka",maps:"https://maps.google.com/?q=Trsat+Castle+Rijeka",prices:[{name:"Entry",cost:"Free"},{name:"Café with a view",cost:"~€3–5"}],bookLabel:"No booking needed"},
+  korzo:{name:"Korzo Promenade",desc:"Rijeka's main pedestrian artery since Habsburg times. Lined with pastel-colored 19th-century buildings, cafés with outdoor terraces, and the distinctive <strong>City Clock Tower</strong> (Gradski Toranj). The Korzo is Rijeka's living room — grab a coffee, sit outside, and watch the city go by. The Central Market (fish market pavilion, Art Nouveau) is a 3-minute walk.",address:"Korzo, 51000 Rijeka",maps:"https://maps.google.com/?q=Korzo+Rijeka",prices:[{name:"Coffee on the Korzo",cost:"€1.50–2.50"}],bookLabel:"No booking needed"},
+  opatija:{name:"Opatija (Day Trip)",desc:"20 minutes by bus from Rijeka. A Belle Époque seaside resort favored by Austro-Hungarian aristocracy in the 19th century. The <strong>Lungomare</strong> is a 12km coastal promenade hugging the Adriatic shoreline — flat, paved, benches, stunning views. Villa Angiolina (1844), manicured parks, and the Maiden with the Seagull statue (Opatija's symbol). Perfect half-day trip.",address:"Opatija, 51410 Croatia (20 min from Rijeka)",maps:"https://maps.google.com/?q=Opatija+Croatia",prices:[{name:"Bus Rijeka → Opatija",cost:"€3–4"},{name:"Lungomare promenade",cost:"Free"}],bookLabel:"No booking needed — bus from Rijeka every 30 min"},
+  // GERMANY
+  brandenburg:{name:"Brandenburg Gate & Reichstag",desc:"Berlin's defining symbol — the 18th-century neoclassical gate that once stood in the death strip of the Berlin Wall, now a symbol of reunification. The <strong>Reichstag dome</strong> (glass dome by Norman Foster) offers 360° views and a look down into the parliamentary chamber. <strong>Free but must book online</strong> — reserve 2–4 weeks ahead.",address:"Pariser Platz, 10117 Berlin",maps:"https://maps.google.com/?q=Brandenburg+Gate+Berlin",prices:[{name:"Brandenburg Gate",cost:"Free"},{name:"Reichstag dome",cost:"Free (book ahead)"}],bookLabel:"Reichstag — bundestag.de (book 2–4 weeks ahead)",bookUrl:"https://www.bundestag.de/en/visittheBundestag"},
+  eastside:{name:"East Side Gallery",desc:"1.3km of the original Berlin Wall, preserved as the world's longest open-air gallery. Over 100 murals by artists from 21 countries, painted in 1990 after the Wall fell. The most famous: <strong>Dmitri Vrubel's \"My God, Help Me to Survive This Deadly Love\"</strong> (the Brezhnev-Honecker kiss). Free, always open, deeply moving.",address:"Mühlenstraße 3-100, 10243 Berlin",maps:"https://maps.google.com/?q=East+Side+Gallery+Berlin",prices:[{name:"Entry",cost:"Free"}],bookLabel:"No booking needed — always open, outdoor"},
+  museumIsland:{name:"Museum Island",desc:"Five world-class museums on a single island in the Spree River (UNESCO World Heritage). The <strong>Pergamon Museum</strong> (Pergamon Altar, Ishtar Gate of Babylon) is the crown jewel. The <strong>Neues Museum</strong> houses the iconic bust of Nefertiti (3,300 years old). Buy a Museum Island day pass — best value.",address:"Bodestraße 1-3, 10178 Berlin",maps:"https://maps.google.com/?q=Museum+Island+Berlin",prices:[{name:"Museum Island day pass (all 5)",cost:"€24"},{name:"Single museum",cost:"€12–14"},{name:"Under 18",cost:"Free"}],bookLabel:"Official — smb.museum (book Pergamon ahead)",bookUrl:"https://www.smb.museum/"},
+  prater:{name:"Prater Garten",desc:"Berlin's oldest beer garden, pouring since 1837. 600 seats under ancient chestnut trees in Prenzlauer Berg. House-brewed Prater Pilsner, giant pretzels (Brezeln), bratwurst from the grill. Open April–September. A true Berlin institution — families, students, old-timers, everyone. No reservations for the beer garden — just find a table.",address:"Kastanienallee 7-9, 10435 Berlin",maps:"https://maps.google.com/?q=Prater+Garten+Berlin",prices:[{name:"Maß (1L) of house Pilsner",cost:"€6.50"},{name:"Bratwurst + pretzel",cost:"€8"},{name:"Full meal + drinks per person",cost:"~€15–20"}],bookLabel:"No reservations for beer garden — just show up. Restaurant inside accepts bookings."},
+  marienplatz:{name:"Marienplatz & Glockenspiel",desc:"Munich's central square since 1158. The <strong>Neues Rathaus</strong> (New Town Hall) is a neo-Gothic fantasy with 400 rooms. The <strong>Glockenspiel</strong> (43 bells, 32 life-sized figures) performs daily at 11am and noon (also 5pm in summer) — it reenacts a 16th-century wedding and the coopers' dance. Tourist trap? Absolutely. Worth seeing once? Absolutely.",address:"Marienplatz, 80331 München",maps:"https://maps.google.com/?q=Marienplatz+Munich",prices:[{name:"Watching the Glockenspiel",cost:"Free"}],bookLabel:"No booking needed"},
+  englischer:{name:"English Garden",desc:"One of the world's largest urban parks — bigger than Central Park (NYC) and Hyde Park (London) combined. <strong>Surfers ride a permanent wave</strong> on the Eisbach river (yes, really). The <strong>Chinese Tower beer garden</strong> (Chinesischer Turm) seats 7,000 people — the second-largest in Munich. Also: nude sunbathing (Schönfeldwiese) is legal and popular. Don't be shocked.",address:"Englischer Garten, 80805 München",maps:"https://maps.google.com/?q=English+Garden+Munich",prices:[{name:"Park entry",cost:"Free"},{name:"Maß (1L) at Chinese Tower",cost:"€8.50"}],bookLabel:"No booking needed"},
+  hofbrauhaus:{name:"Hofbräuhaus",desc:"The world's most famous beer hall, founded in 1589 by the Duke of Bavaria. Mozart lived around the corner and drank here. Lenin and Hitler both visited (at different times, obviously). Today: oompah bands, stein-lifting contests, giant pretzels, and <strong>Schweinshaxe</strong> (crispy roast pork knuckle). Loud, touristy, and absolutely essential. The beer hall seats 1,300 — you'll find space.",address:"Platzl 9, 80331 München",maps:"https://maps.google.com/?q=Hofbrauhaus+Munich",prices:[{name:"Maß (1L) of Hofbräu Original",cost:"€9.50"},{name:"Schweinshaxe (pork knuckle)",cost:"€17"},{name:"Full meal + beer per person",cost:"~€25–35"}],bookLabel:"No booking needed for beer hall — find a table. Restaurant upstairs takes reservations."},
+  // PRAGUE
+  charlesBridge:{name:"Charles Bridge",desc:"14th-century stone bridge commissioned by King Charles IV, lined with 30 baroque statues. Connects Old Town to Malá Strana (Lesser Town) below Prague Castle. <strong>Go at sunrise (6am)</strong> — during the day it's shoulder-to-shoulder with tourists and caricature artists. At dawn, you'll share it with a few photographers and the morning light on the castle is pure magic.",address:"Karlův most, 110 00 Praha 1",maps:"https://maps.google.com/?q=Charles+Bridge+Prague",prices:[{name:"Crossing",cost:"Free"}],bookLabel:"No booking needed"},
+  castle:{name:"Prague Castle & St. Vitus",desc:"The largest ancient castle in the world (Guinness World Record) — 70,000 m². Within its walls: <strong>St. Vitus Cathedral</strong> (Gothic masterpiece, 600 years to build, Mucha's stained glass window), the Old Royal Palace, Golden Lane (tiny colorful houses where Kafka lived). Buy Circuit B ticket (covers the essentials). Changing of the guard hourly at the main gate.",address:"Pražský hrad, 119 08 Praha 1",maps:"https://maps.google.com/?q=Prague+Castle",prices:[{name:"Circuit B (Cathedral + Palace + Golden Lane)",cost:"€10"},{name:"Castle grounds",cost:"Free"}],bookLabel:"Official — hrad.cz",bookUrl:"https://www.hrad.cz/"},
+  lokal:{name:"Lokál Dlouhááá",desc:"The gold standard of Czech pub dining. Tankové pivo — <strong>fresh, unpasteurized Pilsner Urquell</strong> delivered directly from the brewery in giant tanks. The svíčková (beef sirloin in cream sauce with cranberries and bread dumplings) is the national dish done right. Fried cheese (smažený sýr) with tartar sauce is the guilty pleasure. Always packed with locals — arrive early or wait.",address:"Dlouhá 33, 110 00 Praha 1",maps:"https://maps.google.com/?q=Lokal+Dlouha+Prague",prices:[{name:"0.5L Pilsner Urquell",cost:"€2.20"},{name:"Svíčková (beef + cream sauce)",cost:"€8"},{name:"Full meal + beer per person",cost:"~€12–18"}],bookLabel:"No reservations — arrive early (before 6pm) or queue."},
+  // COPENHAGEN
+  nyhavn:{name:"Nyhavn",desc:"The iconic 17th-century harbor with colorful townhouses, wooden ships, and canal-side restaurants. Originally a rough sailors' quarter — Hans Christian Andersen lived at No. 20 (and No. 67, and No. 18). The <strong>canal tour boats depart from here</strong> — 1 hour, guided, see the city from the water (€12). Best photos from the bridge halfway down.",address:"Nyhavn, 1051 København K",maps:"https://maps.google.com/?q=Nyhavn+Copenhagen",prices:[{name:"Walking/looking",cost:"Free"},{name:"Canal boat tour (1 hour)",cost:"€12"}],bookLabel:"Canal tours — no booking, buy at departure point"},
+  tivoli:{name:"Tivoli Gardens",desc:"The second-oldest amusement park in the world (1843), and the one that <strong>inspired Walt Disney to build Disneyland</strong>. It's not just rides — it's illuminated gardens, open-air concerts, fine dining, and fairy-tale architecture. Go in the evening when the lights come on — it's pure magic. The wooden roller coaster (1914) still runs. Even if you don't ride anything, just walk through.",address:"Vesterbrogade 3, 1630 København V",maps:"https://maps.google.com/?q=Tivoli+Gardens+Copenhagen",prices:[{name:"Entry only",cost:"€22"},{name:"Entry + unlimited rides",cost:"€45"}],bookLabel:"Official — tivoli.dk",bookUrl:"https://www.tivoli.dk/"},
+  torvehallerne:{name:"Torvehallerne Market",desc:"Copenhagen's upscale food hall near Nørreport Station. 60+ stalls selling everything from <strong>smørrebrød</strong> (Danish open-faced sandwiches) to fresh seafood, artisanal cheese, coffee, and Danish pastries. Hallernes Smørrebrød (stall E7) is the move for lunch — pick 2–3 pieces, eat standing at the high tables. Great for a quick, high-quality lunch without the restaurant price tag.",address:"Frederiksborggade 21, 1360 København K",maps:"https://maps.google.com/?q=Torvehallerne+Copenhagen",prices:[{name:"Smørrebrød (per piece)",cost:"€8–12"},{name:"Coffee + pastry",cost:"€8"}],bookLabel:"No booking needed — open Mon–Fri 10–19, Sat 10–18, Sun 11–17"},
+  // STOCKHOLM
+  gamlaStan:{name:"Gamla Stan (Old Town)",desc:"One of Europe's best-preserved medieval centers, dating to the 13th century. Cobblestone alleys, ochre and terracotta buildings, the <strong>Royal Palace</strong> (official residence of the Swedish monarch), and Stortorget — the oldest square, site of the 1520 Stockholm Bloodbath. The narrowest alley: <strong>Mårten Trotzigs Gränd</strong> — just 90cm wide at its narrowest point.",address:"Gamla Stan, 111 29 Stockholm",maps:"https://maps.google.com/?q=Gamla+Stan+Stockholm",prices:[{name:"Wandering",cost:"Free"},{name:"Royal Palace",cost:"€17"}],bookLabel:"Royal Palace — kungligaslotten.se"},
+  vasa:{name:"Vasa Museum",desc:"A 17th-century warship that <strong>sank on its maiden voyage</strong> in 1628, was salvaged in 1961 virtually intact, and is now the most visited museum in Scandinavia. The ship is 98% original — 69m long, adorned with 700 carved sculptures. It's an astonishing time capsule. The museum is built around the ship at multiple levels. Allow 2 hours.",address:"Galärvarvsvägen 14, 115 21 Stockholm",maps:"https://maps.google.com/?q=Vasa+Museum+Stockholm",prices:[{name:"Adult",cost:"€17"},{name:"Under 18",cost:"Free"}],bookLabel:"Official — vasamuseet.se",bookUrl:"https://www.vasamuseet.se/"},
+  // OSLO
+  opera:{name:"Oslo Opera House",desc:"The building you can <strong>walk on top of</strong>. The angled white marble and granite roof rises directly from the Oslofjord — climb to the top for panoramic views of the fjord, islands, and the city. Free, always open, day or night. The interior is equally stunning — the main auditorium is a horseshoe of warm oak. Guided tours available (€14).",address:"Kirsten Flagstads Plass 1, 0150 Oslo",maps:"https://maps.google.com/?q=Oslo+Opera+House",prices:[{name:"Roof access",cost:"Free"},{name:"Guided tour (50 min)",cost:"€14"}],bookLabel:"No booking for roof. Guided tour — operaen.no",bookUrl:"https://www.operaen.no/"},
+  vikings:{name:"Viking Ship Museum",desc:"Three actual 9th-century Viking ships — the Oseberg (the most complete, with intricate carvings), Gokstad, and Tune. Excavated from burial mounds where they served as tombs for Viking nobility. Alongside the ships: sleds, carts, tools, textiles, and skeletal remains. A raw, direct connection to the Viking Age. On the Bygdøy peninsula (ferry from the city center).",address:"Huk Aveny 35, 0287 Oslo",maps:"https://maps.google.com/?q=Viking+Ship+Museum+Oslo",prices:[{name:"Adult",cost:"€12"},{name:"Under 18",cost:"Free"}],bookLabel:"Official — khm.uio.no",bookUrl:"https://www.khm.uio.no/"},
+  // BUDAPEST
+  parliament:{name:"Hungarian Parliament",desc:"The third-largest parliament building in the world, a Neo-Gothic masterpiece on the Danube bank. 691 rooms, 20km of corridors, 40kg of gold leaf used in the interior. The <strong>Holy Crown of Hungary</strong> (dating to the 12th century) is displayed under 24-hour guard. <strong>Book a guided tour</strong> — you can't enter without one. Best viewed from the Buda side across the river.",address:"Kossuth Lajos tér 1-3, 1055 Budapest",maps:"https://maps.google.com/?q=Hungarian+Parliament+Budapest",prices:[{name:"Guided tour (EU citizens)",cost:"€14"},{name:"Guided tour (non-EU)",cost:"€28"}],bookLabel:"Official — parlament.hu (book 2+ weeks ahead)",bookUrl:"https://www.parlament.hu/"},
+  szechenyi:{name:"Széchenyi Thermal Bath",desc:"The largest medicinal bath in Europe, housed in a grand Neo-Baroque palace built in 1913. 15 indoor pools and 3 vast outdoor pools kept at 27–38°C year-round. The outdoor pools are the iconic image of Budapest — steam rising in winter, old men playing chess on floating boards. <strong>Go at opening (7am) or evening</strong> to avoid crowds. Bring your own towel and flip-flops.",address:"Állatkerti krt. 9-11, 1146 Budapest",maps:"https://maps.google.com/?q=Szechenyi+Thermal+Bath+Budapest",prices:[{name:"Weekday ticket (with locker)",cost:"€22"},{name:"Weekend/holiday (with locker)",cost:"€24"},{name:"Cabin (private changing room)",cost:"+€3"}],bookLabel:"Official — szechenyibath.hu",bookUrl:"https://www.szechenyibath.hu/"},
+  gundel:{name:"Gundel",desc:"Budapest's most famous restaurant since 1894, in a beautiful Art Nouveau setting in City Park (next to Széchenyi Bath). The <strong>Gundel palacsinta</strong> — a flambéed crêpe filled with walnuts, raisins, and rum, covered in dark chocolate sauce — is legendary. Live Romani music in the evenings. Splurge territory, but a Budapest institution.",address:"Gundel Károly út 4, 1146 Budapest",maps:"https://maps.google.com/?q=Gundel+Restaurant+Budapest",prices:[{name:"3-course dinner",cost:"€55–70"},{name:"Gundel palacsinta (dessert)",cost:"€12"}],bookLabel:"Book online — gundel.hu",bookUrl:"https://www.gundel.hu/"},
+  // VIENNA
+  schonbrunn:{name:"Schönbrunn Palace",desc:"The summer residence of the Habsburgs — 1,441 rooms, gardens that rival Versailles. The <strong>Imperial Tour</strong> (22 rooms, 40 min) covers the state rooms and Franz Joseph's private apartments. The <strong>Grand Tour</strong> (40 rooms, 60 min) adds the 18th-century interiors of Maria Theresa. The gardens are free — climb to the Gloriette for the postcard view back over the palace to Vienna.",address:"Schönbrunner Schloßstraße 47, 1130 Wien",maps:"https://maps.google.com/?q=Schonbrunn+Palace+Vienna",prices:[{name:"Imperial Tour (22 rooms)",cost:"€22"},{name:"Grand Tour (40 rooms)",cost:"€27"},{name:"Gardens",cost:"Free"}],bookLabel:"Official — schoenbrunn.at (book ahead)",bookUrl:"https://www.schoenbrunn.at/"},
+  central:{name:"Café Central",desc:"The cathedral of Viennese coffee houses, open since 1876. Freud, Trotsky, Lenin, and Stefan Zweig were regulars. The vaulted ceilings, marble columns, and grand piano (live music daily 4–7pm) create a cathedral-like atmosphere. Order a <strong>Melange</strong> (Viennese coffee) and <strong>Sachertorte</strong> (the famous chocolate cake). Expect a queue — it moves fast (15–20 min).",address:"Herrengasse 14, 1010 Wien",maps:"https://maps.google.com/?q=Cafe+Central+Vienna",prices:[{name:"Melange (coffee)",cost:"€5.50"},{name:"Sachertorte",cost:"€7.50"},{name:"Full breakfast/lunch",cost:"€18–25"}],bookLabel:"No reservations — queue at the door. Go mid-afternoon for shorter wait."},
+  // AMSTERDAM
+  rijks:{name:"Rijksmuseum",desc:"The grandest museum in the Netherlands. Rembrandt's <strong>Night Watch</strong> (currently undergoing public restoration inside a glass chamber — you can watch the conservators work), Vermeer's <em>Milkmaid</em>, and 8,000 objects spanning 800 years of Dutch art and history. The building itself is a neo-Gothic masterpiece (1885). <strong>Book the 9am first slot.</strong>",address:"Museumstraat 1, 1071 XX Amsterdam",maps:"https://maps.google.com/?q=Rijksmuseum+Amsterdam",prices:[{name:"Adult",cost:"€22.50"},{name:"Under 18",cost:"Free"}],bookLabel:"Official — rijksmuseum.nl (book ahead)",bookUrl:"https://www.rijksmuseum.nl/"},
+  annefrank:{name:"Anne Frank House",desc:"The hidden annex at Prinsengracht 263 where Anne Frank, her family, and four others hid from the Nazis for 761 days. Anne's original diary is displayed. The rooms remain unfurnished (as Otto Frank wished). <strong>Deeply moving.</strong> Tickets are released exactly <strong>6 weeks ahead</strong> every Tuesday at 10am CET — they sell out within hours. Set an alarm.",address:"Westermarkt 20, 1016 GV Amsterdam",maps:"https://maps.google.com/?q=Anne+Frank+House+Amsterdam",prices:[{name:"Adult",cost:"€16"},{name:"Youth 10–17",cost:"€7"},{name:"Under 10",cost:"€1"}],bookLabel:"Official — annefrank.org (6 weeks ahead, Tuesday 10am)",bookUrl:"https://www.annefrank.org/"},
+  canalCruise:{name:"Canal Cruise",desc:"Amsterdam's 17th-century canal ring is a UNESCO World Heritage site. The <strong>1-hour evening cruise</strong> (with wine and cheese) is the move — the bridges light up, the canal houses glow, and the city transforms. Multiple operators depart from near Central Station. Lovers, Blue Boat, and Flagship are the reputable ones. Book ahead for evening cruises.",address:"Multiple departure points near Central Station, Amsterdam",maps:"https://maps.google.com/?q=Canal+Cruise+Amsterdam+Central",prices:[{name:"1-hour daytime cruise",cost:"€14–16"},{name:"1-hour evening cruise (wine + cheese)",cost:"€22–25"}],bookLabel:"Book online — various operators. Lovers Canal Cruises recommended."},
+  // LISBON
+  belem:{name:"Belém Tower & Jerónimos",desc:"Belém — the departure point of the Age of Discovery. <strong>Belém Tower</strong> (1514, UNESCO) is a fortress on the Tagus River. <strong>Jerónimos Monastery</strong> (1501, UNESCO) is Manueline architecture at its peak — the cloister will make your jaw drop. Between them: <strong>Pastéis de Belém</strong> — the original pastel de nata bakery since 1837. The secret recipe is known to only 6 people. Get 2 (minimum).",address:"Belém, 1400 Lisboa",maps:"https://maps.google.com/?q=Belem+Tower+Lisbon",prices:[{name:"Belém Tower",cost:"€8.50"},{name:"Jerónimos Monastery",cost:"€10"},{name:"Pastéis de Belém (per tart)",cost:"€1.30"}],bookLabel:"Jerónimos — mosteirojeronimos.pt (book ahead)",bookUrl:"https://www.mosteirojeronimos.pt/"},
+  alfama:{name:"Alfama District",desc:"Lisbon's oldest neighborhood — one of the few areas that survived the 1755 earthquake. A maze of narrow alleys, tiled facades, hidden courtyards, and steep staircases. <strong>Fado music</strong> drifts from small taverns at night — the soulful, melancholic music of Portugal. The <strong>miradouros</strong> (viewpoints) — Portas do Sol, Santa Luzia — offer stunning views over the terracotta roofs to the river.",address:"Alfama, 1100 Lisboa",maps:"https://maps.google.com/?q=Alfama+Lisbon",prices:[{name:"Wandering",cost:"Free"},{name:"Fado dinner (meal + music)",cost:"€30–50"}],bookLabel:"Fado — book a casa de fado in advance. Mesa de Frades and A Baiuca are authentic."},
+  tram28:{name:"Tram 28",desc:"The vintage yellow Remodelado tram rattling through Lisbon's prettiest, narrowest streets since the 1930s. The route: Graça → Alfama → Baixa → Estrela — past the Sé Cathedral, up the hills, through neighborhoods unchanged for decades. <strong>Go at 6–7am</strong> or you'll ride it standing, crushed between 50 tourists and a pickpocket's elbow. Board at the first stop (Martim Moniz) for a seat.",address:"Tram 28, start at Martim Moniz, Lisboa",maps:"https://maps.google.com/?q=Tram+28+Lisbon",prices:[{name:"Single ticket (onboard)",cost:"€3"},{name:"24-hour public transport pass (includes Tram 28)",cost:"€6.60"}],bookLabel:"No booking — board at Martim Moniz early (before 7am) for a seat."},
+  cervesaria:{name:"Cervejaria Ramiro",desc:"<strong>The temple of seafood in Lisbon.</strong> Three floors of seafood chaos since 1956. No reservations for the main dining room — take a ticket at the door and wait (30–60 min, worth it). Order: garlic shrimp (gambas ao alho), percebes (goose barnacles — weird, prehistoric-looking, delicious), and the <strong>prego</strong> (steak sandwich) for dessert — yes, after seafood, it's the tradition.",address:"Av. Alm. Reis 1, 1150-007 Lisboa",maps:"https://maps.google.com/?q=Cervejaria+Ramiro+Lisbon",prices:[{name:"Garlic shrimp",cost:"€14"},{name:"Percebes (seasonal)",cost:"€25–40"},{name:"Prego steak sandwich",cost:"€7"},{name:"Full meal + beer per person",cost:"~€35–55"}],bookLabel:"No reservations for main room — take a ticket at the door. Upstairs accepts bookings."}
+};
+
+// ── MODAL LOGIC ──
+const overlay = document.getElementById('modalOverlay');
+const content = document.getElementById('modalContent');
+
+function openModal(id) {
+  const d = DATA[id];
+  if (!d) return;
+  let pricesHtml = '';
+  if (d.prices) {
+    pricesHtml = d.prices.filter(p => p.name).map(p =>
+      `<div class="price-tier"><span class="tier-name">${p.name}</span><span class="tier-cost">${p.cost}</span></div>`
+    ).join('');
+  }
+  let bookHtml = '';
+  if (d.bookUrl) {
+    bookHtml = `<div class="detail-row"><div class="detail-label">🎟️ BOOKING</div><div class="detail-value"><a href="${d.bookUrl}" target="_blank" rel="noopener">${d.bookLabel || d.bookUrl} ↗</a></div></div>`;
+  } else if (d.bookLabel) {
+    bookHtml = `<div class="detail-row"><div class="detail-label">🎟️ BOOKING</div><div class="detail-value">${d.bookLabel}</div></div>`;
+  }
+
+  content.innerHTML = `
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h3>${d.name}</h3>
+    <div class="modal-desc">${d.desc}</div>
+    <div class="detail-row"><div class="detail-label">📍 ADDRESS</div><div class="detail-value">${d.address}</div></div>
+    <div class="detail-row"><div class="detail-label">🗺️ MAPS</div><div class="detail-value"><a href="${d.maps}" target="_blank" rel="noopener">Open in Google Maps ↗</a></div></div>
+    ${d.prices ? `<div class="detail-row"><div class="detail-label">💰 PRICES</div>${pricesHtml}</div>` : ''}
+    ${bookHtml}
+  `;
+  overlay.classList.add('open');
+  document.body.classList.add('modal-open');
+}
+function closeModal() { overlay.classList.remove('open'); document.body.classList.remove('modal-open'); }
+document.querySelectorAll('.card[data-modal]').forEach(card => card.addEventListener('click', () => openModal(card.dataset.modal)));
+overlay.addEventListener('click', e => { if (e.target===overlay) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key==='Escape'&&overlay.classList.contains('open')) closeModal(); });
+
+// ── SCROLLSPY ──
+const nav = document.querySelector('.top-nav');
+const navLinks = nav.querySelectorAll('a');
+const sectionMap = {};
+navLinks.forEach(link => { const id = (link.getAttribute('href')||'').slice(1); const s = document.getElementById(id); if (s) sectionMap[id] = {link,section:s}; });
+const activeStyle = document.createElement('style');
+activeStyle.textContent = '.top-nav a.active{color:#60a5fa!important;background:rgba(96,165,250,0.12)}';
+document.head.appendChild(activeStyle);
+function setActive(id) {
+  navLinks.forEach(l => l.classList.remove('active'));
+  const e = sectionMap[id]; if (!e) return;
+  e.link.classList.add('active');
+  const L = e.link.offsetLeft, R = L + e.link.offsetWidth, S = nav.scrollLeft, W = nav.offsetWidth;
+  if (R > S + W) nav.scrollTo({left:R - W + 16, behavior:'smooth'});
+  else if (L < S + 8) nav.scrollTo({left:L - 16, behavior:'smooth'});
+}
+const observer = new IntersectionObserver(entries => {
+  const visible = entries.filter(en => en.isIntersecting).map(en => en.target.id);
+  if (visible.length) setActive(visible[0]);
+}, { rootMargin:'-15% 0px -75% 0px', threshold:0 });
+Object.values(sectionMap).forEach(({section:s}) => observer.observe(s));
+</script>
+</body>
+</html>
