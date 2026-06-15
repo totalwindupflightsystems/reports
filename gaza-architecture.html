@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Architecture of the Trap — How the World Uses Palestinians</title>
+<style>
+  :root {
+    --bg: #0d0f13;
+    --surface: #171a21;
+    --surface2: #1e2230;
+    --border: rgba(255,255,255,0.06);
+    --text: #e4e6ef;
+    --text2: #9ca0b0;
+    --text3: #6b7084;
+    --red: #f87171;
+    --red2: #ef4444;
+    --amber: #fbbf24;
+    --amber2: #d97706;
+    --green: #4ade80;
+    --blue: #60a5fa;
+    --purple: #a78bfa;
+    --radius: 10px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+  }
+  .container { max-width: 820px; margin: 0 auto; padding: 20px 20px 80px; }
+
+  /* Hero */
+  .hero {
+    text-align: center;
+    padding: 60px 0 40px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 36px;
+  }
+  .hero .kicker {
+    font-size: 12px; color: var(--amber); text-transform: uppercase;
+    letter-spacing: 2px; font-weight: 600; margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-size: 34px; font-weight: 800; letter-spacing: -0.8px;
+    line-height: 1.2; margin-bottom: 12px;
+  }
+  .hero .subtitle {
+    font-size: 17px; color: var(--text2); max-width: 600px;
+    margin: 0 auto; line-height: 1.6;
+  }
+  .hero .meta {
+    margin-top: 20px; font-size: 13px; color: var(--text3);
+  }
+  .hero .warning {
+    margin-top: 24px; display: inline-block;
+    padding: 8px 16px; border-radius: 20px;
+    background: rgba(248,113,113,0.1); color: var(--red);
+    font-size: 13px; font-weight: 600; border: 1px solid rgba(248,113,113,0.2);
+  }
+
+  /* TOC */
+  .toc {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 24px; margin-bottom: 40px;
+  }
+  .toc h2 { font-size: 14px; color: var(--text2); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 14px; }
+  .toc ol { padding-left: 20px; }
+  .toc li { margin-bottom: 8px; font-size: 14px; }
+  .toc a { color: var(--text); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.15s; }
+  .toc a:hover { border-color: var(--amber); color: var(--amber); }
+
+  /* Sections */
+  section { margin-bottom: 48px; }
+  h2 {
+    font-size: 24px; font-weight: 700; margin-bottom: 8px;
+    letter-spacing: -0.3px; line-height: 1.3;
+  }
+  h3 {
+    font-size: 17px; font-weight: 600; margin: 28px 0 12px;
+    color: var(--text);
+  }
+  p { margin-bottom: 16px; font-size: 16px; color: var(--text2); }
+  strong { color: var(--text); }
+
+  /* Pull quotes */
+  .pull {
+    border-left: 3px solid var(--amber);
+    padding: 16px 20px; margin: 24px 0;
+    background: rgba(251,191,36,0.05);
+    border-radius: 0 var(--radius) var(--radius) 0;
+  }
+  .pull p { font-size: 18px; font-style: italic; color: var(--text); margin: 0; }
+  .pull .attrib { font-size: 13px; color: var(--amber); font-style: normal; margin-top: 8px; }
+
+  /* Architecture cards */
+  .layers { margin: 24px 0; }
+  .layer {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 20px 24px; margin-bottom: 12px;
+    display: flex; gap: 16px; align-items: flex-start;
+  }
+  .layer .num {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--surface2); display: flex; align-items: center;
+    justify-content: center; font-weight: 800; font-size: 16px;
+    flex-shrink: 0; border: 1px solid var(--border);
+  }
+  .layer:nth-child(1) .num { color: var(--red); border-color: rgba(248,113,113,0.3); }
+  .layer:nth-child(2) .num { color: var(--amber); border-color: rgba(251,191,36,0.3); }
+  .layer:nth-child(3) .num { color: var(--amber); border-color: rgba(251,191,36,0.3); }
+  .layer:nth-child(4) .num { color: var(--red2); border-color: rgba(239,68,68,0.3); }
+  .layer:nth-child(5) .num { color: var(--purple); border-color: rgba(167,139,250,0.3); }
+  .layer .content h4 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .layer .content p { font-size: 14px; margin: 0; color: var(--text2); }
+
+  /* Country cards */
+  .country-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 12px; margin: 20px 0;
+  }
+  .country-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 20px;
+  }
+  .country-card .flag { font-size: 28px; margin-bottom: 8px; }
+  .country-card h4 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .country-card .label { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; }
+  .country-card p { font-size: 13px; color: var(--text2); margin: 0; line-height: 1.6; }
+
+  /* Data grid */
+  .data-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px; margin: 20px 0;
+  }
+  .data-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 18px; text-align: center;
+  }
+  .data-card .num { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; }
+  .data-card .num.red { color: var(--red); }
+  .data-card .num.amber { color: var(--amber); }
+  .data-card .desc { font-size: 11px; color: var(--text3); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.3px; }
+
+  /* Verdict box */
+  .verdict {
+    background: linear-gradient(135deg, rgba(248,113,113,0.08), rgba(251,191,36,0.06));
+    border: 1px solid rgba(248,113,113,0.2); border-radius: var(--radius);
+    padding: 28px; margin: 32px 0;
+  }
+  .verdict h2 { color: var(--red); }
+  .verdict p { font-size: 16px; }
+
+  /* Phase dividers */
+  .divider {
+    text-align: center; padding: 32px 0; color: var(--text3);
+    font-size: 24px; letter-spacing: 12px;
+  }
+
+  footer {
+    margin-top: 60px; padding-top: 24px;
+    border-top: 1px solid var(--border);
+    text-align: center; font-size: 12px; color: var(--text3);
+  }
+  footer a { color: var(--blue); text-decoration: none; }
+
+  @media (max-width: 600px) {
+    .hero h1 { font-size: 24px; }
+    .hero .subtitle { font-size: 15px; }
+    .layer { flex-direction: column; }
+    .country-grid { grid-template-columns: 1fr; }
+    .data-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="kicker">Middle East Analysis · June 2026</div>
+    <h1>The Architecture of the Trap</h1>
+    <div class="subtitle">
+      Everyone funds the fire, locks the exits, and lets someone else pull the trigger — then holds a press conference about human rights.
+    </div>
+    <div class="meta">Compiled by Hermes Agent &amp; Bane · June 5–6, 2026</div>
+    <div class="warning">⚠️ This report contains analysis that polite discourse refuses to say out loud.</div>
+  </div>
+
+  <!-- TOC -->
+  <nav class="toc">
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#thesis">The Thesis</a></li>
+      <li><a href="#architecture">The Five-Layer Architecture</a></li>
+      <li><a href="#funding">Who Funds the Fire</a></li>
+      <li><a href="#borders">Who Seals the Exits</a></li>
+      <li><a href="#israel">Israel as Trigger-Puller</a></li>
+      <li><a href="#harvest">The Moral Capital Harvest</a></li>
+      <li><a href="#benefit">Everyone Benefits — Except the People Living There</a></li>
+      <li><a href="#verdict">Conclusion</a></li>
+      <li><a href="#context">Broader Context: Israel–Lebanon &amp; Gaza</a></li>
+    </ol>
+  </nav>
+
+  <!-- 1. THESIS -->
+  <section id="thesis">
+    <h2>I. The Thesis</h2>
+    <p>There is a system. It is not hypothetical. It has been operating for decades, and it reached its fullest expression in the 2023–2026 cycle of wars. The system works as follows:</p>
+
+    <p><strong>State actors fund, arm, and provide political cover for militant groups.</strong> They write the checks that buy the rockets. They host the leadership. They run the media that frames every Israeli military action as genocide.</p>
+
+    <p><strong>Those same actors — plus every neighboring state — seal the borders.</strong> The civilian population is physically trapped. Gaza's 2 million cannot leave. Palestinian refugees in Lebanon and Jordan cannot become citizens. Movement is blocked by policy, not geography.</p>
+
+    <p><strong>The pressure cooker radicalizes.</strong> Decades of statelessness, poverty, and hopelessness — maintained by the very states that claim to be their defenders — produce exactly what any rational observer would predict: a population desperate enough that militant recruitment is easy.</p>
+
+    <p><strong>Israel is left to pull the trigger.</strong> When the inevitable explosion happens, Israel responds with overwhelming military force. The patrons who funded the militants, sealed the borders, and radicalized the population now issue statements condemning "Israeli aggression" and "war crimes."</p>
+
+    <p><strong>The moral capital is harvested.</strong> Every dead Palestinian child is a propaganda victory. Every bombed school is a UN resolution. Every funeral is a recruitment video. The blood is real. The grief is real. But it is also instrumental — fuel for the next cycle.</p>
+
+    <p>This is outsourcing. Iran and Qatar don't share a border with Israel. They don't deal with rockets landing on their cities. They fund the fire, lock the exits, and pay someone else to do the dying — both Palestinian and Israeli. Then they hold press conferences about human rights.</p>
+  </section>
+
+  <!-- 2. ARCHITECTURE -->
+  <section id="architecture">
+    <h2>II. The Five-Layer Architecture</h2>
+
+    <div class="layers">
+      <div class="layer">
+        <div class="num">1</div>
+        <div class="content">
+          <h4>Arm the Fire</h4>
+          <p>Iran, Qatar, and others fund, equip, and provide political cover for Hamas and Hezbollah. The rockets, the tunnels, the ideology — none of it exists without state patrons writing checks. Iran provides an estimated $700M–$1B annually to its proxies. Qatar has channeled billions into Gaza, including direct cash transfers approved by the Israeli government itself.</p>
+        </div>
+      </div>
+
+      <div class="layer">
+        <div class="num">2</div>
+        <div class="content">
+          <h4>Trap the Fuel</h4>
+          <p>The same patrons, plus Egypt, Jordan, Lebanon, and the broader Arab League, refuse to absorb or relocate the civilian population. Egypt's border is sealed. Jordan's king said "no refugees." Lebanon keeps Palestinians in permanent legal limbo — no property, no professions, no citizenship, for 75 years. The camps are permanent.</p>
+        </div>
+      </div>
+
+      <div class="layer">
+        <div class="num">3</div>
+        <div class="content">
+          <h4>Radicalize the Pressure Cooker</h4>
+          <p>Decades of statelessness, unemployment, and blocked futures — maintained by policy — produce exactly what you'd expect. Al Jazeera and Iranian state media amplify every Israeli strike, every civilian death, every destroyed home. The algorithm of radicalization feeds itself. When the only path to dignity is martyrdom, martyrdom becomes a growth industry.</p>
+        </div>
+      </div>
+
+      <div class="layer">
+        <div class="num">4</div>
+        <div class="content">
+          <h4>Let Israel Pull the Trigger</h4>
+          <p>When the inevitable explosion — October 7, rocket barrages, whatever sparks the next war — occurs, Israel responds with overwhelming force. Civilians die. The patrons who funded the militants, sealed the exits, and radicalized the population now condemn "Israeli aggression" and demand ceasefires they know won't hold.</p>
+        </div>
+      </div>
+
+      <div class="layer">
+        <div class="num">5</div>
+        <div class="content">
+          <h4>Harvest the Moral Capital</h4>
+          <p>Every dead Palestinian child is a propaganda victory. Every destroyed home is a UN resolution. Every funeral is a recruitment video. The patrons pose as defenders of the oppressed while their own policies ensure the oppression continues. Israel absorbs the global outrage. The cycle resets. The only people who lose are the ones living there.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. FUNDING -->
+  <section id="funding">
+    <h2>III. Who Funds the Fire</h2>
+
+    <div class="country-grid">
+      <div class="country-card">
+        <div class="flag">🇮🇷</div>
+        <h4>Iran</h4>
+        <div class="label">Primary Sponsor</div>
+        <p>Estimated $700M–$1B annually to proxies. Supplies rockets, drones, tunnel technology, and training to Hamas, Hezbollah, and Palestinian Islamic Jihad. The IRGC Quds Force runs the logistics. Iran has never shared a border with Israel and has no intention of doing so. Palestinian suffering is a strategic asset — it destabilizes rivals, distracts from domestic repression, and positions Iran as leader of the "resistance axis" without costing a single Iranian soldier's life in direct combat.</p>
+      </div>
+
+      <div class="country-card">
+        <div class="flag">🇶🇦</div>
+        <h4>Qatar</h4>
+        <div class="label">Political & Financial Sponsor</div>
+        <p>Hosts Hamas political leadership in Doha. Channels billions into Gaza — including suitcases of cash delivered with Israeli government approval, designed to maintain Hamas's governing capacity. Runs Al Jazeera, which provides 24/7 coverage framing Israel as the aggressor. Offers zero refugees. Fund from a distance. Never let them in.</p>
+      </div>
+
+      <div class="country-card">
+        <div class="flag">🇹🇷</div>
+        <h4>Turkey</h4>
+        <div class="label">Verbal Sponsor</div>
+        <p>Erdoğan gives fiery speeches condemning Israel. Hosts Hamas officials. Compares Netanyahu to Hitler. Has not offered to accept a single Palestinian refugee. Turkey already hosts millions of Syrian refugees and faces domestic backlash — Palestinians would be politically radioactive.</p>
+      </div>
+
+      <div class="country-card">
+        <div class="flag">🇩🇿</div>
+        <h4>Algeria</h4>
+        <div class="label">Rhetorical Sponsor</div>
+        <p>Among the loudest pro-Palestinian voices in the Arab world. Openly sides with Hamas. Has not offered to accept refugees. Sits safely on the other side of the Mediterranean, where Palestinian suffering costs nothing.</p>
+      </div>
+    </div>
+
+    <div class="pull">
+      <p>"The people funding the terrorist are also creating the atmosphere for people to become terrorist. And would rather let Israel spill the blood of the innocent. Then we say Israel is the problem."</p>
+      <div class="attrib">— Bane, June 5, 2026</div>
+    </div>
+  </section>
+
+  <!-- 4. BORDERS -->
+  <section id="borders">
+    <h2>IV. Who Seals the Exits</h2>
+
+    <div class="country-grid">
+      <div class="country-card">
+        <div class="flag">🇪🇬</div>
+        <h4>Egypt</h4>
+        <div class="label">The "Red Line"</div>
+        <p>Shares a direct border with Gaza. The Sinai Peninsula is vast, underpopulated, and could physically absorb millions. Egypt absolutely refuses. el-Sissi called it a "red line" that would "liquidate the Palestinian cause." Real translation: he'd rather see Gazans die trapped than risk his own political stability. Egypt already hosts 9 million refugees and the military regime wants no part of a potentially radicalized Palestinian population in the already-insurgent Sinai. Even the UNHCR validated Egypt's position — effectively endorsing the policy of keeping civilians in a war zone.</p>
+      </div>
+
+      <div class="country-card">
+        <div class="flag">🇯🇴</div>
+        <h4>Jordan</h4>
+        <div class="label">Black September Never Forgot</div>
+        <p>Already majority Palestinian by some demographic estimates. In 1970, the PLO attempted to overthrow the Hashemite monarchy in what became Black September — King Hussein's army killed thousands of Palestinians to crush the uprising. The lesson was burned into the state: armed Palestinian factions will eventually try to take your country. King Abdullah II, when asked about accepting Gazan refugees in 2023, said simply: <strong>"No refugees in Jordan."</strong> Not ambiguous. Not negotiable.</p>
+      </div>
+
+      <div class="country-card">
+        <div class="flag">🇱🇧</div>
+        <h4>Lebanon</h4>
+        <div class="label">75 Years of Limbo</div>
+        <p>Palestinians have lived in Lebanese camps since 1948. They cannot own property. Cannot work in most professions. Cannot become citizens. Three generations have been born in Lebanon, never seen Palestine, kept permanently stateless. The PLO's armed presence in these camps helped ignite the 15-year Lebanese Civil War. Lebanon's sectarian balance is so fragile that naturalizing even a fraction of the Palestinian population could collapse the state. And Lebanon is currently under Israeli invasion — not exactly a destination for refugees.</p>
+      </div>
+
+      <div class="country-card">
+        <div class="flag">🇰🇼</div>
+        <h4>Kuwait</h4>
+        <div class="label">The Expulsion</div>
+        <p>After the Gulf War in 1991, Kuwait expelled approximately 400,000 Palestinians because the PLO had backed Saddam Hussein's invasion. The Gulf states learned the lesson permanently: Palestinians inside your borders become a political liability. Fund them. Never let them in.</p>
+      </div>
+
+      <div class="country-card">
+        <div class="flag">🇪🇺</div>
+        <h4>Europe</h4>
+        <div class="label">"They Must Stay in Gaza"</div>
+        <p>In February 2025, Israel formally demanded Spain, Ireland, and Norway accept Gazan refugees. Spain's Foreign Minister: <strong>"Gaza is the land of Gazan Palestinians and they must stay in Gaza."</strong> Ireland and Norway agreed. Canada passed Bill C-12 tightening asylum rules, making it harder for Gazans to enter. Human rights organizations called Israel's resettlement push "ethnic cleansing" — and then effectively endorsed the policy of trapping civilians in a war zone because the alternative was politically unacceptable.</p>
+      </div>
+
+      <div class="country-card">
+        <div class="flag">🇺🇳</div>
+        <h4>The UN System</h4>
+        <div class="label">Perpetual Refugee Status</div>
+        <p>UNRWA, the UN agency created specifically for Palestinian refugees, is the only UN refugee agency that grants refugee status to descendants in perpetuity. Every other refugee population on Earth is handled by UNHCR, which works to resettle and integrate refugees. Palestinians alone get a separate agency whose structure effectively maintains their refugee status across generations. The system is designed to preserve the claim of return — and, as a byproduct, to preserve the suffering as political currency.</p>
+      </div>
+    </div>
+
+    <div class="data-grid">
+      <div class="data-card">
+        <div class="num red">~2M</div>
+        <div class="desc">Population of Gaza</div>
+      </div>
+      <div class="data-card">
+        <div class="num red">~1.8M</div>
+        <div class="desc">Displaced This War</div>
+      </div>
+      <div class="data-card">
+        <div class="num amber">60%+</div>
+        <div class="desc">Gaza Under IDF Control</div>
+      </div>
+      <div class="data-card">
+        <div class="num amber">~6M</div>
+        <div class="desc">Palestinian Refugees Worldwide</div>
+      </div>
+      <div class="data-card">
+        <div class="num red">0</div>
+        <div class="desc">Countries Accepting Refugees</div>
+      </div>
+      <div class="data-card">
+        <div class="num amber">75+</div>
+        <div class="desc">Years of Refugee Status</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. ISRAEL -->
+  <section id="israel">
+    <h2>V. Israel as Trigger-Puller</h2>
+
+    <p>None of this absolves Israel. The blood is real. The killing is real. Israeli airstrikes have killed tens of thousands. Whole neighborhoods in Gaza have been razed. In Lebanon, Israeli forces occupy roughly 20% of the country — 2,000 square kilometers — with 1.2 million displaced. The stated justifications (destroying Hamas, pushing Hezbollah north of the Litani) have metastasized into something larger.</p>
+
+    <p>Israel's right wing benefits enormously from the permanent emergency. Endless war justifies endless occupation. It crushes the domestic peace camp — any Israeli who advocates withdrawal after October 7 is branded a traitor. It keeps Netanyahu in power through elections he might otherwise lose. It keeps the military budget growing. It keeps the settlements expanding.</p>
+
+    <p>But Israel is also, in a structural sense, the janitor — the one left to do the dirty work that everyone else outsources. Iran and Qatar don't have to deal with rockets landing on Tel Aviv. Egypt doesn't have to manage occupation or counterinsurgency. Europe doesn't have to do anything except vote at the UN. Israel pulls the trigger, and Israel absorbs the global outrage. The patrons keep their hands clean.</p>
+
+    <p>Former Israeli PM Ehud Barak, the man who withdrew from Lebanon in 2000 after 18 years of occupation, told NPR on June 10:</p>
+
+    <div class="pull">
+      <p>"There is no way to completely defeat Hezbollah without conquering the whole of Lebanon, which is totally impractical."</p>
+      <div class="attrib">— Ehud Barak, June 2026</div>
+    </div>
+
+    <p>The occupation he ended in 2000 was, in his words, "a stretched-out tragedy that had no explanation in a rational way as to why we were there." Israel is now deeper into Lebanon than at any point since 1982, fighting the same enemy Hisbollah — a group that was <em>created by</em> the previous occupation. The cycle is not an accident. It is the product.</p>
+  </section>
+
+  <!-- 6. HARVEST -->
+  <section id="harvest">
+    <h2>VI. The Moral Capital Harvest</h2>
+
+    <p>This is the part that makes the whole system sustainable: <strong>everyone gets paid.</strong></p>
+
+    <p><strong>Iran gets paid in regional influence.</strong> Every Israeli bomb that kills civilians is proof that the "resistance axis" is necessary. Every dead Palestinian child validates the Iranian narrative that compromise with Israel is impossible. The IRGC doesn't need to win — it just needs the conflict to continue, because the conflict justifies the regime at home and expands Iran's proxy network abroad.</p>
+
+    <p><strong>Arab autocrats get paid in domestic stability.</strong> For Egypt's el-Sissi, Jordan's Abdullah, and the Gulf monarchies, Israel is the perfect external enemy. When populations get restless about corruption, unemployment, or repression, the government can point outward: <em>look at what they're doing to your brothers in Gaza.</em> The Palestinian cause is a pressure-release valve for domestic dissent across the Arab world.</p>
+
+    <p><strong>The international left gets paid in moral clarity.</strong> The Israel-Palestine conflict is one of the few global issues where the moral lines appear simple to a Western activist: colonizer vs. colonized, oppressor vs. oppressed. It provides a clean framework for rage that doesn't require confronting complexity. Marching with a Palestinian flag feels righteous. Actually resettling a Palestinian family in your neighborhood does not.</p>
+
+    <p><strong>The arms industry gets paid in actual money.</strong> The US has sent tens of billions in military aid to Israel. Iran and Russia supply the other side. Raytheon, Boeing, Lockheed Martin — the war is a balance sheet item. Every escalation is a revenue event.</p>
+
+    <p><strong>Israel's right wing gets paid in political survival.</strong> The permanent security emergency makes the occupation permanent. It delegitimizes the peace camp. It keeps Likud in power. It keeps the settlements growing. It keeps the military budget untouchable. Peace is an existential threat to the Israeli right — not because they couldn't survive it, but because their entire political project depends on there being no peace.</p>
+
+    <p>And the Palestinians? They pay with everything.</p>
+  </section>
+
+  <!-- 7. EVERYONE BENEFITS -->
+  <section id="benefit">
+    <h2>VII. Everyone Benefits — Except the People Living There</h2>
+
+    <p>The word for this system is <strong>outsourcing</strong>. The sponsors are geographically insulated. Iran and Qatar share no border with Israel. Egypt's border is a sealed wall. Europe is a continent away. No rockets land in Doha. No occupation forces patrol Tehran. No blockades strangle Riyadh. The conflict is exported to a strip of land where 2 million people are locked inside with nowhere to go.</p>
+
+    <p>And because everyone benefits from the system continuing, nobody has a real incentive to end it. The "peace process" is itself part of the architecture — an endlessly renewed performance that maintains the status quo while pretending to challenge it. Ceasefires are announced and violated within hours. Negotiations produce statements, not outcomes. The diplomatic machinery exists to manage the conflict, not to resolve it.</p>
+
+    <div class="verdict">
+      <h3 style="color: var(--red); font-size: 18px; margin-bottom: 12px;">The Trap Is the Product</h3>
+      <p>The architecture of Palestinian suffering is not a bug in the system. It <strong>is</strong> the system. Everyone funds the fire, everyone locks the exits, everyone lets Israel pull the trigger, and everyone harvests the moral capital. The blood is real. The grief is real. And it is also — in the coldest possible sense — the product that keeps the entire machine running. The only people who have no exit, no patron, and no upside are the ones living in the trap.</p>
+    </div>
+  </section>
+
+  <!-- 8. CONTEXT -->
+  <section id="context">
+    <h2>VIII. Broader Context: Israel–Lebanon &amp; Gaza (June 2026)</h2>
+
+    <h3>Lebanon</h3>
+    <p>Israel occupies ~2,000 km² (~20% of Lebanon) as of late May 2026 — the deepest incursion in over 25 years. Forces have pushed past the Litani River to the outskirts of Nabatieh and captured Beaufort Castle. 1.2 million displaced. The April 17 ceasefire was never observed. A new conditional ceasefire was announced June 4 between Israel and Lebanon's government — Hezbollah rejected it. Fighting continues on both sides. Iran has explicitly tied the Lebanon ceasefire to the broader Iran ceasefire negotiations.</p>
+
+    <h3>Gaza</h3>
+    <p>Israel controls 60%+ of the Strip. ~1.8 million displaced — many multiple times. The Rafah crossing with Egypt remains sealed. Hamas still operates, despite Israeli claims of military control. The population is trapped between an advancing IDF, a sealed Egyptian border, and a militant group embedded in civilian infrastructure. The Trump administration has pushed for "voluntary resettlement" — rejected by every potential host country.</p>
+
+    <h3>Iran Connection</h3>
+    <p>The Lebanon, Gaza, and Iran conflicts are now operationally linked. Iran fired ballistic missiles at Israel on June 1-2. Israel responded with airstrikes on Iran. Trump is attempting to negotiate a comprehensive deal but Iran has made Israeli withdrawal from Lebanon a precondition. The ceasefire architecture is a house of cards — each front depends on the others, and none of them are holding.</p>
+  </section>
+
+  <footer>
+    <p>Sources: Al Jazeera, NPR, BBC News, Reuters, The Guardian, The Jerusalem Post, New York Times, Associated Press, PBS NewsHour, Politico, US News, The Washington Institute, UNHCR, Amnesty International</p>
+    <p>Report compiled by Hermes Agent with Bane · June 5–6, 2026 · <a href="https://totalwindupflightsystems.github.io/reports/">Reports Repository</a></p>
+  </footer>
+
+</div>
+
+</body>
+</html>
