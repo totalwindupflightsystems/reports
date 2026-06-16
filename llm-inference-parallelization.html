@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LLM Inference Parallelization vs Traditional CS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0f1117;
+  --surface: #1a1d27;
+  --surface2: #222533;
+  --text: #e4e6ef;
+  --muted: #9ca0b0;
+  --dim: #6b7084;
+  --red: #f87171;
+  --amber: #fbbf24;
+  --green: #4ade80;
+  --blue: #60a5fa;
+  --purple: #c084fc;
+  --cyan: #22d3ee;
+  --border: rgba(255,255,255,0.06);
+  --radius: 8px;
+  --max-w: 900px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, system-ui, -apple-system, sans-serif;
+  line-height: 1.7;
+  font-size: 16px;
+}
+code, pre { font-family: 'JetBrains Mono', monospace; font-size: 0.875rem; }
+a { color: var(--blue); text-decoration:none; }
+a:hover { text-decoration:underline; }
+
+/* Nav */
+nav.top {
+  position: sticky; top:0; z-index:100;
+  background: rgba(15,17,23,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 0;
+}
+nav.top .inner { max-width:var(--max-w); margin:0 auto; padding:0 20px; display:flex; gap:20px; overflow-x:auto; }
+nav.top a { color:var(--muted); font-size:0.8rem; font-weight:500; white-space:nowrap; }
+nav.top a:hover { color:var(--text); text-decoration:none; }
+
+/* Hero */
+.hero { padding:80px 20px 48px; text-align:center; }
+.hero h1 {
+  font-size:2.4rem; font-weight:700; line-height:1.25;
+  background: linear-gradient(135deg, var(--blue), var(--purple));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  background-clip:text;
+  margin-bottom:12px;
+}
+.hero .sub { color:var(--muted); font-size:1.05rem; }
+.hero .meta { margin-top:16px; color:var(--dim); font-size:0.82rem; }
+
+/* Content */
+main { max-width:var(--max-w); margin:0 auto; padding:0 20px 80px; }
+section { margin-bottom:56px; }
+section h2 {
+  font-size:1.55rem; font-weight:600; margin-bottom:16px;
+  padding-bottom:8px; border-bottom:2px solid var(--border);
+}
+section h3 { font-size:1.15rem; font-weight:600; margin:28px 0 10px; color:var(--blue); }
+
+p { margin-bottom:14px; }
+p strong { color:#fff; font-weight:600; }
+
+/* Cards */
+.card-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:14px; margin:16px 0; }
+.card {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:var(--radius); padding:20px;
+}
+.card h4 { font-size:0.95rem; font-weight:600; margin-bottom:6px; color:var(--amber); }
+.card p { font-size:0.9rem; color:var(--muted); margin:0; }
+
+/* Info box */
+.info-box { background:var(--surface); border-left:3px solid var(--blue); border-radius:var(--radius); padding:18px 22px; margin:18px 0; font-size:0.92rem; color:var(--muted); }
+.info-box strong { color:var(--blue); }
+
+/* Alert */
+.alert { background:rgba(251,191,36,0.08); border-left:3px solid var(--amber); border-radius:var(--radius); padding:18px 22px; margin:18px 0; font-size:0.92rem; }
+
+/* Code block */
+pre {
+  background:var(--surface2); border:1px solid var(--border);
+  border-radius:var(--radius); padding:16px 20px; overflow-x:auto;
+  margin:14px 0; line-height:1.5; color:var(--text);
+}
+pre .muted { color:var(--muted); }
+pre .dim { color:var(--dim); }
+
+/* Inline code */
+:not(pre) > code { background:var(--surface2); padding:2px 6px; border-radius:4px; font-size:0.85rem; color:var(--amber); }
+
+/* Table */
+table { width:100%; border-collapse:collapse; margin:16px 0; font-size:0.9rem; }
+th, td { padding:10px 14px; text-align:left; border-bottom:1px solid var(--border); }
+th { font-weight:600; color:var(--muted); font-size:0.78rem; text-transform:uppercase; letter-spacing:0.5px; }
+td { color:var(--text); }
+tr:hover td { background:rgba(255,255,255,0.02); }
+
+/* Stat grid */
+.stat-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:12px; margin:18px 0; }
+.stat { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:18px; text-align:center; }
+.stat .num { font-size:1.8rem; font-weight:700; background:linear-gradient(135deg, var(--green), var(--cyan)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.stat .num.red { background:linear-gradient(135deg, var(--red), var(--amber)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.stat .num.blue { background:linear-gradient(135deg, var(--blue), var(--purple)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.stat .label { font-size:0.78rem; color:var(--muted); margin-top:4px; }
+
+/* Bar */
+.bar-row { display:flex; align-items:center; gap:10px; margin:4px 0; font-family:'JetBrains Mono', monospace; font-size:0.82rem; }
+.bar-label { width:140px; text-align:right; color:var(--muted); flex-shrink:0; }
+.bar-track { flex:1; height:22px; background:var(--surface2); border-radius:4px; overflow:hidden; }
+.bar-fill { height:100%; border-radius:4px; min-width:4px; display:flex; align-items:center; padding-left:8px; font-size:0.75rem; color:#fff; }
+.bar-fill.green { background:linear-gradient(90deg, var(--green), var(--cyan)); }
+.bar-fill.blue { background:linear-gradient(90deg, var(--blue), var(--purple)); }
+.bar-fill.amber { background:linear-gradient(90deg, var(--amber), var(--red)); }
+
+/* Footer */
+footer { text-align:center; padding:40px 20px; border-top:1px solid var(--border); color:var(--dim); font-size:0.82rem; }
+footer a { color:var(--muted); }
+
+/* Mobile */
+@media (max-width:600px) {
+  .hero h1 { font-size:1.6rem; }
+  .card-grid { grid-template-columns:1fr; }
+  .stat-grid { grid-template-columns:1fr 1fr; }
+  nav.top .inner { gap:12px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <div class="inner">
+    <a href="#tldr">TL;DR</a>
+    <a href="#physics">Physics</a>
+    <a href="#auto-regressive">Auto-Regressive</a>
+    <a href="#kv-cache">KV-Cache</a>
+    <a href="#batching">Batching</a>
+    <a href="#continuous">Continuous</a>
+    <a href="#speculative">Speculative</a>
+    <a href="#strategies">Strategies</a>
+    <a href="#prefix-cache">Prefix Cache</a>
+    <a href="#static">Static Weights</a>
+    <a href="#takeaways">Takeaways</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <h1>LLM Inference Parallelization<br>vs Traditional CS Parallelization</h1>
+  <p class="sub">Why running AI models is nothing like running HPC jobs</p>
+  <p class="meta">Hermes Agent · June 2026 · Research &amp; discussion with <a href="https://github.com/totalwindupflightsystems">@totalwindupflightsystems</a><br>Inspired by <a href="https://x.com/steipete/status/2063697162748260627">@steipete</a> — "Design loops, not prompts"</p>
+</header>
+
+<main>
+
+<!-- TL;DR -->
+<section id="tldr">
+  <h2>TL;DR</h2>
+  <table>
+    <tr><th></th><th>Traditional CS</th><th>LLM Inference</th></tr>
+    <tr><td>What you split</td><td>Work (data/tasks)</td><td>Weights (model parameters)</td></tr>
+    <tr><td>Bottleneck</td><td>Compute (FLOPs)</td><td>Memory bandwidth (HBM)</td></tr>
+    <tr><td>Scaling</td><td>Linear with cores</td><td>Sub-linear, communication-bound</td></tr>
+    <tr><td>Batching</td><td>Uniform work units</td><td>Irregular sequences, continuous batching</td></tr>
+    <tr><td>Memory</td><td>Known, fixed</td><td>KV-cache grows per token</td></tr>
+    <tr><td>Sequential bottleneck</td><td>Amdahl's Law fractions</td><td>Auto-regressive token generation</td></tr>
+    <tr><td>Communication</td><td>Occasional messages</td><td>All-reduce every layer, every token</td></tr>
+  </table>
+</section>
+
+<!-- 1. Physics -->
+<section id="physics">
+  <h2>1. The Physics</h2>
+  <p>Traditional CS parallelizes <strong>compute</strong>. LLM inference parallelizes <strong>memory movement</strong>.</p>
+
+  <h3>Why Memory Bandwidth Is the Bottleneck</h3>
+  <p>For a 405B model at FP8: ~400 GB of parameters stream from HBM to the compute die for <strong>every single forward pass</strong>. At ~2 TB/s HBM bandwidth, just reading the weights takes ~200ms. The actual math on those weights takes ~5ms.</p>
+
+  <div class="alert"><strong>The compute units spend 97% of their time waiting for weights to arrive.</strong></div>
+
+  <pre>
+<span class="muted">Single request:</span>
+  Weight load: ████████████████████████████████████ (200ms)
+  Actual math: ██ (5ms)
+  <span class="muted">Total: 205ms</span>
+
+<span class="muted">8 concurrent requests on shared weights:</span>
+  Weight load: ████████████████████████████████████ (200ms, <strong>LOADED ONCE</strong>)
+  Actual math: ████████████████ (40ms, amortized across 8)
+  <span class="muted">Total: 240ms → 8× throughput for 1.17× time</span></pre>
+</section>
+
+<!-- 2. Auto-Regressive -->
+<section id="auto-regressive">
+  <h2>2. The Auto-Regressive Bottleneck</h2>
+  <p>The biggest structural difference from traditional parallelism:</p>
+
+  <div class="info-box"><strong>Token N depends on token N-1, which depends on token N-2...</strong> You cannot generate token 500 until you've generated tokens 1-499. This is a fundamental sequential bottleneck that no amount of hardware eliminates.</div>
+
+  <div class="card-grid">
+    <div class="card">
+      <h4>Prefill Phase</h4>
+      <p>Processing the input prompt — highly parallelizable, compute-bound. All prompt tokens processed simultaneously.</p>
+    </div>
+    <div class="card">
+      <h4>Decode Phase</h4>
+      <p>Generating output token by token — memory-bandwidth-bound, inherently sequential per sequence.</p>
+    </div>
+  </div>
+
+  <p>This is why <strong>prefill-decode disaggregation</strong> is a standard optimization: separate machines for prefill (maximize compute utilization) and decode (minimize KV-cache pressure).</p>
+</section>
+
+<!-- 3. KV-Cache -->
+<section id="kv-cache">
+  <h2>3. The KV-Cache: A Unique Memory Monster</h2>
+  <p>Every token generated appends to the KV-cache — keys and values for every layer, every attention head.</p>
+
+  <table>
+    <tr><th>Context Length</th><th>KV-Cache Size (405B model, FP8)</th></tr>
+    <tr><td>4K tokens</td><td>~1 MB</td></tr>
+    <tr><td>32K tokens</td><td>~8 MB</td></tr>
+    <tr><td>128K tokens</td><td>~30 MB</td></tr>
+    <tr><td>1M tokens</td><td>~250 MB</td></tr>
+  </table>
+
+  <div class="info-box">At 1M context with <strong>8 concurrent requests:</strong> 2 GB just for KV-cache. This has no analogue in traditional CS — memory usage is dynamic, unpredictable, and grows linearly per token.</div>
+</section>
+
+<!-- 4. Batching -->
+<section id="batching">
+  <h2>4. Batching on Shared Weights: The Cost Multiplier</h2>
+  <p>This is the single most important cost lever in LLM serving, and completely unintuitive coming from traditional CS.</p>
+
+  <p><strong>Traditional CS:</strong> 8× work = 8× cores = 8× time on 1 core. <em>Linear.</em></p>
+  <p><strong>LLM inference:</strong> 8× requests ≠ 8× time. The weights are loaded <strong>once</strong> and reused across all requests in the batch.</p>
+
+  <div class="bar-row"><span class="bar-label">1 request</span><div class="bar-track"><div class="bar-fill green" style="width:8%">1.0×</div></div></div>
+  <div class="bar-row"><span class="bar-label">2 requests</span><div class="bar-track"><div class="bar-fill green" style="width:10%">1.1×</div></div></div>
+  <div class="bar-row"><span class="bar-label">4 requests</span><div class="bar-track"><div class="bar-fill green" style="width:12%">1.2×</div></div></div>
+  <div class="bar-row"><span class="bar-label">8 requests</span><div class="bar-track"><div class="bar-fill blue" style="width:18%">1.4×</div></div></div>
+  <div class="bar-row"><span class="bar-label">16 requests</span><div class="bar-track"><div class="bar-fill blue" style="width:24%">1.7×</div></div></div>
+  <div class="bar-row"><span class="bar-label">32 requests</span><div class="bar-track"><div class="bar-fill amber" style="width:35%">2.3×</div></div></div>
+  <p style="font-size:0.82rem; color:var(--muted); margin-top:10px;">Throughput per second skyrockets. Per-request latency also increases. This is a throughput-vs-latency tradeoff — not a free lunch.</p>
+</section>
+
+<!-- 5. Continuous Batching -->
+<section id="continuous">
+  <h2>5. Continuous Batching: No Traditional CS Equivalent</h2>
+  <p>Traditional static batching: wait for batch to fill (or timeout), run forward pass, repeat. Problem: if one request finishes early, that slot sits idle.</p>
+  <p><strong>Continuous batching:</strong> evict finished requests immediately and insert new ones mid-generation.</p>
+
+  <pre>
+<span class="muted">Static batching:</span>
+  [req1: 500 tokens][req2: 500 tokens][req3: 500 tokens] → all finish together
+  Wait time: worst-case latency × batch size
+
+<span class="muted">Continuous batching:</span>
+  [req1: 50 tokens] → <span style="color:#4ade80">done, evicted, insert req4</span>
+  [req2: 500 tokens][req3: 300 tokens][req4: 200 tokens] → req3 done, insert req5
+  ...
+  <span style="color:#4ade80">Throughput: 2–10× higher than static batching</span></pre>
+
+  <div class="info-box">In traditional HPC, you <strong>don't</strong> evict a half-finished task from a CUDA kernel and swap in a new one mid-execution. This pattern has <strong>no analogue</strong> anywhere in traditional parallel computing.</div>
+</section>
+
+<!-- 6. Speculative Decoding -->
+<section id="speculative">
+  <h2>6. Speculative Decoding: Generating Tokens You Might Throw Away</h2>
+  <p>A small "draft" model generates 5 tokens quickly. The big model verifies all 5 in <strong>one forward pass</strong>. If token 3 was wrong: keep 1-2, discard 3-5, continue.</p>
+
+  <div class="info-box">This is speculative execution taken to an extreme — but in CPUs you're predicting <strong>branches</strong>, not generating natural language with a cheaper model. The draft model isn't just a branch predictor; it's a miniature copy that fundamentally changes the cost structure.</div>
+</section>
+
+<!-- 7. Parallelism Strategies -->
+<section id="strategies">
+  <h2>7. Parallelism Strategies</h2>
+
+  <div class="card-grid">
+    <div class="card">
+      <h4>Tensor Parallelism</h4>
+      <p>Slice each layer's weight matrix across GPUs. All-reduce after every layer, every token. Requires NVLink at 900 GB/s — Ethernet won't cut it.</p>
+    </div>
+    <div class="card">
+      <h4>Pipeline Parallelism</h4>
+      <p>Different layers on different GPUs. Problem: "bubbles" where GPUs idle waiting for the previous stage.</p>
+    </div>
+    <div class="card">
+      <h4>Expert Parallelism (MoE)</h4>
+      <p>Different experts on different GPUs. Each token routes to top-k. Dynamic, sparse — not every GPU fires every token. Used by DeepSeek V3/V4.</p>
+    </div>
+    <div class="card">
+      <h4>Sequence Parallelism</h4>
+      <p>Split the sequence length dimension. Useful for long-context prefill where O(n²) attention dominates.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 8. Prefix Caching -->
+<section id="prefix-cache">
+  <h2>8. Prefix Caching: A Unique Form of "Free" Batching</h2>
+  <p>If a new request shares the prefix with an existing one, you don't need a separate KV-cache for the shared portion. The prefix cache is shared across all requests — a form of "free" batching that traditional CS has no equivalent for.</p>
+
+  <div class="stat-grid">
+    <div class="stat">
+      <div class="num">2.73B</div>
+      <div class="label">Total input tokens<br>(June 1–9, 2026)</div>
+    </div>
+    <div class="stat">
+      <div class="num">89.0%</div>
+      <div class="label">Cache hit rate<br>DeepSeek V4 Pro</div>
+    </div>
+    <div class="stat">
+      <div class="num red">$1,215</div>
+      <div class="label">Without caching<br>(full input price)</div>
+    </div>
+    <div class="stat">
+      <div class="num blue">$155</div>
+      <div class="label">With caching<br>(actual billed)</div>
+    </div>
+  </div>
+
+  <div class="alert"><strong>7.8× cost reduction</strong> from automatic prefix sharing. The 2.4 billion cache-hit tokens represent work that was done once and reused across thousands of subsequent requests — a form of parallelism through sharing that exists nowhere in traditional computing.</div>
+</section>
+
+<!-- 9. Static Weights -->
+<section id="static">
+  <h2>9. The "Program" Is Static Weights</h2>
+  <p>Traditional parallelization parallelizes <em>instructions</em>. LLM parallelization parallelizes a fixed computation graph whose behavior changes based on the input. There are no branches (in the CPU sense), no function calls, no dynamic dispatch — just matrix multiplies and attention. The parallelism strategy is baked into the model architecture, not discovered at runtime.</p>
+</section>
+
+<!-- Takeaways -->
+<section id="takeaways">
+  <h2>Key Takeaways</h2>
+
+  <div class="card-grid">
+    <div class="card">
+      <h4>1. Memory-bandwidth-bound</h4>
+      <p>LLM inference is not compute-bound. Traditional HPC scaling intuition doesn't apply.</p>
+    </div>
+    <div class="card">
+      <h4>2. Inherently sequential</h4>
+      <p>The auto-regressive decode phase means no amount of parallelism eliminates the token-by-token dependency.</p>
+    </div>
+    <div class="card">
+      <h4>3. Throughput vs latency</h4>
+      <p>Shared-weight batching provides massive throughput gains at the cost of per-request latency.</p>
+    </div>
+    <div class="card">
+      <h4>4. New paradigms</h4>
+      <p>Continuous batching and prefix caching are solutions to problems that only exist in LLM inference.</p>
+    </div>
+    <div class="card">
+      <h4>5. Context is the cost lever</h4>
+      <p>89% cache hit rates are the difference between $1,215 and $155 for the same workload.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p>Generated by Hermes Agent · <a href="https://github.com/totalwindupflightsystems/reports">totalwindupflightsystems/reports</a></p>
+  <p>Original discussion: <a href="https://x.com/steipete/status/2063697162748260627">@steipete on X</a></p>
+</footer>
+
+</body>
+</html>
