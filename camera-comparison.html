@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Camera Comparison — Xiaomi 17 Ultra vs Oppo Find X9 Ultra + Compact Cameras (June 2026)</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #222532;
+    --border: rgba(255,255,255,0.06);
+    --text: #e4e6ef;
+    --text2: #9ca0b0;
+    --green: #4ade80;
+    --amber: #fbbf24;
+    --orange: #fb923c;
+    --red: #f87171;
+    --blue: #60a5fa;
+    --purple: #a78bfa;
+    --pink: #f472b6;
+    --radius: 10px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  .container { max-width: 900px; margin: 0 auto; padding: 20px 16px 60px; }
+
+  .hero { text-align:center; padding:48px 0 36px; border-bottom:1px solid var(--border); margin-bottom:32px; }
+  .hero .icon { font-size:48px; margin-bottom:12px; }
+  .hero h1 { font-size:30px; font-weight:800; letter-spacing:-0.5px; }
+  .hero .subtitle { color:var(--text2); font-size:15px; margin-top:6px; }
+
+  .top-nav {
+    display:flex; gap:6px; flex-wrap:nowrap; margin-bottom:28px;
+    padding:10px 0; border-bottom:1px solid var(--border);
+    position:sticky; top:0; background:var(--bg); z-index:10;
+    overflow-x:auto; scroll-behavior:smooth;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+  }
+  .top-nav::-webkit-scrollbar { display:none; }
+  .top-nav a { font-size:11px; color:var(--text2); text-decoration:none; padding:4px 9px; border-radius:6px; transition:background 0.15s; white-space:nowrap; flex-shrink:0; }
+  .top-nav a:hover { background:var(--surface); color:var(--text); }
+
+  section { margin-bottom:40px; }
+  h2 { font-size:22px; font-weight:700; margin-bottom:18px; padding-bottom:10px; border-bottom:1px solid var(--border); letter-spacing:-0.3px; }
+  h3 { font-size:17px; font-weight:600; margin:24px 0 14px; color:var(--text); }
+  p { margin-bottom:14px; font-size:15px; color:var(--text2); }
+  strong { color:var(--text); }
+
+  .table-wrap { overflow-x:auto; margin-bottom:20px; border-radius:var(--radius); border:1px solid var(--border); }
+  table { width:100%; border-collapse:collapse; font-size:14px; }
+  th { text-align:left; padding:10px 14px; background:var(--surface2); color:var(--text2); font-size:11px; text-transform:uppercase; letter-spacing:0.5px; font-weight:600; }
+  td { padding:10px 14px; border-top:1px solid var(--border); vertical-align:top; }
+  tr:hover td { background:rgba(255,255,255,0.02); }
+
+  .winner { color:var(--green); font-weight:700; }
+  .loser { color:var(--red); }
+  .tie { color:var(--amber); }
+  .winner-bg { background:rgba(74,222,128,0.06) !important; }
+
+  .card-grid-2 { display:grid; grid-template-columns:repeat(auto-fit, minmax(380px, 1fr)); gap:16px; margin-bottom:20px; }
+  .card {
+    background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
+    padding:22px;
+  }
+  .card.xiaomi { border-left:3px solid var(--red); }
+  .card.oppo { border-left:3px solid var(--green); }
+
+  .phone-header { display:flex; align-items:center; gap:12px; margin-bottom:16px; }
+  .phone-header .model { font-size:18px; font-weight:700; }
+  .phone-header .brand { font-size:12px; color:var(--text2); text-transform:uppercase; letter-spacing:0.5px; }
+
+  .spec-row { display:flex; justify-content:space-between; padding:8px 0; border-top:1px solid var(--border); font-size:14px; }
+  .spec-row .spec-label { color:var(--text2); }
+  .spec-row .spec-value { color:var(--text); font-weight:500; }
+
+  .verdict-box {
+    background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
+    padding:20px; margin-bottom:20px;
+  }
+  .verdict-box .verdict-header { font-size:16px; font-weight:700; margin-bottom:10px; display:flex; align-items:center; gap:8px; }
+  .verdict-box p { font-size:14px; margin-bottom:8px; }
+
+  .alert {
+    background:var(--surface); border-radius:var(--radius); padding:16px;
+    margin-bottom:16px; font-size:14px;
+  }
+  .alert.tip { border-left:3px solid var(--blue); }
+  .alert.warn { border-left:3px solid var(--amber); }
+  .alert.good { border-left:3px solid var(--green); }
+
+  .badge {
+    display:inline-block; padding:2px 8px; border-radius:4px;
+    font-size:11px; font-weight:700; letter-spacing:0.4px;
+  }
+  .badge.green { background:rgba(74,222,128,0.15); color:var(--green); }
+  .badge.amber { background:rgba(251,191,36,0.15); color:var(--amber); }
+  .badge.red { background:rgba(248,113,113,0.15); color:var(--red); }
+  .badge.blue { background:rgba(96,165,250,0.15); color:var(--blue); }
+  .badge.pink { background:rgba(244,114,182,0.15); color:var(--pink); }
+
+  .store-card {
+    background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
+    padding:18px; margin-bottom:12px;
+  }
+  .store-card .store-name { font-size:16px; font-weight:700; margin-bottom:6px; }
+  .store-card .store-addr { font-size:13px; color:var(--text2); margin-bottom:4px; }
+  .store-card .store-hours { font-size:12px; color:var(--amber); }
+
+  .pink-item {
+    background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
+    padding:14px 18px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;
+  }
+  .pink-item .pink-name { font-weight:600; font-size:14px; }
+  .pink-item .pink-price { color:var(--green); font-weight:700; font-size:14px; }
+  .pink-item .pink-source { font-size:11px; color:var(--text2); display:block; margin-top:2px; }
+
+  .review-quote {
+    background:rgba(96,165,250,0.06); border-left:3px solid var(--blue);
+    padding:14px 18px; margin-bottom:12px; border-radius:0 var(--radius) var(--radius) 0;
+    font-size:14px; font-style:italic;
+  }
+  .review-quote .source { display:block; margin-top:6px; font-size:12px; color:var(--text2); font-style:normal; }
+
+  .back-link {
+    display:inline-block; margin-top:16px; font-size:13px; color:var(--blue);
+    text-decoration:none; padding:6px 12px; border-radius:6px; background:var(--surface);
+  }
+  .back-link:hover { background:var(--surface2); }
+
+  @media (max-width: 500px) {
+    .card-grid-2 { grid-template-columns: 1fr; }
+    .hero h1 { font-size:24px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- Hero -->
+<div class="hero">
+  <div class="icon">📸</div>
+  <h1>Camera Comparison — June 2026</h1>
+  <div class="subtitle">Xiaomi 17 Ultra vs Oppo Find X9 Ultra · Compact Cameras · Barcelona Shopping</div>
+</div>
+
+<!-- Top Nav -->
+<nav class="top-nav">
+  <a href="#phones">Phone Cameras</a>
+  <a href="#verdict-phone">Phone Verdict</a>
+  <a href="#compact">Compact Cameras</a>
+  <a href="#compact-verdict">Compact Verdict</a>
+  <a href="#stores">Barcelona Stores</a>
+  <a href="#pink">Pink Accessories</a>
+  <a href="#notes">Notes</a>
+</nav>
+
+<!-- ============ PHONE CAMERA COMPARISON ============ -->
+<section id="phones">
+  <h2>📱 Ultra Camera Phones — Head to Head</h2>
+  <p>Both released <strong>Spring 2026</strong>, both run <strong>Snapdragon 8 Elite Gen 5</strong>. Xiaomi <strong>skipped the 16</strong> entirely — the 17 Ultra is the current model. Oppo went from X8 → X9.</p>
+
+  <div class="card-grid-2">
+    <!-- Xiaomi -->
+    <div class="card xiaomi">
+      <div class="phone-header">
+        <div class="model">Xiaomi 17 Ultra</div>
+        <div class="brand">Leica Optics</div>
+      </div>
+      <div class="spec-row"><span class="spec-label">Released</span><span class="spec-value">March 10, 2026</span></div>
+      <div class="spec-row"><span class="spec-label">Main Sensor</span><span class="spec-value winner">1-inch · 200MP · variable aperture</span></div>
+      <div class="spec-row"><span class="spec-label">Telephoto</span><span class="spec-value">200MP 75–100mm variable zoom</span></div>
+      <div class="spec-row"><span class="spec-label">Ultrawide</span><span class="spec-value winner">50MP — cleaner edges</span></div>
+      <div class="spec-row"><span class="spec-label">Max Zoom</span><span class="spec-value">~100x digital</span></div>
+      <div class="spec-row"><span class="spec-label">Tuning</span><span class="spec-value">Leica Authentic / Vibrant</span></div>
+      <div class="spec-row"><span class="spec-label">Size</span><span class="spec-value winner">8.3mm · 223g (thinner, lighter)</span></div>
+      <div class="spec-row"><span class="spec-label">Battery</span><span class="spec-value">6000 mAh · 90W wired · 80W wireless</span></div>
+      <div class="spec-row"><span class="spec-label">RAM / Storage</span><span class="spec-value">16GB / 512GB–1TB</span></div>
+      <div class="spec-row"><span class="spec-label">Spain Price</span><span class="spec-value">~€1,499</span></div>
+      <div class="spec-row"><span class="spec-label">Spain Availability</span><span class="spec-value winner">✅ MediaMarkt, FNAC, Xiaomi Store</span></div>
+    </div>
+
+    <!-- Oppo -->
+    <div class="card oppo">
+      <div class="phone-header">
+        <div class="model">Oppo Find X9 Ultra</div>
+        <div class="brand">Hasselblad Optics</div>
+      </div>
+      <div class="spec-row"><span class="spec-label">Released</span><span class="spec-value">May 8, 2026 (first global Ultra)</span></div>
+      <div class="spec-row"><span class="spec-label">Main Sensor</span><span class="spec-value">200MP · f/1.5 (smaller sensor)</span></div>
+      <div class="spec-row"><span class="spec-label">Telephoto</span><span class="spec-value winner">200MP 3x (70mm) + 50MP 10x optical !!</span></div>
+      <div class="spec-row"><span class="spec-label">Ultrawide</span><span class="spec-value">50MP · 123° (chromatic aberration at edges)</span></div>
+      <div class="spec-row"><span class="spec-label">Max Zoom</span><span class="spec-value winner">120x digital (10x optical base)</span></div>
+      <div class="spec-row"><span class="spec-label">Tuning</span><span class="spec-value">Hasselblad Natural Color</span></div>
+      <div class="spec-row"><span class="spec-label">Size</span><span class="spec-value">9.1mm · 236g</span></div>
+      <div class="spec-row"><span class="spec-label">Battery</span><span class="spec-value winner">~6000 mAh · more efficient</span></div>
+      <div class="spec-row"><span class="spec-label">RAM / Storage</span><span class="spec-value">16GB / 512GB–1TB</span></div>
+      <div class="spec-row"><span class="spec-label">Spain Price</span><span class="spec-value winner">~€1,200</span></div>
+      <div class="spec-row"><span class="spec-label">Spain Availability</span><span class="spec-value winner">✅ Europe launch — store availability TBD</span></div>
+    </div>
+  </div>
+
+  <!-- Review quotes -->
+  <h3>What the Reviews Say</h3>
+  <div class="review-quote">
+    "The Xiaomi 17 Ultra has a wider field of view and its ultrawide images come out cleaner. I spotted several instances of chromatic aberration along the edges from the Oppo Find X9 Ultra."
+    <span class="source">— Android Authority, June 2026</span>
+  </div>
+  <div class="review-quote">
+    "Oppo is better for zoom and versatility, while Xiaomi wins in overall image consistency and natural photography. Xiaomi feels more reliable, Oppo feels more ambitious."
+    <span class="source">— Gizmochina, April 2026</span>
+  </div>
+  <div class="review-quote">
+    "If you want one of the best camera phones but don't want to compromise on general smartphone uses, the Oppo Find X9 Ultra is a brilliant choice."
+    <span class="source">— Trusted Reviews, May 2026</span>
+  </div>
+</section>
+
+<!-- Phone Verdict -->
+<section id="verdict-phone">
+  <h2>🏆 Camera Phone Verdict</h2>
+
+  <div class="card-grid-2">
+    <div class="verdict-box" style="border-left:3px solid var(--red);">
+      <div class="verdict-header">🥇 Xiaomi 17 Ultra <span class="badge red">Photography Purist</span></div>
+      <p><strong>Get this if:</strong> you want the 1-inch sensor with real depth of field, better low light, and Leica's film-like color science. Thinner and lighter. The more "camera-first" device.</p>
+      <p><strong>~€1,499</strong> at MediaMarkt Gran Via 2, FNAC, or Xiaomi Store Passeig de Gràcia</p>
+    </div>
+
+    <div class="verdict-box" style="border-left:3px solid var(--green);">
+      <div class="verdict-header">🥈 Oppo Find X9 Ultra <span class="badge green">Zoom King</span></div>
+      <p><strong>Get this if:</strong> you want 10x optical zoom (real telescope reach), dual dedicated telephoto lenses, and Hasselblad color. Better value at €1,200. First Oppo Ultra with full EU warranty and Google services.</p>
+      <p><strong>~€1,200</strong> — check FNAC, El Corte Inglés, or Amazon.es</p>
+    </div>
+  </div>
+
+  <div class="alert warn">
+    <strong>Note:</strong> Vivo X300 Ultra (Forbes "best camera phone right now") is <strong>China-only</strong>. No European release, no Google services out of box, no warranty. Skip it unless you want the import headache via AliExpress/Wondamobile.
+  </div>
+  <div class="alert tip">
+    <strong>Both</strong> slaughter the S25 Ultra on camera hardware. Since you already daily an iPhone 17 Pro Max and S25 Ultra, this is a camera-first purchase — the Xiaomi 17 Ultra with its 1-inch Leica sensor is the purer choice.
+  </div>
+</section>
+
+<!-- ============ COMPACT CAMERAS ============ -->
+<section id="compact">
+  <h2>📷 Compact Cameras for Her</h2>
+  <p>All models support <strong>WiFi + Bluetooth transfer to iPhone</strong> — no computer needed. All are <strong>purse-sized</strong>, no camera bag required.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Camera</th>
+          <th>Price</th>
+          <th>Flip Screen</th>
+          <th>4K</th>
+          <th>Mic In</th>
+          <th>Size</th>
+          <th>Best For</th>
+          <th>Stock</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Canon G7X Mark III</strong></td>
+          <td>€850 MSRP / ~€1,200 resale</td>
+          <td><span class="badge green">180° flip ✓</span></td>
+          <td><span class="badge green">✓</span></td>
+          <td><span class="badge green">✓</span></td>
+          <td>105×61×41mm · 304g</td>
+          <td>Photos + vibe/aesthetic</td>
+          <td><span class="badge amber">Hard to find</span></td>
+        </tr>
+        <tr>
+          <td><strong>Sony ZV-1 II</strong></td>
+          <td>€899</td>
+          <td><span class="badge green">Fully articulating ✓</span></td>
+          <td><span class="badge green">✓</span></td>
+          <td><span class="badge green">✓</span></td>
+          <td>106×60×47mm · 292g</td>
+          <td>Best autofocus, wider selfie lens</td>
+          <td><span class="badge green">In stock</span></td>
+        </tr>
+        <tr>
+          <td><strong>Canon PowerShot V1</strong></td>
+          <td>€899</td>
+          <td><span class="badge green">Fully articulating ✓</span></td>
+          <td><span class="badge green">✓</span></td>
+          <td><span class="badge green">Built-in</span></td>
+          <td>Purse-sized (new 2025)</td>
+          <td>Video-first, built-in cooling fan</td>
+          <td><span class="badge green">In stock</span></td>
+        </tr>
+        <tr>
+          <td><strong>Sony RX100 VII</strong></td>
+          <td>€1,299</td>
+          <td><span class="badge green">180° flip ✓</span></td>
+          <td><span class="badge green">✓</span></td>
+          <td><span class="badge red">✗</span></td>
+          <td>102×58×43mm · 302g</td>
+          <td>Best image quality, 200mm zoom</td>
+          <td><span class="badge green">In stock</span></td>
+        </tr>
+        <tr>
+          <td><strong>DJI Osmo Pocket 3</strong></td>
+          <td>€519</td>
+          <td><span class="badge green">Rotatable ✓</span></td>
+          <td><span class="badge green">✓</span></td>
+          <td><span class="badge red">✗</span></td>
+          <td>140×42mm · 179g</td>
+          <td>Video/TikTok, buttery gimbal</td>
+          <td><span class="badge green">In stock</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="alert warn">
+    <strong>Canon G9X Mark II — AVOID.</strong> No flip screen (can't see yourself), no 4K, slower lens, no mic input. If she mentioned "G9X," she almost certainly meant <strong>G7X</strong> — the G9X is the wrong tool for influencer content.
+  </div>
+</section>
+
+<!-- Compact Verdict -->
+<section id="compact-verdict">
+  <h2>🏆 Compact Camera Verdict</h2>
+
+  <div class="verdict-box" style="border-left:3px solid var(--amber);">
+    <div class="verdict-header">The One She Wants <span class="badge amber">If You Can Find It</span></div>
+    <p><strong>Canon G7X Mark III</strong> — the viral TikTok camera. Warm, dreamy skin tones straight out of camera. No editing needed. Flip screen, 4K, mic input. That "influencer look" she's seen everywhere.</p>
+    <p>At €850 MSRP it's a steal — but you'll likely pay €1,200+ on resale. Canon Spain's online store (canon.es) occasionally restocks. The 30th Anniversary graphite edition is €1,299 and available now.</p>
+  </div>
+
+  <div class="verdict-box" style="border-left:3px solid var(--blue);">
+    <div class="verdict-header">Best Available Right Now <span class="badge blue">No Hunt Required</span></div>
+    <p><strong>Sony ZV-1 II</strong> (€899) or <strong>Canon PowerShot V1</strong> (€899) — both in stock, both excellent. The ZV-1 II has Sony's legendary autofocus and a wider selfie lens. The PowerShot V1 is Canon's brand-new creator camera with a built-in cooling fan and multi-mic array.</p>
+  </div>
+</section>
+
+<!-- ============ BARCELONA STORES ============ -->
+<section id="stores">
+  <h2>🗺️ Barcelona Store Guide</h2>
+  <p>Updated June 16, 2026 (Tuesday). Current time: 18:38 CEST.</p>
+
+  <h3>🥇 Gran Via 2 — Walkable from Your Location</h3>
+  <div class="store-card">
+    <div class="store-name">MediaMarkt (inside Gran Via 2)</div>
+    <div class="store-addr">Av. de la Gran Via, 75, L'Hospitalet de Llobregat</div>
+    <div class="store-hours">⏰ Today: 10:00–22:00 ✓ Open 3h 20m left</div>
+    <p style="font-size:13px;color:var(--text2);margin-top:6px;">Biggest MediaMarkt in Barcelona. Carries <strong>Xiaomi 17 Ultra</strong>, compact cameras (G7X, ZV-1 II, RX100). Start here.</p>
+  </div>
+
+  <div class="store-card">
+    <div class="store-name">GUESS (inside Gran Via 2)</div>
+    <div class="store-addr">Same mall — Av. de la Gran Via, 75</div>
+    <div class="store-hours">⏰ Today: 10:00–22:00 ✓</div>
+    <p style="font-size:13px;color:var(--text2);margin-top:6px;">Recently opened. Clothes for her — all in one trip.</p>
+  </div>
+
+  <div class="store-card">
+    <div class="store-name">Inside / Bosanova / Foot Locker (boots)</div>
+    <div class="store-addr">Inside Gran Via 2</div>
+    <div class="store-hours">⏰ Today: 10:00–22:00 ✓</div>
+    <p style="font-size:13px;color:var(--text2);margin-top:6px;">Multiple shoe stores in the mall. Boots for her.</p>
+  </div>
+
+  <h3>🥈 Pro Camera Row — Ronda Universitat</h3>
+  <div class="store-card">
+    <div class="store-name">Casanova Foto</div>
+    <div class="store-addr">Ronda Universitat 35, 08007 Barcelona</div>
+    <div class="store-hours">⏰ Today: 10:00–14:00 + 16:30–20:30 — <strong>Closes in 1h 50m!</strong></div>
+    <p style="font-size:13px;color:var(--text2);margin-top:6px;">Barcelona's legendary camera store since 1972. Full Canon, Sony, Fujifilm range. If anyone has a G7X III in stock, it's them. <strong>Go NOW if you want this option.</strong></p>
+  </div>
+
+  <div class="store-card">
+    <div class="store-name">Foto K</div>
+    <div class="store-addr">Ronda Universitat 25, 08007 Barcelona (3 doors down)</div>
+    <div class="store-hours">⏰ Similar hours — likely ~20:30 close</div>
+  </div>
+
+  <h3>🥉 Other Options</h3>
+  <div class="store-card">
+    <div class="store-name">El Corte Inglés — Plaça de Catalunya</div>
+    <div class="store-addr">Plaça de Catalunya, Barcelona</div>
+    <div class="store-hours">⏰ Today: 10:00–22:00 ✓ (no siesta)</div>
+    <p style="font-size:13px;color:var(--text2);margin-top:6px;">Electronics + photography floor. Lists G7X III at ~€899 on their website.</p>
+  </div>
+
+  <div class="store-card">
+    <div class="store-name">Xiaomi Store Barcelona</div>
+    <div class="store-addr">Passeig de Gràcia area</div>
+    <div class="store-hours">⏰ Check before going</div>
+    <p style="font-size:13px;color:var(--text2);margin-top:6px;">Best place to buy the Xiaomi 17 Ultra — official store with full warranty.</p>
+  </div>
+</section>
+
+<!-- ============ PINK ACCESSORIES ============ -->
+<section id="pink">
+  <h2>💖 Pink Cases & Wraps</h2>
+  <p>For the Canon G7X Mark III (if you find one). All available on <strong>Amazon.es</strong> — deliver to your hotel/apartment.</p>
+
+  <div class="pink-item">
+    <div>
+      <div class="pink-name">TUYUNG Silicone Case — Hot Pink</div>
+      <div class="pink-source">Amazon.es · includes lens cap</div>
+    </div>
+    <div class="pink-price">~€15</div>
+  </div>
+
+  <div class="pink-item">
+    <div>
+      <div class="pink-name">Pocoukate Case — Rosy Pink</div>
+      <div class="pink-source">Amazon.es · includes screen protector + lens cover</div>
+    </div>
+    <div class="pink-price">~€20</div>
+  </div>
+
+  <div class="pink-item">
+    <div>
+      <div class="pink-name">Gosknor Silicone — Pink</div>
+      <div class="pink-source">Amazon.es · detachable lens cap</div>
+    </div>
+    <div class="pink-price">~€17</div>
+  </div>
+
+  <div class="pink-item">
+    <div>
+      <div class="pink-name">BMAOLLONGB Leather Half-Case — Pink</div>
+      <div class="pink-source">Amazon.es · genuine leather + hand strap (X100VI)</div>
+    </div>
+    <div class="pink-price">~€40</div>
+  </div>
+
+  <div class="pink-item">
+    <div>
+      <div class="pink-name">STSEETOP Silicone Case — Pink (Sony ZV-E10 II)</div>
+      <div class="pink-source">Amazon.es · if you go Sony instead</div>
+    </div>
+    <div class="pink-price">~€15</div>
+  </div>
+
+  <div class="alert tip" style="margin-top:16px;">
+    <strong>Tip:</strong> Amazon.es delivers to Barcelona hotels in 1–2 days with Prime. Order the pink case now, it'll arrive before you leave. Canon Spain online store (canon.es) ships free on orders over €30.
+  </div>
+</section>
+
+<!-- ============ STRATEGY NOTES ============ -->
+<section id="notes">
+  <h2>📋 Shopping Strategy</h2>
+
+  <div class="verdict-box" style="border-left:3px solid var(--purple);">
+    <div class="verdict-header">Tonight's Plan <span class="badge" style="background:rgba(167,139,250,0.15);color:var(--purple);">Efficient</span></div>
+    <p><strong>1.</strong> Walk 2 min to <strong>Gran Via 2</strong> (closes 22:00)</p>
+    <p><strong>2.</strong> MediaMarkt → Xiaomi 17 Ultra for you + compact camera for her</p>
+    <p><strong>3.</strong> GUESS → clothes for her</p>
+    <p><strong>4.</strong> Inside/Bosanova → boots</p>
+    <p><strong>5.</strong> Done by 10pm, everything in one mall</p>
+    <p style="margin-top:12px;"><strong>Fallback:</strong> If MediaMarkt doesn't have the G7X III, go to Casanova Foto tomorrow morning (opens 10:00, closed tonight at 20:30).</p>
+  </div>
+
+  <h3>The G7X III Hunt</h3>
+  <p>The Canon G7X Mark III is <strong>discontinued but still in demand</strong>. It occasionally restocks at:</p>
+  <p>• <strong>Canon Spain online</strong> (canon.es/store) — both black (€850) and 30th Anniversary graphite (€1,299) editions listed</p>
+  <p>• <strong>El Corte Inglés</strong> — lists it at ~€899 on their website</p>
+  <p>• <strong>Casanova Foto</strong> — your best bet for in-store stock</p>
+
+  <div class="alert warn">
+    <strong>Don't pay €1,200 on resale</strong> unless you have to. Canon Spain occasionally restocks at €850 MSRP. The 30th Anniversary Edition at €1,299 is available now and comes with a Peak Design wrist strap and 32GB SD card.
+  </div>
+
+  <h3>Xiaomi 17 Ultra vs S25 Ultra</h3>
+  <p>The Xiaomi 17 Ultra has a <strong>1-inch sensor</strong> (vs S25 Ultra's 1/1.3") and <strong>Leica-tuned optics</strong>. The difference in depth of field, low light, and color rendering is significant — it's the closest a phone gets to a dedicated camera. Since you already have the iPhone 17 Pro Max and S25 Ultra, this is purely a camera upgrade.</p>
+</section>
+
+<a class="back-link" href="index.html">← Back to Reports Index</a>
+
+</div>
+</body>
+</html>
