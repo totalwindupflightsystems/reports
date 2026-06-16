@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LLM Inference — Test Your Understanding</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0f1117; --surface: #1a1d27; --surface2: #222533;
+  --text: #e4e6ef; --muted: #9ca0b0; --dim: #6b7084;
+  --green: #4ade80; --red: #f87171; --amber: #fbbf24;
+  --blue: #60a5fa; --purple: #c084fc; --cyan: #22d3ee;
+  --border: rgba(255,255,255,0.06); --radius: 10px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background: var(--bg); color: var(--text);
+  font-family: Inter, system-ui, sans-serif; line-height: 1.7;
+  font-size: 16px;
+}
+.container { max-width: 800px; margin:0 auto; padding:40px 20px 80px; }
+
+/* Header */
+.header { text-align:center; padding:48px 0 32px; border-bottom:1px solid var(--border); margin-bottom:36px; }
+.header h1 { font-size:2rem; font-weight:700; background:linear-gradient(135deg, var(--blue), var(--purple)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.header p { color:var(--muted); margin-top:8px; font-size:0.95rem; }
+
+/* Progress */
+.progress-wrap { margin-bottom:24px; }
+.progress-bar { height:4px; background:var(--surface2); border-radius:2px; overflow:hidden; }
+.progress-fill { height:100%; background:linear-gradient(90deg, var(--blue), var(--purple)); transition:width 0.3s; width:0; }
+.progress-text { font-size:0.78rem; color:var(--muted); margin-top:8px; display:flex; justify-content:space-between; }
+
+/* Question */
+.q-card {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:var(--radius); padding:28px; margin-bottom:18px;
+}
+.q-num { font-size:0.75rem; color:var(--dim); text-transform:uppercase; letter-spacing:1px; margin-bottom:8px; }
+.q-text { font-size:1.1rem; font-weight:600; margin-bottom:20px; }
+.q-code {
+  background:var(--surface2); border:1px solid var(--border);
+  border-radius:6px; padding:14px 18px; margin-bottom:18px;
+  font-family:'JetBrains Mono', monospace; font-size:0.85rem;
+  line-height:1.5; overflow-x:auto;
+}
+.q-code .hl { color:var(--amber); }
+.q-code .dim { color:var(--dim); }
+
+/* Options */
+.options { display:flex; flex-direction:column; gap:10px; }
+.opt {
+  display:flex; align-items:flex-start; gap:12px;
+  padding:14px 16px; background:var(--surface2);
+  border:2px solid var(--border); border-radius:8px;
+  cursor:pointer; transition:all 0.15s;
+}
+.opt:hover { border-color:rgba(255,255,255,0.2); background:#282c3a; }
+.opt.selected { border-color:var(--blue); background:rgba(96,165,250,0.08); }
+.opt.correct { border-color:var(--green); background:rgba(74,222,128,0.08); }
+.opt.wrong { border-color:var(--red); background:rgba(248,113,113,0.08); }
+.opt .check {
+  width:22px; height:22px; border-radius:50%;
+  border:2px solid var(--dim); flex-shrink:0; margin-top:1px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:0.7rem; transition:all 0.15s;
+}
+.opt.selected .check { border-color:var(--blue); background:var(--blue); }
+.opt.correct .check { border-color:var(--green); background:var(--green); }
+.opt.wrong .check { border-color:var(--red); background:var(--red); }
+.opt label { cursor:pointer; flex:1; }
+.opt .letter { font-weight:700; margin-right:4px; color:var(--dim); }
+
+/* Feedback */
+.feedback {
+  margin-top:16px; padding:16px; border-radius:8px;
+  display:none; font-size:0.9rem; line-height:1.6;
+}
+.feedback.show { display:block; }
+.feedback.correct { background:rgba(74,222,128,0.06); border:1px solid rgba(74,222,128,0.2); }
+.feedback.wrong { background:rgba(248,113,113,0.06); border:1px solid rgba(248,113,113,0.2); }
+.feedback .why { margin-top:8px; color:var(--text); }
+.feedback .why strong { color:var(--amber); }
+
+/* Buttons */
+.btn-row { display:flex; gap:10px; margin-top:18px; }
+.btn {
+  padding:10px 24px; border-radius:6px; font-size:0.9rem; font-weight:600;
+  cursor:pointer; border:none; font-family:Inter,sans-serif;
+  transition:all 0.15s;
+}
+.btn-primary { background:var(--blue); color:#0f1117; }
+.btn-primary:hover { background:#93c5fd; }
+.btn-secondary { background:var(--surface2); color:var(--text); border:1px solid var(--border); }
+.btn-secondary:hover { border-color:rgba(255,255,255,0.2); }
+.btn:disabled { opacity:0.4; cursor:not-allowed; }
+
+/* Results */
+.results {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:var(--radius); padding:32px; text-align:center;
+  margin-top:32px; display:none;
+}
+.results.show { display:block; }
+.results .score {
+  font-size:3.5rem; font-weight:800;
+  background:linear-gradient(135deg, var(--green), var(--cyan));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.results .grade { font-size:1.2rem; font-weight:600; margin:8px 0; }
+.results .detail { color:var(--muted); font-size:0.9rem; }
+.results .review-link { margin-top:16px; }
+.results .review-link a { color:var(--blue); }
+
+/* Review list */
+.review-item {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:8px; padding:18px; margin-bottom:12px;
+}
+.review-item .r-num { font-size:0.75rem; color:var(--dim); margin-bottom:4px; }
+.review-item .r-q { font-weight:600; margin-bottom:8px; }
+.review-item .r-answer { font-size:0.9rem; color:var(--muted); }
+.review-item .r-answer .icon { margin-right:6px; }
+.review-item .r-answer.correct { color:var(--green); }
+.review-item .r-answer.wrong { color:var(--red); }
+.review-item .r-why { margin-top:10px; padding:12px; background:var(--surface2); border-radius:6px; font-size:0.85rem; color:var(--muted); line-height:1.5; }
+.review-item .r-why strong { color:var(--amber); }
+
+.hidden { display:none; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+  <h1>LLM Inference Parallelization</h1>
+  <p>Test your understanding — 12 questions. No memorization required. Explain the concept to answer.</p>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="progress-text"><span id="qRemaining">12 questions remaining</span><span id="scoreDisplay"></span></div>
+</div>
+
+<div id="quiz"></div>
+
+<div class="results" id="results">
+  <div class="score" id="finalScore"></div>
+  <div class="grade" id="finalGrade"></div>
+  <div class="detail" id="finalDetail"></div>
+  <div class="review-link"><a href="#" onclick="showReview();return false">Review all answers ↓</a></div>
+</div>
+
+<div id="review" class="hidden"></div>
+
+<script>
+const questions = [
+  {
+    q: "In LLM inference, what is the PRIMARY bottleneck — the thing that limits throughput most?",
+    opts: [
+      "Compute (FLOPs) — the GPU cores can't multiply matrices fast enough",
+      "Memory bandwidth (HBM) — the compute units wait for weights to arrive",
+      "Network I/O — moving data between GPUs over Ethernet",
+      "CPU scheduling — the OS can't dispatch inference requests fast enough"
+    ],
+    ans: 1,
+    why: "For large models (~405B at FP8), ~400 GB of weights must stream from HBM to the compute die for every forward pass. At ~2 TB/s HBM bandwidth, reading weights takes ~200ms. The actual math takes ~5ms. The compute units spend 97% of their time idle, waiting for data. This is memory-bandwidth-bound, not compute-bound — the exact opposite of traditional HPC."
+  },
+  {
+    q: "A 405B model at FP8 takes ~200ms to read weights from HBM and ~5ms to do the math. If you run 8 requests in a batch on the SAME model weights, roughly how long does the forward pass take?",
+    opts: [
+      "8 × 205ms = 1,640ms (8× the work = 8× the time)",
+      "~240ms (weights loaded once, math amortized across 8)",
+      "Still 205ms (batching adds no overhead at all)",
+      "~40ms (batching somehow eliminates the weight-load entirely)"
+    ],
+    ans: 1,
+    why: "The weights are loaded ONCE and reused across all requests in the batch. The math scales sub-linearly (~40ms for 8 instead of ~5ms for 1). Total: ~240ms. This gives 8× throughput for only 1.17× time — but per-request LATENCY increases (240ms vs 205ms). The throughput-vs-latency tradeoff is the key insight."
+  },
+  {
+    q: "Why can't you generate token 500 before generating tokens 1-499?",
+    opts: [
+      "Because the API rate-limiter enforces sequential delivery",
+      "Because the GPU scheduler processes tokens one at a time by design",
+      "Because each token's computation depends on the KV-cache entries from all previous tokens — the auto-regressive dependency",
+      "You actually CAN — speculative decoding does exactly this"
+    ],
+    ans: 2,
+    why: "Token N depends on the attention output computed from tokens 1 through N-1 (the KV-cache). Token N literally cannot be computed without the accumulated keys and values from every prior token. This is the auto-regressive bottleneck — a fundamental sequential dependency that no amount of hardware parallelism eliminates. Speculative decoding doesn't break this; it guesses ahead and verifies, discarding wrong guesses."
+  },
+  {
+    q: "At 1M context with a 405B model in FP8 and 8 concurrent requests, how much memory does the KV-cache consume?",
+    opts: [
+      "~8 MB — the KV-cache is highly compressed",
+      "~250 MB — one full 1M-context KV-cache",
+      "~2 GB — 8 requests × ~250 MB each",
+      "~16 GB — the model's parameter count is the KV-cache limit"
+    ],
+    ans: 2,
+    why: "Each request at 1M context stores keys and values for every layer, every attention head — that's ~250 MB per request in FP8. 8 concurrent requests: ~2 GB just for KV-cache. This has no analogue in traditional CS where memory usage is known and fixed upfront. In LLM inference, it grows linearly per token, per request."
+  },
+  {
+    q: "What is 'continuous batching' and why does it have no equivalent in traditional parallel computing?",
+    opts: [
+      "Processing requests in a never-ending stream without restarting the model",
+      "Padding all sequences to the same length so the batch is uniform",
+      "Evicting finished requests mid-generation and inserting new ones — swapping work units inside an active CUDA kernel",
+      "Running multiple models simultaneously on the same GPU"
+    ],
+    ans: 2,
+    why: "In traditional static batching, you wait for the batch to fill, run the forward pass, and all requests finish together. Empty slots sit idle. Continuous batching evicts finished requests IMMEDIATELY and swaps in new ones — mid-generation, inside the active batch. In traditional HPC, you don't evict a half-finished task from a CUDA kernel and swap in a replacement. This pattern is unique to LLM serving."
+  },
+  {
+    q: "Speculative decoding uses a small 'draft' model to generate tokens ahead of the main model. What happens if the draft model's 3rd token guess is wrong?",
+    opts: [
+      "The entire generation is discarded and restarted from token 1",
+      "Tokens 1-2 are kept, tokens 3+ are discarded, the main model regenerates from token 3",
+      "The wrong token is corrected in-place without any discard",
+      "The draft model retries with a higher temperature"
+    ],
+    ans: 1,
+    why: "The main model verifies all 5 draft tokens in ONE forward pass. If token 3 was wrong: keep 1-2 (they were correct), discard 3-5. The main model picks up generation from token 3. This is speculative execution applied to language — but instead of predicting CPU branches, you're using a cheaper language model as your 'branch predictor.'"
+  },
+  {
+    q: "In tensor parallelism, why can't you just use regular Ethernet (100 Gbps) instead of NVLink (900 GB/s)?",
+    opts: [
+      "Ethernet doesn't support GPU-to-GPU communication at all",
+      "You could, but the latency would make it slightly slower",
+      "Tensor parallelism requires an all-reduce after EVERY layer, EVERY token — 6,000+ all-reduce operations for 60 layers × 100 tokens. At that density, Ethernet bandwidth is catastrophically insufficient.",
+      "Ethernet works fine; NVLink is just marketing"
+    ],
+    ans: 2,
+    why: "Tensor parallelism slices each layer's weight matrix across GPUs. After every layer, every token, all GPUs must all-reduce their partial results. For a 60-layer model generating 100 tokens: 6,000 all-reduce operations. Each one moves partial activation data. At 100 Gbps vs 900 GB/s, Ethernet is ~70× slower — the GPUs would spend 99% of their time waiting on the network instead of computing."
+  },
+  {
+    q: "Bane's June 2026 DeepSeek V4 Pro usage: 2.73 billion input tokens, 89% cache hit rate. Actual cost: $155. What would it cost without caching?",
+    opts: [
+      "About the same — caching doesn't affect DeepSeek pricing",
+      "~$1,215 — 7.8× more, because the 2.4B cache-hit tokens get billed at full input price",
+      "~$310 — exactly double, one for the cache hit and one for the miss",
+      "~$580 — caching saves roughly 75%"
+    ],
+    ans: 1,
+    why: "DeepSeek V4 Pro pricing: $0.435/M input (full), $0.003625/M cached (120× cheaper). Without caching: 2.73B × $0.435/M = ~$1,187 for input alone, plus output tokens. With 89% cache hits: 2.43B hits × $0.003625 = ~$8.80 + 301M misses × $0.435 = ~$131 + output ≈ $155. The 89% hit rate is the difference between affordable and ruinous."
+  },
+  {
+    q: "What is 'prefix caching' and how is it a form of 'free' batching?",
+    opts: [
+      "Saving the entire response to avoid regenerating it",
+      "When a new request shares the same beginning as an existing request, the KV-cache for the overlapping portion is reused — no recomputation needed. It's 'free' work-sharing across requests.",
+      "A technique to compress the model weights so they fit in cache",
+      "Queuing requests so they're processed in alphabetical order"
+    ],
+    ans: 1,
+    why: "If Request A processed tokens 1-50,000 and Request B starts with tokens 1-50,000 identically, Request B reads the shared KV-cache entries instead of recomputing them. The work was done once, reused across thousands of subsequent requests. This is parallelism through sharing — a concept that exists nowhere in traditional computing where each job is independent."
+  },
+  {
+    q: "In Expert Parallelism (MoE), not every GPU fires for every token. Why is this different from traditional load-balanced work distribution?",
+    opts: [
+      "It's not different — it's exactly like a task queue with work stealing",
+      "The routing is dynamic and per-token — each token's content determines which GPU it goes to, and the routing was learned during training, not programmed by an engineer",
+      "It's the same as MapReduce but with GPUs instead of CPUs",
+      "All GPUs participate equally; the 'expert' label just means specialized training data"
+    ],
+    ans: 1,
+    why: "In traditional CS, work distribution is programmer-defined: round-robin, work-stealing, hash-based. In MoE, a learned router (a small neural network inside the model) decides which expert handles which token — based on the TOKEN'S CONTENT. The routing was learned during training. Some experts fire rarely; others fire constantly. This dynamic, content-based routing has no prior analogue in parallel computing."
+  },
+  {
+    q: "The report claims LLM inference's 'program' is static weights, not dynamic instructions. What does this mean for parallelism?",
+    opts: [
+      "The parallelism strategy must be decided at model design time and is baked into the architecture — you can't discover it at runtime",
+      "LLMs don't actually run programs; they're just lookup tables",
+      "The model can dynamically rewrite its own parallelism strategy between tokens",
+      "It means you can't distribute LLMs across multiple machines"
+    ],
+    ans: 0,
+    why: "In traditional CS, the OS/scheduler discovers parallelism at runtime: independent threads, data-parallel loops, task graphs. In LLM inference, the computation graph is FIXED — matrix multiplies and attention, repeated identically for every token. There are no branches (in the CPU sense), no function calls, no dynamic dispatch. The parallelism strategy (tensor-slice across GPUs, pipeline stages, expert placement) is an architectural decision made before deployment, not discovered dynamically. This makes LLM parallelism more like designing a factory than scheduling processes."
+  },
+  {
+    q: "Why is 'prefill-decode disaggregation' used, and what does it solve?",
+    opts: [
+      "It separates the model weights from the KV-cache for better cooling",
+      "It puts the prefill phase (compute-bound, parallelizable) on one set of machines and the decode phase (memory-bound, sequential) on another — optimizing each for its bottleneck",
+      "It's a security technique to prevent prompt injection",
+      "It unifies all inference into a single pipeline for simplicity"
+    ],
+    ans: 1,
+    why: "Prefill (processing all input tokens at once) is compute-bound and highly parallelizable — GPU utilization is high. Decode (generating one token at a time) is memory-bandwidth-bound and sequential — GPU utilization is low because you're waiting on HBM. If you mix both on the same machine, the decode phase drags down overall utilization. Separating them lets you pack prefill machines to 100% compute utilization while decode machines optimize for KV-cache bandwidth. This is a latency/throughput optimization that has no direct traditional CS analogue."
+  }
+];
+
+let current = 0;
+let answers = new Array(questions.length).fill(-1);
+let revealed = new Array(questions.length).fill(false);
+
+function render() {
+  const q = questions[current];
+  const a = answers[current];
+  const r = revealed[current];
+
+  let html = `<div class="q-card">
+    <div class="q-num">Question ${current + 1} of ${questions.length}</div>
+    <div class="q-text">${q.q}</div>`;
+
+  if (q.code) {
+    html += `<div class="q-code">${q.code}</div>`;
+  }
+
+  html += `<div class="options">`;
+  q.opts.forEach((opt, i) => {
+    let cls = 'opt';
+    if (r) {
+      if (i === q.ans) cls += ' correct';
+      else if (i === a) cls += ' wrong';
+    } else if (i === a) {
+      cls += ' selected';
+    }
+    html += `<div class="${cls}" onclick="${r ? '' : 'select(' + i + ')'}">
+      <div class="check">${r ? (i === q.ans ? '✓' : (i === a ? '✗' : '')) : (i === a ? '●' : '')}</div>
+      <label><span class="letter">${'ABCD'[i]}.</span> ${opt}</label>
+    </div>`;
+  });
+  html += `</div>`;
+
+  if (r) {
+    const correct = a === q.ans;
+    html += `<div class="feedback show ${correct ? 'correct' : 'wrong'}">
+      <strong>${correct ? '✓ Correct' : '✗ Incorrect'}</strong>
+      <div class="why"><strong>Why:</strong> ${q.why}</div>
+    </div>`;
+  }
+
+  html += `</div>`;
+
+  html += `<div class="btn-row">
+    <button class="btn btn-secondary" onclick="prev()" ${current === 0 ? 'disabled' : ''}>← Previous</button>
+    ${!r ? `<button class="btn btn-primary" onclick="submit()" ${a < 0 ? 'disabled' : ''}>Check Answer</button>` : ''}
+    <button class="btn btn-secondary" onclick="next()" ${current === questions.length - 1 ? '' : ''}>${current === questions.length - 1 ? 'Finish →' : 'Next →'}</button>
+  </div>`;
+
+  document.getElementById('quiz').innerHTML = html;
+  updateProgress();
+}
+
+function select(i) {
+  if (revealed[current]) return;
+  answers[current] = i;
+  render();
+}
+
+function submit() {
+  revealed[current] = true;
+  render();
+}
+
+function prev() {
+  if (current > 0) { current--; render(); }
+}
+
+function next() {
+  if (current < questions.length - 1) { current++; render(); }
+  else showResults();
+}
+
+function updateProgress() {
+  const answered = revealed.filter(r => r).length;
+  const pct = (answered / questions.length) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('qRemaining').textContent = (questions.length - answered) + ' questions remaining';
+  if (answered > 0) {
+    const correct = revealed.filter((r, i) => answers[i] === questions[i].ans).length;
+    document.getElementById('scoreDisplay').textContent = correct + '/' + answered + ' correct';
+  }
+}
+
+function showResults() {
+  const correct = revealed.filter((r, i) => answers[i] === questions[i].ans).length;
+  const total = questions.length;
+  const pct = Math.round((correct / total) * 100);
+
+  document.getElementById('finalScore').textContent = correct + '/' + total;
+  let grade = '', detail = '';
+  if (pct >= 90) { grade = '🏆 Frontier-Level Understanding'; detail = 'You deeply understand why LLM inference is fundamentally different from traditional parallel computation. You could design an inference serving system.'; }
+  else if (pct >= 70) { grade = '💪 Solid Grasp'; detail = 'You understand the core concepts. Review the missed questions — they\'re likely the subtler distinctions between CS and ML paradigms.'; }
+  else if (pct >= 50) { grade = '🔧 Getting There'; detail = 'The auto-regressive bottleneck and batching economics are intuitive. The weirder concepts (continuous batching, speculative decoding, MoE routing) need another pass.'; }
+  else { grade = '🧱 Foundation Building'; detail = 'This material is genuinely unintuitive to anyone coming from traditional CS. The memory-bandwidth bottleneck flips everything. Re-read the report and try again — the second pass is where it clicks.'; }
+  document.getElementById('finalGrade').textContent = grade;
+  document.getElementById('finalDetail').textContent = detail;
+  document.getElementById('results').classList.add('show');
+  document.getElementById('quiz').innerHTML = '';
+
+  // Build review
+  let review = '<h2 style="margin-bottom:20px">Answer Review</h2>';
+  questions.forEach((q, i) => {
+    const correct = answers[i] === q.ans;
+    review += `<div class="review-item">
+      <div class="r-num">Q${i+1}</div>
+      <div class="r-q">${q.q}</div>
+      <div class="r-answer ${correct ? 'correct' : 'wrong'}">
+        <span class="icon">${correct ? '✓' : '✗'}</span>
+        Your answer: ${answers[i] >= 0 ? 'ABCD'[answers[i]] + '. ' + q.opts[answers[i]] : 'Not answered'}
+        ${!correct ? '<br><span style="color:#4ade80">✓ Correct: ' + 'ABCD'[q.ans] + '. ' + q.opts[q.ans] + '</span>' : ''}
+      </div>
+      <div class="r-why"><strong>Why:</strong> ${q.why}</div>
+    </div>`;
+  });
+  document.getElementById('review').innerHTML = review;
+  updateProgress();
+}
+
+function showReview() {
+  document.getElementById('review').classList.toggle('hidden');
+}
+</script>
+</body>
+</html>
