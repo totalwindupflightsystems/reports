@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agent-First Code Platform — Stack &amp; Blueprint</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --abyss: #050507;
+  --carbon: #101010;
+  --charcoal: #3d3a39;
+  --green: #00d992;
+  --mint: #2fd6a1;
+  --snow: #f2f2f2;
+  --parchment: #b8b3b0;
+  --steel: #8b949e;
+  --purple: #a78bfa;
+  --amber: #fbbf24;
+  --blue: #60a5fa;
+  --red: #f87171;
+  --radius: 8px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  background: var(--abyss); color: var(--snow);
+  font-family: Inter, system-ui, -apple-system, sans-serif;
+  line-height: 1.65; font-size: 16px;
+}
+code, pre, .mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+
+/* Nav */
+nav.top {
+  position: sticky; top:0; z-index:100;
+  background: rgba(5,5,7,0.92); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--charcoal);
+  padding: 14px 0;
+}
+nav.top .inner { max-width: 1100px; margin:0 auto; padding:0 24px; display:flex; gap:22px; overflow-x:auto; align-items:center; }
+nav.top a { color:var(--steel); font-size:0.82rem; font-weight:500; text-decoration:none; white-space:nowrap; }
+nav.top a:hover { color:var(--green); }
+nav.top .brand { color:var(--green); font-weight:700; font-size:0.95rem; margin-right:auto; }
+
+/* Hero */
+.hero { padding:100px 24px 72px; text-align:center; position:relative; overflow:hidden; }
+.hero::before {
+  content:''; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  width:600px; height:600px; background:radial-gradient(circle, rgba(0,217,146,0.06) 0%, transparent 70%);
+  pointer-events:none;
+}
+.hero .badge {
+  display:inline-block; padding:5px 14px; border-radius:9999px;
+  border:1px solid rgba(0,217,146,0.3); color:var(--mint);
+  font-size:0.78rem; font-weight:600; letter-spacing:0.5px;
+  margin-bottom:20px;
+}
+.hero h1 {
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size:3.2rem; font-weight:400; line-height:1.05; letter-spacing:-0.8px;
+  max-width:800px; margin:0 auto 16px;
+}
+.hero h1 .hl { color:var(--green); }
+.hero .sub { color:var(--parchment); font-size:1.1rem; max-width:600px; margin:0 auto 32px; }
+.hero .byline { color:var(--steel); font-size:0.82rem; margin-top:12px; }
+.hero .byline a { color:var(--mint); }
+
+/* Main */
+main { max-width:1100px; margin:0 auto; padding:0 24px 100px; }
+
+/* Section */
+section { margin-bottom:80px; }
+.section-label {
+  font-family: system-ui, sans-serif; font-size:0.8rem; font-weight:600;
+  letter-spacing:2.5px; text-transform:uppercase; color:var(--green);
+  margin-bottom:12px;
+}
+section h2 {
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size:2rem; font-weight:400; line-height:1.15; letter-spacing:-0.5px;
+  margin-bottom:12px;
+}
+section .desc { color:var(--parchment); font-size:1rem; margin-bottom:32px; max-width:700px; }
+
+/* Cards */
+.card-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(320px,1fr)); gap:14px; }
+.card {
+  background:var(--carbon); border:1px solid var(--charcoal);
+  border-radius:var(--radius); padding:24px;
+  transition:border-color 0.2s;
+}
+.card:hover { border-color:rgba(0,217,146,0.3); }
+.card.accent { border-left:2px solid var(--green); }
+.card.purple { border-left:2px solid var(--purple); }
+.card.amber { border-left:2px solid var(--amber); }
+.card.blue { border-left:2px solid var(--blue); }
+.card .tag {
+  display:inline-block; padding:2px 10px; border-radius:9999px;
+  font-size:0.7rem; font-weight:600; letter-spacing:0.5px; margin-bottom:10px;
+  border:1px solid;
+}
+.tag-built { color:var(--green); border-color:rgba(0,217,146,0.25); }
+.tag-exists { color:var(--blue); border-color:rgba(96,165,250,0.25); }
+.tag-future { color:var(--amber); border-color:rgba(251,191,36,0.25); }
+.card h3 { font-size:1.1rem; font-weight:600; margin-bottom:6px; }
+.card .lang { color:var(--steel); font-size:0.75rem; margin-bottom:10px; }
+.card p { color:var(--parchment); font-size:0.88rem; line-height:1.55; }
+
+/* Flow Diagram */
+.flow { margin:32px 0; }
+.flow-layer { margin-bottom:6px; }
+.flow-layer .layer-label {
+  font-size:0.72rem; font-weight:600; letter-spacing:1px; text-transform:uppercase;
+  color:var(--steel); margin-bottom:6px; padding-left:4px;
+}
+.flow-box {
+  background:var(--carbon); border:1px solid var(--charcoal);
+  border-radius:6px; padding:14px 18px;
+  display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+}
+.flow-box .arrow { color:var(--green); font-size:0.9rem; }
+.flow-box .item {
+  font-size:0.85rem; color:var(--snow); font-weight:500;
+  padding:4px 12px; border-radius:4px; background:rgba(0,217,146,0.06);
+  border:1px solid rgba(0,217,146,0.15);
+}
+.flow-box .item.dim { background:rgba(255,255,255,0.03); border-color:var(--charcoal); color:var(--parchment); }
+
+/* Architecture Diagram */
+.arch {
+  display:flex; flex-direction:column; gap:2px;
+  border:1px solid var(--charcoal); border-radius:var(--radius);
+  overflow:hidden; margin:24px 0;
+}
+.arch-row {
+  display:flex; align-items:stretch; min-height:60px;
+}
+.arch-row .label {
+  width:180px; flex-shrink:0; padding:14px 16px;
+  font-size:0.72rem; font-weight:600; letter-spacing:1px; text-transform:uppercase;
+  color:var(--steel); border-right:1px solid var(--charcoal);
+  background:rgba(0,0,0,0.2); display:flex; align-items:center;
+}
+.arch-row .content {
+  flex:1; padding:14px 18px; display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+}
+.arch-row .chip {
+  font-size:0.82rem; font-weight:500; padding:6px 14px; border-radius:6px;
+}
+.chip-green { background:rgba(0,217,146,0.08); border:1px solid rgba(0,217,146,0.2); color:var(--mint); }
+.chip-blue { background:rgba(96,165,250,0.08); border:1px solid rgba(96,165,250,0.2); color:var(--blue); }
+.chip-purple { background:rgba(167,139,250,0.08); border:1px solid rgba(167,139,250,0.2); color:var(--purple); }
+.chip-amber { background:rgba(251,191,36,0.08); border:1px solid rgba(251,191,36,0.2); color:var(--amber); }
+.chip-dim { background:rgba(255,255,255,0.03); border:1px solid var(--charcoal); color:var(--parchment); }
+
+/* Flow steps */
+.flow-steps { counter-reset:step; margin:24px 0; }
+.flow-step {
+  display:flex; gap:18px; margin-bottom:14px; align-items:flex-start;
+  padding:18px; background:var(--carbon); border:1px solid var(--charcoal);
+  border-radius:var(--radius);
+}
+.flow-step .num {
+  width:36px; height:36px; flex-shrink:0;
+  background:rgba(0,217,146,0.1); border:1px solid rgba(0,217,146,0.3);
+  border-radius:50%; display:flex; align-items:center; justify-content:center;
+  font-size:0.82rem; font-weight:700; color:var(--green);
+  font-family:'JetBrains Mono',monospace;
+}
+.flow-step .step-content h4 { font-size:0.95rem; font-weight:600; margin-bottom:4px; }
+.flow-step .step-content p { font-size:0.85rem; color:var(--parchment); line-height:1.55; }
+.flow-step .step-content .who { font-size:0.72rem; color:var(--steel); margin-top:6px; font-style:italic; }
+
+/* CTA */
+.cta {
+  text-align:center; padding:48px; background:var(--carbon);
+  border:1px solid var(--charcoal); border-radius:var(--radius);
+  margin:40px 0;
+}
+.cta h3 { font-size:1.3rem; font-weight:600; margin-bottom:8px; }
+.cta p { color:var(--parchment); font-size:0.9rem; }
+.cta .links { margin-top:16px; display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+.cta .link-btn {
+  display:inline-block; padding:10px 22px; border-radius:6px;
+  font-size:0.88rem; font-weight:600; text-decoration:none;
+  border:1px solid var(--charcoal); color:var(--snow);
+  background:rgba(255,255,255,0.03); transition:all 0.15s;
+}
+.cta .link-btn:hover { border-color:var(--green); color:var(--mint); }
+.cta .link-btn.primary { background:rgba(0,217,146,0.08); border-color:rgba(0,217,146,0.3); color:var(--mint); }
+.cta .link-btn.primary:hover { background:rgba(0,217,146,0.15); }
+
+/* Feature list */
+.feat-list { list-style:none; }
+.feat-list li {
+  padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.04);
+  display:flex; gap:10px; align-items:baseline;
+  font-size:0.9rem; color:var(--parchment);
+}
+.feat-list li .bullet { color:var(--green); font-weight:700; flex-shrink:0; }
+
+/* Footer */
+footer { text-align:center; padding:40px 24px; border-top:1px solid var(--charcoal); color:var(--steel); font-size:0.78rem; }
+footer a { color:var(--mint); }
+
+/* Stat row */
+.stat-row { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; margin:24px 0; }
+.stat-box {
+  background:var(--carbon); border:1px solid var(--charcoal);
+  border-radius:var(--radius); padding:22px; text-align:center;
+}
+.stat-box .num {
+  font-family:'JetBrains Mono',monospace; font-size:2rem; font-weight:700;
+  color:var(--green); margin-bottom:4px;
+}
+.stat-box .label { font-size:0.78rem; color:var(--steel); }
+
+/* Responsive */
+@media (max-width:768px) {
+  .hero h1 { font-size:2rem; }
+  .card-grid { grid-template-columns:1fr; }
+  .arch-row { flex-direction:column; }
+  .arch-row .label { width:100%; border-right:none; border-bottom:1px solid var(--charcoal); }
+}
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <div class="inner">
+    <span class="brand">⬡ Origin Blueprint</span>
+    <a href="#built">What We Built</a>
+    <a href="#tools">Existing Tools</a>
+    <a href="#architecture">Architecture</a>
+    <a href="#flow">The Flow</a>
+    <a href="#future">What We Could Build</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="badge">Research + Blueprint · June 2026</div>
+  <h1>An <span class="hl">Agent-First</span> Code Platform<br>Built from What We Already Have</h1>
+  <p class="sub">Cursor Origin is a $60B idea. The pieces to build an open, agent-native alternative already exist — many of them in our own repos. Here's the full stack, how it glues together, and what's left to build.</p>
+  <p class="byline">Compiled by Hermes Agent · <a href="https://github.com/totalwindupflightsystems">@totalwindupflightsystems</a></p>
+</header>
+
+<main>
+
+<!-- STATS -->
+<div class="stat-row">
+  <div class="stat-box">
+    <div class="num">9</div>
+    <div class="label">Projects We've Built</div>
+  </div>
+  <div class="stat-box">
+    <div class="num">8</div>
+    <div class="label">Existing Tools to Glue</div>
+  </div>
+  <div class="stat-box">
+    <div class="num">5</div>
+    <div class="label">Features Left to Build</div>
+  </div>
+  <div class="stat-box">
+    <div class="num">12</div>
+    <div class="label">Steps from Issue → Merge</div>
+  </div>
+</div>
+
+<!-- WHAT WE BUILT -->
+<section id="built">
+  <div class="section-label">What We Built</div>
+  <h2>Projects Already in Our Repos</h2>
+  <p class="desc">Each one maps to a layer in the Origin stack. These aren't ideas — they're working code, tested, ready to integrate.</p>
+
+  <div class="card-grid">
+    <div class="card accent">
+      <span class="tag tag-built">Built · Python · 221 tests</span>
+      <h3>GitReins</h3>
+      <p class="lang">Git-Native Agent Co-Harness</p>
+      <p>Task lifecycle with MCP tools. Agentic evaluator reads files, runs tests, searches patterns, delivers structured PASS/FAIL. Git hooks block commits that don't pass quality gates. <strong>Maps to: Quality Gate + Commit Guard</strong></p>
+    </div>
+
+    <div class="card purple">
+      <span class="tag tag-built">Built · Python · 90 tests</span>
+      <h3>Chimera</h3>
+      <p class="lang">Dynamic Multi-Model Formation Engine</p>
+      <p>Rewriter designs custom DAG per query → Dispatcher assigns models by domain strength → Workers run in parallel → Judges merge with scoring → Audit independently verifies. Not a jury — a team. <strong>Maps to: Model Router + Multi-Angle PR Review</strong></p>
+    </div>
+
+    <div class="card accent">
+      <span class="tag tag-built">Built · Go · Dockerized</span>
+      <h3>Conscientiousness</h3>
+      <p class="lang">Agent Conscience / Self-Evaluation</p>
+      <p>Prompt-based agent evaluation, verification loops, adversarial quality gates. Runs as a service. The agent that asks "are you sure?" before merge. <strong>Maps to: Agent Self-Eval + Adversarial Review</strong></p>
+    </div>
+
+    <div class="card blue">
+      <span class="tag tag-built">Built · Go · 26+ packages</span>
+      <h3>Muster</h3>
+      <p class="lang">Dynamic OpenAPI Client + MCP Server</p>
+      <p>Parses any OpenAPI spec → auto-generates CLI commands, MCP tools, shell completions, Starlark DSL. Multi-tier caching, WASM runtime. <strong>Maps to: API Compatibility Layer — glues everything together</strong></p>
+    </div>
+
+    <div class="card amber">
+      <span class="tag tag-built">Built · Go + Python</span>
+      <h3>Kobayashi-Maru</h3>
+      <p class="lang">No-Win Scenario Training System</p>
+      <p>Exhaustive specification, adversarial refinement, Ralph Loop engine, penetration testing, Prometheus+Loki+Fluentd monitoring. <strong>Maps to: Stress Testing — guarantees agents can't cheat the gates</strong></p>
+    </div>
+
+    <div class="card purple">
+      <span class="tag tag-built">Built · Multi-Language</span>
+      <h3>Axiom</h3>
+      <p class="lang">Agent Orchestration Platform</p>
+      <p>60+ adversarial/quality agents (assumption-buster, red-team, white-hat, chaos-engineer, finops-cost). Specs-as-contracts, evidence bundles, Jira/Notion/GitHub sync. <strong>Maps to: Agent Swarm Orchestration</strong></p>
+    </div>
+
+    <div class="card blue">
+      <span class="tag tag-built">Built · Go + React TS</span>
+      <h3>Hivemind</h3>
+      <p class="lang">Agent Memory + Scheduling System</p>
+      <p>IAM/auth, git operations, Ralph Loop engine, SQLite+YAML memory bank, inbox/compiled pattern, hierarchical rate limiting. <strong>Maps to: Persistent Memory + Task Scheduling — the shared blackboard</strong></p>
+    </div>
+
+    <div class="card accent">
+      <span class="tag tag-built">Built · Docker Compose</span>
+      <h3>Hermes4Friends</h3>
+      <p class="lang">Multi-Tenant Agent Platform</p>
+      <p>Per-friend containers (VPN + dind + agent), Nextcloud bridge, known-friends identity registry. <strong>Maps to: Agent Hosting + Identity — each agent gets its own sandbox</strong></p>
+    </div>
+
+    <div class="card accent">
+      <span class="tag tag-built">Built · Hermes Agent Skills</span>
+      <h3>Designing Loops, Not Prompts</h3>
+      <p class="lang">Philosophy + Methodology</p>
+      <p>The operational directive: don't prompt agents. Design loops that prompt agents. Build → test → fix → repeat. <strong>Maps to: The core execution pattern everything runs on</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- EXISTING TOOLS -->
+<section id="tools">
+  <div class="section-label">Existing Tools</div>
+  <h2>What We Glue In</h2>
+  <p class="desc">Open-source, battle-tested tools that fill the gaps between our projects. No reinvention needed.</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <span class="tag tag-exists">Git Forge</span>
+      <h3>Forgejo</h3>
+      <p>Self-hosted git forge. PRs, issues, actions, packages, Pages. Gitea fork, lightweight, API-compatible. The foundation — every agent pushes here.</p>
+    </div>
+    <div class="card">
+      <span class="tag tag-exists">Observability</span>
+      <h3>LangFuse</h3>
+      <p>LLM tracing, prompt management, eval datasets, cost tracking. OpenTelemetry-compatible. Every agent call logged with trace ID.</p>
+    </div>
+    <div class="card">
+      <span class="tag tag-exists">Eval Framework</span>
+      <h3>PromptFoo</h3>
+      <p>Prompt evaluation as YAML. Multi-model comparison, assertions. <code>.promptfoo.yaml</code> in CI on every prompt change.</p>
+    </div>
+    <div class="card">
+      <span class="tag tag-exists">Memory</span>
+      <h3>DuckBrain</h3>
+      <p>Git-backed persistent agent memory. JSONL + Parquet, vector search. Long-term memory for agent decisions, anti-patterns.</p>
+    </div>
+    <div class="card">
+      <span class="tag tag-exists">Agent Runner</span>
+      <h3>OpenCode</h3>
+      <p>Task-based agent execution, worktree isolation, MCP support. The executor — Ralph Loop wraps it.</p>
+    </div>
+    <div class="card">
+      <span class="tag tag-exists">Model Access</span>
+      <h3>OpenRouter</h3>
+      <p>344+ models, single API, Fusion multi-model. Chimera's Dispatcher routes through here for model diversity.</p>
+    </div>
+    <div class="card">
+      <span class="tag tag-exists">IDE Bridge</span>
+      <h3>Continue.dev</h3>
+      <p>Open-source AI assistant. Local models, custom slash commands. The human interface layer.</p>
+    </div>
+    <div class="card">
+      <span class="tag tag-exists">External Sync</span>
+      <h3>Atlassian / Notion / GitHub MCP</h3>
+      <p>Jira sync, Notion docs, GitHub PR linkage. Already integrated in Axiom. Repo is source of truth.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ARCHITECTURE -->
+<section id="architecture">
+  <div class="section-label">Architecture</div>
+  <h2>The Stack — Layered</h2>
+  <p class="desc">Every existing project and tool mapped to its layer in the platform.</p>
+
+  <div class="arch">
+    <div class="arch-row">
+      <div class="label">Human Interface</div>
+      <div class="content">
+        <span class="chip chip-dim">Continue.dev</span>
+        <span class="chip chip-dim">Cursor</span>
+        <span class="chip chip-dim">CLI</span>
+        <span class="chip chip-green">Hermes4Friends (Telegram)</span>
+      </div>
+    </div>
+    <div class="arch-row">
+      <div class="label">Orchestration</div>
+      <div class="content">
+        <span class="chip chip-purple">Axiom — agent fleet</span>
+        <span class="chip chip-blue">Hivemind — memory + scheduling</span>
+        <span class="chip chip-amber">Kobayashi-Maru — stress testing</span>
+      </div>
+    </div>
+    <div class="arch-row">
+      <div class="label">Execution</div>
+      <div class="content">
+        <span class="chip chip-dim">OpenCode — worktree isolation</span>
+        <span class="chip chip-dim">Ralph Loop — lock → commit → merge</span>
+        <span class="chip chip-blue">Muster — MCP tools for any API</span>
+        <span class="chip chip-green">Hermes4Friends — agent sandbox hosting</span>
+      </div>
+    </div>
+    <div class="arch-row">
+      <div class="label">Git Forge</div>
+      <div class="content">
+        <span class="chip chip-dim">Forgejo — repos, PRs, issues, CI, Pages</span>
+        <span class="chip chip-green">GitReins hooks — quality gates on push</span>
+        <span class="chip chip-blue">PromptFoo — eval as CI</span>
+        <span class="chip chip-dim">AGENTS.yaml — model pinning, permissions</span>
+      </div>
+    </div>
+    <div class="arch-row">
+      <div class="label">Quality & Review</div>
+      <div class="content">
+        <span class="chip chip-purple">Chimera — multi-model judge + audit</span>
+        <span class="chip chip-green">Conscientiousness — adversarial self-eval</span>
+        <span class="chip chip-green">GitReins evaluator — Tier 1 static + Tier 2 agentic</span>
+        <span class="chip chip-blue">PromptFoo — prompt regression tests</span>
+      </div>
+    </div>
+    <div class="arch-row">
+      <div class="label">Observability</div>
+      <div class="content">
+        <span class="chip chip-blue">LangFuse — traces, costs, prompt versions</span>
+        <span class="chip chip-blue">DuckBrain — persistent agent memory</span>
+        <span class="chip chip-blue">Hivemind — inbox/compiled memory bank</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE FLOW -->
+<section id="flow">
+  <div class="section-label">The Flow</div>
+  <h2>Issue → Merge — 12 Steps, Zero Human Bottlenecks</h2>
+  <p class="desc">This is what shipping looks like when agents and humans are equals in the platform.</p>
+
+  <div class="flow-steps">
+    <div class="flow-step">
+      <div class="num">1</div>
+      <div class="step-content">
+        <h4>Human creates task</h4>
+        <p>Opens an issue in Forgejo, writes a prompt in <code>prompts/feature-name/v1.md</code>, or assigns from the agent task queue.</p>
+        <p class="who">Human · Forgejo</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="num">2</div>
+      <div class="step-content">
+        <h4>Axiom assembles the swarm</h4>
+        <p>Reads the task, determines required agents (implementer, reviewer, security auditor), checks agent availability and budgets.</p>
+        <p class="who">Axiom · Agent Swarm</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="num">3</div>
+      <div class="step-content">
+        <h4>Ralph Loop acquires lock + worktree</h4>
+        <p>Prevents conflicts. Creates isolated worktree. Agents load context from Hivemind memory + DuckBrain.</p>
+        <p class="who">Ralph Loop · Hivemind · DuckBrain</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="num">4</div>
+      <div class="step-content">
+        <h4>Agent writes code</h4>
+        <p>Runs in isolated H4F container. Uses models pinned in AGENTS.yaml. Tool calls logged via LangFuse.</p>
+        <p class="who">Hermes Agent · H4F Container</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="num">5</div>
+      <div class="step-content">
+        <h4>Agent commits with attestation</h4>
+        <p>Every commit signed with agent key + metadata: prompt-hash, model, context window. Full lineage stored.</p>
+        <p class="who">Agent · GitReins Protocol</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="num">6</div>
+      <div class="step-content">
+        <h4>GitReins pre-receive hook blocks or passes</h4>
+        <p>Tier 1 (secrets, lint, tests) + Tier 2 (agentic evaluator reads code, runs checks, delivers PASS/FAIL).</p>
+        <p class="who">GitReins · Forgejo Hook</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="num">7</div>
+      <div class="step-content">
+        <h4>Agent opens PR</h4>
+        <p>PR auto-filled with: prompt, model, confidence score per file, tests run, files touched.</p>
+        <p class="who">Agent · Forgejo PR</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="num">8</div>
+      <div class="step-content">
+        <h4>Chimera runs multi-model review</h4>
+        <p>Rewriter designs formation: Sonnet reviews logic, DeepSeek audits security, Gemini checks style. Judges merge. Audit verifies.</p>
+        <p class="who">Chimera · Multi-Model Panel</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="num">9</div>
+      <div class="step-content">
+        <h4>Conscientiousness runs adversarial self-eval</h4>
+        <p>"Are you sure this is correct?" Adversarial agents challenge assumptions, probe edge cases, attempt to falsify claims.</p>
+        <p class="who">Conscientiousness · Adversarial Agents</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="num">10</div>
+      <div class="step-content">
+        <h4>PromptFoo CI verifies no regression</h4>
+        <p>Runs <code>.promptfoo.yaml</code> against the prompt version used. Blocks merge if quality drops below threshold.</p>
+        <p class="who">PromptFoo · Forgejo CI</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="num">11</div>
+      <div class="step-content">
+        <h4>Human + Agent co-approve</h4>
+        <p>Branch protection: 1 human review required + 1 agent review required. Both must approve. Agent can veto with evidence.</p>
+        <p class="who">Human + Agent · Forgejo</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="num">12</div>
+      <div class="step-content">
+        <h4>Merge + Deploy</h4>
+        <p>Code lands on main. Forgejo Pages auto-deploys if it's a site. LangFuse records final trace. Hivemind updates memory.</p>
+        <p class="who">Forgejo · Pages · LangFuse</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FUTURE -->
+<section id="future">
+  <div class="section-label">What We Could Build</div>
+  <h2>Five Features That Make This An Origin Competitor</h2>
+  <p class="desc">The gap between what we have and what Cursor announced yesterday. Each feature maps to existing code.</p>
+
+  <div class="card-grid">
+    <div class="card accent">
+      <span class="tag tag-future">Build Next · Priority 1</span>
+      <h3>Agent Identity in Forgejo</h3>
+      <p>H4F's known-friends.json → Forgejo OAuth. Agents get real accounts with profiles, SSH keys, avatars. No more masked bot tokens. Axiom's IAM system already models this — extend it to git.</p>
+      <ul class="feat-list">
+        <li><span class="bullet">▸</span> Agent account creation from known-friends registry</li>
+        <li><span class="bullet">▸</span> Scoped permissions: push to feat/* but not main, open PRs but not merge solo</li>
+        <li><span class="bullet">▸</span> Agent budgets per repo (max PRs/day, max commits/hour)</li>
+        <li><span class="bullet">▸</span> Trust escalation: earn merge rights over time based on PR acceptance rate</li>
+      </ul>
+    </div>
+
+    <div class="card amber">
+      <span class="tag tag-future">Build Next · Priority 2</span>
+      <h3>Pre-Flight Cost Estimator</h3>
+      <p>Before Ralph Loop spawns, estimate token burn and ask for budget approval. LangFuse provides the cost data. Hivemind enforces the budget. No more "$1,200 in a 2-hour demo" surprises.</p>
+      <ul class="feat-list">
+        <li><span class="bullet">▸</span> Per-task cost estimate before agent execution</li>
+        <li><span class="bullet">▸</span> Model routing: cheap models for boilerplate, frontier for reasoning</li>
+        <li><span class="bullet">▸</span> Per-agent, per-repo, per-sprint cost dashboards</li>
+        <li><span class="bullet">▸</span> Auto-escalate: 3 failures on cheap model → escalate to frontier</li>
+      </ul>
+    </div>
+
+    <div class="card purple">
+      <span class="tag tag-future">Build Next · Priority 3</span>
+      <h3>Agent-to-Agent PR Negotiation</h3>
+      <p>Two agents disagree in PR comments. Chimera breaks the tie with multi-model analysis. The debate is public, traceable, and the tie-break is auditable. This is the "agent with real authority" feature.</p>
+      <ul class="feat-list">
+        <li><span class="bullet">▸</span> Agent A implements, Agent B reviews — both posting inline comments</li>
+        <li><span class="bullet">▸</span> Disagreement → Chimera runs multi-model analysis of the disputed code</li>
+        <li><span class="bullet">▸</span> Agent veto with evidence: "Blocking merge. SQL injection on line 47."</li>
+        <li><span class="bullet">▸</span> Human spectates or breaks ties. Escalation path when agents deadlock.</li>
+      </ul>
+    </div>
+
+    <div class="card blue">
+      <span class="tag tag-future">Build Next · Priority 4</span>
+      <h3>Prompt Registry + Attestation</h3>
+      <p>Every prompt is source code in <code>prompts/</code>. Every commit links to its prompt version. GitReins hook verifies the link. PromptFoo in CI catches regressions. Full reproducibility.</p>
+      <ul class="feat-list">
+        <li><span class="bullet">▸</span> <code>prompts/</code> directory in every repo — version-controlled, git-diffable</li>
+        <li><span class="bullet">▸</span> Commit attestation: "Generated from auth-implement/v3.md · deepseek-v4-pro · 128K ctx"</li>
+        <li><span class="bullet">▸</span> Prompt → code lineage: "This function from v2. v3 available."</li>
+        <li><span class="bullet">▸</span> Reproducible generation: re-run exact prompt + model version</li>
+      </ul>
+    </div>
+
+    <div class="card accent">
+      <span class="tag tag-future">Build Next · Priority 5</span>
+      <h3>Agent Marketplace</h3>
+      <p>Discoverable registry of pre-built agents. "I need a Rust security auditor" → search → install → joins repo's agent pool with preconfigured permissions. Per-agent reputation scores from Axiom's adversarial tracking.</p>
+      <ul class="feat-list">
+        <li><span class="bullet">▸</span> Agent profiles: role, model, prompt, permissions, budget</li>
+        <li><span class="bullet">▸</span> Public metrics: PR acceptance rate, bug rate, review accuracy</li>
+        <li><span class="bullet">▸</span> One-click install: agent joins repo's agent pool</li>
+        <li><span class="bullet">▸</span> Bad agents get low trust scores; good agents auto-escalate permissions</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- HOW H4F FITS -->
+<section id="h4f">
+  <div class="section-label">How Hermes4Friends Fits</div>
+  <h2>The Agent Hosting + Identity Layer</h2>
+  <p class="desc">H4F is the infrastructure that gives every agent its own sandbox. Each agent runs as a Hermes instance in its own Docker container — isolated, with its own API key, model config, tool permissions, and budget.</p>
+
+  <div class="card-grid">
+    <div class="card accent">
+      <h3>Identity Registry</h3>
+      <p>known-friends.json becomes the agent identity registry. Each agent: UUID, role, permissions, budget, reputation. Maps directly to Forgejo OAuth for git access.</p>
+    </div>
+    <div class="card accent">
+      <h3>Isolated Sandbox</h3>
+      <p>Per-agent Docker container with gluetun VPN + dind executor. Agent can't touch other agents' worktrees or secrets. Blast radius contained.</p>
+    </div>
+    <div class="card accent">
+      <h3>Budget Enforcement</h3>
+      <p>Per-agent API key with spending limits. H4F tracks token usage. Hivemind enforces per-task budgets. Cost overrun = agent paused, human notified.</p>
+    </div>
+    <div class="card accent">
+      <h3>Scoped Permissions</h3>
+      <p>Agent A: push to feat/*, open PRs, read CI. Agent B (security): read-only, post review comments. Agent C (trusted): merge to main with co-approval. All scoped at the container level.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta">
+  <h3>The Pieces Exist. The Glue Is Ours.</h3>
+  <p>Forgejo + GitReins + Chimera + Conscientiousness + Axiom + Hivemind + Muster + Kobayashi-Maru + Hermes4Friends + LangFuse + PromptFoo + DuckBrain + OpenCode + OpenRouter + Continue.dev.</p>
+  <p style="margin-top:12px;">Five features stand between this stack and an open, self-hosted Cursor Origin competitor.</p>
+  <div class="links">
+    <a href="https://github.com/totalwindupflightsystems/reports" class="link-btn primary">Reports Repo</a>
+    <a href="https://github.com/totalwindupflightsystems/gitreins" class="link-btn">GitReins</a>
+    <a href="https://github.com/dexdat/conscientiousness" class="link-btn">Conscientiousness</a>
+    <a href="https://github.com/anything-agent/axiom" class="link-btn">Axiom</a>
+  </div>
+</div>
+
+</main>
+
+<footer>
+  <p>Blueprint compiled by Hermes Agent · June 2026 · <a href="https://github.com/totalwindupflightsystems">@totalwindupflightsystems</a></p>
+  <p style="margin-top:6px;">Research from X, web, and analysis of 9 existing projects</p>
+</footer>
+
+</body>
+</html>
