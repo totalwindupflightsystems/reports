@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hermes VFS — Virtual Filesystem for Agentic Workflows</title>
+<style>
+:root {
+  --bg: #0a0a14; --surface: #12122a; --surface2: #1a1a32;
+  --accent: #4a90d9; --gold: #ccaa55; --green: #4a9; --red: #c44; --orange: #d94;
+  --text: #c8ccd8; --text2: #9a9dac; --text3: #6a6d7c;
+  --border: #1e1e3a; --border2: #2a2a4a; --code-bg: #0d0d1a;
+  --max-width: 1100px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background: var(--bg); color: var(--text);
+  font-family: 'Inter', -apple-system, sans-serif; line-height: 1.65; padding: 2rem;
+}
+.container { max-width: var(--max-width); margin: 0 auto; }
+h1 { font-size: 2.2rem; color: var(--gold); margin-bottom: 0.3rem; letter-spacing: -0.5px; }
+h2 { font-size: 1.5rem; color: var(--accent); margin: 2.5rem 0 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border); }
+h3 { font-size: 1.15rem; color: var(--green); margin: 1.5rem 0 0.5rem; }
+h4 { font-size: 1rem; color: var(--text); margin: 1rem 0 0.4rem; }
+p { margin-bottom: 1rem; color: var(--text2); }
+a { color: var(--accent); }
+strong { color: var(--text); }
+code { background: var(--code-bg); padding: 1px 5px; border-radius: 3px; font-size: 0.9em; color: var(--orange); }
+pre { background: var(--code-bg); padding: 1rem 1.2rem; border-radius: 6px; overflow-x: auto; margin: 0.8rem 0 1.5rem; border: 1px solid var(--border2); font-size: 0.85rem; line-height: 1.5; }
+pre code { background: none; padding: 0; color: var(--text); }
+.subtitle { color: var(--text3); font-size: 1rem; margin-bottom: 2rem; }
+table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.88rem; }
+th { text-align: left; padding: 0.5rem 0.8rem; background: var(--surface2); color: var(--gold); font-weight: 600; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid var(--border); }
+td { padding: 0.5rem 0.8rem; border-bottom: 1px solid var(--border); color: var(--text2); }
+td strong { color: var(--text); }
+tr:hover td { background: rgba(255,255,255,0.02); }
+.card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; margin: 1rem 0 1.5rem; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.2rem; }
+.card h4 { margin-top: 0; color: var(--accent); }
+.card p { font-size: 0.85rem; margin-bottom: 0.5rem; }
+.tag { display: inline-block; padding: 1px 6px; border-radius: 3px; font-size: 0.65rem; font-weight: 600; margin-right: 0.3rem; }
+.tag-green { background: rgba(68,170,153,0.2); color: var(--green); }
+.tag-red { background: rgba(204,68,68,0.2); color: var(--red); }
+.tag-gold { background: rgba(204,170,85,0.2); color: var(--gold); }
+.tag-blue { background: rgba(74,144,217,0.2); color: var(--accent); }
+.arch { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin: 1.5rem 0; font-family: monospace; font-size: 0.82rem; line-height: 2; }
+.arch .layer { color: var(--accent); font-weight: bold; }
+.arch .comp { color: var(--green); }
+.arch .prot { color: var(--orange); }
+.arch .note { color: var(--text3); font-style: italic; }
+.decision { background: rgba(74,144,217,0.08); border-left: 3px solid var(--accent); padding: 1rem 1.2rem; margin: 1rem 0; border-radius: 0 6px 6px 0; font-size: 0.9rem; }
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0; }
+.compare > div { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; }
+.compare h5 { color: var(--gold); margin-bottom: 0.5rem; }
+ul, ol { margin: 0.5rem 0 1rem 1.5rem; color: var(--text2); }
+li { margin-bottom: 0.3rem; }
+hr { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>Hermes VFS</h1>
+<p class="subtitle">Virtual Filesystem for Agentic Workflows — Architecture &amp; Design Reference<br>
+<strong>Status:</strong> Research / Design Phase &nbsp;|&nbsp; <strong>Date:</strong> June 2026</p>
+
+<hr>
+
+<h2>1. Core Concept</h2>
+
+<p><strong>Clone a repo → Mount it with Hermes VFS → Point your agent workspace at the mount.</strong></p>
+
+<p>Agents read and write files like normal. They never see the VFS. Behind the scenes, the VFS injects context, resolves virtual paths, tracks relationships between files, and federates storage across git, S3, and local disk — all invisible to the agent.</p>
+
+<div class="arch">
+<span class="note"># Agent runs:</span><br>
+$ cat /mnt/vfs/project/src/auth/login.go<br>
+<br>
+<span class="note"># VFS intercepts, injects context, returns:</span><br>
+<span class="note">[=== Context: Auth Module ===]</span><br>
+<span class="note">Related: src/auth/types.go, src/auth/middleware.go</span><br>
+<span class="note">Test coverage: 87% (login_test.go)</span><br>
+<span class="note">Last modified: 2 hours ago</span><br>
+<br>
+<span class="note">[=== File: login.go ===]</span><br>
+<span class="comp">package auth</span><br>
+<span class="comp">func Login(...) { ... }</span><br>
+<br>
+<span class="note"># Agent processes normally — never knows context was injected.</span>
+</div>
+
+<hr>
+
+<h2>2. Architecture — Three Layers</h2>
+
+<div class="arch">
+┌─────────────────────────────────────────────────┐<br>
+│&nbsp;&nbsp;<span class="layer">LAYER 1: Interface</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+│&nbsp;&nbsp;How agents talk to the VFS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+│&nbsp;&nbsp;<span class="comp">FUSE</span> &nbsp;|&nbsp; <span class="comp">9P</span> &nbsp;|&nbsp; <span class="comp">NFS</span> &nbsp;|&nbsp; <span class="comp">CLI shim</span> &nbsp;|&nbsp; <span class="comp">Go library</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+├─────────────────────────────────────────────────┤<br>
+│&nbsp;&nbsp;<span class="layer">LAYER 2: Metadata Engine</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+│&nbsp;&nbsp;Relationships, graph queries, injection rules&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+│&nbsp;&nbsp;<span class="comp">SQLite</span> &nbsp;|&nbsp; <span class="comp">Content-addressable</span> &nbsp;|&nbsp; <span class="comp">Dgraph</span> &nbsp;|&nbsp; <span class="comp">Git notes</span>&nbsp;&nbsp;&nbsp;│<br>
+├─────────────────────────────────────────────────┤<br>
+│&nbsp;&nbsp;<span class="layer">LAYER 3: Backend Storage</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+│&nbsp;&nbsp;Where the actual bytes live&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│<br>
+│&nbsp;&nbsp;<span class="comp">Git</span> &nbsp;|&nbsp; <span class="comp">S3</span> &nbsp;|&nbsp; <span class="comp">Local disk</span> &nbsp;|&nbsp; <span class="comp">SQLite blob</span> &nbsp;|&nbsp; <span class="comp">IPFS</span>&nbsp;&nbsp;&nbsp;│<br>
+└─────────────────────────────────────────────────┘
+</div>
+
+<hr>
+
+<h2>3. Layer 1: Interface — How Agents Connect</h2>
+
+<table>
+<tr><th>Interface</th><th>Mechanism</th><th>Agent-Friendliness</th><th>Setup Cost</th><th>Portability</th><th>When to Use</th></tr>
+<tr><td><strong>FUSE</strong></td><td>Kernel module — real <code>open()</code>, <code>read()</code>, <code>write()</code> syscalls</td><td><span class="tag tag-green">Invisible</span></td><td>Medium — fuse module, <code>user_allow_other</code></td><td>Linux only</td><td>When you need real filesystem behavior</td></tr>
+<tr><td><strong>9P</strong></td><td>Userspace server over TCP or Unix socket</td><td><span class="tag tag-green">Good</span> — <code>mount -t 9p</code></td><td>Low — no kernel module per mount</td><td>Linux, WSL2</td><td>Simpler than FUSE, WSL2-native</td></tr>
+<tr><td><strong>NFS v4</strong></td><td>Network filesystem, kernel NFS server</td><td><span class="tag tag-green">Invisible</span></td><td>High</td><td>Every OS</td><td>Overkill for local, network-transparent</td></tr>
+<tr><td><strong>CLI shim</strong></td><td><code>vfs read</code>, <code>vfs ls</code>, <code>vfs write</code></td><td><span class="tag tag-gold">Moderate</span></td><td>Zero</td><td>Everywhere</td><td>Fastest prototype, works in containers</td></tr>
+<tr><td><strong>Go library</strong></td><td>Import, call <code>vfs.Read()</code></td><td><span class="tag tag-red">Programmatic</span></td><td>Zero</td><td>Go only</td><td>Zero IPC overhead</td></tr>
+</table>
+
+<h3>3.1 FUSE Deep Dive</h3>
+
+<p>FUSE (Filesystem in Userspace) forwards kernel VFS syscalls to your userspace program via <code>/dev/fuse</code>. Every <code>open()</code>, <code>read()</code>, <code>write()</code>, <code>stat()</code> becomes a message your program handles.</p>
+
+<p><strong>How it works:</strong></p>
+<ol>
+  <li>Kernel receives <code>open("/mnt/vfs/src/main.go")</code></li>
+  <li>Kernel checks: this path is a FUSE mount → forward to userspace daemon via <code>/dev/fuse</code></li>
+  <li>Your daemon receives a FUSE_OPEN request with the inode number</li>
+  <li>Your daemon resolves inode → git blob, reads content, returns file handle</li>
+  <li>Kernel returns fd to the calling process — agent sees a normal file descriptor</li>
+</ol>
+
+<p><strong>Go library:</strong> <code>hanwen/go-fuse</code> is the current best. Actively maintained, v2 API, supports both low-level "raw" mode and higher-level "nodefs" mode.</p>
+
+<pre><code>// Minimal FUSE read-only filesystem
+import "github.com/hanwen/go-fuse/v2/fs"
+import "github.com/hanwen/go-fuse/v2/fuse"
+
+type VFSFile struct {
+    fs.Inode
+    content []byte
+}
+
+func (f *VFSFile) Read(ctx context.Context, dest []byte, 
+                        off int64) (fuse.ReadResult, syscall.Errno) {
+    end := int(off) + len(dest)
+    if end > len(f.content) { end = len(f.content) }
+    return fuse.ReadResultData(f.content[off:end]), 0
+}
+
+func (f *VFSFile) Getattr(ctx context.Context, fh fs.FileHandle, 
+                           out *fuse.AttrOut) syscall.Errno {
+    out.Size = uint64(len(f.content))
+    out.Mode = 0644
+    return 0
+}</code></pre>
+
+<p><strong>Key FUSE operations you'd implement:</strong></p>
+<table>
+<tr><th>Operation</th><th>What It Handles</th><th>Your VFS Logic</th></tr>
+<tr><td><code>Lookup</code></td><td>Resolve a name in a directory</td><td>Path → git tree walk → return inode</td></tr>
+<tr><td><code>Open</code> / <code>Read</code></td><td>Open and read a file</td><td>Inode → git blob → return content (+ injection)</td></tr>
+<tr><td><code>Getattr</code></td><td>stat() — size, permissions, mtime</td><td>Return blob size, git commit time</td></tr>
+<tr><td><code>ReadDir</code> / <code>ReadDirPlus</code></td><td>ls / readdir</td><td>Git tree → directory entries + virtual paths</td></tr>
+<tr><td><code>Write</code> / <code>Create</code></td><td>Write or create a file</td><td>Buffer write, stage for git commit</td></tr>
+<tr><td><code>Mkdir</code> / <code>Rmdir</code></td><td>Create/remove directories</td><td>Stage directory operations</td></tr>
+<tr><td><code>Rename</code></td><td>mv</td><td>Git mv equivalent</td></tr>
+</table>
+
+<h3>3.2 9P Deep Dive — The FUSE Alternative</h3>
+
+<p>9P is the Plan 9 file protocol. Simpler than FUSE because it uses a single kernel module (v9fs) for ALL 9P mounts — you write a userspace server, and the kernel's existing 9P client handles the mount.</p>
+
+<div class="compare">
+  <div><h5>9P Advantages</h5><ul>
+    <li>No custom kernel module per filesystem</li>
+    <li>Protocol is ~15 message types (FUSE has ~40+)</li>
+    <li>WSL2 uses 9P internally for Windows/Linux file sharing</li>
+    <li>Go has <code>aqwari.net/net/styx</code> (9P server library)</li>
+    <li>Each file operation = simple request/response</li>
+  </ul></div>
+  <div><h5>9P Limitations</h5><ul>
+    <li>Less tooling than FUSE</li>
+    <li>mmap, sendfile don't work over 9P</li>
+    <li>Permissions model is simpler than POSIX ACLs</li>
+    <li>Not all Linux distros enable v9fs by default</li>
+  </ul></div>
+</div>
+
+<h3>3.3 CLI Shim — The Pragmatic Start</h3>
+
+<p>Instead of a kernel filesystem, expose the VFS as commands. Agents call <code>vfs read</code> instead of <code>cat</code>. This is the fastest path to a working prototype.</p>
+
+<pre><code>$ vfs read src/auth/login.go
+[=== Context: Auth Module ===]
+Related: src/auth/types.go, src/auth/middleware.go
+Test coverage: 87%
+
+[=== File: login.go ===]
+package auth
+func Login(...) { ... }
+
+$ vfs ls src/auth/
+login.go
+types.go
+middleware.go
+README.md
+login_test.go
+
+$ vfs graph deps src/auth/login.go
+src/auth/login.go → src/auth/types.go (imports)
+src/auth/login.go → src/auth/middleware.go (imports)
+src/auth/login.go ← src/auth/login_test.go (tested_by)
+
+$ vfs mount s3://my-bucket/models/ /project/models/
+Mounted s3://my-bucket/models/ at /project/models/</code></pre>
+
+<div class="decision">
+<strong>For the prototype:</strong> Start with CLI shim. It proves the concept (context injection, graph queries, virtual mounts) with zero kernel involvement. Graduate to 9P or FUSE once the design is proven. CLI shim also works in Docker containers and CI pipelines where FUSE mounts are restricted.
+</div>
+
+<hr>
+
+<h2>4. Layer 2: Metadata Engine — The Graph Problem</h2>
+
+<p>Files don't exist in isolation. <code>auth/login.go</code> imports <code>auth/types.go</code>. <code>handler.go</code> is tested by <code>handler_test.go</code>. Three files form a logical feature. The metadata engine tracks these relationships and makes them queryable.</p>
+
+<h3>4.1 Option A: SQLite Adjacency (Recommended)</h3>
+
+<p>Two tables. Simple, queryable with SQL, exportable to git.</p>
+
+<pre><code>CREATE TABLE files (
+    id INTEGER PRIMARY KEY,
+    path TEXT UNIQUE NOT NULL,
+    hash TEXT NOT NULL,          -- SHA-256
+    size INTEGER, mtime INTEGER,
+    metadata JSON                -- {"feature": "auth", "owner": "alex"}
+);
+
+CREATE TABLE edges (
+    from_id INTEGER REFERENCES files(id),
+    to_id INTEGER REFERENCES files(id),
+    relation TEXT NOT NULL,       -- 'imports', 'tested_by', 'documents'
+    weight REAL DEFAULT 1.0,
+    UNIQUE(from_id, to_id, relation)
+);</code></pre>
+
+<p><strong>Key queries:</strong></p>
+
+<pre><code>-- What does auth/login.go import?
+SELECT f.path FROM files f 
+JOIN edges e ON e.to_id = f.id 
+WHERE e.from_id = (SELECT id FROM files WHERE path = 'src/auth/login.go')
+  AND e.relation = 'imports';
+
+-- What breaks if I delete types.go? (reverse dependency)
+SELECT f.path FROM files f 
+JOIN edges e ON e.from_id = f.id 
+WHERE e.to_id = (SELECT id FROM files WHERE path = 'src/auth/types.go');
+
+-- Show me the full auth module (recursive dependency tree)
+WITH RECURSIVE deps AS (
+  SELECT to_id, 1 AS depth FROM edges 
+  WHERE from_id = (SELECT id FROM files WHERE path = 'src/auth/login.go')
+  UNION ALL
+  SELECT e.to_id, d.depth + 1 FROM edges e 
+  JOIN deps d ON e.from_id = d.to_id WHERE d.depth < 10
+)
+SELECT DISTINCT f.path, d.depth FROM files f 
+JOIN deps d ON f.id = d.to_id ORDER BY d.depth;</code></pre>
+
+<div class="card-grid">
+  <div class="card"><h4>✓ Strengths</h4>
+    <p>• Single file, zero setup<br>• SQL — everyone knows it<br>• ~10M edges before perf degrades<br>• Export to <code>.vfs/edges.jsonl</code> → commit to git<br>• Recursive CTEs for graph queries</p>
+  </div>
+  <div class="card"><h4>✗ Limitations</h4>
+    <p>• Recursive CTEs slow at depth > 5 with millions of edges<br>• No native property graph model<br>• Schema changes need migrations<br>• Not ideal for > 50M edges</p>
+  </div>
+</div>
+
+<h3>4.2 Option B: Property Graph (Dgraph / Badger-native)</h3>
+
+<p>Files as <strong>nodes</strong>, relationships as <strong>edges</strong> with typed predicates. Native graph traversal.</p>
+
+<pre><code>// Conceptual schema (GraphQL+-like)
+type File {
+    path: string @index(exact)
+    hash: string
+    feature: string
+}
+// Reverse edge: files that test this file
+type TestedBy {
+    from: File    // the test file
+    to: File      // the source file
+}
+
+// Query: all files in auth feature, with their test files
+{ files(func: eq(feature, "auth")) { 
+    path
+    tests: ~tested_by { path }
+}}</code></pre>
+
+<p><strong>When to use:</strong> You need multi-hop queries regularly AND have > 1M files. For most repos (< 100k files), SQLite is faster and simpler.</p>
+
+<h3>4.3 Option C: Content-Addressable Overlay</h3>
+
+<p>Store relationships by <strong>content hash</strong>, not file path. When a file changes, its hash changes → new edge file. Old relationships persist (describe the file at that point in time).</p>
+
+<pre><code>.vfs/graph/edges/
+  sha256:abc123def → {"imports": ["sha256:789...", "sha256:012..."],
+                       "tested_by": ["sha256:345..."],
+                       "feature": "auth-module"}
+  sha256:789ghi012 → {"imported_by": ["sha256:abc..."],
+                       "feature": "auth-module"}</code></pre>
+
+<p><strong>Why it's elegant:</strong> File renames don't break relationships (hash stays same). Multiple versions coexist. Natural fit with git's content-addressable model. Flat files — no database.</p>
+
+<p><strong>Where it hurts:</strong> Every file change = new hash = new edge file. Query requires: hash → read edge file → resolve hashes to paths. Not queryable with SQL.</p>
+
+<h3>4.4 Option D: Git-Native (git notes)</h3>
+
+<p>Git already stores a DAG. <code>git notes</code> attaches metadata to any git object without modifying it.</p>
+
+<pre><code>git notes add -m "edge:imports→sha256:def456" sha256:abc123
+git notes add -m "feature:auth-module" sha256:abc123
+git notes show sha256:abc123
+# → edge:imports→sha256:def456
+#   feature:auth-module</code></pre>
+
+<p><strong>When:</strong> You absolutely need metadata versioned alongside code AND the repo is small (< 10k files). Useful as a transport between clones, even if the query engine is SQLite.</p>
+
+<h3>4.5 Recommendation</h3>
+
+<table>
+<tr><th>Scale</th><th>Best Engine</th><th>Why</th></tr>
+<tr><td>&lt; 100k files</td><td><strong>SQLite adjacency</strong></td><td>Simple, queryable, commit to git</td></tr>
+<tr><td>100k–1M files</td><td><strong>SQLite + content-addressable index</strong></td><td>Hybrid — SQL for queries, hash-based for versioning</td></tr>
+<tr><td>&gt; 1M files</td><td><strong>Dgraph / Badger property graph</strong></td><td>Multi-hop at scale</td></tr>
+<tr><td>Git-purity above all</td><td><strong>Git notes + SQLite cache</strong></td><td>Notes for storage, SQLite for fast queries</td></tr>
+</table>
+
+<hr>
+
+<h2>5. Layer 3: Backend Storage</h2>
+
+<table>
+<tr><th>Backend</th><th>Latency</th><th>Scale</th><th>Best For</th></tr>
+<tr><td><strong>Git repo (local)</strong></td><td>Sub-ms</td><td>Repo size</td><td>Source code, config</td></tr>
+<tr><td><strong>S3 / GCS / R2</strong></td><td>10–100ms</td><td>Infinite</td><td>Assets, models, large binaries</td></tr>
+<tr><td><strong>Local disk</strong></td><td>Sub-ms</td><td>Disk size</td><td>Caches, temp files</td></tr>
+<tr><td><strong>SQLite blob</strong></td><td>Sub-ms</td><td>&lt; 1GB/blob</td><td>Small assets with metadata</td></tr>
+<tr><td><strong>IPFS</strong></td><td>Seconds</td><td>Distributed</td><td>Verifiable, dedup, P2P</td></tr>
+</table>
+
+<h3>Virtual Mounts</h3>
+
+<p>The manifest declares what storage backs each path. The VFS routes transparently.</p>
+
+<pre><code># .vfs/manifest.yaml
+mounts:
+  s3://my-bucket/models/:
+    at: /project/models/
+    cache: /tmp/vfs-cache/models/
+    ttl: 3600
+    
+  git+ssh://git@github.com/org/other-repo.git:
+    at: /project/vendor/other-lib/
+    ref: main</code></pre>
+
+<p>The agent sees <code>/project/models/bert-large.bin</code> as a normal file. The VFS routes to S3, caches locally, and serves from cache on subsequent reads.</p>
+
+<hr>
+
+<h2>6. The Manifest — Triggers, Injection, Rules</h2>
+
+<p>The manifest (<code>.vfs/manifest.yaml</code>) defines everything the VFS does beyond basic file serving.</p>
+
+<pre><code># .vfs/manifest.yaml
+version: 1
+
+global:
+  inject:
+    - when: "*.go"
+      prepend_template: |
+        // === Context ===
+        // Related: {{ .RelatedPaths }}
+        // === End Context ===
+  import_parsing:
+    enabled: true
+    languages: [go, python, typescript, rust]
+
+paths:
+  "src/auth/":
+    inject:
+      - when: "*.go"
+        sidebar: "src/auth/README.md"
+      - when: "handler_*.go"
+        context_query:
+          relations: [imports, tested_by]
+          max_depth: 2
+          max_results: 10
+    graph:
+      auto_edges: true
+      feature_tag: "auth-module"
+    
+  ".env":
+    inject: []              # Never inject into secrets
+    graph: { exclude: true }
+
+triggers:
+  - name: "lint-on-save"
+    when: "*.go"
+    on: write
+    run: "golangci-lint run {{ .FilePath }}"
+    timeout: 30s
+    
+  - name: "update-graph"
+    when: "*"
+    on: [write, delete]
+    run: "vfs graph update --path {{ .FilePath }}"
+
+virtual:
+  "/project/.vfs/deps/auth-module.md":
+    query:
+      root: "src/auth/login.go"
+      relations: [imports, tested_by]
+      direction: downstream
+      format: markdown
+
+  "/project/.vfs/impact/types.go.md":
+    query:
+      root: "src/auth/types.go"
+      relations: [imported_by]
+      direction: upstream
+      format: markdown
+
+mounts:
+  s3://my-bucket/models/:
+    at: "/project/models/"
+    cache: "/tmp/vfs-cache/"
+    ttl: 3600</code></pre>
+
+<h3>Injection Flow — Step by Step</h3>
+
+<pre><code>1. AGENT: cat /mnt/vfs/project/src/auth/login.go
+
+2. VFS INTERCEPTS:
+   ├── Resolve path → git backend: blob sha256:abc123
+   ├── Read file content
+   ├── Check manifest for "src/auth/login.go":
+   │   ├── global.inject["*.go"] → prepend context template
+   │   ├── paths["src/auth/"].sidebar → read README.md
+   │   ├── paths["src/auth/"].context_query → SQL recursive CTE
+   │   │   → [types.go, middleware.go, login_test.go, session.go]
+   │   └── paths["src/auth/"].auto_edges → parse imports
+   │       → upsert edges in SQLite
+   └── Return: prepend + sidebar + file_content
+
+3. AGENT RECEIVES:
+   [=== Context: Auth Module ===]
+   Related: types.go, middleware.go, login_test.go, session.go
+   Test coverage: 87%
+   
+   [=== Auth Module README ===]
+   # Auth Module
+   Handles OAuth2 + session tokens...
+   
+   [=== File: login.go ===]
+   package auth
+   func Login(...) { ... }</code></pre>
+
+<hr>
+
+<h2>7. Graph Queries Reference</h2>
+
+<table>
+<tr><th>Question</th><th>SQL (SQLite adjacency)</th></tr>
+<tr><td>What does X import?</td><td><code>SELECT to_path FROM edges WHERE from_path = ? AND relation = 'imports'</code></td></tr>
+<tr><td>What imports X?</td><td><code>SELECT from_path FROM edges WHERE to_path = ? AND relation = 'imports'</code></td></tr>
+<tr><td>What breaks if I change X?</td><td><code>WITH RECURSIVE ... WHERE relation = 'imports' UNION ALL ... (reverse)</code></td></tr>
+<tr><td>Show me the auth module</td><td><code>SELECT * FROM files WHERE json_extract(metadata, '$.feature') = 'auth'</code></td></tr>
+<tr><td>Which files have no tests?</td><td><code>SELECT path FROM files f WHERE NOT EXISTS (SELECT 1 FROM edges e WHERE e.from_id = f.id AND e.relation = 'tested_by')</code></td></tr>
+<tr><td>Dependency depth</td><td><code>WITH RECURSIVE ... SELECT path, MAX(depth) ...</code></td></tr>
+<tr><td>Most-connected files</td><td><code>SELECT path, COUNT(*) AS degree FROM edges JOIN files ... GROUP BY ... ORDER BY degree DESC</code></td></tr>
+</table>
+
+<hr>
+
+<h2>8. Full Workflow — Clone → Mount → Work</h2>
+
+<pre><code># 1. Clone the repo
+$ git clone https://github.com/org/project.git ~/projects/myapp
+
+# 2. Initialize VFS
+$ cd ~/projects/myapp
+$ vfs init
+  → Created .vfs/manifest.yaml
+  → Created .vfs/graph/ directory
+
+# 3. (Optional) Edit manifest
+$ vim .vfs/manifest.yaml
+
+# 4. Mount through VFS
+$ vfs mount ~/projects/myapp /mnt/vfs/myapp
+  → Backend: git
+  → Metadata: SQLite (.vfs/graph.db)
+  → Interface: FUSE
+  → Mounted at /mnt/vfs/myapp
+
+# 5. Point agent at the mount
+$ export WORKSPACE=/mnt/vfs/myapp
+$ agent run "Add OAuth to auth module"
+
+# Agent sees:
+#   cat /mnt/vfs/myapp/src/auth/login.go
+#   → File + injected context
+#
+#   ls /mnt/vfs/myapp/.vfs/deps/
+#   → auth-module.md (computed dependency graph)
+#
+#   cat /mnt/vfs/myapp/project/models/bert-large.bin
+#   → Routed to S3, cached locally
+
+# 6. Unmount
+$ vfs unmount /mnt/vfs/myapp
+  → Exported graph to .vfs/edges.jsonl
+  → Committed .vfs/ to git
+  → Unmounted</code></pre>
+
+<hr>
+
+<h2>9. Implementation Roadmap</h2>
+
+<table>
+<tr><th>Phase</th><th>What</th><th>Interface</th><th>Metadata</th><th>Backend</th><th>Time</th></tr>
+<tr><td><strong>1. Prototype</strong></td><td>Context injection proof-of-concept</td><td><span class="tag tag-gold">CLI shim</span></td><td><span class="tag tag-green">SQLite adjacency</span></td><td><span class="tag tag-green">Git</span></td><td>1–2 days</td></tr>
+<tr><td><strong>2. Graph Engine</strong></td><td>Import parsing, edge discovery, graph queries</td><td><span class="tag tag-gold">CLI shim</span></td><td><span class="tag tag-green">SQLite + content overlay</span></td><td><span class="tag tag-green">Git</span></td><td>3–5 days</td></tr>
+<tr><td><strong>3. Real Mount</strong></td><td>FUSE or 9P — agents use real <code>cat</code>/<code>ls</code></td><td><span class="tag tag-blue">FUSE / 9P</span></td><td><span class="tag tag-green">SQLite + content overlay</span></td><td><span class="tag tag-green">Git</span></td><td>2–4 days</td></tr>
+<tr><td><strong>4. Remote Backends</strong></td><td>S3 mounts, remote repos, caching</td><td><span class="tag tag-blue">FUSE / 9P</span></td><td><span class="tag tag-green">SQLite + content overlay</span></td><td><span class="tag tag-green">Git + S3</span></td><td>3–5 days</td></tr>
+<tr><td><strong>5. Production</strong></td><td>Scale, multi-repo, triggers, benchmarks</td><td><span class="tag tag-blue">FUSE / 9P</span></td><td><span class="tag tag-green">Property graph (if needed)</span></td><td><span class="tag tag-green">Git + S3 + remote</span></td><td>1–2 weeks</td></tr>
+</table>
+
+<hr>
+
+<h2>10. Open Questions</h2>
+
+<ol>
+<li><strong>FUSE vs 9P vs CLI for prototype?</strong> CLI fastest. 9P gives real <code>cat</code>/<code>ls</code>. Decision affects agent compatibility.</li>
+<li><strong>Import parsing: regex or tree-sitter?</strong> Regex fast but fragile. Tree-sitter accurate but heavier.</li>
+<li><strong>Graph sync across machines?</strong> Git notes could transport edges between clones.</li>
+<li><strong>Injection overhead at scale?</strong> Every <code>read()</code> = manifest check + graph lookup. Caching needed above 100 req/s.</li>
+<li><strong>Write path?</strong> Auto-update edges on write? Or background job?</li>
+<li><strong>Binary files?</strong> Skip injection for binary MIME types.</li>
+<li><strong>Security?</strong> Should VFS strip secrets from <code>.env</code> before serving? Refuse certain paths?</li>
+<li><strong>Latency?</strong> FUSE round-trip ~50μs + metadata engine query time. Fine for agents, not for HFT.</li>
+</ol>
+
+<hr>
+
+<h2>11. Prior Art &amp; References</h2>
+
+<h3>Filesystem Interfaces</h3>
+<ul>
+<li><strong>libfuse</strong> — <a href="https://github.com/libfuse/libfuse">github.com/libfuse/libfuse</a> — Reference FUSE (C)</li>
+<li><strong>go-fuse</strong> — <a href="https://github.com/hanwen/go-fuse">github.com/hanwen/go-fuse</a> — Best Go FUSE library</li>
+<li><strong>9P protocol</strong> — <a href="https://9p.io/plan9/">9p.io</a> — Plan 9 file protocol spec</li>
+<li><strong>styx</strong> — <a href="https://pkg.go.dev/aqwari.net/net/styx">aqwari.net/net/styx</a> — Go 9P server library</li>
+<li><strong>WSL2</strong> — Uses 9P internally for Windows/Linux file sharing</li>
+</ul>
+
+<h3>Virtual Filesystems</h3>
+<ul>
+<li><strong>gitfs</strong> — FUSE for git repos (Python, reference design)</li>
+<li><strong>s3fs-fuse</strong> — Mount S3 as local filesystem</li>
+<li><strong>rclone mount</strong> — Mount any cloud storage (Go, mature)</li>
+<li><strong>mergerfs</strong> — Union filesystem (join multiple dirs under one mount)</li>
+<li><strong>juicefs</strong> — Distributed POSIX on S3 (Go, production-grade)</li>
+</ul>
+
+<h3>Graph / Metadata</h3>
+<ul>
+<li><strong>git notes</strong> — <code>git-notes(1)</code> — Metadata on git objects</li>
+<li><strong>SQLite JSON</strong> — <code>json_extract()</code>, recursive CTEs</li>
+<li><strong>Dgraph</strong> — <a href="https://dgraph.io">dgraph.io</a> — Distributed graph DB (Go)</li>
+<li><strong>tree-sitter</strong> — <a href="https://tree-sitter.github.io">tree-sitter.github.io</a> — Incremental parsing</li>
+</ul>
+
+<h3>Philosophical</h3>
+<ul>
+<li><strong>Plan 9</strong> — Everything is a file. Per-process namespaces. 9P.</li>
+<li><strong>Content-addressable storage</strong> — Git's object model, IPFS.</li>
+<li><strong>Semantic file systems</strong> — Gifford et al., 1991. Files queryable by attributes, not just path.</li>
+</ul>
+
+<hr>
+
+<p style="text-align:center; color: var(--text3); margin-top:3rem; font-size:0.85rem;">
+Hermes VFS — Design Reference — June 2026<br>
+A Hermes Agent project
+</p>
+
+</div>
+</body>
+</html>
