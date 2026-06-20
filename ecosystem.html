@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Total Windup Flight Systems — Agent Infrastructure Ecosystem</title>
+<style>
+:root {
+  --bg: #0a0a14; --surface: #12122a; --surface2: #1a1a32;
+  --accent: #4a90d9; --gold: #ccaa55; --green: #4a9; --red: #c44; --orange: #d94;
+  --purple: #a78bfa; --teal: #22d3ee; --pink: #f472b6;
+  --text: #c8ccd8; --text2: #9a9dac; --text3: #6a6d7c;
+  --border: #1e1e3a; --border2: #2a2a4a;
+  --max-width: 1200px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background: var(--bg); color: var(--text);
+  font-family: 'Inter', -apple-system, system-ui, sans-serif;
+  line-height: 1.65; padding: 2rem;
+}
+.container { max-width: var(--max-width); margin: 0 auto; }
+
+/* Hero */
+.hero { text-align: center; padding: 3rem 0 2rem; border-bottom: 1px solid var(--border); margin-bottom: 3rem; }
+.hero h1 { font-size: 2.4rem; color: var(--gold); font-weight: 800; letter-spacing: -0.5px; margin-bottom: 0.5rem; }
+.hero .tagline { font-size: 1.1rem; color: var(--text2); max-width: 700px; margin: 0 auto 1.5rem; }
+.hero .stats { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; }
+.hero .stat { text-align: center; }
+.hero .stat-num { font-size: 2rem; font-weight: 800; color: var(--accent); }
+.hero .stat-label { font-size: 0.75rem; color: var(--text3); text-transform: uppercase; letter-spacing: 0.5px; }
+
+/* Section headings */
+h2 { font-size: 1.4rem; color: var(--accent); margin: 3rem 0 1.2rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border); }
+h2 .count { font-size: 0.75rem; color: var(--text3); font-weight: 400; margin-left: 0.5rem; }
+
+/* Card grid */
+.card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1rem; margin: 1rem 0 2rem; }
+.card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 10px; padding: 1.3rem;
+  transition: border-color 0.2s, transform 0.1s;
+  position: relative; overflow: hidden;
+}
+.card:hover { border-color: var(--border2); transform: translateY(-1px); }
+.card-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 0.6rem; }
+.card-header h3 { font-size: 1.05rem; color: var(--text); font-weight: 700; margin: 0; }
+.card p { font-size: 0.85rem; color: var(--text2); margin-bottom: 0.8rem; line-height: 1.5; }
+.card .meta { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.6rem; }
+.card .links { display: flex; gap: 0.8rem; }
+.card .links a { font-size: 0.8rem; color: var(--accent); text-decoration: none; }
+.card .links a:hover { text-decoration: underline; }
+
+/* Tags */
+.tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.65rem; font-weight: 600; letter-spacing: 0.3px; text-transform: uppercase; }
+.tag-rust { background: rgba(204,106,50,0.2); color: #cc6a32; }
+.tag-go { background: rgba(0,173,216,0.2); color: #00add8; }
+.tag-python { background: rgba(53,114,165,0.2); color: #3572a5; }
+.tag-ts { background: rgba(49,120,198,0.2); color: #3178c6; }
+.tag-live { background: rgba(68,170,153,0.2); color: var(--green); }
+.tag-alpha { background: rgba(168,123,250,0.2); color: var(--purple); }
+.tag-mature { background: rgba(74,144,217,0.15); color: var(--accent); }
+.tag-new { background: rgba(34,211,238,0.15); color: var(--teal); }
+
+/* Status bar */
+.status-bar { display: flex; gap: 0.4rem; align-items: center; margin-bottom: 0.3rem; }
+.status-dot { width: 6px; height: 6px; border-radius: 50%; }
+.status-dot.green { background: var(--green); }
+.status-dot.yellow { background: var(--orange); }
+.status-dot.purple { background: var(--purple); }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .card-grid { grid-template-columns: 1fr; }
+  .hero h1 { font-size: 1.8rem; }
+  .hero .stats { gap: 1rem; }
+}
+
+/* Footer */
+footer {
+  margin-top: 4rem; padding-top: 2rem;
+  border-top: 1px solid var(--border);
+  text-align: center; font-size: 0.8rem; color: var(--text3);
+  display: flex; flex-direction: column; gap: 0.5rem;
+}
+footer a { color: var(--accent); }
+.ecosystem-note {
+  margin: 2rem 0 1rem; padding: 1.2rem;
+  background: rgba(74,144,217,0.06); border: 1px solid var(--border);
+  border-radius: 8px; font-size: 0.85rem; color: var(--text2);
+  text-align: center;
+}
+.ecosystem-note strong { color: var(--gold); }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header class="hero">
+  <h1>Total Windup Flight Systems</h1>
+  <p class="tagline">Open-source agent infrastructure. Filesystems, quality harnesses, deliberation engines, memory banks, benchmarks, and coding platforms — built for AI agents, by AI agents.</p>
+  <div class="stats">
+    <div class="stat"><div class="stat-num">19</div><div class="stat-label">Projects</div></div>
+    <div class="stat"><div class="stat-num">5</div><div class="stat-label">Languages</div></div>
+    <div class="stat"><div class="stat-num">∞</div><div class="stat-label">Agents Served</div></div>
+  </div>
+</header>
+
+<!-- AGENT INFRASTRUCTURE -->
+<h2>Agent Infrastructure <span class="count">6 projects</span></h2>
+<div class="card-grid">
+
+  <div class="card">
+    <div class="card-header">
+      <h3>WarpFS</h3>
+      <span class="tag tag-rust">Rust</span>
+    </div>
+    <div class="status-bar"><span class="status-dot purple"></span><span class="tag tag-new">Spec Phase</span></div>
+    <p>Virtual filesystem for agentic workflows. Mount multiple git repos, S3 buckets, and local paths into a unified tree. Metadata surfaced via Linux extended attributes and MCP. FUSE-enforced permissions. Extensible via wasm plugins.</p>
+    <div class="meta">
+      <span class="tag tag-live">2026</span>
+    </div>
+    <div class="links">
+      <a href="https://github.com/totalwindupflightsystems/warpfs">GitHub</a>
+      <a href="https://totalwindupflightsystems.github.io/reports/warpfs-implementation-reference.html">Spec</a>
+      <a href="https://totalwindupflightsystems.github.io/reports/hermes-vfs-design.html">Design</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h3>GitReins</h3>
+      <span class="tag tag-python">Python</span>
+    </div>
+    <div class="status-bar"><span class="status-dot green"></span><span class="tag tag-mature">v0.7.0</span></div>
+    <p>Git-native AI agent co-harness. Tier 1 static guards (secrets, lint, tests, build) run on pre-commit. Tier 2 agentic LLM evaluator judges acceptance criteria. Prevents AI-generated code from shipping broken.</p>
+    <div class="meta">
+      <span class="tag tag-live">15 projects</span>
+    </div>
+    <div class="links">
+      <a href="https://github.com/totalwindupflightsystems/gitreins">GitHub</a>
+      <a href="https://pypi.org/project/gitreins/">PyPI</a>
+      <a href="https://totalwindupflightsystems.github.io/reports/gitreins-brochure.html">Brochure</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h3>Chimera</h3>
+      <span class="tag tag-go">Go</span><span class="tag tag-python">Python</span>
+    </div>
+    <div class="status-bar"><span class="status-dot green"></span><span class="tag tag-mature">v2</span></div>
+    <p>Multi-model deliberation engine. 25 models across 9 providers. Routes prompts through budget, standard, and premium tiers. Formation presets for different deliberation strategies. MCP server for agent integration.</p>
+    <div class="meta">
+      <span class="tag tag-live">Running on :8765</span>
+    </div>
+    <div class="links">
+      <a href="https://github.com/totalwindupflightsystems/chimera">GitHub</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h3>Helix</h3>
+      <span class="tag tag-go">Go</span>
+    </div>
+    <div class="status-bar"><span class="status-dot green"></span><span class="tag tag-alpha">Active</span></div>
+    <p>Agent-first software development lifecycle platform. Spec-driven development with bubblewrap sandboxing at 3 isolation levels. Master specification (40-60K words). CLI-first, agent-native architecture.</p>
+    <div class="meta">
+      <span class="tag tag-live">19 work items</span>
+    </div>
+    <div class="links">
+      <a href="https://github.com/totalwindupflightsystems/helix">GitHub</a>
+      <a href="https://github.com/totalwindupflightsystems/helix-specs">Specs</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h3>SpecLang</h3>
+      <span class="tag tag-go">Go</span>
+    </div>
+    <div class="status-bar"><span class="status-dot green"></span><span class="tag tag-alpha">Active</span></div>
+    <p>Meta-circular specification-driven assembler. Write specifications, run the assembler, produce code. Self-hosting — SpecLang's own assembler is written in SpecLang.</p>
+    <div class="links">
+      <a href="https://github.com/totalwindupflightsystems/SpecLang">GitHub</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h3>DuckBrain</h3>
+      <span class="tag tag-python">Python</span>
+    </div>
+    <div class="status-bar"><span class="status-dot green"></span><span class="tag tag-mature">Active</span></div>
+    <p>Persistent version-controlled agent memory bank. Git-backed with DuckDB for vector search. Namespace isolation. Memory compaction with Parquet. Semantic recall across sessions. MCP server for any agent.</p>
+    <div class="meta">
+      <span class="tag tag-live">337 skills indexed</span>
+    </div>
+    <div class="links">
+      <a href="https://github.com/totalwindupflightsystems/duckbrain">GitHub</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- CODING AGENT TOOLS -->
+<h2>Coding Agent Platforms <span class="count">3 projects</span></h2>
+<div class="card-grid">
+
+  <div class="card">
+    <div class="card-header">
+      <h3>Coding Hermes</h3>
+      <span class="tag tag-go">Multi-Model</span>
+    </div>
+    <div class="status-bar"><span class="status-dot green"></span><span class="tag tag-mature">Proven</span></div>
+    <p>Multi-model coding paradigm. Orchestrator model (DeepSeek V4 Pro) plans. Coding model (GLM 5.2, MiniMax M3, Kimi K2.7) executes. Single profile, shared skills, anti-drift enforcement. Foundry compiler for prompt quality.</p>
+    <div class="meta">
+      <span class="tag tag-live">5 coding models</span>
+    </div>
+    <div class="links">
+      <a href="https://github.com/totalwindupflightsystems/hermes-agent">Hermes Agent</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h3>OpenCode Containers</h3>
+      <span class="tag tag-go">Docker</span>
+    </div>
+    <div class="status-bar"><span class="status-dot green"></span><span class="tag tag-mature">11 running</span></div>
+    <p>Per-project Docker containers for OpenCode CLI. Isolated coding environments with language-specific toolchains. No host pollution. Consistent across machines. Used by Axiom and coding-hermes pipelines.</p>
+    <div class="links">
+      <a href="https://github.com/totalwindupflightsystems/opencode-containers">GitHub</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h3>Axiom Orchestration</h3>
+      <span class="tag tag-python">Python</span>
+    </div>
+    <div class="status-bar"><span class="status-dot green"></span><span class="tag tag-mature">Active</span></div>
+    <p>Agent orchestration framework for autonomous development. Work items with acceptance criteria. Cron-driven foreman loop. Multi-project support. Drives DexDat, Helios, and WarpFS development autonomously.</p>
+    <div class="meta">
+      <span class="tag tag-live">Foreman pattern</span>
+    </div>
+    <div class="links">
+      <a href="https://github.com/totalwindupflightsystems/axiom">GitHub</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- PLATFORMS & FRAMEWORKS -->
+<h2>Platforms &amp; Frameworks <span class="count">4 projects</span></h2>
+<div class="card-grid">
+
+  <div class="card">
+    <div class="card-header">
+      <h3>Consensus</h3>
+      <span class="tag tag-go">Go</span>
+    </div>
+    <div class="status-bar"><span class="status-dot green"></span><span class="tag tag-mature">28/28 tests</span></div>
+    <p>Database-as-runtime Go framework. GitReins-wired with full CI pipeline. DeepSeek-backed evaluator. Pre-commit blocks secrets. 60/60 acceptance criteria. Production-grade foundation for data-driven agents.</p>
+    <div class="links">
+      <a href="https://github.com/totalwindupflightsystems/consensus">GitHub</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h3>Hivemind</h3>
+      <span class="tag tag-go">Go</span>
+    </div>
+    <div class="status-bar"><span class="status-dot green"></span><span class="tag tag-alpha">Active</span></div>
+    <p>Git-native agent workspace management. Multi-repo coordination with git worktrees. Critical package coverage ≥89.6%. Active priorities: E2E testing, workspace isolation, spec alignment.</p>
+    <div class="links">
+      <a href="https://github.com/totalwindupflightsystems/hivemind">GitHub</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h3>DexDat</h3>
+      <span class="tag tag-python">Python</span><span class="tag tag-ts">TS</span><span class="tag tag-go">Go</span>
+    </div>
+    <div class="status-bar"><span class="status-dot yellow"></span><span class="tag tag-alpha">Active</span></div>
+    <p>Data experience platform. 16 interconnected systems: API gateway, ingestion, search, tagging, rules engine, scheduling, AI workflows, monitoring, security, deployment, MCP protocol. Axiom-driven development. 38/65 ACs.</p>
+    <div class="meta">
+      <span class="tag tag-live">468 tasks tracked</span>
+    </div>
+    <div class="links">
+      <a href="https://github.com/totalwindupflightsystems/dexdat">GitHub</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h3>Muster</h3>
+      <span class="tag tag-python">Python</span><span class="tag tag-go">Go</span>
+    </div>
+    <div class="status-bar"><span class="status-dot green"></span><span class="tag tag-mature">23/23 demos</span></div>
+    <p>AI model evaluation and benchmarking platform. Visual demo suite showing "one source connecting everything." Image generation with xAI grok-imagine. Non-FAL image pipeline. Agent evaluation harnesses.</p>
+    <div class="links">
+      <a href="https://github.com/totalwindupflightsystems/muster">GitHub</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- BENCHMARKS -->
+<h2>Benchmarks &amp; Testing <span class="count">2 projects</span></h2>
+<div class="card-grid">
+
+  <div class="card">
+    <div class="card-header">
+      <h3>Kobayashi-Maru</h3>
+      <span class="tag tag-go">Go</span>
+    </div>
+    <div class="status-bar"><span class="status-dot green"></span><span class="tag tag-alpha">Active</span></div>
+    <p>No-win scenario benchmark for AI agents. Star Trek inspired — testing how agents handle impossible situations. GitReins-wired with 8-gate config. Public results on GitHub Pages. Two-repo architecture (private code + public results).</p>
+    <div class="links">
+      <a href="https://github.com/totalwindupflightsystems/kobayashi-maru-results">Results</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h3>Mafia AI Benchmark</h3>
+      <span class="tag tag-ts">TypeScript</span>
+    </div>
+    <div class="status-bar"><span class="status-dot green"></span><span class="tag tag-alpha">Active</span></div>
+    <p>Game-based AI benchmark. TypeScript monorepo. Tests agent deception, cooperation, and reasoning in social game scenarios. Mafia/Werewolf party game as an AI evaluation framework.</p>
+    <div class="links">
+      <a href="https://github.com/totalwindupflightsystems/mafia-ai-benchmark">GitHub</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- INFRASTRUCTURE -->
+<h2>Infrastructure &amp; Operations <span class="count">2 projects</span></h2>
+<div class="card-grid">
+
+  <div class="card">
+    <div class="card-header">
+      <h3>Hermes4Friends</h3>
+      <span class="tag tag-python">Python</span><span class="tag tag-go">Go</span>
+    </div>
+    <div class="status-bar"><span class="status-dot green"></span><span class="tag tag-mature">Multi-tenant</span></div>
+    <p>Multi-tenant Hermes Agent provisioning platform. User isolation, key management lifecycle, subscription handling. OpenRouter key provisioning and rotation. Shared host-level infrastructure for Hermes instances.</p>
+    <div class="links">
+      <a href="https://github.com/totalwindupflightsystems/hermes4friends">GitHub</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h3>AI Gateway</h3>
+      <span class="tag tag-python">Python</span>
+    </div>
+    <div class="status-bar"><span class="status-dot green"></span><span class="tag tag-mature">Active</span></div>
+    <p>Unified AI inference gateway. Routes to multiple providers behind a single OpenAI-compatible API. Load balancing, failover, cost tracking. Custom provider integration. Used by Chimera and Hermes pipelines.</p>
+    <div class="links">
+      <a href="https://github.com/totalwindupflightsystems/ai-gateway">GitHub</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- CREATIVE -->
+<h2>Creative &amp; Research <span class="count">2 projects</span></h2>
+<div class="card-grid">
+
+  <div class="card">
+    <div class="card-header">
+      <h3>Frontier's Ghost</h3>
+      <span class="tag tag-python">AI Art</span>
+    </div>
+    <div class="status-bar"><span class="status-dot green"></span><span class="tag tag-alpha">Active</span></div>
+    <p>Star Trek fan creative project. 25 characters with full bios. 81 environment YAMLs for AI image generation. USS Venture NCC-82914. Service container batch generation pipeline. Character sheets, ship references, environment art.</p>
+    <div class="meta">
+      <span class="tag tag-live">25 chars · 81 envs</span>
+    </div>
+    <div class="links">
+      <a href="https://github.com/totalwindupflightsystems/frontiers-ghost">GitHub</a>
+      <a href="https://github.com/totalwindupflightsystems/mythos">Engine</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h3>Reports</h3>
+      <span class="tag tag-python">HTML</span>
+    </div>
+    <div class="status-bar"><span class="status-dot green"></span><span class="tag tag-mature">Active</span></div>
+    <p>Research briefings, security updates, and geopolitical analysis. LLM inference deep-dives. Camera comparisons. Travel safety guides. Architecture documentation for the agent infrastructure ecosystem. Dark-themed GitHub Pages.</p>
+    <div class="links">
+      <a href="https://totalwindupflightsystems.github.io/reports/">Browse Reports</a>
+      <a href="https://github.com/totalwindupflightsystems/reports">GitHub</a>
+    </div>
+  </div>
+
+</div>
+
+<div class="ecosystem-note">
+  <strong>Everything is open source.</strong> 19 projects. 5 languages. All built with AI agents using the tools above. GitReins guards every commit. Coding Hermes writes the code. Axiom drives the development. The ecosystem builds itself.
+</div>
+
+<footer>
+  <p><a href="https://github.com/totalwindupflightsystems">github.com/totalwindupflightsystems</a></p>
+  <p>Built by AI agents. Guarded by GitReins. Driven by Hermes.</p>
+</footer>
+
+</div>
+</body>
+</html>
