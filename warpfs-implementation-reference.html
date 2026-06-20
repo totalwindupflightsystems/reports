@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WarpFS — Implementation Reference</title>
+<style>
+:root {
+  --bg: #0a0a14; --surface: #12122a; --surface2: #1a1a32;
+  --accent: #4a90d9; --gold: #ccaa55; --green: #4a9; --red: #c44; --orange: #d94;
+  --text: #c8ccd8; --text2: #9a9dac; --text3: #6a6d7c;
+  --border: #1e1e3a; --border2: #2a2a4a; --code-bg: #0d0d1a;
+  --max-width: 1100px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background: var(--bg); color: var(--text);
+  font-family: 'Inter', -apple-system, sans-serif; line-height: 1.65; padding: 2rem;
+}
+.container { max-width: var(--max-width); margin: 0 auto; }
+h1 { font-size: 2.2rem; color: var(--gold); margin-bottom: 0.3rem; letter-spacing: -0.5px; }
+h2 { font-size: 1.5rem; color: var(--accent); margin: 2.5rem 0 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border); }
+h3 { font-size: 1.15rem; color: var(--green); margin: 1.5rem 0 0.5rem; }
+h4 { font-size: 1rem; color: var(--text); margin: 1rem 0 0.4rem; }
+p { margin-bottom: 1rem; color: var(--text2); }
+a { color: var(--accent); }
+strong { color: var(--text); }
+code { background: var(--code-bg); padding: 1px 5px; border-radius: 3px; font-size: 0.9em; color: var(--orange); }
+pre { background: var(--code-bg); padding: 1rem 1.2rem; border-radius: 6px; overflow-x: auto; margin: 0.8rem 0 1.5rem; border: 1px solid var(--border2); font-size: 0.85rem; line-height: 1.5; }
+pre code { background: none; padding: 0; color: var(--text); }
+.subtitle { color: var(--text3); font-size: 1rem; margin-bottom: 2rem; }
+.decision { background: rgba(74,144,217,0.08); border-left: 3px solid var(--accent); padding: 1rem 1.2rem; margin: 1rem 0; border-radius: 0 6px 6px 0; font-size: 0.9rem; }
+.verdict { background: rgba(68,170,153,0.08); border-left: 3px solid var(--green); padding: 1rem 1.2rem; margin: 1rem 0; border-radius: 0 6px 6px 0; font-size: 0.9rem; }
+.warning { background: rgba(204,68,68,0.08); border-left: 3px solid var(--red); padding: 1rem 1.2rem; margin: 1rem 0; border-radius: 0 6px 6px 0; font-size: 0.9rem; }
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0; }
+.compare > div { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; }
+.compare h5 { color: var(--gold); margin-bottom: 0.5rem; }
+ul, ol { margin: 0.5rem 0 1rem 1.5rem; color: var(--text2); }
+li { margin-bottom: 0.3rem; }
+hr { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
+.tag { display: inline-block; padding: 1px 6px; border-radius: 3px; font-size: 0.65rem; font-weight: 600; margin-right: 0.3rem; }
+.tag-green { background: rgba(68,170,153,0.2); color: var(--green); }
+.tag-red { background: rgba(204,68,68,0.2); color: var(--red); }
+.tag-gold { background: rgba(204,170,85,0.2); color: var(--gold); }
+.tag-blue { background: rgba(74,144,217,0.2); color: var(--accent); }
+table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.88rem; }
+th { text-align: left; padding: 0.5rem 0.8rem; background: var(--surface2); color: var(--gold); font-weight: 600; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid var(--border); }
+td { padding: 0.5rem 0.8rem; border-bottom: 1px solid var(--border); color: var(--text2); }
+td strong { color: var(--text); }
+tr:hover td { background: rgba(255,255,255,0.02); }
+.arch { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.4rem; margin: 1.5rem 0; font-family: monospace; font-size: 0.8rem; line-height: 1.9; }
+.arch .layer { color: var(--accent); font-weight: bold; }
+.arch .comp { color: var(--green); }
+.arch .warn { color: var(--red); font-weight: bold; }
+.arch .note { color: var(--text3); font-style: italic; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>WarpFS — Implementation Reference</h1>
+<p class="subtitle">Virtual Filesystem for Agentic Workflows — Language, Permissions, Sandboxing &amp; Manifest Design<br>
+<strong>Status:</strong> Spec Phase &nbsp;|&nbsp; <strong>Date:</strong> June 2026 &nbsp;|&nbsp; <strong>Repo:</strong> <a href="https://github.com/totalwindupflightsystems/warpfs">totalwindupflightsystems/warpfs</a><br>
+<strong>Design doc:</strong> <a href="hermes-vfs-design.html">Hermes VFS Design (v2 metadata-first)</a></p>
+
+<hr>
+
+<h2>1. Language Decision</h2>
+
+<div class="verdict">
+<strong>Verdict: Rust for the core daemon.</strong> Python for the MCP server. Go for the client library.<br>
+The deciding factor: the trigger hot path runs on every file save — tree-sitter AST parsing, graph traversal, parallel xattr writes across impacted files. No GC pause, no CGO boundary, zero-copy AST traversal.
+</div>
+
+<h3>1.1 The trigger hot path is the bottleneck</h3>
+
+<pre><code>AGENT SAVES FILE → inotify fires → trigger runs:
+  1. tree-sitter parse AST of changed file
+  2. Extract: imports, exports, called functions, type references
+  3. Diff against previous AST: what edges changed?
+  4. petgraph traversal → impacted files (transitive)
+  5. Parallel setxattr on ALL impacted files (dozens of calls)
+  6. Append to edges.jsonl
+  7. (optional) Update DuckDB analytical index
+
+AGENT ASKS "what's impacted?" → read xattr → answer in microseconds</code></pre>
+
+<h3>1.2 Language tiers</h3>
+
+<table>
+<tr><th>Layer</th><th>Language</th><th>Why</th></tr>
+<tr>
+  <td><strong>Core FUSE daemon</strong></td>
+  <td><strong>Rust</strong></td>
+  <td>Kernel integration (fuser 0.16.0), goroutine-free concurrency (tokio), petgraph 0.8.2 for graph traversal, tree-sitter in pure Rust, <code>xattr</code> crate, zero-GC trigger hot path, compile-time crash prevention</td>
+</tr>
+<tr>
+  <td><strong>MCP server</strong></td>
+  <td><strong>Python</strong> (pipx)</td>
+  <td>Universal install, official duckdb package, os.getxattr built-in, no kernel integration needed</td>
+</tr>
+<tr>
+  <td><strong>Go client library</strong></td>
+  <td><strong>Go</strong></td>
+  <td>Thin wrapper — os.Getxattr via golang.org/x/sys/unix, DuckDB via marcboeker/go-duckdb, zero IPC for Go agents</td>
+</tr>
+<tr>
+  <td><strong>CLI shim</strong></td>
+  <td><strong>Rust</strong> (same binary)</td>
+  <td>vfs read|write|meta|graph|mount — compiled into daemon, no subprocess</td>
+</tr>
+<tr>
+  <td><strong>Import parsers</strong></td>
+  <td><strong>Rust</strong> (tree-sitter)</td>
+  <td>Go, Python, TypeScript, Rust, JavaScript, Java, C, C++, Ruby grammars — all pure Rust, zero FFI</td>
+</tr>
+</table>
+
+<h3>1.3 Key crates</h3>
+
+<table>
+<tr><th>Crate</th><th>Version</th><th>Status</th><th>Role</th></tr>
+<tr><td><code>fuser</code></td><td>0.16.0</td><td><span class="tag tag-green">Production</span></td><td>FUSE daemon — pure Rust, no libfuse required</td></tr>
+<tr><td><code>petgraph</code></td><td>0.8.2</td><td><span class="tag tag-green">Production</span></td><td>Graph data structure — used in Rust's own compiler</td></tr>
+<tr><td><code>tree-sitter</code></td><td>latest</td><td><span class="tag tag-green">Production</span></td><td>AST parsing — official Rust bindings, zero-copy</td></tr>
+<tr><td><code>xattr</code></td><td>latest</td><td><span class="tag tag-green">Production</span></td><td>Extended attributes — pure Rust, cross-platform</td></tr>
+<tr><td><code>inotify</code></td><td>latest</td><td><span class="tag tag-green">Production</span></td><td>File event watching — idiomatic kernel wrapper</td></tr>
+<tr><td><code>duckdb</code></td><td>0.10+</td><td><span class="tag tag-green">Official</span></td><td>DuckDB bindings — maintained by DuckDB team</td></tr>
+<tr><td><code>tokio</code></td><td>1.x</td><td><span class="tag tag-green">Production</span></td><td>Async runtime for concurrent FUSE request handling</td></tr>
+<tr><td><code>rayon</code></td><td>1.x</td><td><span class="tag tag-green">Production</span></td><td>Parallel impact traversal — compute independent subtrees</td></tr>
+</table>
+
+<hr>
+
+<h2>2. Permission Model — FUSE-Enforced, Not Advisory</h2>
+
+<div class="decision">
+<strong>Core principle:</strong> The model sees real filesystem permission errors, not injected warnings. The VFS sets FUSE mode bits that the Linux kernel enforces. When the agent tries to write to a read-only file, it gets <code>EACCES</code> from the kernel — exactly like a real filesystem. No injected warnings, no special tool calls.
+</div>
+
+<h3>2.1 Kernel enforcement path</h3>
+
+<pre><code>1. AGENT: echo "change" > /mnt/vfs/workspace/.gitignore
+2. KERNEL: checks FUSE mode bits → file is 0444
+3. KERNEL: returns -EACCES (Permission denied)
+4. AGENT: "Permission denied" — the file isn't writable
+5. MODEL: Learns that .gitignore is protected. Moves on.</code></pre>
+
+<h3>2.2 Manifest permission rules</h3>
+
+<pre><code># .vfs/manifest.yaml
+permissions:
+  rules:
+    # VFS internals — never writable
+    - paths: [".vfs/**"]
+      mode: 0444
+    
+    # Git internals — never writable through VFS
+    - paths: [".git/**", ".gitignore", ".gitattributes", ".gitmodules"]
+      mode: 0444
+    
+    # Dependency lock files — read-only (use package manager)
+    - paths: ["**/go.sum", "**/Cargo.lock", "**/package-lock.json",
+              "**/yarn.lock", "**/pnpm-lock.yaml"]
+      mode: 0444
+    
+    # Generated code — read-only (edit the source, not the output)
+    - paths: ["**/*.pb.go", "**/*.gen.go", "**/*.generated.*",
+              "**/generated/**", "**/__pycache__/**"]
+      mode: 0444
+    
+    # Vendored dependencies — read-only
+    - paths: ["**/vendor/**", "**/node_modules/**"]
+      mode: 0444
+    
+    # CI/CD config — read-only (change via PR, not direct edit)
+    - paths: [".github/workflows/**", ".gitlab-ci.yml", "Dockerfile"]
+      mode: 0444
+    
+    # Documentation — read-write
+    - paths: ["docs/**", "*.md", "README.md"]
+      mode: 0644
+    
+    # Source code — read-write (default workspace)
+    - paths: ["src/**", "lib/**", "pkg/**", "cmd/**", "internal/**"]
+      mode: 0644
+    
+    # Configuration files — read-write but no delete
+    - paths: ["*.toml", "*.yaml", "*.yml", "*.json"]
+      mode: 0644
+      allow_delete: false
+
+  default_mode: 0644
+
+  # Backend-level overrides
+  backends:
+    - name: shared-lib        # mounted dependency repo
+      mode: 0444              # entire mount read-only
+</code></pre>
+
+<h3>2.3 What the agent can't touch</h3>
+
+<table>
+<tr><th>Path</th><th>Mode</th><th>Why blocked</th></tr>
+<tr><td><code>.gitignore</code></td><td>0444</td><td>Git config — modify via git commands, not file writes</td></tr>
+<tr><td><code>go.sum</code></td><td>0444</td><td>Dependency pinning — update via <code>go mod tidy</code></td></tr>
+<tr><td><code>*.pb.go</code></td><td>0444</td><td>Generated from .proto — edit the .proto file instead</td></tr>
+<tr><td><code>node_modules/</code></td><td>0444</td><td>Package manager territory</td></tr>
+<tr><td><code>shared-lib/</code> (remote)</td><td>0444</td><td>External dependency, pinned to a tag</td></tr>
+<tr><td><code>.github/workflows/</code></td><td>0444</td><td>CI config — change via PR, not direct edit</td></tr>
+</table>
+
+<hr>
+
+<h2>3. Bubblewrap Sandboxing — Optional Security Layer</h2>
+
+<div class="verdict">
+<strong>Verdict: Worth it as an OPTIONAL layer, not core.</strong> Bubblewrap wraps the agent's shell in a mount namespace. The VFS daemon runs on the host. The agent's process sees only the VFS mount. This protects against malicious escape, not just accidental damage.
+</div>
+
+<h3>3.1 Two layers of protection</h3>
+
+<table>
+<tr><th>Layer</th><th>VFS permissions</th><th>Bubblewrap</th></tr>
+<tr><td>Enforced by</td><td>Linux kernel (FUSE mode bits)</td><td>Linux kernel (mount namespace)</td></tr>
+<tr><td>Scope</td><td>Within the VFS mount — agent can't write to .gitignore</td><td>Outside the VFS mount — agent can't see /etc, /home</td></tr>
+<tr><td>Protects against</td><td>Accidental damage, policy violations</td><td>Malicious escape, host recon</td></tr>
+<tr><td>Agent sees</td><td>"Permission denied" on the file</td><td>Files outside workspace simply don't exist</td></tr>
+<tr><td>Runtime cost</td><td>Zero (just mode bits)</td><td>~100ms namespace creation per shell</td></tr>
+</table>
+
+<h3>3.2 Architecture</h3>
+
+<pre><code>Host:                   warpfs-daemon (FUSE, full host access)
+                            │
+                    /mnt/vfs/workspace  ← mounted by daemon
+                            │
+Bubblewrap sandbox:    /workspace  ← bind-mounted read-write
+                       / (root)    ← bind-mounted READ-ONLY
+                       /tmp        ← isolated tmpfs
+                       /proc       ← isolated
+                            │
+                       agent's shell (cd /workspace)</code></pre>
+
+<h3>3.3 Manifest configuration</h3>
+
+<pre><code># .vfs/manifest.yaml
+sandbox:
+  enabled: false              # default: off
+  engine: bubblewrap           # or: none
+  isolate_network: true        # --unshare-net
+  isolate_pid: true            # --unshare-pid
+  read_only_root: true         # bind-mount / as read-only
+  writable_paths:
+    - /tmp
+    - /workspace</code></pre>
+
+<div class="warning">
+<strong>Not core — optional security escalation.</strong> Bubblewrap adds 50MB package, ~100ms startup latency, and system-specific bind-mount configuration. The VFS permission model handles 95% of use cases. Bubblewrap is for untrusted agents or multi-tenant environments where agent escape is a real threat.
+</div>
+
+<h3>3.4 Availability</h3>
+
+<table>
+<tr><th>System</th><th>Bubblewrap</th><th>User Namespaces</th></tr>
+<tr><td>Ubuntu 24.04+</td><td><code>apt install bubblewrap</code> (0.11.1)</td><td><span class="tag tag-green">Enabled by default</span></td></tr>
+<tr><td>Debian 12+</td><td><code>apt install bubblewrap</code></td><td><span class="tag tag-green">Enabled by default</span></td></tr>
+<tr><td>Fedora 40+</td><td>Pre-installed (Flatpak dependency)</td><td><span class="tag tag-green">Enabled</span></td></tr>
+<tr><td>Arch</td><td><code>pacman -S bubblewrap</code></td><td><span class="tag tag-green">Enabled</span></td></tr>
+<tr><td>Docker/CI</td><td>Requires <code>--privileged</code> or <code>--cap-add SYS_ADMIN</code></td><td><span class="tag tag-red">Often disabled</span></td></tr>
+</table>
+
+<hr>
+
+<h2>4. Multi-Repo Workspace</h2>
+
+<div class="decision">
+<strong>Core feature.</strong> Mount multiple git repos, S3 buckets, and local paths into one unified tree. Cross-repo graph edges. Agent opens one directory and sees everything.
+</div>
+
+<pre><code>/mnt/vfs/workspace/          ← top-level VFS mount (not a git repo)
+├── auth-service/            ← git@github.com:org/auth-service.git (main)
+├── payment-service/         ← git@github.com:org/payment-service.git (develop)
+├── shared-lib/              ← git@github.com:org/shared-lib.git (v2.1.0, read-only)
+├── models/                  ← S3 bucket (not a repo)
+├── docs/                    ← git@github.com:org/docs.git (main)
+├── .vfs/                    ← TOP-LEVEL inventory (cross-repo graph)
+│   ├── manifest.yaml        ← declares all repos & backends
+│   ├── graph/edges.jsonl    ← CROSS-REPO edges
+│   └── backends/mounts.yaml</code></pre>
+
+<pre><code># .vfs/manifest.yaml
+repos:
+  - name: auth-service
+    url: git@github.com:org/auth-service.git
+    ref: main
+    writable: true
+    
+  - name: shared-lib
+    url: git@github.com:org/shared-lib.git
+    ref: v2.1.0
+    writable: false            # read-only dependency
+    
+  - name: docs
+    url: git@github.com:org/docs.git
+    writable: true
+
+backends:
+  s3:
+    - bucket: platform-models
+      at: /mnt/vfs/workspace/models/
+
+graph:
+  cross_repo: true             # parse imports across repo boundaries</code></pre>
+
+<hr>
+
+<h2>5. Full Manifest Reference</h2>
+
+<p>The complete <code>.vfs/manifest.yaml</code> — every configurable option:</p>
+
+<pre><code># .vfs/manifest.yaml — single source of configuration truth
+version: 2
+
+# ── Project identity ──
+project:
+  name: "my-project"
+  description: "Description for agent context"
+
+# ── Interfaces ──
+interfaces:
+  fuse: { enabled: true, mount_point: /mnt/vfs/project, auto_unmount: true }
+  ninep: { enabled: false }
+  cli: { enabled: true }
+  mcp: { enabled: true, transport: stdio }
+  golib: { enabled: true }
+
+# ── Multi-repo workspace ──
+repos:
+  - { name: auth-service, url: git@github.com:org/auth-service.git, ref: main, writable: true }
+  - { name: shared-lib, url: git@github.com:org/shared-lib.git, ref: v2.1.0, writable: false }
+
+# ── Backends ──
+backends:
+  s3:
+    - { bucket: my-bucket, prefix: prod/, at: /project/models/, cache: /tmp/vfs-cache/, ttl: 3600, writable: false }
+  remote:
+    - { url: git@github.com:org/lib.git, at: /project/vendor/lib/, ref: main }
+  local:
+    - { path: /data/datasets/, at: /project/data/, writable: true }
+
+# ── Metadata (xattrs set on every file) ──
+metadata:
+  namespaces: [feature, purpose, backend, hash, relations, impact, complexity, risk, last_tested, last_modified, cache_status]
+  auto: { hash: true, last_modified: true, complexity: true }
+
+# ── Graph & Impact ──
+graph:
+  edges: .vfs/graph/edges.jsonl
+  duckdb_cache: .vfs/graph/graph.duckdb
+  auto_discover:
+    enabled: true
+    languages: [go, python, typescript, rust, javascript, java]
+    on_write: true
+  impact: { enabled: true, max_depth: 5, parallel: true }
+  cross_repo: true
+
+# ── Permissions ──
+permissions:
+  rules:
+    - { paths: [".vfs/**", ".git/**", ".gitignore"], mode: 0444 }
+    - { paths: ["**/go.sum", "**/Cargo.lock", "**/package-lock.json"], mode: 0444 }
+    - { paths: ["**/*.pb.go", "**/*.gen.go", "**/generated/**"], mode: 0444 }
+    - { paths: ["**/vendor/**", "**/node_modules/**"], mode: 0444 }
+    - { paths: ["src/**", "lib/**", "pkg/**", "cmd/**"], mode: 0644 }
+  default_mode: 0644
+  backends:
+    - { name: shared-lib, mode: 0444 }
+
+# ── Triggers (inotify-wired) ──
+triggers:
+  - { name: update-graph, when: "*", on: [write, delete], run: parse-and-diff, async: true }
+  - { name: lint-go, when: "*.go", on: write, run: "golangci-lint run {{ .FilePath }}", async: true }
+  - { name: auto-test, when: "src/**/*.go", on: write, run: "go test ./{{ .ModulePath }}/...", async: true, debounce: 2s }
+  - { name: sync-s3, when: "/project/models/*", on: write, run: upload-to-backend, async: true }
+
+# ── Query rules (MCP-invokable) ──
+rules:
+  - name: stale-files
+    description: "Files changed since last test pass"
+  - name: untested-critical
+    description: "Critical path files with no tests"
+  - name: transitive-impact
+    description: "Full dependency chain for a file"
+
+# ── Auto-discovery ──
+discovery:
+  feature_inference: { enabled: true, strategy: directory }
+  test_association: { enabled: true }
+  generated_detection: { enabled: true }
+
+# ── Sandbox (optional) ──
+sandbox:
+  enabled: false
+  engine: bubblewrap
+  isolate_network: true
+  read_only_root: true
+
+# ── Performance ──
+performance:
+  cache: { path: .vfs/cache/, max_size: 1GB }
+  fuse: { attr_timeout: 1.0, entry_timeout: 1.0 }
+  duckdb: { threads: 4, memory_limit: 512MB }
+  triggers: { debounce_default: 500ms, max_concurrent: 8 }</code></pre>
+
+<hr>
+
+<h2>6. Crate Map</h2>
+
+<pre><code>warpfs/
+├── warpfs-core/          # Manifest parsing, config types, shared state
+├── warpfs-fuse/          # FUSE daemon (fuser 0.16.0), inotify wiring
+├── warpfs-metadata/      # xattr read/write, inventory file I/O, DuckDB queries
+├── warpfs-graph/         # tree-sitter AST parsing, petgraph traversal, impact computation
+├── warpfs-backends/      # Git (git2), S3 (rusoto/aws-sdk), remote git, local
+├── warpfs-triggers/      # Trigger engine, debouncing, async execution
+├── warpfs-cli/           # `vfs read|write|meta|graph|mount` CLI shim
+├── warpfs-mcp/           # MCP server (Python, separate repo, pipx-installable)
+├── warpfs-permissions/   # Mode bit enforcement, FUSE permission callbacks
+└── warpfs-go/            # Go client library (golang.org/x/sys/unix)</code></pre>
+
+<hr>
+
+<h2>7. The Agent Experience</h2>
+
+<pre><code># Agent opens workspace
+$ cd /mnt/vfs/workspace
+
+# Sees unified tree (6 repos + S3 + local path)
+$ ls
+auth-service/  payment-service/  shared-lib/  models/  docs/  datasets/
+
+# Reads a file normally
+$ cat auth-service/src/handler.go
+(func Handler(...) — pristine file bytes from git backend)
+
+# Asks: "what's connected to this file?"
+$ getfattr -n user.vfs.relations auth-service/src/handler.go
+user.vfs.relations="imports:auth-service/src/types.go,auth-service/src/middleware.go|external:shared-lib/pkg/utils.go"
+
+# Asks: "what breaks if I change this?"
+$ getfattr -n user.vfs.impact shared-lib/pkg/utils.go
+user.vfs.impact="direct:shared-lib/pkg/auth.go|external:auth-service/src/handler.go,payment-service/src/checkout.rs"
+
+# Tries to edit .gitignore
+$ echo "*.log" > .gitignore
+bash: .gitignore: Permission denied    ← kernel-enforced, not injected
+
+# Tries to edit a generated file
+$ echo "" > auth-service/src/auth.pb.go
+bash: auth.pb.go: Permission denied    ← "edit the .proto file instead"
+
+# Tries to edit a lock file
+$ echo "" > go.sum
+bash: go.sum: Permission denied        ← "use go mod tidy"
+
+# Checks risk before editing
+$ getfattr -n user.vfs.risk auth-service/src/middleware.go
+user.vfs.risk="critical-path"          ← model: "be careful here"
+
+# Checks freshness
+$ getfattr -n user.vfs.last_test auth-service/src/login.go
+user.vfs.last_tested="2026-06-14T09:33:14"
+# Model compares with last_modified → STALE. Needs re-test.
+
+# Invokes a rule through MCP
+# vfs_rule_check("untested-critical")
+# → Returns: "3 critical path files have no tests: ..."</code></pre>
+
+<hr>
+
+<h2>8. Open Questions</h2>
+
+<ol>
+<li><strong>xattr namespace strategy?</strong> <code>user.*</code> is portable but per-UID. <code>trusted.*</code> requires CAP_SYS_ADMIN. Multi-UID agents need MCP proxy or trusted namespace.</li>
+<li><strong>Metadata size limits?</strong> ext4 caps at 4KB per file. Highly-connected files may exceed this. Split across multiple xattrs or store heavy data in sidecar files.</li>
+<li><strong>xattr sync across git clones?</strong> git clone doesn't preserve xattrs. Store in git notes or a sidecar file that <code>vfs mount</code> restores.</li>
+<li><strong>Cross-filesystem xattrs?</strong> Moving files from ext4 to tmpfs = metadata loss. Detect and warn.</li>
+<li><strong>Graph write amplification?</strong> Every file write triggers import re-parsing + edge updates + xattr writes + JSONL append. Measure overhead under load.</li>
+<li><strong>Bubblewrap in Docker/CI?</strong> User namespaces are often disabled in containerized environments. Degrade gracefully.</li>
+<li><strong>MCP vs direct xattr — which wins?</strong> MCP gives richer structured responses. getfattr is faster (no IPC). Both should work.</li>
+</ol>
+
+<hr>
+
+<p style="text-align:center; color: var(--text3); margin-top:3rem; font-size:0.85rem;">
+WarpFS — Implementation Reference — June 2026<br>
+<a href="https://github.com/totalwindupflightsystems/warpfs">totalwindupflightsystems/warpfs</a>
+</p>
+
+</div>
+</body>
+</html>
