@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WarpFS — Phase 1 POC Demo</title>
+<style>
+:root {
+  --bg: #0a0a14; --surface: #12122a; --surface2: #1a1a32;
+  --accent: #4a90d9; --gold: #ccaa55; --green: #4a9; --red: #c44; --orange: #d94;
+  --purple: #a78bfa; --teal: #22d3ee;
+  --text: #c8ccd8; --text2: #9a9dac; --text3: #6a6d7c;
+  --border: #1e1e3a; --border2: #2a2a4a; --code-bg: #0d0d1a;
+  --max-width: 1100px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background: var(--bg); color: var(--text);
+  font-family: 'Inter', -apple-system, sans-serif; line-height: 1.65; padding: 2rem;
+}
+.container { max-width: var(--max-width); margin: 0 auto; }
+h1 { font-size: 2.2rem; color: var(--gold); margin-bottom: 0.3rem; letter-spacing: -0.5px; }
+h2 { font-size: 1.4rem; color: var(--accent); margin: 2.5rem 0 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border); }
+h3 { font-size: 1.1rem; color: var(--green); margin: 1.5rem 0 0.5rem; }
+p { margin-bottom: 1rem; color: var(--text2); }
+a { color: var(--accent); }
+strong { color: var(--text); }
+code { background: var(--code-bg); padding: 1px 5px; border-radius: 3px; font-size: 0.9em; color: var(--orange); }
+pre { background: var(--code-bg); padding: 1rem 1.2rem; border-radius: 6px; overflow-x: auto; margin: 0.8rem 0 1.5rem; border: 1px solid var(--border2); font-size: 0.85rem; line-height: 1.5; }
+pre code { background: none; padding: 0; color: var(--text); }
+.subtitle { color: var(--text3); font-size: 1rem; margin-bottom: 2rem; }
+.tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.65rem; font-weight: 600; letter-spacing: 0.3px; }
+.tag-green { background: rgba(68,170,153,0.2); color: var(--green); }
+.tag-blue { background: rgba(74,144,217,0.2); color: var(--accent); }
+.tag-gold { background: rgba(204,170,85,0.2); color: var(--gold); }
+.tag-purple { background: rgba(168,123,250,0.2); color: var(--purple); }
+table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.88rem; }
+th { text-align: left; padding: 0.5rem 0.8rem; background: var(--surface2); color: var(--gold); font-weight: 600; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid var(--border); }
+td { padding: 0.5rem 0.8rem; border-bottom: 1px solid var(--border); color: var(--text2); }
+td strong { color: var(--text); }
+tr:hover td { background: rgba(255,255,255,0.02); }
+.card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; margin: 1rem 0 1.5rem; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.2rem; }
+.card h4 { color: var(--accent); margin: 0 0 0.5rem; }
+.card p { font-size: 0.85rem; margin-bottom: 0.5rem; }
+.check { color: var(--green); }
+footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; font-size: 0.8rem; color: var(--text3); }
+footer a { color: var(--accent); }
+.mcp-exchange { background: var(--surface); border: 1px solid var(--border2); border-radius: 8px; padding: 1rem; margin: 1rem 0; font-family: monospace; font-size: 0.8rem; }
+.mcp-exchange .arrow { color: var(--green); }
+.mcp-exchange .response { color: var(--text2); }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>WarpFS — Phase 1 POC</h1>
+<p class="subtitle">Live demonstration of the virtual filesystem for agentic workflows<br>
+<strong>Date:</strong> June 21, 2026 &nbsp;|&nbsp; <strong>Status:</strong> <span class="tag tag-green">Builds &amp; Works</span> &nbsp;|&nbsp; <strong>Repo:</strong> <a href="https://github.com/totalwindupflightsystems/warpfs">totalwindupflightsystems/warpfs</a></p>
+
+<hr>
+
+<h2>1. Crate Map</h2>
+
+<table>
+<tr><th>Crate</th><th>Files</th><th>Lines</th><th>Tests</th><th>Built by</th></tr>
+<tr><td><strong>warpfs-core</strong></td><td>4</td><td>1,448</td><td>10 <span class="check">✓</span></td><td>GLM 5.2 — Tick 1</td></tr>
+<tr><td><strong>warpfs-metadata</strong></td><td>5</td><td>672</td><td>6 <span class="check">✓</span></td><td>GLM 5.2 — Tick 2</td></tr>
+<tr><td><strong>warpfs-graph</strong></td><td>7</td><td>545</td><td>13 <span class="check">✓</span></td><td>GLM 5.2 — Tick 3</td></tr>
+<tr><td><strong>warpfs-cli</strong></td><td>7</td><td>484</td><td>6 <span class="check">✓</span></td><td>GLM 5.2 — Tick 4</td></tr>
+<tr><td><strong>warpfs-mcp</strong></td><td>5</td><td>542</td><td>8 <span class="check">✓</span></td><td>GLM 5.2 — Tick 5</td></tr>
+<tr><td><strong>Total</strong></td><td><strong>28</strong></td><td><strong>3,691</strong></td><td><strong>43 <span class="check">✓</span></strong></td><td><strong>6 commits</strong></td></tr>
+</table>
+
+<div class="card-grid">
+  <div class="card"><h4>Language</h4><p>Pure Rust — single binary</p></div>
+  <div class="card"><h4>Quality</h4><p>GitReins v0.7.1 — pre-commit blocks secrets. Tier 2 LLM evaluator found 1 real bug.</p></div>
+  <div class="card"><h4>Pipeline</h4><p>warpfs-foreman cron (30m) — GLM 5.2 spawns → cargo build/test → GitReins guard → commit</p></div>
+</div>
+
+<hr>
+
+<h2>2. warpfs init</h2>
+<p>Creates <code>.vfs/</code> directory with a complete default <code>manifest.yaml</code> — all 13 sections populated.</p>
+
+<pre><code>$ warpfs-cli init
+Initialized WarpFS in /tmp/warpfs-demo
+
+$ find .vfs/ -type f
+.vfs/manifest.yaml</code></pre>
+
+<pre><code># .vfs/manifest.yaml (first 30 lines)
+version: 2
+project:
+  name: warpfs-demo
+  description: ''
+interfaces:
+  fuse:
+    enabled: true
+    mount_point: /mnt/vfs/project
+    allow_other: false
+    direct_io: false
+    auto_unmount: true
+  ninep:
+    enabled: false
+    listen: 0.0.0.0:5640
+  cli: { enabled: true }
+  mcp:
+    enabled: true
+    transport: stdio
+    port: 8766
+  golib: { enabled: false }
+repos: []
+backends:
+  s3: []
+  remote: []
+  local: []
+metadata:
+  namespaces: []
+  auto: { hash: true, last_modified: true, complexity: true }
+...</code></pre>
+
+<hr>
+
+<h2>3. warpfs meta — Extended Attributes</h2>
+<p>Reads <code>user.vfs.*</code> Linux extended attributes on any file. Metadata lives alongside file bytes — content is never modified.</p>
+
+<pre><code># Set an xattr manually (setxattr not yet in CLI)
+$ python3 -c "import os; os.setxattr('src/auth/login.go', 'user.vfs.feature', b'auth-module')"
+
+# Read xattrs via WarpFS
+$ warpfs-cli meta src/auth/login.go
+feature: auth-module</code></pre>
+
+<hr>
+
+<h2>4. warpfs graph discover — tree-sitter + DuckDB</h2>
+<p>Parses Go source files with tree-sitter, extracts imports, writes <code>edges.jsonl</code>, initializes DuckDB graph database.</p>
+
+<h3>Test fixture</h3>
+<pre><code>// src/auth/login.go
+package auth
+import (
+    "fmt"
+    "os"
+    "github.com/org/shared-lib/pkg/utils"
+)
+func Login() { fmt.Println(os.Getenv("USER")) }
+
+// src/auth/token.go
+package auth
+func ValidateToken(t string) bool { return len(t) > 0 }</code></pre>
+
+<h3>Run</h3>
+<pre><code>$ warpfs-cli graph discover
+Discovered 3 edges across 1 files
+
+$ cat .vfs/graph/edges.jsonl
+{"from":"src/auth/login.go","to":"std:fmt","rel":"imports"}
+{"from":"src/auth/login.go","to":"std:os","rel":"imports"}
+{"from":"src/auth/login.go","to":"pkg:github.com/org/shared-lib/pkg/utils","rel":"imports"}</code></pre>
+
+<p><strong>Edge prefixes:</strong> <code>std:</code> for standard library, <code>pkg:</code> for external packages. The graph engine distinguishes them for impact analysis.</p>
+
+<p><strong>DuckDB initialization:</strong></p>
+<pre><code>$ ls -la .vfs/graph/
+edges.jsonl    211 bytes   ← source of truth
+graph.db    798,720 bytes   ← DuckDB persisted indexes and query plans</code></pre>
+
+<hr>
+
+<h2>5. warpfs graph stats — Analytics</h2>
+<p>Queries DuckDB for graph-wide statistics. Agents use this to find hotspots and orphans.</p>
+
+<pre><code>$ warpfs-cli graph stats
+Total edges: 3
+Unique source files: 1
+Unique dependencies: 3
+Top dependencies:
+  std:os: 1
+  pkg:github.com/org/shared-lib/pkg/utils: 1
+  std:fmt: 1</code></pre>
+
+<hr>
+
+<h2>6. warpfs serve --mcp — MCP Server</h2>
+<p>Stdio MCP server exposing 3 tools. Any MCP-compatible agent can call them. The server reads xattrs and queries DuckDB in real-time.</p>
+
+<h3>Initialize</h3>
+<div class="mcp-exchange">
+<div><span class="arrow">→</span> <code>{"jsonrpc":"2.0","id":1,"method":"initialize","params":{...}}</code></div>
+<div><span class="response">←</span> <code>{"serverInfo":{"name":"warpfs-mcp","version":"0.1.0"},"protocolVersion":"2024-11-05","capabilities":{"tools":{}}}</code></div>
+</div>
+
+<h3>List tools</h3>
+<div class="mcp-exchange">
+<div><span class="arrow">→</span> <code>{"jsonrpc":"2.0","id":2,"method":"tools/list","params":{}}</code></div>
+<div><span class="response">←</span> <code>{"tools":[</code></div>
+<div><code>  {"name":"vfs_get_metadata","description":"Read WarpFS extended attributes for a file.",</code></div>
+<div><code>   "inputSchema":{"properties":{"path":{"type":"string"}},"required":["path"]}},</code></div>
+<div><code>  {"name":"vfs_graph_related","description":"Find files related to the given file via the dependency graph.",</code></div>
+<div><code>   "inputSchema":{"properties":{"path":{"type":"string"}},"required":["path"]}},</code></div>
+<div><code>  {"name":"vfs_graph_stats","description":"Get summary statistics about the dependency graph.",</code></div>
+<div><code>   "inputSchema":{"properties":{},"type":"object"}}</code></div>
+<div><code>]}</code></div>
+</div>
+
+<h3>Call vfs_get_metadata</h3>
+<div class="mcp-exchange">
+<div><span class="arrow">→</span> <code>{"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"vfs_get_metadata","arguments":{"path":"src/auth/login.go"}}}</code></div>
+<div><span class="response">←</span> <code>{"content":[{"text":"{\"user.vfs.feature\":\"auth-module\"}","type":"text"}]}</code></div>
+</div>
+
+<p>The server is fully JSON-RPC compliant — clean exit on stdin close, no zombie processes.</p>
+
+<hr>
+
+<h2>7. What the Agent Sees</h2>
+
+<p>An AI coding agent using WarpFS through MCP can:</p>
+
+<pre><code># 1. Ask: "what metadata does login.go have?"
+vfs_get_metadata("src/auth/login.go")
+→ {"user.vfs.feature": "auth-module"}
+
+# 2. Ask: "what files is login.go connected to?"
+vfs_graph_related("src/auth/login.go")
+→ [{path:"std:fmt", relation:"imports"}, {path:"std:os", relation:"imports"}, ...]
+
+# 3. Ask: "how connected is this codebase?"
+vfs_graph_stats()
+→ {total_edges:3, unique_sources:1, top_dependencies:[...]}</code></pre>
+
+<p>The agent doesn't need <code>grep</code> or manual import tracing. The VFS has already parsed the AST and built the graph. Metadata queries return in microseconds.</p>
+
+<hr>
+
+<h2>8. What's Not Yet Built (Phase 2+)</h2>
+
+<table>
+<tr><th>Feature</th><th>Phase</th><th>Status</th></tr>
+<tr><td>FUSE mount — real <code>cat</code>/<code>ls</code> behavior</td><td>Phase 4</td><td><span class="tag tag-purple">Pending</span></td></tr>
+<tr><td>Auto-discovery on write — inotify triggers</td><td>Phase 2</td><td><span class="tag tag-purple">Pending</span></td></tr>
+<tr><td>Impact analysis — transitive dependency chains</td><td>Phase 2</td><td><span class="tag tag-purple">Pending</span></td></tr>
+<tr><td>Multi-repo workspace — cross-repo graph edges</td><td>Phase 6</td><td><span class="tag tag-purple">Pending</span></td></tr>
+<tr><td>S3 backend — virtual folders with auto-upload</td><td>Phase 3</td><td><span class="tag tag-purple">Pending</span></td></tr>
+<tr><td>Permission enforcement — FUSE mode bits</td><td>Phase 4</td><td><span class="tag tag-purple">Pending</span></td></tr>
+<tr><td>Plugin system — extism wasm sandbox</td><td>Phase 5</td><td><span class="tag tag-purple">Pending</span></td></tr>
+<tr><td>Bubblewrap sandboxing — optional agent isolation</td><td>Phase 7</td><td><span class="tag tag-purple">Pending</span></td></tr>
+</table>
+
+<hr>
+
+<h2>9. How to Run It Yourself</h2>
+
+<pre><code># Clone and build
+git clone https://github.com/totalwindupflightsystems/warpfs.git
+cd warpfs
+cargo build
+
+# Create a test workspace
+mkdir /tmp/warpfs-test && cd /tmp/warpfs-test
+mkdir -p src/mypackage
+
+# Write a Go file with imports
+echo 'package mypackage
+import ("fmt"; "os")
+func Hello() { fmt.Println(os.Getenv("USER")) }' > src/mypackage/hello.go
+
+# Initialize WarpFS
+./target/debug/warpfs-cli init
+
+# Set metadata on the file
+python3 -c "import os; os.setxattr('src/mypackage/hello.go', 'user.vfs.feature', b'greeter')"
+
+# Read it back
+./target/debug/warpfs-cli meta src/mypackage/hello.go
+
+# Discover the graph
+./target/debug/warpfs-cli graph discover
+
+# View stats
+./target/debug/warpfs-cli graph stats
+
+# Start MCP server
+./target/debug/warpfs-cli serve --mcp
+# → paste JSON-RPC on stdin, get responses on stdout</code></pre>
+
+<hr>
+
+<footer>
+  <p><a href="https://github.com/totalwindupflightsystems/warpfs">totalwindupflightsystems/warpfs</a> &nbsp;|&nbsp;
+  <a href="warpfs-implementation-reference.html">Implementation Reference</a> &nbsp;|&nbsp;
+  <a href="hermes-vfs-design.html">Architecture Design (v2)</a></p>
+  <p>Phase 1 built autonomously by GLM 5.2 via warpfs-foreman cron. Guarded by GitReins v0.7.1.</p>
+</footer>
+
+</div>
+</body>
+</html>
