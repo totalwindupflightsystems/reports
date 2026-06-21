@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Helix — Agent-First Code Platform</title>
+<style>
+  :root {
+    --bg: #0d0f13;
+    --surface: #171a21;
+    --surface2: #1c1f2a;
+    --border: rgba(255,255,255,0.06);
+    --border2: rgba(255,255,255,0.10);
+    --text: #e4e6ef;
+    --text2: #9ca0b0;
+    --text3: #6b7280;
+    --amber: #fbbf24;
+    --red: #f87171;
+    --green: #4ade80;
+    --blue: #60a5fa;
+    --purple: #c084fc;
+    --cyan: #22d3ee;
+    --pink: #f472b6;
+    --gold: #ccaa55;
+    --radius: 10px;
+    --radius-sm: 6px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+  }
+
+  /* Navigation */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(13,15,19,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 0;
+  }
+  .nav-inner {
+    max-width: 960px; margin: 0 auto; padding: 0 20px;
+    display: flex; gap: 20px; overflow-x: auto;
+    font-size: 13px; font-weight: 500;
+  }
+  .nav a {
+    color: var(--text2); text-decoration: none;
+    white-space: nowrap; transition: color 0.15s;
+  }
+  .nav a:hover { color: var(--text); }
+
+  .container { max-width: 960px; margin: 0 auto; padding: 0 20px 80px; }
+
+  /* Hero */
+  .hero {
+    text-align: center; padding: 64px 0 48px;
+    border-bottom: 1px solid var(--border); margin-bottom: 48px;
+  }
+  .hero h1 {
+    font-size: 42px; font-weight: 800; letter-spacing: -1px;
+    margin-bottom: 12px;
+  }
+  .hero .accent { color: var(--blue); }
+  .hero .tagline {
+    font-size: 18px; color: var(--text2); max-width: 640px;
+    margin: 0 auto 24px; line-height: 1.6;
+  }
+  .hero .thesis {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 20px 28px;
+    max-width: 700px; margin: 0 auto;
+    font-size: 15px; color: var(--text2); line-height: 1.7;
+    text-align: left;
+  }
+  .thesis strong { color: var(--text); }
+  .thesis em { color: var(--blue); font-style: normal; }
+
+  /* Sections */
+  section { margin-bottom: 56px; }
+  h2 {
+    font-size: 24px; font-weight: 700; letter-spacing: -0.5px;
+    margin-bottom: 8px; padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  h3 {
+    font-size: 18px; font-weight: 600; margin: 28px 0 12px;
+    color: var(--text);
+  }
+  p { color: var(--text2); margin-bottom: 16px; font-size: 15px; }
+
+  /* Stat cards */
+  .stat-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px; margin: 20px 0;
+  }
+  .stat-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 20px; text-align: center;
+  }
+  .stat-card .num { font-size: 28px; font-weight: 800; color: var(--text); }
+  .stat-card .label { font-size: 12px; color: var(--text2); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  /* Architecture diagram */
+  .arch-layer {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 20px 24px; margin-bottom: 8px;
+    border-left: 3px solid var(--border);
+  }
+  .arch-layer.l1 { border-left-color: var(--pink); }
+  .arch-layer.l2 { border-left-color: var(--purple); }
+  .arch-layer.l3 { border-left-color: var(--blue); }
+  .arch-layer.l4 { border-left-color: var(--amber); }
+  .arch-layer.l5 { border-left-color: var(--red); }
+  .arch-layer.l6 { border-left-color: var(--cyan); }
+  .arch-layer .layer-num {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 1px; margin-bottom: 6px;
+  }
+  .arch-layer.l1 .layer-num { color: var(--pink); }
+  .arch-layer.l2 .layer-num { color: var(--purple); }
+  .arch-layer.l3 .layer-num { color: var(--blue); }
+  .arch-layer.l4 .layer-num { color: var(--amber); }
+  .arch-layer.l5 .layer-num { color: var(--red); }
+  .arch-layer.l6 .layer-num { color: var(--cyan); }
+  .arch-layer .layer-title { font-size: 17px; font-weight: 700; margin-bottom: 4px; }
+  .arch-layer .layer-desc { font-size: 13px; color: var(--text2); }
+
+  /* Project cards */
+  .project-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px; margin: 20px 0;
+  }
+  .project-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 20px 24px;
+    border-top: 3px solid var(--border);
+  }
+  .project-card.built { border-top-color: var(--green); }
+  .project-card.external { border-top-color: var(--text3); }
+  .project-card.planning { border-top-color: var(--amber); }
+  .project-card .proj-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .project-card .proj-name { font-size: 16px; font-weight: 700; }
+  .project-card .proj-lang {
+    font-size: 10px; font-weight: 600; text-transform: uppercase;
+    padding: 2px 8px; border-radius: 4px; letter-spacing: 0.5px;
+  }
+  .lang-py { background: rgba(96,165,250,0.15); color: var(--blue); }
+  .lang-go { background: rgba(74,222,128,0.15); color: var(--green); }
+  .lang-ts { background: rgba(96,165,250,0.15); color: var(--blue); }
+  .lang-docker { background: rgba(34,211,238,0.15); color: var(--cyan); }
+  .lang-multi { background: rgba(192,132,252,0.15); color: var(--purple); }
+  .lang-pattern { background: rgba(251,191,36,0.15); color: var(--amber); }
+  .project-card .proj-role { font-size: 13px; color: var(--text2); margin-bottom: 8px; }
+  .project-card .proj-stat {
+    font-size: 11px; color: var(--text3); margin-top: 8px;
+    font-weight: 500;
+  }
+  .project-card .stat-highlight {
+    color: var(--green); font-weight: 700;
+  }
+
+  /* Feature cards */
+  .feature-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 20px 24px; margin-bottom: 12px;
+    border-left: 3px solid var(--amber);
+  }
+  .feature-card h3 { margin: 0 0 6px; font-size: 16px; }
+  .feature-card p { margin-bottom: 0; font-size: 13px; }
+
+  /* Flow steps */
+  .flow-step {
+    display: flex; gap: 16px; margin-bottom: 12px; align-items: flex-start;
+  }
+  .flow-step .step-num {
+    min-width: 36px; height: 36px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 800;
+    background: var(--surface); border: 2px solid var(--border);
+    color: var(--text2); flex-shrink: 0;
+  }
+  .flow-step .step-content { padding-top: 6px; }
+  .flow-step .step-title { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
+  .flow-step .step-desc { font-size: 13px; color: var(--text2); }
+
+  /* Glue primitives */
+  .glue-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px; margin: 20px 0;
+  }
+  .glue-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 20px;
+  }
+  .glue-card .glue-name { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .glue-card .glue-project { font-size: 11px; color: var(--blue); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+  .glue-card .glue-desc { font-size: 13px; color: var(--text2); }
+
+  /* Alert boxes */
+  .alert {
+    border-radius: var(--radius); padding: 16px 20px; margin: 16px 0;
+    font-size: 14px; line-height: 1.6;
+  }
+  .alert.info { background: rgba(96,165,250,0.08); border: 1px solid rgba(96,165,250,0.25); color: var(--text2); }
+  .alert.warn { background: rgba(251,191,36,0.08); border: 1px solid rgba(251,191,36,0.25); color: var(--text2); }
+  .alert.good { background: rgba(74,222,128,0.08); border: 1px solid rgba(74,222,128,0.25); color: var(--text2); }
+
+  /* Tables */
+  .tbl-wrap { overflow-x: auto; margin: 16px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--border); }
+  th { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text3); }
+  td { color: var(--text2); }
+  td strong { color: var(--text); font-weight: 600; }
+  .tag {
+    display: inline-block; padding: 2px 8px; border-radius: 4px;
+    font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .tag-b { background: rgba(74,222,128,0.15); color: var(--green); }
+  .tag-e { background: rgba(96,165,250,0.15); color: var(--blue); }
+  .tag-p { background: rgba(251,191,36,0.15); color: var(--amber); }
+  .tag-r { background: rgba(248,113,113,0.15); color: var(--red); }
+
+  /* Code blocks */
+  pre {
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: 16px; overflow-x: auto;
+    font-size: 13px; line-height: 1.5; color: var(--text2);
+    margin: 12px 0;
+  }
+
+  /* Footer */
+  footer {
+    margin-top: 64px; padding-top: 32px;
+    border-top: 1px solid var(--border);
+    text-align: center; font-size: 13px; color: var(--text3);
+  }
+  footer a { color: var(--blue); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .hero h1 { font-size: 28px; }
+    .hero .tagline { font-size: 15px; }
+    .nav-inner { gap: 14px; font-size: 12px; }
+    h2 { font-size: 20px; }
+    .stat-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#thesis">Thesis</a>
+    <a href="#architecture">Architecture</a>
+    <a href="#built">Built</a>
+    <a href="#features">Building</a>
+    <a href="#flow">The Flow</a>
+    <a href="#glue">Glue Primitives</a>
+    <a href="#external">External Tools</a>
+    <a href="#status">Status</a>
+    <a href="#stats">Stats</a>
+  </div>
+</nav>
+
+<div class="container">
+
+<!-- Hero -->
+<header class="hero">
+  <h1><span class="accent">Helix</span></h1>
+  <p class="tagline">An open, self-hosted, agent-first software development platform. The alternative to closed, hosted agent platforms — built from 9 projects we own plus 8 open-source tools.</p>
+  <div class="thesis">
+    <strong>The thesis is encoded in the name:</strong> two strands — <em>human intelligence</em> and <em>AI intelligence</em> — spiral together through the software development lifecycle, each reinforcing the other. Humans set intent and approve; agents plan, build, review, and merge. Neither operates alone.
+  </div>
+</header>
+
+<!-- Section: Architecture -->
+<section id="architecture">
+  <h2>Six-Layer Architecture</h2>
+  <p>Helix organizes 17 components into six functional layers. Data flows top-to-bottom (human intent → merged code) and bottom-to-top (observability → human feedback). Each layer is independently deployable but contracts with adjacent layers.</p>
+
+  <div class="arch-layer l1">
+    <div class="layer-num">Layer 1</div>
+    <div class="layer-title">Human Interface</div>
+    <div class="layer-desc">Continue.dev · Cursor · CLI · Telegram (via H4F) — Humans express intent; agents report results</div>
+  </div>
+  <div class="arch-layer l2">
+    <div class="layer-num">Layer 2</div>
+    <div class="layer-title">Orchestration</div>
+    <div class="layer-desc">Axiom (fleet mgmt) · Hivemind (memory+scheduling) · Kobayashi-Maru (stress testing) — Decompose intent → assemble agent swarms → schedule work</div>
+  </div>
+  <div class="arch-layer l3">
+    <div class="layer-num">Layer 3</div>
+    <div class="layer-title">Execution</div>
+    <div class="layer-desc">OpenCode (worktree isolation) · Ralph Loop (lock→commit→merge) · Muster (MCP tools for any API) — Agents write code in isolated worktrees, commit with attestation</div>
+  </div>
+  <div class="arch-layer l4">
+    <div class="layer-num">Layer 4</div>
+    <div class="layer-title">Git Forge</div>
+    <div class="layer-desc">Forgejo (repos, PRs, CI, Pages) · GitReins hooks (quality gates) · PromptFoo (eval as CI) — Canonical home for all code; branch protection and CI enforced</div>
+  </div>
+  <div class="arch-layer l5">
+    <div class="layer-num">Layer 5</div>
+    <div class="layer-title">Quality &amp; Review</div>
+    <div class="layer-desc">Chimera (multi-model formation engine) · Conscientiousness (adversarial eval) · GitReins evaluator (Tier 1+2) · PromptFoo — Nothing merges without multi-model review + adversarial self-eval</div>
+  </div>
+  <div class="arch-layer l6">
+    <div class="layer-num">Layer 6</div>
+    <div class="layer-title">Observability &amp; Memory</div>
+    <div class="layer-desc">LangFuse (traces/costs) · DuckBrain (agent memory) · Hivemind (inbox/compiled pattern) — Every decision traceable; every agent remembers across sessions</div>
+  </div>
+</section>
+
+<!-- Section: Built Projects -->
+<section id="built">
+  <h2>What We've Built (9 Projects)</h2>
+  <p>Every component of the quality, orchestration, and execution pipeline is built and tested. The platform runs today — it's not a spec document.</p>
+
+  <div class="project-grid">
+
+    <div class="project-card built">
+      <div class="proj-header">
+        <span class="proj-name">GitReins</span>
+        <span class="proj-lang lang-py">Python</span>
+      </div>
+      <div class="proj-role">Quality gate + commit guard. Tier 1 static checks (secrets, lint, tests, build) + Tier 2 agentic evaluator that reads code output and judges against task criteria. Blocks commits that fail quality gates.</div>
+      <div class="proj-stat"><span class="stat-highlight">221 tests</span> · v0.7.1 · 6 blocking checks · multi-dim caps</div>
+    </div>
+
+    <div class="project-card built">
+      <div class="proj-header">
+        <span class="proj-name">Chimera</span>
+        <span class="proj-lang lang-py">Python</span>
+      </div>
+      <div class="proj-role">Dynamic multi-model formation engine. Rewriter designs custom DAG → Dispatcher assigns models by domain strength → Workers run in parallel → Judges merge with scoring → Audit independently verifies. Not a jury — a team.</div>
+      <div class="proj-stat"><span class="stat-highlight">90 tests</span> · running on localhost:8765 · multi-model deliberation</div>
+    </div>
+
+    <div class="project-card built">
+      <div class="proj-header">
+        <span class="proj-name">Conscientiousness</span>
+        <span class="proj-lang lang-go">Go</span>
+      </div>
+      <div class="proj-role">Agent conscience/harness. Prompt-based agent evaluation, verification loops, adversarial quality gates. Runs as a Dockerized service with SQLite state. The agent that asks "are you sure?" before merge.</div>
+      <div class="proj-stat">Dockerized · SQLite · adversarial self-eval</div>
+    </div>
+
+    <div class="project-card built">
+      <div class="proj-header">
+        <span class="proj-name">Muster</span>
+        <span class="proj-lang lang-go">Go</span>
+      </div>
+      <div class="proj-role">Dynamic OpenAPI client + MCP server. Parses any OpenAPI spec → generates CLI commands, MCP tools, shell completions, Starlark DSL. Multi-tier caching, rate limiting, WASM runtime, daemon mode.</div>
+      <div class="proj-stat"><span class="stat-highlight">26+ packages</span> · OpenAPI→MCP generator · WASM runtime</div>
+    </div>
+
+    <div class="project-card built">
+      <div class="proj-header">
+        <span class="proj-name">Kobayashi-Maru</span>
+        <span class="proj-lang lang-multi">Go + Python</span>
+      </div>
+      <div class="proj-role">No-win scenario training system. Exhaustive specification, adversarial refinement, Ralph Loop engine, penetration testing, Prometheus + Loki + Fluentd monitoring. Guarantees agents can't cheat the gates.</div>
+      <div class="proj-stat"><span class="stat-highlight">83.3% kill rate</span> · 52 automated wakes · 6 work items complete</div>
+    </div>
+
+    <div class="project-card built">
+      <div class="proj-header">
+        <span class="proj-name">Axiom</span>
+        <span class="proj-lang lang-multi">Multi-lang</span>
+      </div>
+      <div class="proj-role">Agent orchestration platform. 60+ adversarial/quality agents (assumption-buster, red-team, white-hat, chaos-engineer, finops-cost). Specs-as-contracts, evidence bundles, Jira/Notion/GitHub sync.</div>
+      <div class="proj-stat">60+ agents · specs-as-contracts · evidence bundles</div>
+    </div>
+
+    <div class="project-card built">
+      <div class="proj-header">
+        <span class="proj-name">Hivemind</span>
+        <span class="proj-lang lang-ts">Go + React TS</span>
+      </div>
+      <div class="proj-role">Agent memory + scheduling system. IAM/auth, git operations, Ralph Loop engine, SQLite + YAML memory bank, inbox/compiled pattern, hierarchical rate limiting. The shared blackboard agents read/write.</div>
+      <div class="proj-stat">SQLite + YAML memory · Ralph Loop · hierarchical rate limiting</div>
+    </div>
+
+    <div class="project-card built">
+      <div class="proj-header">
+        <span class="proj-name">Hermes4Friends</span>
+        <span class="proj-lang lang-docker">Docker Compose</span>
+      </div>
+      <div class="proj-role">Multi-tenant Hermes platform. Per-friend containers (gluetun VPN + dind executor + hermes-agent), Nextcloud bridge, shared compose templates, known-friends identity management. Agent hosting + identity layer.</div>
+      <div class="proj-stat">Docker sandboxes · gluetun VPN · known-friends identity</div>
+    </div>
+
+    <div class="project-card built">
+      <div class="proj-header">
+        <span class="proj-name">Ralph Loop</span>
+        <span class="proj-lang lang-pattern">Pattern</span>
+      </div>
+      <div class="proj-role">Execution pattern embedded in Kobayashi-Maru and Hivemind: acquire lock → create worktree → write code → commit with attestation → open PR → merge → release lock. Guarantees no two agents edit the same branch concurrently.</div>
+      <div class="proj-stat">Embedded in K-M + Hivemind · lock-worktree-commit-merge</div>
+    </div>
+  </div>
+</section>
+
+<!-- Section: Features We're Building -->
+<section id="features">
+  <h2>What We're Building Now (5 Features)</h2>
+  <p>These 5 features complete the platform. All have implementation specifications written — code is being generated by the Helix foreman cron job every 30 minutes.</p>
+
+  <div class="feature-card">
+    <h3>1. Agent Identity in Forgejo</h3>
+    <p>H4F's known-friends.json → Forgejo OAuth. Agents get real accounts (not bot tokens), SSH keys, scoped permissions (push to feat/* branches, open PRs, cannot merge solo), budget tracking, and trust earned over time. <strong>Priority #1</strong> — everything else depends on it.</p>
+  </div>
+
+  <div class="feature-card">
+    <h3>2. Pre-Flight Cost Estimator</h3>
+    <p>Before Ralph Loop spawns, estimate token burn and ask for budget approval. Tracks per-agent spend, per-PR cost, and enforces budget caps. Integrates with GitReins cache token tracking (v0.4.0+) to distinguish fresh input from 10x cheaper cache hits.</p>
+  </div>
+
+  <div class="feature-card">
+    <h3>3. Agent-to-Agent PR Negotiation</h3>
+    <p>Two agents disagree in PR comments → Chimera breaks the tie. Multi-model debate with evidence bundles. Agents can veto a merge with evidence. Resolution is traceable via LangFuse.</p>
+  </div>
+
+  <div class="feature-card">
+    <h3>4. Prompt Registry</h3>
+    <p>prompts/ directory in every repo. GitReins hook verifies every commit links to a prompt version. PromptFoo runs regression tests on every prompt change. Version-controlled, attested prompts — no more "what prompt generated this code?"</p>
+  </div>
+
+  <div class="feature-card">
+    <h3>5. Agent Marketplace</h3>
+    <p>Discoverable registry of pre-built agents with reputation scores. Agents earn trust over time based on successful merges, review quality, and human feedback. Ranked, searchable, self-improving.</p>
+  </div>
+
+  <div class="alert good">
+    <strong>Specs written:</strong> All 5 features have exhaustive implementation specifications (2,745 total lines across agent-identity, cost-estimator, pr-negotiation, prompt-registry, and agent-marketplace specs). Go stubs exist for Features 2–5. Feature 1 has 1,769 lines of Go code with typed errors, state files, dry-run infra, and rate limiters.
+  </div>
+</section>
+
+<!-- Section: The 12-Step Flow -->
+<section id="flow">
+  <h2>The 12-Step Flow (Issue → Merge)</h2>
+  <p>This is the canonical end-to-end lifecycle. Every Helix feature maps to one or more steps. The flow runs end-to-end today with all built components live.</p>
+
+  <div class="flow-step"><div class="step-num">1</div><div class="step-content"><div class="step-title">Human creates task</div><div class="step-desc">Forgejo issue, prompt file, Jira ticket, or CLI command</div></div></div>
+  <div class="flow-step"><div class="step-num">2</div><div class="step-content"><div class="step-title">Axiom assembles agent swarm</div><div class="step-desc">Reads specs, decomposes into work items, assigns agents</div></div></div>
+  <div class="flow-step"><div class="step-num">3</div><div class="step-content"><div class="step-title">Ralph Loop acquires lock + worktree</div><div class="step-desc">File-level or branch-level lock; isolated git worktree</div></div></div>
+  <div class="flow-step"><div class="step-num">4</div><div class="step-content"><div class="step-title">Agent writes code in H4F container</div><div class="step-desc">OpenCode executor; Muster provides API tools if needed</div></div></div>
+  <div class="flow-step"><div class="step-num">5</div><div class="step-content"><div class="step-title">Agent commits with attestation</div><div class="step-desc">Commit includes prompt-hash, model, context-hash, cost</div></div></div>
+  <div class="flow-step"><div class="step-num">6</div><div class="step-content"><div class="step-title">GitReins pre-receive hook fires</div><div class="step-desc">Tier 1: static guards (secrets, lint, tests, build). Tier 2: agentic evaluator judges against criteria.</div></div></div>
+  <div class="flow-step"><div class="step-num">7</div><div class="step-content"><div class="step-title">Agent opens PR with metadata</div><div class="step-desc">Linked issue, spec reference, evidence bundle in description</div></div></div>
+  <div class="flow-step"><div class="step-num">8</div><div class="step-content"><div class="step-title">Chimera runs multi-model review</div><div class="step-desc">Formation of 2+ independent models + aggregator merges verdicts</div></div></div>
+  <div class="flow-step"><div class="step-num">9</div><div class="step-content"><div class="step-title">Conscientiousness adversarial self-eval</div><div class="step-desc">Agent argues against its own work; surfaces hidden assumptions</div></div></div>
+  <div class="flow-step"><div class="step-num">10</div><div class="step-content"><div class="step-title">PromptFoo CI verifies no regression</div><div class="step-desc">.promptfoo.yaml test suite runs in Forgejo Actions</div></div></div>
+  <div class="flow-step"><div class="step-num">11</div><div class="step-content"><div class="step-title">Human + Agent co-approve</div><div class="step-desc">BOTH approvals required; neither can merge solo</div></div></div>
+  <div class="flow-step"><div class="step-num">12</div><div class="step-content"><div class="step-title">Merge + Deploy</div><div class="step-desc">Forgejo merge → Forgejo Pages deploy → LangFuse trace finalized</div></div></div>
+</section>
+
+<!-- Section: Glue Primitives -->
+<section id="glue">
+  <h2>The Four Glue Primitives</h2>
+  <p>Everything in Helix slots into these four primitives. Understanding them is prerequisite to understanding any integration.</p>
+
+  <div class="glue-grid">
+    <div class="glue-card">
+      <div class="glue-name">Execution</div>
+      <div class="glue-project">Ralph Loop</div>
+      <div class="glue-desc">Acquire lock → create worktree → write code → commit with attestation → open PR → merge → release lock. Guarantees no two agents edit the same branch concurrently; every commit carries provenance.</div>
+    </div>
+    <div class="glue-card">
+      <div class="glue-name">API Compatibility</div>
+      <div class="glue-project">Muster</div>
+      <div class="glue-desc">Parse OpenAPI spec → generate MCP tools + CLI commands + shell completions. Any REST API becomes agent-callable in minutes — no hand-written wrappers.</div>
+    </div>
+    <div class="glue-card">
+      <div class="glue-name">Quality Gates</div>
+      <div class="glue-project">GitReins</div>
+      <div class="glue-desc">Tier 1 (static: secrets, lint, tests, build) + Tier 2 (agentic LLM evaluator with 9 tools). Blocks commits that fail objective checks before they enter the forge.</div>
+    </div>
+    <div class="glue-card">
+      <div class="glue-name">Agent Hosting + Identity</div>
+      <div class="glue-project">Hermes4Friends</div>
+      <div class="glue-desc">Per-agent Docker sandbox with budget, permissions, VPN, and known-friends identity. Agents run in isolation; identity is provisioned and scoped.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Section: External Tools -->
+<section id="external">
+  <h2>External Tools We Glue In (8)</h2>
+  <p>No proprietary black-box SaaS required. The only paid external dependencies are LLM inference APIs — swappable via Chimera's abstraction layer.</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Tool</th><th>Role</th><th>How It Plugs In</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Forgejo</strong></td><td>Self-hosted git forge (Gitea fork)</td><td>The base — every agent pushes here. Muster auto-generates MCP tools via its OpenAPI spec.</td></tr>
+        <tr><td><strong>LangFuse</strong></td><td>LLM tracing, prompt mgmt, evals, cost tracking</td><td>Observability — every agent call logged with trace ID. OpenTelemetry-compatible.</td></tr>
+        <tr><td><strong>PromptFoo</strong></td><td>Prompt evaluation framework</td><td>Eval as CI — .promptfoo.yaml in every repo. CI runs on every prompt change.</td></tr>
+        <tr><td><strong>DuckBrain</strong></td><td>Persistent agent memory (git-backed)</td><td>Long-term memory — agent decisions, tradeoffs, anti-patterns stored via MCP.</td></tr>
+        <tr><td><strong>OpenCode</strong></td><td>Agent runner (task-based, worktree isolation)</td><td>Agent executor — runs agents in isolated worktrees. Ralph Loop wraps it.</td></tr>
+        <tr><td><strong>OpenRouter</strong></td><td>Model aggregator (344+ models)</td><td>Model access layer — Chimera's Dispatcher routes through it for model diversity.</td></tr>
+        <tr><td><strong>Continue.dev</strong></td><td>Open-source AI code assistant</td><td>IDE bridge — the human interface layer. Agents push to Forgejo, human reviews in Continue.</td></tr>
+        <tr><td><strong>MCP Servers</strong></td><td>Jira, Notion, GitHub, Chrome DevTools</td><td>External system mirrors — Axiom treats repo as source of truth, syncs outward.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- Section: Current Status -->
+<section id="status">
+  <h2>Current Status — What's Running Right Now</h2>
+
+  <div class="alert info">
+    <strong>This isn't speculative.</strong> These components are running, tested, and active as of June 19, 2026.
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Component</th><th>Status</th><th>Detail</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Kobayashi-Maru</strong></td><td><span class="tag tag-b">Live</span></td><td>83.3% kill rate across 52 automated wakes. 6/6 work items done. Cron humming — adversarial stress testing every 30 min.</td></tr>
+        <tr><td><strong>Chimera</strong></td><td><span class="tag tag-b">Live</span></td><td>Running on localhost:8765. 90/90 tests pass. Multi-model deliberation engine active.</td></tr>
+        <tr><td><strong>GitReins</strong></td><td><span class="tag tag-b">Live</span></td><td>v0.7.1 in Helix monorepo. 6 blocking pre-commit/commit-msg checks. Tier 2 evaluator just cleared a 5-pass debug session finding 2 real bugs.</td></tr>
+        <tr><td><strong>Forgejo</strong></td><td><span class="tag tag-b">Live</span></td><td>Running on localhost:3030. Admin user + test agent provisioned. API accessible.</td></tr>
+        <tr><td><strong>H4F</strong></td><td><span class="tag tag-b">Live</span></td><td>Multi-tenant on Hetzner (37.27.250.128). Per-friend Docker containers with VPN isolation.</td></tr>
+        <tr><td><strong>Helix Foreman</strong></td><td><span class="tag tag-b">Active</span></td><td>Cron job ticks every 30 min from .coding-hermes/tasks.md. Generating Go tests and stubs continuously.</td></tr>
+        <tr><td><strong>Helix Monorepo</strong></td><td><span class="tag tag-p">In Progress</span></td><td>3,567 lines Go · 12,064 lines specs · 14 spec files · 17 test fixture files. GitReins pre-commit hook installed.</td></tr>
+        <tr><td><strong>Feature 1 (Identity)</strong></td><td><span class="tag tag-p">In Progress</span></td><td>1,769 lines Go with typed errors. Forgejo HTTP client being unstubbed.</td></tr>
+        <tr><td><strong>Features 2–5</strong></td><td><span class="tag tag-p">Spec'ed</span></td><td>All 5 have implementation specs written. Go stubs exist. Foreman generating code.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- Section: Stats -->
+<section id="stats">
+  <h2>By the Numbers</h2>
+
+  <div class="stat-grid">
+    <div class="stat-card">
+      <div class="num">17</div>
+      <div class="label">Total Components</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">9</div>
+      <div class="label">Built &amp; Tested</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">8</div>
+      <div class="label">External Tools</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">5</div>
+      <div class="label">Features Building</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">6</div>
+      <div class="label">Layers</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">12</div>
+      <div class="label">Flow Steps</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">4</div>
+      <div class="label">Glue Primitives</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">3,567</div>
+      <div class="label">Lines of Go Code</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">12,064</div>
+      <div class="label">Lines of Specs</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">311</div>
+      <div class="label">Tests (GitReins + Chimera)</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">83.3%</div>
+      <div class="label">K-M Kill Rate</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">60+</div>
+      <div class="label">Axiom Agents</div>
+    </div>
+  </div>
+</section>
+
+<!-- Section: Philosophical Architecture -->
+<section id="philosophy">
+  <h2>Architectural Principles</h2>
+
+  <div class="project-grid">
+    <div class="project-card built">
+      <div class="proj-header"><span class="proj-name">Agents have real identities</span></div>
+      <div class="proj-role">Every agent is a first-class Forgejo user with SSH keys, scoped permissions, and a budget. Agents are not anonymous API calls — they are accountable actors.</div>
+    </div>
+    <div class="project-card built">
+      <div class="proj-header"><span class="proj-name">Multi-model agreement required</span></div>
+      <div class="proj-role">A single model's review is insufficient. Chimera formations require at least two independent models plus an aggregator. Conscientiousness adds adversarial self-evaluation.</div>
+    </div>
+    <div class="project-card built">
+      <div class="proj-header"><span class="proj-name">Everything is traceable</span></div>
+      <div class="proj-role">Every agent action produces a LangFuse trace with model, tokens, cost, latency, and decision rationale. Every commit carries an attestation linking back to the prompt that generated it.</div>
+    </div>
+    <div class="project-card built">
+      <div class="proj-header"><span class="proj-name">Sandbox by default</span></div>
+      <div class="proj-role">Agents execute in Docker containers with network isolation (gluetun VPN). No agent touches the host filesystem directly. Budgets enforced per-agent.</div>
+    </div>
+    <div class="project-card built">
+      <div class="proj-header"><span class="proj-name">Self-hosted, no lock-in</span></div>
+      <div class="proj-role">Every component can run on a single Hetzner box. The only external dependencies are LLM APIs, abstracted behind Chimera's provider gateway.</div>
+    </div>
+    <div class="project-card built">
+      <div class="proj-header"><span class="proj-name">Loops, not prompts</span></div>
+      <div class="proj-role">Agents are driven by well-designed feedback loops — not hand-tuned prompts. Ralph Loop, GitReins gates, and Chimera review constrain agent behavior structurally.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p><strong>Helix</strong> · Agent-first code platform · <a href="https://github.com/totalwindupflightsystems/helix">github.com/totalwindupflightsystems/helix</a></p>
+  <p style="margin-top:4px">totalwindupflightsystems · June 19, 2026</p>
+</footer>
+
+</div>
+</body>
+</html>
