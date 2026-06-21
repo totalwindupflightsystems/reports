@@ -271,18 +271,18 @@
 <div class="container">
 
 <!-- Hero -->
-<header class="hero">
+<div class="hero">
   <h1><span class="accent">Helix</span></h1>
-  <p class="tagline">An open, self-hosted, agent-first software development platform. The alternative to closed, hosted agent platforms — built from 9 projects we own plus 8 open-source tools.</p>
+  <p class="tagline">An open, self-hosted, agent-first software development platform — our alternative to closed, hosted agent platforms (Cursor Origin, Devin Cloud). Built from <strong>8 projects we own</strong> plus 8 open-source tools. Built WITH Axiom (the disciplined build pipeline), not built ON Axiom.</p>
   <div class="thesis">
     <strong>The thesis is encoded in the name:</strong> two strands — <em>human intelligence</em> and <em>AI intelligence</em> — spiral together through the software development lifecycle, each reinforcing the other. Humans set intent and approve; agents plan, build, review, and merge. Neither operates alone.
   </div>
-</header>
+</div>
 
 <!-- Section: Architecture -->
 <section id="architecture">
   <h2>Six-Layer Architecture</h2>
-  <p>Helix organizes 17 components into six functional layers. Data flows top-to-bottom (human intent → merged code) and bottom-to-top (observability → human feedback). Each layer is independently deployable but contracts with adjacent layers.</p>
+  <p>Helix organizes 16 components into six functional layers. Data flows top-to-bottom (human intent → merged code) and bottom-to-top (observability → human feedback). Each layer is independently deployable but contracts with adjacent layers.</p>
 
   <div class="arch-layer l1">
     <div class="layer-num">Layer 1</div>
@@ -292,7 +292,7 @@
   <div class="arch-layer l2">
     <div class="layer-num">Layer 2</div>
     <div class="layer-title">Orchestration</div>
-    <div class="layer-desc">Axiom (fleet mgmt) · Hivemind (memory+scheduling) · Kobayashi-Maru (stress testing) — Decompose intent → assemble agent swarms → schedule work</div>
+    <div class="layer-desc">Hivemind (memory+scheduling+IAM) · Kobayashi-Maru (adversarial stress testing) · Helix Dispatcher (spec → work items → agent assignment) — Decompose intent → schedule work → dispatch to agents</div>
   </div>
   <div class="arch-layer l3">
     <div class="layer-num">Layer 3</div>
@@ -318,8 +318,8 @@
 
 <!-- Section: Built Projects -->
 <section id="built">
-  <h2>What We've Built (9 Projects)</h2>
-  <p>Every component of the quality, orchestration, and execution pipeline is built and tested. The platform runs today — it's not a spec document.</p>
+  <h2>What We've Built (8 Projects)</h2>
+  <p>Every component of the quality, orchestration, and execution pipeline is built and tested. Axiom (40 agents, 1,837 tests) is used as the build pipeline to create Helix — but it's a tool, not a platform component.</p>
 
   <div class="project-grid">
 
@@ -370,11 +370,11 @@
 
     <div class="project-card built">
       <div class="proj-header">
-        <span class="proj-name">Axiom</span>
-        <span class="proj-lang lang-multi">Multi-lang</span>
+        <span class="proj-name">Helix Dispatcher</span>
+        <span class="proj-lang lang-go">Go</span>
       </div>
-      <div class="proj-role">Agent orchestration platform. 60+ adversarial/quality agents (assumption-buster, red-team, white-hat, chaos-engineer, finops-cost). Specs-as-contracts, evidence bundles, Jira/Notion/GitHub sync.</div>
-      <div class="proj-stat">60+ agents · specs-as-contracts · evidence bundles</div>
+      <div class="proj-role">Spec-driven task dispatch. Reads specs → decomposes into work items → assigns to agents via Hivemind IAM → hands off to Ralph Loop for execution. The thin orchestration layer that replaces Axiom in Helix's stack.</div>
+      <div class="proj-stat">Spec decomposition · agent assignment · Ralph Loop handoff</div>
     </div>
 
     <div class="project-card built">
@@ -447,7 +447,7 @@
   <p>This is the canonical end-to-end lifecycle. Every Helix feature maps to one or more steps. The flow runs end-to-end today with all built components live.</p>
 
   <div class="flow-step"><div class="step-num">1</div><div class="step-content"><div class="step-title">Human creates task</div><div class="step-desc">Forgejo issue, prompt file, Jira ticket, or CLI command</div></div></div>
-  <div class="flow-step"><div class="step-num">2</div><div class="step-content"><div class="step-title">Axiom assembles agent swarm</div><div class="step-desc">Reads specs, decomposes into work items, assigns agents</div></div></div>
+  <div class="flow-step"><div class="step-num">2</div><div class="step-content"><div class="step-title">Dispatcher decomposes task, Hivemind schedules</div><div class="step-desc">Spec read → work items decomposed → agent assigned via Hivemind IAM → Ralph Loop queued</div></div></div>
   <div class="flow-step"><div class="step-num">3</div><div class="step-content"><div class="step-title">Ralph Loop acquires lock + worktree</div><div class="step-desc">File-level or branch-level lock; isolated git worktree</div></div></div>
   <div class="flow-step"><div class="step-num">4</div><div class="step-content"><div class="step-title">Agent writes code in H4F container</div><div class="step-desc">OpenCode executor; Muster provides API tools if needed</div></div></div>
   <div class="flow-step"><div class="step-num">5</div><div class="step-content"><div class="step-title">Agent commits with attestation</div><div class="step-desc">Commit includes prompt-hash, model, context-hash, cost</div></div></div>
@@ -505,7 +505,7 @@
         <tr><td><strong>OpenCode</strong></td><td>Agent runner (task-based, worktree isolation)</td><td>Agent executor — runs agents in isolated worktrees. Ralph Loop wraps it.</td></tr>
         <tr><td><strong>OpenRouter</strong></td><td>Model aggregator (344+ models)</td><td>Model access layer — Chimera's Dispatcher routes through it for model diversity.</td></tr>
         <tr><td><strong>Continue.dev</strong></td><td>Open-source AI code assistant</td><td>IDE bridge — the human interface layer. Agents push to Forgejo, human reviews in Continue.</td></tr>
-        <tr><td><strong>MCP Servers</strong></td><td>Jira, Notion, GitHub, Chrome DevTools</td><td>External system mirrors — Axiom treats repo as source of truth, syncs outward.</td></tr>
+        <tr><td><strong>MCP Servers</strong></td><td>Jira, Notion, GitHub, Chrome DevTools</td><td>External system mirrors — Helix treats Forgejo as source of truth, syncs outward.</td></tr>
       </tbody>
     </table>
   </div>
@@ -528,6 +528,7 @@
         <tr><td><strong>GitReins</strong></td><td><span class="tag tag-b">Live</span></td><td>v0.7.1 in Helix monorepo. 6 blocking pre-commit/commit-msg checks. Tier 2 evaluator just cleared a 5-pass debug session finding 2 real bugs.</td></tr>
         <tr><td><strong>Forgejo</strong></td><td><span class="tag tag-b">Live</span></td><td>Running on localhost:3030. Admin user + test agent provisioned. API accessible.</td></tr>
         <tr><td><strong>H4F</strong></td><td><span class="tag tag-b">Live</span></td><td>Multi-tenant on Hetzner (37.27.250.128). Per-friend Docker containers with VPN isolation.</td></tr>
+        <tr><td><strong>Helix Dispatcher</strong></td><td><span class="tag tag-p">Spec'd</span></td><td>Spec-driven task dispatch. Reads specs → work items → agent assignment. Thin layer replacing Axiom orchestration role.</td></tr>
         <tr><td><strong>Helix Foreman</strong></td><td><span class="tag tag-b">Active</span></td><td>Cron job ticks every 30 min from .coding-hermes/tasks.md. Generating Go tests and stubs continuously.</td></tr>
         <tr><td><strong>Helix Monorepo</strong></td><td><span class="tag tag-p">In Progress</span></td><td>3,567 lines Go · 12,064 lines specs · 14 spec files · 17 test fixture files. GitReins pre-commit hook installed.</td></tr>
         <tr><td><strong>Feature 1 (Identity)</strong></td><td><span class="tag tag-p">In Progress</span></td><td>1,769 lines Go with typed errors. Forgejo HTTP client being unstubbed.</td></tr>
@@ -543,11 +544,11 @@
 
   <div class="stat-grid">
     <div class="stat-card">
-      <div class="num">17</div>
+      <div class="num">16</div>
       <div class="label">Total Components</div>
     </div>
     <div class="stat-card">
-      <div class="num">9</div>
+      <div class="num">8</div>
       <div class="label">Built &amp; Tested</div>
     </div>
     <div class="stat-card">
@@ -587,8 +588,8 @@
       <div class="label">K-M Kill Rate</div>
     </div>
     <div class="stat-card">
-      <div class="num">60+</div>
-      <div class="label">Axiom Agents</div>
+      <div class="num">5</div>
+      <div class="label">Review Layers (per PR)</div>
     </div>
   </div>
 </section>
