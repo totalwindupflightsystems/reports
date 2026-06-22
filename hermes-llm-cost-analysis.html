@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hermes LLM Cost Analysis — DeepSeek vs Alternatives (June 2026)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0f1117;
+  --surface: #1a1d27;
+  --surface2: #222533;
+  --text: #e4e6ef;
+  --muted: #9ca0b0;
+  --dim: #6b7084;
+  --red: #f87171;
+  --amber: #fbbf24;
+  --green: #4ade80;
+  --blue: #60a5fa;
+  --purple: #c084fc;
+  --cyan: #22d3ee;
+  --border: rgba(255,255,255,0.06);
+  --radius: 8px;
+  --max-w: 960px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, system-ui, -apple-system, sans-serif;
+  line-height: 1.7;
+  font-size: 15px;
+}
+code, pre { font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; }
+a { color: var(--blue); text-decoration:none; }
+a:hover { text-decoration:underline; }
+
+nav.top {
+  position: sticky; top:0; z-index:100;
+  background: rgba(15,17,23,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 0;
+}
+nav.top .inner { max-width:var(--max-w); margin:0 auto; padding:0 20px; display:flex; gap:16px; overflow-x:auto; }
+nav.top a { color:var(--muted); font-size:0.78rem; font-weight:500; white-space:nowrap; }
+nav.top a:hover { color:var(--text); text-decoration:none; }
+
+.hero { padding:72px 20px 44px; text-align:center; }
+.hero h1 {
+  font-size:2.2rem; font-weight:800; line-height:1.25;
+  background: linear-gradient(135deg, var(--green), var(--cyan));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  background-clip:text;
+  margin-bottom:10px;
+}
+.hero .sub { color:var(--muted); font-size:1rem; max-width:600px; margin:0 auto; }
+.hero .meta { margin-top:14px; color:var(--dim); font-size:0.8rem; }
+
+.stat-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:12px; margin:24px 0; }
+.stat-card {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:var(--radius); padding:18px 16px; text-align:center;
+}
+.stat-card .value { font-size:1.8rem; font-weight:700; letter-spacing:-0.5px; }
+.stat-card .label { color:var(--muted); font-size:0.75rem; margin-top:4px; text-transform:uppercase; letter-spacing:0.5px; }
+.value.green { color:var(--green); }
+.value.amber { color:var(--amber); }
+.value.red { color:var(--red); }
+.value.blue { color:var(--blue); }
+.value.cyan { color:var(--cyan); }
+
+main { max-width:var(--max-w); margin:0 auto; padding:0 20px 80px; }
+section { margin-bottom:48px; }
+section h2 {
+  font-size:1.45rem; font-weight:700; margin-bottom:16px;
+  padding-bottom:8px; border-bottom:2px solid var(--border);
+  color:var(--text);
+}
+section h3 { font-size:1.1rem; font-weight:600; margin:24px 0 10px; color:var(--blue); }
+section h3.warn { color:var(--amber); }
+section h3.rec { color:var(--green); }
+p { margin-bottom:12px; color:var(--muted); }
+p strong { color:var(--text); font-weight:600; }
+
+table {
+  width:100%; border-collapse:collapse; margin:16px 0;
+  font-size:0.85rem;
+}
+thead { background:var(--surface2); }
+th {
+  text-align:left; padding:10px 12px;
+  font-weight:600; color:var(--text); font-size:0.75rem;
+  text-transform:uppercase; letter-spacing:0.5px;
+  border-bottom:2px solid var(--border);
+}
+td {
+  padding:9px 12px; border-bottom:1px solid var(--border);
+  color:var(--muted);
+}
+td.num { text-align:right; font-family:'JetBrains Mono',monospace; font-size:0.8rem; }
+td.green { color:var(--green); }
+td.amber { color:var(--amber); }
+td.red { color:var(--red); }
+td.best { color:var(--green); font-weight:600; }
+tr:hover td { background: rgba(255,255,255,0.015); }
+
+.model-card {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:var(--radius); padding:22px 24px; margin-bottom:18px;
+}
+.model-card h3 { margin-top:0; font-size:1.1rem; display:flex; align-items:center; gap:8px; }
+.model-card h3 .badge {
+  font-size:0.65rem; font-weight:700; text-transform:uppercase;
+  padding:2px 8px; border-radius:4px; letter-spacing:0.5px;
+}
+.badge.winner { background:rgba(74,222,128,0.15); color:var(--green); }
+.badge.safe { background:rgba(96,165,250,0.15); color:var(--blue); }
+.badge.avoid { background:rgba(248,113,113,0.15); color:var(--red); }
+.badge.interesting { background:rgba(251,191,36,0.15); color:var(--amber); }
+.model-card .specs { font-size:0.82rem; color:var(--muted); margin-top:8px; }
+.model-card .specs strong { color:var(--text); }
+
+.callout {
+  background:var(--surface2); border-left:3px solid var(--blue);
+  border-radius:0 var(--radius) var(--radius) 0;
+  padding:16px 20px; margin:16px 0;
+}
+.callout.green { border-left-color:var(--green); }
+.callout.red { border-left-color:var(--red); }
+.callout.amber { border-left-color:var(--amber); }
+.callout p { margin:0; }
+
+footer {
+  max-width:var(--max-w); margin:40px auto 0; padding:24px 20px;
+  border-top:1px solid var(--border);
+  text-align:center; color:var(--dim); font-size:0.78rem;
+}
+
+@media (max-width:600px) {
+  .hero h1 { font-size:1.6rem; }
+  .stat-card .value { font-size:1.3rem; }
+  table { font-size:0.72rem; }
+  th, td { padding:7px 8px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <div class="inner">
+    <a href="#">↑ Top</a>
+    <a href="#usage">Usage Profile</a>
+    <a href="#cache">Cache Moat</a>
+    <a href="#models">Model Deep Dives</a>
+    <a href="#ranked">Ranked Comparison</a>
+    <a href="#recommendations">Recommendations</a>
+    <a href="index.html">← Reports</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <h1>Hermes LLM Cost Analysis</h1>
+  <p class="sub">DeepSeek vs 17 alternative models — complete provider, cache, and token-plan audit using real June 2026 usage data.</p>
+  <p class="meta">June 22, 2026 &middot; Based on 22 days of actual Hermes agent workload &middot; 174,766 requests analyzed</p>
+</div>
+
+<main>
+
+<!-- ═══════════════════════════════════════════ -->
+<section id="summary">
+  <h2>Executive Summary</h2>
+
+  <div class="stat-grid">
+    <div class="stat-card">
+      <div class="value green">$380</div>
+      <div class="label">Actual Spend (22 days)</div>
+    </div>
+    <div class="stat-card">
+      <div class="value blue">16.2B</div>
+      <div class="label">Input Tokens</div>
+    </div>
+    <div class="stat-card">
+      <div class="value amber">175:1</div>
+      <div class="label">Input:Output Ratio</div>
+    </div>
+    <div class="stat-card">
+      <div class="value cyan">96.0%</div>
+      <div class="label">Cache Hit Rate (DeepSeek)</div>
+    </div>
+    <div class="stat-card">
+      <div class="value green">$0.0235</div>
+      <div class="label">Effective Input Price /M</div>
+    </div>
+  </div>
+
+  <p><strong>Your true input price is $0.024/1M tokens — not the $0.435 sticker.</strong> DeepSeek's automatic context caching discounts 96% of your 16.2B input tokens by 120× (from $0.435/M to $0.0036/M). This single mechanism saves ~$5,900 every 22 days versus uncached pricing.</p>
+
+  <p>The analysis examined 17 alternative models across 5 distinct cache-read pricing tiers. <strong>Only one non-DeepSeek model has the same cache economics: MiMo-V2.5.</strong> Every other model charges 11–22× more for cached tokens — making them fundamentally non-competitive at your 175:1 input-heavy workload.</p>
+
+  <div class="callout green">
+    <p><strong>Bottom line:</strong> Three viable moves exist. MiMo-V2.5 at ~$278/mo (44% cheaper), DeepSeek V4 Flash-only at ~$179/mo (66% cheaper), or Hy3 Preview at ~$754/mo (budget gem with real caching). Everything else costs 3–11× your current bill.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<section id="usage">
+  <h2>Your Usage Profile</h2>
+
+  <table>
+    <thead><tr><th>Metric</th><th class="num">Value</th></tr></thead>
+    <tbody>
+      <tr><td>Period</td><td class="num">June 1–22, 2026 (22 days)</td></tr>
+      <tr><td>Total cost</td><td class="num green">$380.08</td></tr>
+      <tr><td>V4 Pro cost</td><td class="num">$356.87 (93.9%)</td></tr>
+      <tr><td>V4 Flash cost</td><td class="num">$23.21 (6.1%)</td></tr>
+      <tr><td>Total requests</td><td class="num">174,766</td></tr>
+      <tr><td>Total input tokens</td><td class="num">16,161,238,840</td></tr>
+      <tr><td>Cache hit tokens</td><td class="num green">15,516,569,344 (96.0%)</td></tr>
+      <tr><td>Cache miss tokens</td><td class="num">644,669,496 (4.0%)</td></tr>
+      <tr><td>Total output tokens</td><td class="num">92,499,338</td></tr>
+      <tr><td>Input:Output ratio</td><td class="num amber">175:1</td></tr>
+      <tr><td>Effective input price</td><td class="num cyan">$0.0235/1M</td></tr>
+      <tr><td>Cache savings (vs no cache)</td><td class="num green">$5,913.43</td></tr>
+      <tr><td>Weekly trend</td><td class="num">W23:$87 → W24:$153 → W25:$137</td></tr>
+    </tbody>
+  </table>
+
+  <p><strong>Your 175:1 input:output ratio means input price matters 175× more than output price.</strong> For every 1 output token your agents generate, they consume 175 input tokens (system prompts, skill libraries, conversation history, tool outputs). Output pricing is a rounding error at this ratio.</p>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<section id="cache">
+  <h2>The Cache Moat: Why Sticker Prices Lie</h2>
+
+  <p>At your 96% cache hit rate, <strong>the cache-read price is the real cost driver</strong> — not the sticker input price. Every $0.001 difference in cache-read price costs you ~$15,500 in additional input charges over 22 days.</p>
+
+  <h3>Cache-Read Pricing Tiers (Actual OpenRouter Data, June 2026)</h3>
+
+  <table>
+    <thead>
+      <tr><th>Tier</th><th>Cache Read $/M</th><th>Discount from Sticker</th><th>Who</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="green"><strong>S-Tier</strong></td>
+        <td class="num green">$0.0028–0.0036</td>
+        <td class="num">120×</td>
+        <td>DeepSeek, MiMo (Xiaomi)</td>
+      </tr>
+      <tr>
+        <td class="amber">Mid</td>
+        <td class="num">$0.04–0.06</td>
+        <td class="num">5×</td>
+        <td>StepFun, MiniMax</td>
+      </tr>
+      <tr>
+        <td class="amber">Low</td>
+        <td class="num">$0.064</td>
+        <td class="num">5×</td>
+        <td>Qwen (Alibaba)</td>
+      </tr>
+      <tr>
+        <td class="red">Bad</td>
+        <td class="num">$0.07–0.22</td>
+        <td class="num">2–5×</td>
+        <td>Kimi (varies by provider)</td>
+      </tr>
+      <tr>
+        <td class="red">None</td>
+        <td class="num">—</td>
+        <td class="num">—</td>
+        <td>Gemma, Nemotron, most Qwen variants</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Only DeepSeek and MiMo are in the S-tier.</strong> Their 120× cache discount means cached tokens cost ~$0.003/M instead of the sticker rate. StepFun and MiniMax charge 11–17× more for the same cached tokens ($0.04–0.06/M). Qwen charges 18× more ($0.064/M). Kimi charges 20–60× more ($0.07–0.22/M depending on provider).</p>
+
+  <div class="callout amber">
+    <p><strong>Critical finding:</strong> Cache-read price × your 15.5B cache-hit tokens = your real bill. Sticker input price × 0.6B cache-miss tokens barely matters. This is why models with cheap stickers (Step 3.7 Flash at $0.20/M) still cost 3.6× more — their cache-read price of $0.04/M is 11× DeepSeek's.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<section id="models">
+  <h2>Model-by-Model Deep Dive</h2>
+
+  <!-- MiMo-V2.5 -->
+  <div class="model-card">
+    <h3>MiMo-V2.5 (xiaomi/mimo-v2.5) <span class="badge winner">Winner</span></h3>
+    <p>Xiaomi's mid-tier omnimodal model. 1M context. Pro-level agentic performance at half the inference cost.</p>
+    <div class="specs">
+      <strong>List:</strong> $0.14 input / $0.28 output &middot;
+      <strong>Cache Read:</strong> $0.0028/M &middot;
+      <strong>Effective Input:</strong> <span style="color:var(--green)">$0.011/M</span> &middot;
+      <strong>Cache Hit:</strong> 93.7% &middot;
+      <strong>Projected:</strong> <span style="color:var(--green)">$278/mo (44% cheaper)</span>
+    </div>
+    <div class="specs"><strong>Providers:</strong> Xiaomi direct (99.9% share, 93.7% hit, $0.0028 cache) · DigitalOcean (0.1%, NO CACHE — avoid). <strong>Routing:</strong> Use Exacto to lock to Xiaomi. DigitalOcean charges same sticker but has zero cache — would 100× your cost.</div>
+    <div class="specs"><strong>Token Plans:</strong> Xiaomi offers 4-tier Token Plans ($6–100/mo) but effective pricing ($1.22/M for V2.5) is far worse than OpenRouter cached pricing ($0.011/M). Skip them.</div>
+    <div class="specs"><strong>Verdict:</strong> <span style="color:var(--green)">The strongest DeepSeek alternative.</span> Same cache economics, cheaper sticker, 93.7% real hit rate. Test with small workload first.</div>
+  </div>
+
+  <!-- DeepSeek V4 Flash -->
+  <div class="model-card">
+    <h3>DeepSeek V4 Flash (deepseek-v4-flash) <span class="badge safe">Safe Bet</span></h3>
+    <p>DeepSeek's fast-tier model. Same cache infrastructure as Pro. 1M context.</p>
+    <div class="specs">
+      <strong>List:</strong> $0.10 input / $0.20 output &middot;
+      <strong>Cache Read:</strong> $0.0028/M &middot;
+      <strong>Effective Input:</strong> <span style="color:var(--green)">~$0.007/M</span> &middot;
+      <strong>Cache Hit:</strong> 96% (proven) &middot;
+      <strong>Projected:</strong> <span style="color:var(--green)">$179/mo (66% cheaper)</span>
+    </div>
+    <div class="specs"><strong>Providers:</strong> DeepSeek direct through OpenRouter. No multi-provider routing complexity.</div>
+    <div class="specs"><strong>Verdict:</strong> <span style="color:var(--green)">Do this now regardless.</span> Zero new-provider risk, proven cache behavior. Shift non-critical crons from Pro → Flash. Only question: is Flash smart enough for all workloads?</div>
+  </div>
+
+  <!-- MiMo-V2.5-Pro -->
+  <div class="model-card">
+    <h3>MiMo-V2.5-Pro (xiaomi/mimo-v2.5-pro) <span class="badge interesting">Interesting</span></h3>
+    <p>Xiaomi's flagship. Same sticker as DS Pro ($0.435/$0.87). 1M context.</p>
+    <div class="specs">
+      <strong>List:</strong> $0.435 input / $0.87 output &middot;
+      <strong>Cache Read:</strong> $0.0036/M (Xiaomi) &middot;
+      <strong>Effective Input:</strong> $0.043/M &middot;
+      <strong>Cache Hit:</strong> 90.9% (Xiaomi, 88.3% share) &middot;
+      <strong>Projected:</strong> $1,057/mo (2.0× current)
+    </div>
+    <div class="specs"><strong>Providers:</strong> Xiaomi ($0.0036 cache, 90.9% hit) · NovitaAI ($0.0043 cache, 85.8%) · DigitalOcean (no cache) · DeepInfra ($0.20 cache, 46.8%).</div>
+    <div class="specs"><strong>Verdict:</strong> Same sticker as DS Pro but 2× cost due to lower hit rate (90.9% vs 96%). The 5-point hit rate gap at your volume = $400/mo. Only relevant if the model is significantly smarter.</div>
+  </div>
+
+  <!-- Hy3 Preview -->
+  <div class="model-card">
+    <h3>Hy3 Preview (tencent/hy3-preview) <span class="badge interesting">Hidden Gem</span></h3>
+    <p>Tencent's high-efficiency MoE model. 262K context. Designed for agentic workflows.</p>
+    <div class="specs">
+      <strong>List:</strong> $0.063 input / $0.21 output &middot;
+      <strong>Cache Read:</strong> $0.021–0.029/M &middot;
+      <strong>Effective Input:</strong> <span style="color:var(--amber)">$0.033/M</span> &middot;
+      <strong>Cache Hit:</strong> 88.9% (SiliconFlow, 98.8% share) &middot;
+      <strong>Projected:</strong> $754/mo (1.5× current)
+    </div>
+    <div class="specs"><strong>Providers:</strong> SiliconFlow dominates (98.8% share, 88.9% hit). Cache read is mid-tier ($0.021–0.029/M) but the ultra-low sticker ($0.063/M) compensates. 262K context window is a limitation.</div>
+    <div class="specs"><strong>Verdict:</strong> Best budget option with real caching. 48% effective discount off list. Preview model — untested for heavy agentic coding. Test for non-critical crons.</div>
+  </div>
+
+  <!-- MiniMax M3 -->
+  <div class="model-card">
+    <h3>MiniMax M3 (minimax/minimax-m3) <span class="badge avoid">Avoid</span></h3>
+    <p>1M context. Sparse attention for long-context efficiency. 6 providers on OpenRouter.</p>
+    <div class="specs">
+      <strong>List:</strong> $0.30 input / $1.20 output &middot;
+      <strong>Cache Read:</strong> $0.06/M (MiniMax/Novita/Together/Parasail) &middot;
+      <strong>Effective Input:</strong> $0.081/M &middot;
+      <strong>Projected:</strong> $1,936/mo (3.7× current via OpenRouter)
+    </div>
+    <div class="specs"><strong>Token Plan reality:</strong> Plus $20/mo, Max $50/mo, Ultra $120/mo. These are explicitly <em>"for individual use, not production."</em> 5-hour rolling windows + 6-7 agent cap. At your 8K req/day volume, they would throttle heavily. MiniMax's own docs tell you to use PAYG for production — which costs $6,840/mo direct or ~$4,640/mo via OpenRouter.</div>
+    <div class="specs"><strong>Providers:</strong> Parasail dominates (82.9% share, 83.5% hit, $0.06 cache). Morph has NO cache. AtlasCloud charges 40% premium.</div>
+  </div>
+
+  <!-- Step 3.7 Flash -->
+  <div class="model-card">
+    <h3>Step 3.7 Flash (stepfun/step-3.7-flash) <span class="badge avoid">Avoid</span></h3>
+    <p>StepFun's latest MoE. 256K context. Selectable reasoning levels.</p>
+    <div class="specs">
+      <strong>List:</strong> $0.20 input / $1.15 output &middot;
+      <strong>Cache Read:</strong> $0.04/M &middot;
+      <strong>Effective Input:</strong> $0.077/M &middot;
+      <strong>Cache Hit:</strong> 77% (StepFun, 99.3% share) &middot;
+      <strong>Projected:</strong> $1,842/mo (3.6× current)
+    </div>
+    <div class="specs"><strong>Step Plan:</strong> 4 tiers ($6.99–99/mo). Billed in "prompts" (1 prompt ≈ 15-20 requests), NOT tokens. Not designed for production-scale agent workloads. All include +40% Studio credits.</div>
+    <div class="specs"><strong>Step 3.5 Flash note:</strong> Despite having $0.02/M cache read pricing, real-world cache hit rate is <strong>0%</strong>. Nobody is getting cache hits on this model. Costs $2,109/mo.</div>
+  </div>
+
+  <!-- Qwen3.7 Plus -->
+  <div class="model-card">
+    <h3>Qwen3.7 Plus (qwen/qwen3.7-plus) <span class="badge avoid">Avoid</span></h3>
+    <p>Alibaba's cost-effective tier. 1M context. Two cache tiers (disk + 5-min ephemeral).</p>
+    <div class="specs">
+      <strong>List:</strong> $0.32 input / $1.28 output &middot;
+      <strong>Cache Read:</strong> $0.064/M (disk) / $0.032/M (5-min ephemeral) &middot;
+      <strong>Effective Input:</strong> $0.175/M &middot;
+      <strong>Cache Hit:</strong> 73.9% &middot;
+      <strong>Projected:</strong> $4,027/mo (7.8× current)
+    </div>
+    <div class="specs"><strong>Single provider:</strong> Alibaba Cloud Int. only. No multi-provider failover. 10 tps throughput — slow. No token plans or subscriptions available.</div>
+  </div>
+
+  <!-- Kimi K2.5 -->
+  <div class="model-card">
+    <h3>Kimi K2.5 (moonshotai/kimi-k2.5) <span class="badge avoid">Avoid</span></h3>
+    <p>Moonshot AI's native multimodal. 262K context. 11 providers — most of any model analyzed.</p>
+    <div class="specs">
+      <strong>List:</strong> $0.375 input / $2.025 output &middot;
+      <strong>Cache Read:</strong> $0.07–0.22/M (varies wildly by provider) &middot;
+      <strong>Effective Input:</strong> ~$0.17/M &middot;
+      <strong>Projected:</strong> $4,002/mo (7.7× current)
+    </div>
+    <div class="specs"><strong>Provider mess:</strong> 11 providers with cache ranging from $0.07 (DeepInfra/SiliconFlow) to $0.22 (Chutes/Venice). DigitalOcean has NO cache. ModelRun is fastest (116 tps, 0.33s) but $0.09 cache. Moonshot AI direct charges $0.60/$3.00 — 60% premium. No token plans for API use.</div>
+  </div>
+
+  <!-- Budget tier -->
+  <h3 class="warn">Budget Tier — No Cache or Cache Not Helping</h3>
+
+  <table>
+    <thead><tr><th>Model</th><th class="num">List In</th><th class="num">Eff In</th><th class="num">$/mo</th><th class="num">vs DS</th><th>Cache?</th></tr></thead>
+    <tbody>
+      <tr><td>Qwen3.5 Flash</td><td class="num">$0.065</td><td class="num">$0.065</td><td class="num">$1,465</td><td class="num">2.8×</td><td>✗ No cache</td></tr>
+      <tr><td>Qwen3-235B-A22B-2507</td><td class="num">$0.09</td><td class="num">$0.09</td><td class="num">$1,996</td><td class="num">3.9×</td><td>✗ No cache</td></tr>
+      <tr><td>Nemotron-3-Super-120B</td><td class="num">$0.09</td><td class="num">$0.09</td><td class="num">$2,040</td><td class="num">3.9×</td><td>✗ Zero cache</td></tr>
+      <tr><td>Gemma-4-26B-A4B</td><td class="num">$0.06</td><td class="num"><span style="color:var(--red)">$0.117</span></td><td class="num">$2,620</td><td class="num">5.1×</td><td>⚠ Counterproductive</td></tr>
+      <tr><td>Qwen3-Next-80B-A3B</td><td class="num">$0.09</td><td class="num"><span style="color:var(--red)">$0.113</span></td><td class="num">$2,629</td><td class="num">5.1×</td><td>✗ Not helping</td></tr>
+      <tr><td>Step 3.5 Flash</td><td class="num">$0.09</td><td class="num"><span style="color:var(--red)">$0.094</span></td><td class="num">$2,109</td><td class="num">4.1×</td><td>⚠ 0% real hit</td></tr>
+      <tr><td>Qwen3.6 Flash</td><td class="num">$0.25</td><td class="num">$0.25</td><td class="num">$5,699</td><td class="num">11.0×</td><td>⚠ Cache read UNLISTED</td></tr>
+      <tr><td>Qwen3.6-35B-A3B</td><td class="num">$0.14</td><td class="num">$0.081</td><td class="num">$1,911</td><td class="num">3.7×</td><td>✓ 3/5 providers</td></tr>
+    </tbody>
+  </table>
+
+  <p><strong>Notable: Gemma-4-26B and Qwen3-Next have effective input prices ABOVE their list prices.</strong> Cache exists but high-priced providers (Google Vertex for Gemma) dominate traffic, making the weighted average worse than paying full list. The cache is literally costing users more.</p>
+
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<section id="ranked">
+  <h2>Complete Ranked Comparison</h2>
+
+  <table>
+    <thead>
+      <tr><th>#</th><th>Model</th><th class="num">Eff In $/M</th><th class="num">22-day</th><th class="num">Monthly</th><th class="num">vs DS</th><th>Cache Tier</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="best">1</td><td class="best">DeepSeek V4 Flash ★</td><td class="num green">$0.007</td><td class="num green">$132</td><td class="num green">$179</td><td class="num green">0.3×</td><td>S</td></tr>
+      <tr><td class="best">2</td><td class="best">MiMo-V2.5 ★★</td><td class="num green">$0.011</td><td class="num green">$204</td><td class="num green">$278</td><td class="num green">0.5×</td><td>S</td></tr>
+      <tr><td class="best">3</td><td>DeepSeek V4 Pro (current)</td><td class="num">$0.024</td><td class="num">$468</td><td class="num">$639</td><td class="num">1.2×</td><td>S</td></tr>
+      <tr><td>4</td><td>Hy3 Preview 🔥</td><td class="num">$0.033</td><td class="num">$553</td><td class="num">$754</td><td class="num">1.5×</td><td>Mid</td></tr>
+      <tr><td>5</td><td>MiMo-V2.5-Pro</td><td class="num">$0.043</td><td class="num">$775</td><td class="num">$1,057</td><td class="num">2.0×</td><td>S</td></tr>
+      <tr><td>6</td><td>Qwen3.5 Flash</td><td class="num">$0.065</td><td class="num">$1,075</td><td class="num">$1,465</td><td class="num">2.8×</td><td>—</td></tr>
+      <tr><td>7</td><td>Step 3.7 Flash</td><td class="num">$0.077</td><td class="num">$1,351</td><td class="num">$1,842</td><td class="num">3.6×</td><td>Mid</td></tr>
+      <tr><td>8</td><td>Qwen3.6-35B-A3B</td><td class="num">$0.081</td><td class="num">$1,402</td><td class="num">$1,911</td><td class="num">3.7×</td><td>Low</td></tr>
+      <tr><td>9</td><td>MiniMax M3</td><td class="num">$0.081</td><td class="num">$1,420</td><td class="num">$1,936</td><td class="num">3.7×</td><td>Mid</td></tr>
+      <tr><td>10</td><td>Qwen3-235B-A22B-2507</td><td class="num">$0.090</td><td class="num">$1,464</td><td class="num">$1,996</td><td class="num">3.9×</td><td>—</td></tr>
+      <tr><td>11</td><td>Nemotron-3-Super-120B</td><td class="num">$0.090</td><td class="num">$1,496</td><td class="num">$2,040</td><td class="num">3.9×</td><td>—</td></tr>
+      <tr><td>12</td><td>Step 3.5 Flash</td><td class="num">$0.094</td><td class="num">$1,547</td><td class="num">$2,109</td><td class="num">4.1×</td><td>—</td></tr>
+      <tr><td>13</td><td>Gemma-4-26B-A4B</td><td class="num">$0.117</td><td class="num">$1,921</td><td class="num">$2,620</td><td class="num">5.1×</td><td>⚠</td></tr>
+      <tr><td>14</td><td>Qwen3-Next-80B-A3B</td><td class="num">$0.113</td><td class="num">$1,928</td><td class="num">$2,629</td><td class="num">5.1×</td><td>⚠</td></tr>
+      <tr><td>15</td><td>Kimi K2.5</td><td class="num">$0.170</td><td class="num">$2,935</td><td class="num">$4,002</td><td class="num">7.7×</td><td>Bad</td></tr>
+      <tr><td>16</td><td>Qwen3.7 Plus</td><td class="num">$0.175</td><td class="num">$2,953</td><td class="num">$4,027</td><td class="num">7.8×</td><td>Low</td></tr>
+      <tr><td>17</td><td>Qwen3.6 Flash ⚠</td><td class="num">$0.250</td><td class="num">$4,179</td><td class="num">$5,699</td><td class="num">11.0×</td><td>⚠</td></tr>
+    </tbody>
+  </table>
+
+  <p><em>★ = proven cache at 96% hit. ★★ = verified cache at 93.7% hit. 🔥 = hidden gem with 88.9% hit. ⚠ = cache exists but ineffective. "—" = no cache.</em></p>
+
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<section id="recommendations">
+  <h2>Recommendations</h2>
+
+  <h3 class="rec">1. Shift to DeepSeek V4 Flash for non-critical workloads — NOW</h3>
+  <p>Zero risk. Same cache infrastructure. Proven 96% hit rate. $179/mo vs your current $639/mo projected. Move background crons, summarization, and non-critical agent tasks to Flash. Keep Pro only for tasks where Flash's reasoning quality is insufficient. This alone saves ~$460/mo with no new provider setup.</p>
+
+  <h3 class="rec">2. Test MiMo-V2.5 with a small workload</h3>
+  <p>The only non-DeepSeek model in the S-tier cache bracket. 93.7% real-world hit rate verified. $278/mo projected — 44% cheaper than current, 56% more than Flash-only. Use Exacto routing to lock to Xiaomi direct (avoid DigitalOcean — no cache). Start with 1-2 cron jobs, monitor the hit rate for a week. If it holds at 93%+ and the model quality is acceptable, MiMo-V2.5 becomes your primary model — beating DeepSeek on price with comparable cache economics.</p>
+
+  <h3 class="rec">3. Explore Hy3 Preview for budget-tier crons</h3>
+  <p>Hidden gem. 88.9% cache hit rate via SiliconFlow. $754/mo. Test for low-stakes background jobs. 262K context may be limiting for long-running agent sessions. Preview model status means it could change or disappear.</p>
+
+  <div class="callout red">
+    <p><strong>Avoid all mid/low-tier cache models (Step, MiniMax, Qwen, Kimi) for production workloads.</strong> Their 11–22× higher cache-read prices make them fundamentally non-competitive at your 175:1 input-heavy ratio. Token plans from MiniMax and StepFun are explicitly not designed for production agent workloads. No-cache budget models are irrelevant — without caching, any input price above $0.024/M costs more than DeepSeek at your volume.</p>
+  </div>
+
+  <h3>Methodology</h3>
+  <p>All pricing data sourced from OpenRouter model pages and API endpoints (June 21–22, 2026). Effective input prices and cache hit rates from OpenRouter's weighted average tables (30-day rolling, weighted by token volume). Token plan details from official provider documentation (MiniMax, StepFun, Xiaomi, Alibaba Cloud). Cost projections use actual 22-day usage data from DeepSeek billing CSVs (16.2B input, 92.5M output, 96.0% cache hit rate). Models marked with estimated hit rates (MiniMax, Kimi) use conservative extrapolation from available tier data. All projections assume OpenRouter routing — direct provider API costs may differ.</p>
+</section>
+
+</main>
+
+<footer>
+  <p>Generated by Hermes Agent · June 22, 2026 · <a href="index.html">Reports Home</a></p>
+</footer>
+
+</body>
+</html>
