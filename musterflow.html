@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Muster Product — The Context7 Model</title>
+<title>MusterFlow — The Context7 Model</title>
 <style>
   :root {
     --bg: #0a0a0f;
@@ -409,30 +409,30 @@
 
     <div class="terminal-block">
       <span class="comment"># Deploy</span><br>
-      <span class="prompt">$</span> <span class="cmd">brew install [name]</span><br>
-      <span class="prompt">$</span> <span class="cmd">[name] start</span><br>
+      <span class="prompt">$</span> <span class="cmd">brew install musterflow</span><br>
+      <span class="prompt">$</span> <span class="cmd">musterflow start</span><br>
       <span class="output">→ Dashboard running on http://localhost:9876</span><br>
       <span class="output">→ MCP endpoint: http://localhost:9876/mcp</span><br>
-      <span class="output">→ CLI ready. Try: [name] connect &lt;url&gt;</span><br>
+      <span class="output">→ CLI ready. Try: musterflow connect &lt;url&gt;</span><br>
       <br>
       <span class="comment"># Connect an API</span><br>
-      <span class="prompt">$</span> <span class="cmd">[name] connect https://api.github.com</span><br>
+      <span class="prompt">$</span> <span class="cmd">musterflow connect https://api.github.com</span><br>
       <span class="output">→ Validated OpenAPI spec</span><br>
       <span class="output">→ Generated 42 CLI commands (gh issues list, gh repos create, …)</span><br>
       <span class="output">→ Registered 42 MCP tools</span><br>
       <span class="output">→ Added to your catalog. Push to community? [Y/n]</span><br>
       <br>
       <span class="comment"># Use it</span><br>
-      <span class="prompt">$</span> <span class="cmd">[name] gh issues list --repo cli/cli --state open --limit 5</span><br>
+      <span class="prompt">$</span> <span class="cmd">musterflow gh issues list --repo cli/cli --state open --limit 5</span><br>
       <span class="output">→ 5 issues returned. Formatted as table.</span><br>
       <br>
       <span class="comment"># Chain APIs into a workflow</span><br>
-      <span class="prompt">$</span> <span class="cmd">[name] flow create</span><br>
+      <span class="prompt">$</span> <span class="cmd">musterflow flow create</span><br>
       <span class="output">→ on stripe:charge.succeeded → gh issues create(title="Payment: $amount")</span><br>
       <span class="output">→ Workflow deployed. Triggered by webhook.</span><br>
       <br>
       <span class="comment"># Your AI agent now has all these tools</span><br>
-      <span class="prompt">$</span> <span class="cmd">[name] mcp endpoint</span><br>
+      <span class="prompt">$</span> <span class="cmd">musterflow mcp endpoint</span><br>
       <span class="output">→ http://localhost:9876/mcp</span><br>
       <span class="comment"># Paste that into Claude Desktop, GPT, or Hermes.</span>
     </div>
@@ -562,7 +562,7 @@
     <ol>
       <li><strong>Single binary</strong> — embeds Muster, a lightweight web dashboard, and the MCP endpoint. <code>brew install</code> and <code>docker run</code>.</li>
       <li><strong>API connection</strong> — paste an OpenAPI URL. It validates. It generates CLI commands and MCP tools immediately.</li>
-      <li><strong>CLI surface</strong> — every connected API becomes typed commands with autocomplete. <code>[name] gh issues list</code>. <code>[name] stripe charges list</code>.</li>
+      <li><strong>CLI surface</strong> — every connected API becomes typed commands with autocomplete. <code>musterflow gh issues list</code>. <code>musterflow stripe charges list</code>.</li>
       <li><strong>MCP endpoint</strong> — local endpoint that AI agents connect to. Every connected API is a tool.</li>
       <li><strong>Catalog push/pull</strong> — push your connected APIs to the community catalog (a public GitHub repo). Pull from it. Search it from the dashboard.</li>
       <li><strong>Quality scores</strong> — official specs, community-inferred, untested. Badges. Sorting.</li>
