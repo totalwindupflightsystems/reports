@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chronicle — AI Investigation Workbench | Reports</title>
+<style>
+  :root {
+    --bg: #0d0f13;
+    --surface: #171a21;
+    --surface2: #1c1f2a;
+    --border: rgba(255,255,255,0.06);
+    --text: #e4e6ef;
+    --text2: #9ca0b0;
+    --amber: #fbbf24;
+    --red: #f87171;
+    --blue: #60a5fa;
+    --green: #4ade80;
+    --purple: #c084fc;
+    --cyan: #22d3ee;
+    --pink: #f472b6;
+    --radius: 10px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+  }
+  .container { max-width: 860px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  /* --- Nav --- */
+  .breadcrumb { margin-bottom: 12px; font-size: 13px; color: var(--text2); }
+  .breadcrumb a { color: var(--blue); text-decoration: none; }
+  .breadcrumb a:hover { text-decoration: underline; }
+
+  /* --- Hero --- */
+  .hero {
+    text-align: center; padding: 56px 0 40px;
+    border-bottom: 1px solid var(--border); margin-bottom: 48px;
+  }
+  .hero .badge {
+    display: inline-block; padding: 4px 14px; margin-bottom: 20px;
+    border-radius: 20px; font-size: 12px; font-weight: 700; letter-spacing: 0.5px;
+    background: rgba(139,92,246,0.15); color: var(--purple);
+  }
+  .hero h1 { font-size: 42px; font-weight: 800; letter-spacing: -1px; margin-bottom: 12px; }
+  .hero .subtitle { font-size: 20px; color: var(--text2); font-weight: 400; max-width: 600px; margin: 0 auto 24px; line-height: 1.5; }
+  .hero .meta { font-size: 13px; color: var(--text2); }
+  .hero .meta span { color: var(--amber); font-weight: 600; }
+
+  /* --- Sections --- */
+  section { margin-bottom: 52px; }
+  section h2 {
+    font-size: 22px; font-weight: 700; letter-spacing: -0.4px;
+    margin-bottom: 20px; padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  section h2 .icon { margin-right: 10px; }
+
+  /* --- Cards --- */
+  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 600px) { .cards { grid-template-columns: 1fr; } }
+  .card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 24px;
+  }
+  .card h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.3px; }
+  .card p { font-size: 14px; color: var(--text2); line-height: 1.6; }
+  .card .price { font-size: 13px; color: var(--green); font-weight: 600; margin-top: 8px; }
+
+  /* --- Feature row --- */
+  .feature-row {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 28px; margin-bottom: 14px;
+  }
+  .feature-row h3 { font-size: 18px; font-weight: 700; margin-bottom: 6px; color: var(--amber); }
+  .feature-row p { font-size: 14px; color: var(--text2); }
+  .feature-row .badge-sm {
+    display: inline-block; margin-top: 8px; padding: 2px 8px;
+    border-radius: 4px; font-size: 10px; font-weight: 600;
+    background: rgba(251,191,36,0.12); color: var(--amber); letter-spacing: 0.3px;
+  }
+
+  /* --- Market columns --- */
+  .market-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 600px) { .market-grid { grid-template-columns: 1fr; } }
+  .market-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 28px;
+  }
+  .market-card.creative { border-color: rgba(244,114,182,0.25); }
+  .market-card.security { border-color: rgba(96,165,250,0.25); }
+  .market-card .emoji { font-size: 28px; margin-bottom: 10px; }
+  .market-card h3 { font-size: 19px; font-weight: 700; margin-bottom: 6px; }
+  .market-card .market-tag {
+    display: inline-block; padding: 2px 8px; border-radius: 4px;
+    font-size: 10px; font-weight: 600; margin-bottom: 12px;
+  }
+  .market-card.creative .market-tag { background: rgba(244,114,182,0.15); color: var(--pink); }
+  .market-card.security .market-tag { background: rgba(96,165,250,0.15); color: var(--blue); }
+  .market-card ul { list-style: none; font-size: 14px; color: var(--text2); }
+  .market-card ul li { padding: 4px 0; }
+  .market-card ul li::before { content: "• "; color: var(--amber); }
+
+  /* --- Traction Timeline --- */
+  .timeline { position: relative; padding-left: 28px; }
+  .timeline::before {
+    content: ''; position: absolute; left: 11px; top: 6px; bottom: 6px;
+    width: 2px; background: var(--border);
+  }
+  .timeline-item { margin-bottom: 28px; position: relative; }
+  .timeline-item::before {
+    content: ''; position: absolute; left: -23px; top: 7px;
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--amber); border: 2px solid var(--bg);
+  }
+  .timeline-item h3 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+  .timeline-item p { font-size: 14px; color: var(--text2); }
+
+  /* --- Quote --- */
+  .quote {
+    background: var(--surface); border-left: 3px solid var(--amber);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 24px 28px; margin: 32px 0;
+    font-style: italic; color: var(--text2); font-size: 15px;
+  }
+  .quote strong { color: var(--text); font-style: normal; }
+
+  /* --- Value prop bar --- */
+  .value-prop {
+    background: linear-gradient(135deg, rgba(139,92,246,0.08), rgba(96,165,250,0.08));
+    border: 1px solid rgba(139,92,246,0.2);
+    border-radius: var(--radius); padding: 32px 36px; margin: 40px 0;
+    text-align: center;
+  }
+  .value-prop h2 { font-size: 26px; font-weight: 800; margin-bottom: 8px; border: none; padding: 0; }
+  .value-prop p { font-size: 16px; color: var(--text2); max-width: 600px; margin: 0 auto; }
+
+  /* --- Footer --- */
+  footer {
+    margin-top: 56px; padding-top: 24px;
+    border-top: 1px solid var(--border);
+    text-align: center; font-size: 12px; color: var(--text2);
+  }
+  footer a { color: var(--blue); text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="breadcrumb">
+    <a href="index.html">← Reports</a> &nbsp;/&nbsp; Chronicle
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="badge">🚀 New Product Concept — June 2026</div>
+    <h1>Chronicle</h1>
+    <p class="subtitle">The AI-powered investigation workbench with perfect memory and transparent reasoning</p>
+    <p class="meta">Powered by <span>Consensus</span> — database-as-agent-runtime</p>
+  </div>
+
+  <!-- VALUE PROP -->
+  <div class="value-prop">
+    <h2>"I can see what the AI is thinking."</h2>
+    <p>Left pane: raw reasoning. Right pane: polished output. Every decision recorded, every action auditable, every session remembered. Never start from scratch again.</p>
+  </div>
+
+  <!-- WHAT IT IS -->
+  <section>
+    <h2><span class="icon">⚡</span>What Is Chronicle?</h2>
+    <p style="color:var(--text2); font-size:15px; margin-bottom: 24px; line-height:1.8;">
+      Chronicle is a standalone, open-source investigation workbench that serves <strong style="color:var(--text);">two passionate communities</strong> with one engine.
+      Writers and game masters use it to build consistent fictional worlds. Security analysts use it to reconstruct attacks and find patterns.
+      The AI doesn't just answer — it <em>shows you how it got there</em>.
+    </p>
+
+    <div class="market-grid">
+      <div class="market-card creative">
+        <div class="emoji">📖</div>
+        <h3>Creative Writers &amp; GMs</h3>
+        <span class="market-tag">Fable5 Alternative</span>
+        <ul>
+          <li>Build worlds with permanent lore memory</li>
+          <li>AI remembers every character, plot, detail</li>
+          <li>Multi-model "writers' room" deliberation</li>
+          <li>Auditable — prove what the AI contributed</li>
+          <li>Fable5 just shut down — <strong style="color:var(--pink);">40K users need a new home</strong></li>
+        </ul>
+      </div>
+      <div class="market-card security">
+        <div class="emoji">🛡️</div>
+        <h3>SOC Analysts &amp; Incident Responders</h3>
+        <span class="market-tag">Security Ops</span>
+        <ul>
+          <li>See AI's full reasoning chain — no black box</li>
+          <li>Semantic search across all past incidents</li>
+          <li>Immutable audit trail for compliance</li>
+          <li>HITL approval for any network action</li>
+          <li>Underserved market — <strong style="color:var(--blue);">security AI is opaque</strong></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section>
+    <h2><span class="icon">🔧</span>Core Features</h2>
+
+    <div class="feature-row">
+      <h3>Immutable Timeline</h3>
+      <p>Append-only ledger of every AI thought, action, and user decision. Becomes the canonical truth — for fictional worlds or incident investigations. Cannot be erased, even by rogue agents.</p>
+      <span class="badge-sm">Consensus: append-only memory</span>
+    </div>
+
+    <div class="feature-row">
+      <h3>Split-Pane THINK / SAYS</h3>
+      <p>Left pane shows the AI's step-by-step rationale — the real reasoning. Right pane shows the polished output. You see how it thinks, not just what it says. Builds genuine trust.</p>
+      <span class="badge-sm">Consensus: THINK/SAYS split</span>
+    </div>
+
+    <div class="feature-row">
+      <h3>Semantic Recall</h3>
+      <p>Don't keyword-search your past. Ask "Show me similar character arcs" or "Find similar lateral movement patterns." AI surfaces relevant records by meaning, not text match.</p>
+      <span class="badge-sm">Consensus: semantic retrieval</span>
+    </div>
+
+    <div class="feature-row">
+      <h3>Multi-Session Persistence</h3>
+      <p>Close your investigation and come back days or weeks later. Full context restored. Essential for year-long novels or 24/7 SOC rotations.</p>
+      <span class="badge-sm">Consensus: multi-session persistence</span>
+    </div>
+
+    <div class="feature-row">
+      <h3>Human-in-the-Loop Gates</h3>
+      <p>Any canon-affecting change (lore edit) or network action requires explicit human approval. Recorded in the timeline. No accidental world-breaking or network damage.</p>
+      <span class="badge-sm">Consensus: HITL approval gates</span>
+    </div>
+
+    <div class="feature-row">
+      <h3>Multi-Model Deliberation</h3>
+      <p>Run a "Writers' Room" or "Threat Brainstorming" where multiple AI models debate alternatives via OpenRouter. Curated, merged output — not a single model's guess.</p>
+      <span class="badge-sm">Consensus + OpenRouter + Chimera</span>
+    </div>
+
+    <div class="feature-row">
+      <h3>Row-Level Security</h3>
+      <p>Invite co-authors or analysts with granular permissions. Each sees only their scope. Multi-tenant ready — one instance, many teams.</p>
+      <span class="badge-sm">Consensus: row-level security</span>
+    </div>
+  </section>
+
+  <!-- WHY IT WINS -->
+  <section>
+    <h2><span class="icon">🎯</span>Why Chronicle Wins</h2>
+    <div class="cards">
+      <div class="card">
+        <h3 style="color:var(--pink);">🕳️ Fable5 Gap</h3>
+        <p>Fable5 just shut down. 40,000 creative writers are actively searching for alternatives <em>right now</em>. Chronicle launches as their new home with transparent AI, persistent worlds, and an open-source model.</p>
+      </div>
+      <div class="card">
+        <h3 style="color:var(--blue);">🔍 Opaque Security AI</h3>
+        <p>Splunk, CrowdStrike, Sentinel — none show the AI's reasoning. Chronicle's split-pane makes threat analysis <em>trusted</em> rather than blindly accepted. SOC teams adopt tools they can verify.</p>
+      </div>
+      <div class="card">
+        <h3 style="color:var(--green);">🔌 Plugin Marketplace</h3>
+        <p>Community contributes "genre packs" (fantasy, cyberpunk) and "investigation packs" (ransomware response, Okta MFA bombing). Viral loop through shared playbooks. Every contribution strengthens the engine.</p>
+      </div>
+      <div class="card">
+        <h3 style="color:var(--purple);">🧬 Pi Agent Pattern</h3>
+        <p>Nobody needs to know Consensus exists. Chronicle is what people install. They love it, contribute plugins, find bugs, upstream fixes. <strong>The product drives the framework, not the other way around.</strong></p>
+      </div>
+    </div>
+
+    <div class="quote">
+      <strong>The insight:</strong> "I built a framework" gets zero users. "I built a tool that fixes your fragmented context, opaque AI, and lack of auditability" gets customers. Chronicle is the tool. Consensus is the engine nobody sees.
+    </div>
+  </section>
+
+  <!-- BUSINESS MODEL -->
+  <section>
+    <h2><span class="icon">💰</span>Business Model</h2>
+    <div class="cards">
+      <div class="card">
+        <h3>Chronicle Solo</h3>
+        <p>Free &amp; open-source (Apache 2.0). Local storage, THINK/SAYS, single-model AI via your own API keys. Full features, no paywall.</p>
+        <p class="price">Free forever</p>
+      </div>
+      <div class="card">
+        <h3>Chronicle Pro</h3>
+        <p>Cloud sync across devices. Unlimited deliberation credits. Up to 3 collaborators. Priority support. For serious writers and analysts.</p>
+        <p class="price">$12/month</p>
+      </div>
+      <div class="card">
+        <h3>Chronicle Team</h3>
+        <p>Full row-level security. Audit logs. Project templates. Custom integrations (Scrivener, Splunk, etc.). Admin dashboard.</p>
+        <p class="price">$25/user/month</p>
+      </div>
+      <div class="card">
+        <h3>Chronicle Enterprise</h3>
+        <p>Self-hosted deployment on your infrastructure. SSO, dedicated memory cluster, SLA. For MSSPs and publishing houses.</p>
+        <p class="price">Custom pricing</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRACTION STRATEGY -->
+  <section>
+    <h2><span class="icon">📈</span>Go-to-Market Strategy</h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <h3>Phase 1 — Fable5 Orphans</h3>
+        <p>Direct migration guide posted to r/Fable5, r/writing, r/rpg. Demo Chronicle as "the alternative with transparent AI reasoning." Target: 500 sign-ups in week one.</p>
+      </div>
+      <div class="timeline-item">
+        <h3>Phase 2 — Security Ops Demo</h3>
+        <p>Viral demo: "A SOC analyst asks Chronicle about a phishing email and sees the AI's full reasoning chain." Share on Infosec Twitter, BlueSky, Hacker News. Target: security community attention.</p>
+      </div>
+      <div class="timeline-item">
+        <h3>Phase 3 — Plugin Marketplace</h3>
+        <p>Community contributes genre packs and investigation packs. Viral loop through shared playbooks. Writers share their fantasy settings, analysts share their incident response templates.</p>
+      </div>
+      <div class="timeline-item">
+        <h3>Phase 4 — Engine Upstream</h3>
+        <p>Power users find and fix bugs in Consensus. The product drives the framework. Open-source contributions flow both ways. Chronicle becomes the reference implementation for Consensus.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p><a href="index.html">Reports</a> · totalwindupflightsystems · GitHub Pages · June 2026</p>
+  </footer>
+</div>
+</body>
+</html>
