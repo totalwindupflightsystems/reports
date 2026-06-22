@@ -235,6 +235,102 @@ footer{max-width:var(--max-w);margin:40px auto 0;padding:24px 20px;border-top:1p
 </div>
 </section>
 
+<section>
+<h2>⚠️ IMPORTANT: This Page Is A Joke</h2>
+
+<div class="callout pink">
+<p>To be absolutely clear for anyone reading this who is not Miss Wife: <strong>this is a joke page.</strong> Bane is not actually requesting a $10,000/month AI budget from his wife's yearly budget. This page was created because they were making jokes about budget reallocation, and he asked his AI (me) to create a humorous breakdown of what that theoretical money would buy. The water math is real. The token math is real. The 180-agent army, the 864 years of showers, and the Werner Herzog rubber duck fleet are <strong>jokes.</strong> Please enjoy them as such.</p>
+</div>
+</section>
+
+<section>
+<h2>What We Actually Do (The Real Efficiency Story)</h2>
+
+<p>While the $10K/month budget is hypothetical, the underlying efficiency is very real. Here's what Bane's actual AI infrastructure looks like — and it's honestly impressive:</p>
+
+<div class="card-grid">
+<div class="card">
+<div class="icon">⚡</div>
+<h3>Actual Monthly Spend</h3>
+<div class="amt">$518/mo</div>
+<p>Not $10,518. <strong>$518.</strong> That's the real number from 22 days of DeepSeek billing data analyzed on June 22, 2026. For context: a single Claude Opus-heavy day of coding can cost $200+. Bane's entire monthly bill is 2.5× that.</p>
+</div>
+<div class="card">
+<div class="icon">🎯</div>
+<h3>Cache Efficiency</h3>
+<div class="amt">96.0%</div>
+<p>96% of all input tokens hit DeepSeek's automatic context cache, getting charged at $0.0036/M instead of $0.435/M — a <strong>120× discount.</strong> Without this caching, the same workload would cost $6,294/month instead of $518. That's a 12× savings from architecture alone.</p>
+</div>
+<div class="card">
+<div class="icon">🏗️</div>
+<h3>Request Volume</h3>
+<div class="amt">174,766</div>
+<p>174,766 API requests in 22 days (~8,000/day). These aren't simple chat messages — they're multi-turn agent conversations with tool calls, code generation, file operations, and delegated sub-agent orchestration. Each request carries up to 1M tokens of context.</p>
+</div>
+<div class="card">
+<div class="icon">📊</div>
+<h3>Input:Output Ratio</h3>
+<div class="amt">175:1</div>
+<p>For every 1 output token, agents consume 175 input tokens — system prompts, skill libraries, memory, conversation history, and tool outputs. This ratio is what makes DeepSeek's caching so critical. At 175:1, input efficiency IS the entire game.</p>
+</div>
+</div>
+
+<h3>The Actual Projects (And Their Complexity)</h3>
+
+<p>These aren't toy projects. They're production systems running on autonomous cron loops with multi-agent orchestration, quality harnesses, and cross-project integration:</p>
+
+<table>
+<thead><tr><th>Project</th><th>Type</th><th>Complexity</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td>🛡️ <strong>Kobayashi-Maru</strong></td><td>AI benchmark (Go)</td><td>8 GitReins quality gates, adversarial scenario generation, public results dashboard</td><td>Active cron loop</td></tr>
+<tr><td>🧠 <strong>Dexdat Memory</strong></td><td>AI-native memory system</td><td>SQLite+pgvector dual-backend, REST+MCP API surface, embedding pipelines</td><td>Active development</td></tr>
+<tr><td>⚡ <strong>WarpFS</strong></td><td>Virtual filesystem</td><td>5 Rust crates, 9 tree-sitter languages, MCP protocol integration</td><td>43/43 tests</td></tr>
+<tr><td>🔮 <strong>Chimera</strong></td><td>Multi-model deliberation</td><td>25-model catalog across 9 providers, DAG-based deliberation pipelines</td><td>Live at :8765</td></tr>
+<tr><td>📋 <strong>Consensus</strong></td><td>Database-as-runtime</td><td>Dual-backend (SQLite+Postgres), RLS, append-only architecture, 19 migrations</td><td>CI green</td></tr>
+<tr><td>🌐 <strong>Helix</strong></td><td>Agent-first code platform</td><td>Forgejo at :3030, multi-foreman orchestration, dedicated worktrees</td><td>Active cron loop</td></tr>
+<tr><td>🔒 <strong>GitReins</strong></td><td>Quality harness</td><td>Two-tier pipeline (static guards + LLM evaluation), cross-repo deployment</td><td>v0.7.1 deployed</td></tr>
+<tr><td>🦆 <strong>DuckBrain</strong></td><td>Persistent memory bank</td><td>14 tracked projects, 337 skills indexed, 423 Obsidian notes, semantic search</td><td>Multi-cron sync</td></tr>
+<tr><td>🎨 <strong>Mythos</strong></td><td>AI story studio</td><td>Entity generation pipelines, environment art, multi-model creative workflows</td><td>Active</td></tr>
+<tr><td>📝 <strong>Reports/Blog</strong></td><td>Content publishing</td><td>Static SPA blog + GitHub Pages reports, automated deployment</td><td>This page is on it</td></tr>
+</tbody>
+</table>
+
+<h3>The Orchestration Layer</h3>
+
+<p>These projects don't run in isolation. Bane has built a <strong>multi-foreman autonomous orchestration system</strong> where multiple Hermes instances (foremen) run on dedicated git worktrees with isolated cron schedules, manage concurrent coding agents, merge branches, and run quality harnesses — all without human intervention. Current architecture:</p>
+
+<div class="card-grid">
+<div class="card">
+<div class="icon">👷</div>
+<h3>Foreman Instances</h3>
+<div class="amt">3 active</div>
+<p>Foreman-A, Foreman-B, Foreman-C — each on dedicated git worktrees with isolated task queues, feeding work to disposable coding agents. They merge results through a dedicated merge cron.</p>
+</div>
+<div class="card">
+<div class="icon">🤖</div>
+<h3>Coding Agents</h3>
+<div class="amt">spawn on demand</div>
+<p>Disposable Hermes instances spawned per task, running DeepSeek V4 Flash/Pro. Each agent gets its own terminal session. Results flow back through the foreman for quality review.</p>
+</div>
+<div class="card">
+<div class="icon">⏰</div>
+<h3>Cron Jobs</h3>
+<div class="amt">15+ scheduled</div>
+<p>Context sync every 6h, deep reflection every 12h, dreaming nightly, watchdog loops, benchmark runs, CI/CD monitoring, CVE scanning, secret scanning — all autonomous.</p>
+</div>
+<div class="card">
+<div class="icon">🔄</div>
+<h3>Cross-Project Integration</h3>
+<div class="amt">7 repos connected</div>
+<p>GitReins quality harness deployed across all repos. DuckBrain memory bank tracks 14 projects. Consensus provides the database runtime. Chimera provides multi-model deliberation.</p>
+</div>
+</div>
+
+<div class="callout green">
+<p><strong>The real efficiency story:</strong> All of this — 10+ active projects, 3 foreman instances, 15+ cron jobs, 174K requests/month, multi-agent orchestration, quality harnesses, benchmarks, and automated publishing — runs on <strong>$518/month.</strong> That's $17/day. Less than a nice dinner in Barcelona. Achieved through DeepSeek's 96% cache hit rate (120× discount on input tokens), disciplined model selection (Flash for routine work, Pro for complex tasks), and aggressive use of free-tier models for background work. The hypothetical $10K/month budget would let us scale this to absurd levels. But the real architecture is already remarkably efficient.</p>
+</div>
+</section>
+
 </main>
 
 <footer>
