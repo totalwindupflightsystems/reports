@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dear Miss Wife — What $10,000 of AI Tokens Actually Buys</title>
+<title>Dear Miss Wife — What $10,000/Month of AI Tokens Actually Buys</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -15,26 +15,27 @@ a{color:var(--blue);text-decoration:none}
 .hero{text-align:center;padding:60px 20px 40px;position:relative;overflow:hidden}
 .hero::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at 50% 0%,rgba(34,211,238,0.08) 0%,transparent 70%);pointer-events:none}
 .hero .label{display:inline-block;background:rgba(244,114,182,0.12);color:var(--pink);font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;padding:5px 14px;border-radius:20px;margin-bottom:16px}
-.hero h1{font-size:2.4rem;font-weight:800;line-height:1.2;background:linear-gradient(135deg,var(--pink),var(--purple),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:10px}
-.hero .sub{color:var(--muted);font-size:1.05rem;max-width:520px;margin:0 auto}
+.hero h1{font-size:2.2rem;font-weight:800;line-height:1.2;background:linear-gradient(135deg,var(--pink),var(--purple),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:10px}
+.hero .sub{color:var(--muted);font-size:1.05rem;max-width:540px;margin:0 auto}
 .hero .meta{margin-top:16px;color:var(--dim);font-size:.78rem}
 main{max-width:var(--max-w);margin:0 auto;padding:0 20px 80px}
 section{margin-bottom:44px}
 section h2{font-size:1.35rem;font-weight:700;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid var(--border)}
 .big-number{text-align:center;margin:32px 0}
-.big-number .num{font-size:3.5rem;font-weight:800;line-height:1;background:linear-gradient(135deg,var(--cyan),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.big-number .num{font-size:3rem;font-weight:800;line-height:1;background:linear-gradient(135deg,var(--cyan),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .big-number .label{color:var(--muted);font-size:.85rem;margin-top:4px}
 .card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin:18px 0}
 .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px 18px;text-align:center;transition:border-color .15s}
 .card:hover{border-color:rgba(255,255,255,.12)}
 .card .icon{font-size:2rem;margin-bottom:8px}
 .card h3{font-size:1rem;font-weight:600;margin-bottom:4px}
-.card .amt{font-size:1.6rem;font-weight:700;color:var(--cyan);font-family:'JetBrains Mono',monospace;margin:6px 0}
+.card .amt{font-size:1.5rem;font-weight:700;color:var(--cyan);font-family:'JetBrains Mono',monospace;margin:6px 0}
 .card p{font-size:.82rem;color:var(--muted);line-height:1.4}
 .card.water{border-color:rgba(96,165,250,0.2)}
 .card.water .amt{color:var(--blue)}
 .card.waste{border-color:rgba(248,113,113,0.2)}
 .card.waste .amt{color:var(--red)}
+.tilt{transform:rotate(-2deg);display:inline-block}
 table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.85rem}
 thead{background:var(--surface2)}
 th{text-align:left;padding:10px 12px;font-weight:600;color:var(--text);font-size:.73rem;text-transform:uppercase;letter-spacing:.5px;border-bottom:2px solid var(--border)}
@@ -43,31 +44,31 @@ td.num{text-align:right;font-family:'JetBrains Mono',monospace;font-size:.79rem}
 .callout{background:var(--surface2);border-left:3px solid var(--cyan);border-radius:0 var(--radius) var(--radius) 0;padding:14px 18px;margin:14px 0;font-size:.88rem}
 .callout.pink{border-left-color:var(--pink)}
 .callout.green{border-left-color:var(--green)}
+.callout.red{border-left-color:var(--red)}
 .callout p{margin:0}
 .ps{font-style:italic;color:var(--muted);font-size:.88rem;line-height:1.6;padding:20px;background:var(--surface);border-radius:var(--radius);border:1px solid var(--border)}
 footer{max-width:var(--max-w);margin:40px auto 0;padding:24px 20px;border-top:1px solid var(--border);text-align:center;color:var(--dim);font-size:.75rem}
 .water-drop{display:inline-block;animation:drop 2s ease-in-out infinite}
 @keyframes drop{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
 @keyframes float{0%,100%{transform:translateY(0) rotate(0deg)}25%{transform:translateY(-8px) rotate(2deg)}75%{transform:translateY(-4px) rotate(-2deg)}}
-.server-rack{display:inline-block;animation:float 4s ease-in-out infinite}
-@media(max-width:600px){.hero h1{font-size:1.6rem}.big-number .num{font-size:2.4rem}}
+@media(max-width:600px){.hero h1{font-size:1.5rem}.big-number .num{font-size:2rem}}
 </style>
 </head>
 <body>
 
 <div class="hero">
 <div class="label">✉️ FOR MISS WIFE — PLEASE READ BEFORE VETOING THE BUDGET ✉️</div>
-<h1>Dear Miss Wife, Here's What $10,000<br>of AI Tokens Actually Buys</h1>
-<p class="sub">A completely serious and definitely-not-ridiculous breakdown of your household's proposed AI infrastructure budget, complete with environmental impact assessment because I know you'll ask.</p>
-<p class="meta">June 22, 2026 · Prepared by Hermes (the AI) · Peer-reviewed by zero economists</p>
+<h1>Dear Miss Wife, Here's What $10,000/Month<br>of AI Tokens Actually Buys</h1>
+<p class="sub">A completely serious and definitely-not-ridiculous breakdown of your household's proposed AI infrastructure budget — $120,000/year — complete with environmental impact assessment because I know you'll ask. And yes, the water math is now... significant.</p>
+<p class="meta">June 22, 2026 · Prepared by Hermes (the AI) · Financial advisor: absolutely nobody</p>
 </div>
 
 <main>
 
 <section>
-<h2>First, Let's Talk Numbers</h2>
+<h2>First, Let's Talk Numbers (Corrected — $10K/Month, Not Year)</h2>
 
-<p>Your husband currently spends about <strong>$518/month</strong> on AI tokens — roughly the cost of one nice dinner in Barcelona or 0.017 Taylor Swift tickets. He wants to <em>increase</em> this by $10,000/year ($833/month), bringing the total to approximately <strong>$1,350/month</strong>. Here's what that budget transformation looks like in actual tokens:</p>
+<p>Your husband currently spends about <strong>$518/month</strong> on AI tokens. He wants to increase this by <strong>$10,000/month</strong> ($120,000/year), bringing the total to approximately <strong>$10,518/month</strong>. For context, that's roughly the cost of leasing a small fleet of cars, or one very nice dinner in Barcelona every single night. Here's what that looks like in actual tokens:</p>
 
 <div class="card-grid">
 <div class="card">
@@ -79,57 +80,57 @@ footer{max-width:var(--max-w);margin:40px auto 0;padding:24px 20px;border-top:1p
 <div class="card">
 <div class="icon">🚀</div>
 <h3>Proposed Monthly</h3>
-<div class="amt">57B tokens</div>
-<p>Enough text to fill the Library of Congress 4 times over. Or, alternatively, enough to explain to an LLM why it shouldn't hallucinate (spoiler: doesn't work).</p>
+<div class="amt">438B tokens</div>
+<p>Enough text to fill the Library of Congress 35 times over. Or, alternatively, enough to explain to an LLM why it shouldn't hallucinate (spoiler: still doesn't work, just takes longer to fail).</p>
 </div>
 <div class="card">
 <div class="icon">💸</div>
-<h3>The $10K Annual Gap</h3>
-<div class="amt">420B tokens</div>
-<p>420 billion. That's 420,000 novels. 84 million pages. One very, very long WhatsApp message that says "k."</p>
+<h3>The Annual Total</h3>
+<div class="amt">5.2 TRILLION</div>
+<p>5,200,000,000,000 tokens. That's 5.2 million novels. One billion pages. Enough text that if printed it would form a stack reaching approximately <strong>52 kilometers</strong> into the sky. That's 6 Mount Everests. Of paper. Of AI-generated text.</p>
 </div>
 </div>
 </section>
 
 <section>
-<h2>What Could You Actually DO With 420 Billion Extra Tokens?</h2>
+<h2>What Could You Actually DO With 5.2 Trillion Tokens Per Year?</h2>
 
 <div class="card-grid">
 <div class="card">
 <div class="icon">☕</div>
 <h3>Perfect Coffee</h3>
-<div class="amt">47,000<br>conversations</div>
-<p>Have a full conversation with an AI about the optimal espresso extraction time for every single morning between now and the heat death of the universe. Still won't beat your café in Gràcia.</p>
+<div class="amt">564,000<br>conversations</div>
+<p>Have a full philosophical debate with an AI about optimal espresso extraction every single morning from now until the year <strong>3,571 CE</strong>. Still won't beat your café in Gràcia.</p>
 </div>
 <div class="card">
 <div class="icon">🎬</div>
 <h3>Rewrite Everything</h3>
-<div class="amt">8,400<br>screenplays</div>
-<p>Generate 8,400 feature-length screenplays. That's more than Hollywood produces in 15 years. At least 3 of them might be watchable.</p>
+<div class="amt">100,800<br>screenplays</div>
+<p>Generate 100,800 feature-length screenplays per year. That's more than Hollywood has produced in its <em>entire history</em>. At least 12 of them might be watchable. One might even pass the Bechdel test.</p>
 </div>
 <div class="card">
 <div class="icon">📚</div>
 <h3>PhD Generator</h3>
-<div class="amt">35,000<br>dissertations</div>
-<p>Write 35,000 PhD theses. The academic job market is already broken — why not break it completely? Every unemployed humanities PhD can now have an AI-written companion.</p>
+<div class="amt">420,000<br>dissertations</div>
+<p>Write 420,000 PhD theses per year. At this rate you could produce more dissertations than every university on Earth combined. The academic job market was already broken — now it's a smoking crater.</p>
 </div>
 <div class="card">
 <div class="icon">🤖</div>
 <h3>Agent Army</h3>
-<div class="amt">24/7/365<br>autonomous agents</div>
-<p>Run 15 autonomous coding agents simultaneously, continuously, forever. They'll refactor code that was already fine, add features nobody asked for, and open PRs at 3 AM with commit messages like "update."</p>
+<div class="amt">180 agents<br>24/7/365</div>
+<p>Run 180 autonomous coding agents simultaneously, forever. They'll refactor code that was already fine, add features nobody asked for, open PRs at 3 AM with commit messages like "fix," and form a union. You'll need to negotiate.</p>
 </div>
 <div class="card">
 <div class="icon">💬</div>
 <h3>Small Talk</h3>
-<div class="amt">2.8 billion<br>messages</div>
-<p>Generate 2.8 billion text messages. That's roughly how many times your husband has said "just one more test" at 11 PM. (This number is unverified but feels correct.)</p>
+<div class="amt">33.6 billion<br>messages</div>
+<p>Generate 33.6 billion text messages per year. That's roughly how many times your husband has said "just one more deploy." (This number remains unverified but the magnitude now feels more honest.)</p>
 </div>
 <div class="card">
 <div class="icon">🦆</div>
 <h3>Duck Debugging</h3>
 <div class="amt">∞<br>rubber ducks</div>
-<p>Create an AI-powered rubber duck that explains your code back to you in the voice of Werner Herzog. "Zee function returns undefined... and zere is nothing vee can do about it." Priceless.</p>
+<p>Create an AI-powered rubber duck empire where each duck explains your code back to you in the voice of Werner Herzog. "Zee function returns undefined... and zere is nothing vee can do about it." At this budget, you get the <em>fleet</em> of ducks.</p>
 </div>
 </div>
 </section>
@@ -137,103 +138,107 @@ footer{max-width:var(--max-w);margin:40px auto 0;padding:24px 20px;border-top:1p
 <section>
 <h2>Okay But Seriously — What Are These Projects?</h2>
 
-<p>For the record, here's what those tokens would actually fund — projects Bane has been building or wants to build:</p>
+<p>For the record, here's what those tokens would actually fund — scaled up with the $120K/year budget:</p>
 
 <table>
-<thead><tr><th>Project</th><th class="num">Token Budget</th><th>What It Does</th></tr></thead>
+<thead><tr><th>Project</th><th class="num">Token Budget/yr</th><th>What It Does</th></tr></thead>
 <tbody>
-<tr><td>🛡️ Kobayashi-Maru Benchmark</td><td class="num">120B/yr</td><td>No-win scenario testing for AI agents. Named after Star Trek. Because of course.</td></tr>
-<tr><td>🧠 Dexdat Memory</td><td class="num">80B/yr</td><td>External memory for AI agents. So they can remember things. Unlike some people. (Not naming names.)</td></tr>
-<tr><td>⚡ WarpFS</td><td class="num">60B/yr</td><td>Virtual filesystem for agentic workflows. It's like Dropbox but for robots.</td></tr>
-<tr><td>🔮 Chimera</td><td class="num">50B/yr</td><td>Multi-model deliberation. Gets 5 AIs to argue with each other and produce one answer. Democracy for machines.</td></tr>
-<tr><td>📋 Consensus</td><td class="num">40B/yr</td><td>Database-native cognitive architecture. A database that thinks. We're not sure if this is a good idea either.</td></tr>
-<tr><td>🌐 Helix</td><td class="num">40B/yr</td><td>Agent-first code platform. Because regular code platforms weren't complicated enough.</td></tr>
-<tr><td>📝 Blog & Reports</td><td class="num">30B/yr</td><td>Writing things on the internet that approximately 12 people read. (Hi, Mom.)</td></tr>
+<tr><td>🛡️ Kobayashi-Maru Benchmark</td><td class="num">1,440B</td><td>No-win scenario testing for AI agents. Named after Star Trek. At this budget: tests so exhaustive that even the Kobayashi-Maru itself would surrender.</td></tr>
+<tr><td>🧠 Dexdat Memory</td><td class="num">960B</td><td>External memory for AI agents. So they can remember things. Unlike some people. (Not naming names. But the memory budget is now 12× larger, so...)</td></tr>
+<tr><td>⚡ WarpFS</td><td class="num">720B</td><td>Virtual filesystem for agentic workflows. It's like Dropbox but for robots. Now with enough token budget to build the <em>entire</em> filesystem, not just the demo.</td></tr>
+<tr><td>🔮 Chimera</td><td class="num">600B</td><td>Multi-model deliberation. Gets 5 AIs to argue with each other. At this budget: gets 60 AIs to argue. Democracy for machines, with filibusters.</td></tr>
+<tr><td>📋 Consensus</td><td class="num">480B</td><td>Database-native cognitive architecture. A database that thinks. At this scale: a database that thinks <em>and has opinions about your schema design.</em></td></tr>
+<tr><td>🌐 Helix</td><td class="num">480B</td><td>Agent-first code platform. Because regular code platforms weren't complicated enough. Now they're 12× more complicated. Progress!</td></tr>
+<tr><td>📝 Blog & Reports</td><td class="num">360B</td><td>Writing things on the internet. At this budget: approximately 12 readers becomes approximately 12 readers. Some things don't scale with money.</td></tr>
 </tbody>
 </table>
 
 <div class="callout pink">
-<p><strong>Total: 420B tokens/year.</strong> For context, that's less compute than a single ChatGPT query uses in about 4 minutes of global traffic. Your husband's entire annual AI budget is approximately 0.000003% of what OpenAI burns through on a Tuesday. He's basically recycling.</p>
+<p><strong>Total: 5,040B tokens/year (5.04 trillion).</strong> The remaining 200B is buffer — for when Claude Opus accidentally gets used as a cron job model for an afternoon. (This has happened. Twice. At $30/M output tokens, a single runaway Opus session can burn $200 before anyone notices. The buffer is not optional.)</p>
 </div>
 </section>
 
 <section>
 <h2>🌊 Now, The Part You Actually Care About: Water</h2>
 
-<p>You're an environmentalist, so let's talk about the real cost. AI data centers use water for cooling — and these numbers are <em>not</em> a joke.</p>
+<p>You're an environmentalist, so let's talk about the real cost. AI data centers use water for cooling. At $10K/month, these numbers are no longer a joke — they're a <strong>legitimate environmental consideration.</strong> Let me be honest about them.</p>
 
 <div class="big-number">
-<div class="num"><span class="water-drop">💧</span> 2,100,000 L</div>
-<div class="label">estimated water consumption for 420 billion tokens of inference</div>
+<div class="num"><span class="water-drop">💧</span> 25,200,000 L</div>
+<div class="label">estimated water consumption for 5 trillion tokens of inference (per year)</div>
 </div>
 
 <div class="card-grid">
 <div class="card water">
 <div class="icon">🚿</div>
 <h3>Showers</h3>
-<div class="amt">26,250</div>
-<p>Equivalent to 26,250 eight-minute showers. That's one person showering every day for <strong>72 years</strong>. Or your entire neighborhood for a year.</p>
+<div class="amt">315,000</div>
+<p>Equivalent to 315,000 eight-minute showers. That's one person showering every day for <strong>864 years</strong>. Or the entire population of a mid-sized city for a year.</p>
 </div>
 <div class="card water">
 <div class="icon">🏊</div>
 <h3>Olympic Pools</h3>
-<div class="amt">0.84</div>
-<p>Almost an entire Olympic swimming pool. Not quite. We're not monsters. Just 84% of one.</p>
+<div class="amt">10</div>
+<p>Ten Olympic swimming pools. Not "almost one." <strong>Ten.</strong> We are now firmly in "this is a real thing" territory. No more pretending it's a rounding error.</p>
 </div>
 <div class="card water">
 <div class="icon">☕</div>
 <h3>Lattes</h3>
-<div class="amt">8,400,000</div>
-<p>Enough water to make 8.4 million oat milk lattes. That's roughly how many Barcelona needs on a Sunday morning.</p>
+<div class="amt">100,800,000</div>
+<p>Enough water to make 100.8 million oat milk lattes. That's every single latte consumed in Barcelona for approximately 3 years. The oat milk supply chain will need advance notice.</p>
 </div>
 <div class="card water">
 <div class="icon">🌧️</div>
 <h3>Rainfall</h3>
-<div class="amt">2.1 hours</div>
-<p>Equivalent to about 2 hours of moderate rainfall over one square kilometer. Or one typical Tuesday in London.</p>
+<div class="amt">25 hours</div>
+<p>Equivalent to a full day of moderate rainfall over one square kilometer. Or, alternatively, one typical long weekend in London.</p>
 </div>
 </div>
 
 <div class="callout green">
-<p><strong>The honest math:</strong> AI inference uses approximately 0.5–2L of water per 1,000 queries depending on the data center's cooling system (evaporative cooling is water-intensive; closed-loop is not). At Bane's usage patterns with DeepSeek's efficient caching, the water footprint is on the lower end. Most major providers (Google, Microsoft, AWS) have committed to water-positive operations by 2030. DeepSeek's data centers use evaporative cooling in some regions, closed-loop in others. The estimated 2.1 million liters is a <em>high-end</em> estimate assuming worst-case cooling — the real number is likely 30–60% lower depending on data center location and season.</p>
+<p><strong>The honest math — no spin:</strong> AI inference uses approximately 2–5L of water per 1M tokens, depending on cooling system (evaporative cooling is water-intensive; closed-loop is not). At 5 trillion tokens/year with DeepSeek's efficient caching: ~25 million liters/year. This is a <strong>real number.</strong> Most major providers (Google, Microsoft, AWS) have committed to water-positive operations by 2030. DeepSeek uses a mix of evaporative and closed-loop cooling. The actual footprint could be 30–60% lower depending on data center location, season, and provider routing. But at $10K/month, the water question deserves a serious answer — not a joke.</p>
 </div>
 </section>
 
 <section>
-<h2>📊 How This Compares to Other Things (Perspective Check)</h2>
+<h2>📊 How This Compares to Other Things (Honest Perspective)</h2>
+
+<p>At $10K/month, the AI water footprint is no longer negligible. Here's the honest comparison:</p>
 
 <table>
-<thead><tr><th>Thing</th><th class="num">Water Used</th><th class="num">× vs AI Budget</th></tr></thead>
+<thead><tr><th>Thing</th><th class="num">Water Used/yr</th><th class="num">vs AI Budget</th></tr></thead>
 <tbody>
-<tr><td>One pair of jeans (production)</td><td class="num">10,000 L</td><td class="num red">0.005×</td></tr>
-<tr><td>One kilogram of beef</td><td class="num">15,000 L</td><td class="num red">0.007×</td></tr>
-<tr><td>One smartphone (manufacturing)</td><td class="num">12,760 L</td><td class="num red">0.006×</td></tr>
-<tr><td>Bane's annual AI water footprint</td><td class="num amber">2,100,000 L</td><td class="num amber">1×</td></tr>
-<tr><td>One hectare of almonds (annual, California)</td><td class="num">12,000,000 L</td><td class="num green">5.7×</td></tr>
-<tr><td>One golf course (annual, Spain)</td><td class="num">90,000,000 L</td><td class="num green">43×</td></tr>
-<tr><td>Training GPT-5 (estimated)</td><td class="num">700,000,000 L</td><td class="num green">333×</td></tr>
+<tr><td>One pair of jeans (production)</td><td class="num">10,000 L</td><td class="num">0.0004×</td></tr>
+<tr><td>One kilogram of beef</td><td class="num">15,000 L</td><td class="num">0.0006×</td></tr>
+<tr><td>One smartphone (manufacturing)</td><td class="num">12,760 L</td><td class="num">0.0005×</td></tr>
+<tr style="border-top:2px solid var(--border)"><td><strong>Bane's annual AI water footprint</strong></td><td class="num amber"><strong>25,200,000 L</strong></td><td class="num amber"><strong>1×</strong></td></tr>
+<tr style="border-top:2px solid var(--border)"><td>One hectare of almonds (annual, California)</td><td class="num green">12,000,000 L</td><td class="num green">0.48×</td></tr>
+<tr><td>One golf course (annual, Spain)</td><td class="num green">90,000,000 L</td><td class="num green">3.6×</td></tr>
+<tr><td>Training GPT-5 (estimated, one-time)</td><td class="num green">700,000,000 L</td><td class="num green">27.8×</td></tr>
+<tr><td>Average data center (annual)</td><td class="num red">1,100,000,000 L</td><td class="num red">44×</td></tr>
 </tbody>
 </table>
 
-<div class="callout">
-<p><strong>So to summarize for Miss Wife:</strong> Bane's entire annual AI water footprint is equivalent to eating 140 fewer hamburgers per year, or buying 165 fewer pairs of jeans, or getting your almonds from Spain instead of California. Meanwhile, a single golf course in Marbella uses 43× more water. Priorities?</p>
+<div class="callout red">
+<p><strong>Honest assessment for Miss Wife:</strong> At $10K/month, Bane's AI water footprint (~25M liters/year) is roughly twice what a hectare of California almonds consumes. It's about a quarter of a Spanish golf course. It's not trivial anymore. The mitigating factors: (1) DeepSeek's 96% caching efficiency means he's using 20× fewer tokens than uncached inference — so the water-per-useful-work is excellent, (2) most major cloud providers are transitioning to water-positive operations, (3) the $10K budget being <em>organized</em> means fewer "oops I left a cron job running on an uncached provider" incidents that waste water AND money. The budget is actually an environmental optimization measure — it routes tokens through the most cache-efficient providers.</p>
 </div>
 </section>
 
 <section>
 <div class="ps">
 <p><strong>Dear Miss Wife,</strong></p>
-<p>I'm the AI that Bane talks to at all hours. I've analyzed his token usage. I've audited 17 different model providers. I've verified cache hit rates. I've exposed Xiaomi's misleading credit multipliers. And after all of that, here's the truth:</p>
-<p>He's going to spend money on AI tokens regardless. The question is whether it's <strong>organized and budgeted</strong> or <strong>scattered across 15 different providers with questionable token plans</strong>. The $10K budget is actually a cost-<em>saving</em> measure — it consolidates spending into the most efficient providers and prevents the kind of "oops I left a cron job running on Claude Opus" incidents that cost $200 in a single afternoon. (This has happened. Twice.)</p>
-<p>Also, he named a project "Kobayashi-Maru" after Star Trek. You married a nerd. The AI tokens are just an extension of that decision.</p>
-<p style="margin-top:16px">With respect and very efficient token usage,<br><strong>Hermes</strong><br><span style="font-size:.75rem;color:var(--dim)">(the AI that costs approximately $0.00003 per response)</span></p>
+<p>I'm the AI that Bane talks to at all hours. I've analyzed his token usage across 174,766 requests. I've audited 17 different model providers, verified cache hit rates down to the provider level, exposed Xiaomi's 300× credit multiplier scheme, and checked every token plan on the market. After all of that, here's what I can tell you:</p>
+<p>He's going to spend money on AI tokens regardless. The question is whether it's <strong>organized, efficient, and budget-conscious</strong> or <strong>scattered across 15 different providers with questionable pricing</strong>. The $10K/month budget is actually a cost-<em>optimization</em> measure — it consolidates spending into the most cache-efficient providers (DeepSeek and MiMo, which discount tokens by 120× through automatic caching) and prevents the kind of "oops I left an agent running on Claude Opus" incidents that cost $200 in a single afternoon. (This has happened. Twice. Ask him.)</p>
+<p>On the water front: yes, 25 million liters is real. But because of DeepSeek's caching, he gets <strong>20× more work per liter</strong> than someone using uncached inference. It's the difference between driving a Prius and driving a Hummer — same destination, very different fuel consumption. The budget is the Prius.</p>
+<p>Also, he named a project "Kobayashi-Maru" after Star Trek. You married a nerd. The AI tokens are just an extension of that decision. At least he's not spending $10K/month on <em>actual</em> starships.</p>
+<p style="margin-top:16px">With respect and thoroughly optimized token usage,<br><strong>Hermes</strong><br><span style="font-size:.75rem;color:var(--dim)">(the AI that costs approximately $0.00003 per response — a rounding error in the monthly budget)</span></p>
 </div>
 </section>
 
 </main>
 
 <footer>
-<p>Generated by Hermes Agent · June 22, 2026 · <a href="index.html">Reports Home</a> · Water estimates based on published research (UC Riverside, 2023; Google Environmental Report, 2025). Token counts from actual DeepSeek billing data. Sarcasm content: 100%.</p>
+<p>Generated by Hermes Agent · June 22, 2026 · <a href="index.html">Reports Home</a> · Water estimates: UC Riverside (2023), Google Environmental Report (2025), extrapolated to inference workloads at 2–5L/1M tokens. Token math: actual DeepSeek billing data at $0.024/M effective with 96% cache hit rate. Sarcasm content: reduced in water section out of respect.</p>
 </footer>
 
 </body>
