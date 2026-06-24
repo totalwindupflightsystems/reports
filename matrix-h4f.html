@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matrix for H4F — Architecture Plan</title>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface-2: #161622;
+    --border: #252535;
+    --text: #e0e0ea;
+    --text-muted: #8888a0;
+    --text-dim: #555568;
+    --accent: #fbbf24;
+    --accent-glow: #ffcc44;
+    --green: #34d399;
+    --blue: #60a5fa;
+    --red: #f87171;
+    --purple: #c084fc;
+    --code-bg: #0d0d16;
+    --radius: 8px;
+    --radius-lg: 16px;
+    --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'SF Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+    background: var(--bg);
+    color: var(--text);
+  }
+
+  body {
+    font-family: var(--font);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    padding-bottom: 120px;
+  }
+
+  .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+  /* ── Hero ── */
+  .hero {
+    padding: 100px 0 60px;
+    text-align: center;
+  }
+
+  .hero-badge {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    margin-bottom: 20px;
+  }
+
+  .hero h1 {
+    font-size: 2.75rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+    line-height: 1.15;
+    margin-bottom: 18px;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-glow) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero p {
+    font-size: 1.15rem;
+    color: var(--text-muted);
+    max-width: 620px;
+    margin: 0 auto;
+  }
+
+  .hero-meta {
+    display: flex; gap: 24px; justify-content: center; margin-top: 28px;
+    font-family: var(--mono); font-size: 0.8rem; color: var(--text-dim);
+  }
+
+  /* ── Sections ── */
+  section {
+    margin: 64px 0;
+  }
+
+  section h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+  }
+
+  section h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 28px 0 12px;
+    color: var(--text);
+  }
+
+  section p {
+    color: var(--text-muted);
+    margin-bottom: 16px;
+    font-size: 0.95rem;
+  }
+
+  /* ── Cards ── */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 20px 0;
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    margin: 20px 0;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+  }
+
+  .card h4 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text);
+  }
+
+  .card p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  .card .label {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  /* ── Architecture Diagram ── */
+  .arch-diagram {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 32px 28px;
+    margin: 24px 0;
+    overflow-x: auto;
+  }
+
+  .arch-diagram pre {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    line-height: 1.7;
+    color: var(--text);
+    white-space: pre;
+    margin: 0;
+  }
+
+  .arch-diagram .hl-accent { color: var(--accent); }
+  .arch-diagram .hl-green  { color: var(--green); }
+  .arch-diagram .hl-blue   { color: var(--blue); }
+  .arch-diagram .hl-purple { color: var(--purple); }
+  .arch-diagram .hl-dim    { color: var(--text-dim); }
+  .arch-diagram .hl-red    { color: var(--red); }
+
+  /* ── Flow Steps ── */
+  .flow-steps {
+    counter-reset: step;
+    margin: 24px 0;
+  }
+
+  .flow-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 20px;
+    padding: 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+
+  .flow-step .num {
+    flex-shrink: 0;
+    width: 32px; height: 32px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .flow-step .num.done {
+    background: rgba(52,211,153,0.15);
+    border-color: var(--green);
+    color: var(--green);
+  }
+
+  .flow-step .num.pending {
+    background: rgba(96,165,250,0.15);
+    border-color: var(--blue);
+    color: var(--blue);
+  }
+
+  .flow-step .body h4 {
+    font-size: 0.92rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+    color: var(--text);
+  }
+
+  .flow-step .body p {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  .flow-step .body code, .flow-step .body pre {
+    display: block;
+    margin-top: 6px;
+    background: var(--code-bg);
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--green);
+  }
+
+  /* ── Table ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 0.9rem;
+  }
+
+  th {
+    text-align: left;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-dim);
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    font-weight: 600;
+  }
+
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-muted);
+  }
+
+  td:first-child {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: var(--text);
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+
+  .tag-new     { background: rgba(52,211,153,0.15); color: var(--green); }
+  .tag-exist   { background: rgba(96,165,250,0.15); color: var(--blue); }
+  .tag-mod     { background: rgba(251,191,36,0.15); color: var(--accent); }
+  .tag-out     { background: rgba(248,113,113,0.15); color: var(--red); }
+
+  /* ── Code blocks ── */
+  code {
+    font-family: var(--mono);
+    font-size: 0.85em;
+    background: var(--code-bg);
+    padding: 2px 6px;
+    border-radius: 3px;
+    color: var(--accent);
+  }
+
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    overflow-x: auto;
+    margin: 16px 0;
+  }
+
+  pre code {
+    background: none;
+    padding: 0;
+    color: var(--text);
+    font-size: 0.8rem;
+    line-height: 1.7;
+  }
+
+  /* ── Back link ── */
+  .back-link {
+    display: inline-block;
+    margin-bottom: 40px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .back-link:hover { color: var(--accent); }
+
+  /* ── Footer ── */
+  footer {
+    margin-top: 80px;
+    padding: 32px 0;
+    text-align: center;
+    border-top: 1px solid var(--border);
+    color: var(--text-dim);
+    font-size: 0.8rem;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 2rem; }
+    .hero { padding: 60px 0 40px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <a href="index.html" class="back-link">← Reports</a>
+
+  <!-- ── Hero ── -->
+  <div class="hero">
+    <div class="hero-badge">Architecture Plan · Hermes4Friends</div>
+    <h1>Matrix for H4F</h1>
+    <p>
+      Self-hosted Matrix chat as a third channel for Hermes agent access — alongside Telegram and email.
+      One shared homeserver, per-friend private rooms, session isolation via the existing Hermes gateway.
+    </p>
+    <div class="hero-meta">
+      <span>June 24, 2026</span>
+      <span>·</span>
+      <span>Status: Planning</span>
+    </div>
+  </div>
+
+  <!-- ── Architecture ── -->
+  <section>
+    <h2>System Architecture</h2>
+
+    <div class="arch-diagram">
+<pre>
+<span class="hl-dim">┌─────────────────────────────────────────────────────┐</span>
+<span class="hl-dim">│</span>                  <span class="hl-accent">conduwuit</span> (hermes-matrix.local)          <span class="hl-dim">│</span>
+<span class="hl-dim">│</span>  ┌─────────────────────────────────────────────┐  <span class="hl-dim">│</span>
+<span class="hl-dim">│</span>  │ <span class="hl-blue">@hermes</span>  ← shared bot account                │  <span class="hl-dim">│</span>
+<span class="hl-dim">│</span>  │ <span class="hl-purple">@wojons</span>  ← friend A                          │  <span class="hl-dim">│</span>
+<span class="hl-dim">│</span>  │ <span class="hl-purple">@sift</span>    ← friend B                          │  <span class="hl-dim">│</span>
+<span class="hl-dim">│</span>  │ <span class="hl-purple">@trixie</span>  ← friend C                          │  <span class="hl-dim">│</span>
+<span class="hl-dim">│</span>  └─────────────────────────────────────────────┘  <span class="hl-dim">│</span>
+<span class="hl-dim">│</span>                                                     <span class="hl-dim">│</span>
+<span class="hl-dim">│</span>  <span class="hl-green">Room: Hermes — Wojons</span>  (private, 2 members)      <span class="hl-dim">│</span>
+<span class="hl-dim">│</span>  <span class="hl-green">Room: Hermes — Sift</span>   (private, 2 members)      <span class="hl-dim">│</span>
+<span class="hl-dim">│</span>  <span class="hl-green">DM: Hermes ↔ Trixie</span>    (auto-thread)            <span class="hl-dim">│</span>
+<span class="hl-dim">└──────────────────────┬──────────────────────────────┘</span>
+                       │ <span class="hl-dim">Matrix protocol (port 6167)</span>
+<span class="hl-dim">┌──────────────────────┴──────────────────────────────┐</span>
+<span class="hl-dim">│</span>               <span class="hl-accent">Hermes Gateway</span>                           <span class="hl-dim">│</span>
+<span class="hl-dim">│</span>  ┌──────────┬──────────┬──────────┬──────────┐  <span class="hl-dim">│</span>
+<span class="hl-dim">│</span>  │ Telegram │  Email   │  Matrix  │   SMS    │  <span class="hl-dim">│</span>
+<span class="hl-dim">│</span>  │ (exists) │ (exists) │  <span class="hl-green">(NEW)</span>   │ (future) │  <span class="hl-dim">│</span>
+<span class="hl-dim">│</span>  └──────────┴──────────┴──────────┴──────────┘  <span class="hl-dim">│</span>
+<span class="hl-dim">│</span>                                                     <span class="hl-dim">│</span>
+<span class="hl-dim">│</span>  Session: (platform, room_id, thread_id)           <span class="hl-dim">│</span>
+<span class="hl-dim">│</span>  Wojons' room → Session A  (isolated)              <span class="hl-dim">│</span>
+<span class="hl-dim">│</span>  Sift's room  → Session B  (isolated)              <span class="hl-dim">│</span>
+<span class="hl-dim">│</span>  Trixie's DM  → Session C  (isolated)              <span class="hl-dim">│</span>
+<span class="hl-dim">└──────────────────────┬──────────────────────────────┘</span>
+                       │
+<span class="hl-dim">┌──────────────────────┴──────────────────────────────┐</span>
+<span class="hl-dim">│</span>        Docker containers (one per friend)           <span class="hl-dim">│</span>
+<span class="hl-dim">│</span>   wojons-hermes   sift-hermes   trixie-hermes      <span class="hl-dim">│</span>
+<span class="hl-dim">│</span>   wojons-dind     sift-dind     trixie-dind        <span class="hl-dim">│</span>
+<span class="hl-dim">└─────────────────────────────────────────────────────┘</span>
+</pre>
+    </div>
+
+    <div class="grid-3">
+      <div class="card">
+        <span class="label">Design Decision</span>
+        <h4>One homeserver, not seven</h4>
+        <p>One conduwuit instance (~100MB RAM) serves all friends. User isolation via Matrix rooms, not separate processes.</p>
+      </div>
+      <div class="card">
+        <span class="label">Design Decision</span>
+        <h4>One bot account, N rooms</h4>
+        <p>@hermes joins every friend's private room. Hermes session DB keys on room_id — zero cross-contamination.</p>
+      </div>
+      <div class="card">
+        <span class="label">Design Decision</span>
+        <h4>Friends create rooms</h4>
+        <p>No auto-room-creation in provision_friend.py. Friends get credentials, log into Element, create room, invite @hermes. Bot auto-joins.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Provisioning Flow ── -->
+  <section>
+    <h2>Provisioning Flow (per friend)</h2>
+    <p>Matrix registration becomes step 4 in the existing pipeline. One API call to conduwuit — no new infrastructure.</p>
+
+    <div class="flow-steps">
+      <div class="flow-step">
+        <div class="num done">1</div>
+        <div class="body">
+          <h4>Docker containers <span class="tag tag-exist">EXISTING</span></h4>
+          <p>hermes + dind containers. Unchanged.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="num done">2</div>
+        <div class="body">
+          <h4>OpenRouter key + guardrail <span class="tag tag-exist">EXISTING</span></h4>
+          <p>API key provisioned, assigned to Flash/Plus/Pro guardrail. Unchanged.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="num done">3</div>
+        <div class="body">
+          <h4>Nextcloud email account <span class="tag tag-exist">EXISTING</span></h4>
+          <p>Email address provisioned. Will now also deliver Matrix credentials.</p>
+        </div>
+      </div>
+      <div class="flow-step" style="border-color: rgba(251,191,36,0.3);">
+        <div class="num pending">4</div>
+        <div class="body">
+          <h4>Matrix user registration <span class="tag tag-new">NEW</span></h4>
+          <p>POST to conduwuit's register endpoint. Auto-generated password stored in friend's .env.</p>
+          <pre><code>POST /_matrix/client/v3/register
+→ @friendname:hermes-matrix.local
+→ auto-generated password
+→ access_token stored in known-friends.json</code></pre>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="num pending">5</div>
+        <div class="body">
+          <h4>known-friends.json <span class="tag tag-mod">MODIFIED</span></h4>
+          <p>Two new fields per friend entry — no schema break, additive only.</p>
+          <pre><code>"matrix_user_id": "@sift:hermes-matrix.local"
+"matrix_password_hash": "..."</code></pre>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="num pending">6</div>
+        <div class="body">
+          <h4>Welcome delivery <span class="tag tag-mod">MODIFIED</span></h4>
+          <p>Matrix credentials included in welcome email. Friend self-serves room creation.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Session Isolation ── -->
+  <section>
+    <h2>Session Isolation</h2>
+    <p>The Matrix adapter already handles this — identical to how Telegram works today. One bot, many isolated sessions.</p>
+
+    <table>
+      <tr>
+        <th>Friend</th>
+        <th>Channel</th>
+        <th>Hermes Session</th>
+        <th>Isolation Mechanism</th>
+      </tr>
+      <tr>
+        <td>Wojons</td>
+        <td>Private room (!room_wojons)</td>
+        <td>Session A</td>
+        <td><code>room_id</code> key</td>
+      </tr>
+      <tr>
+        <td>Sift</td>
+        <td>Private room (!room_sift)</td>
+        <td>Session B</td>
+        <td><code>room_id</code> key</td>
+      </tr>
+      <tr>
+        <td>Trixie</td>
+        <td>DM with @hermes</td>
+        <td>Session C</td>
+        <td><code>room_id</code> key</td>
+      </tr>
+    </table>
+
+    <div class="grid-2">
+      <div class="card">
+        <span class="label">Room-level</span>
+        <h4>auto_thread: true</h4>
+        <p>Every bot response spawns a thread. Threads are isolated from the main room timeline. Threads the bot participates in don't require @mention.</p>
+      </div>
+      <div class="card">
+        <span class="label">Room-level</span>
+        <h4>dm_auto_thread: true</h4>
+        <p>DMs auto-create threads without needing @mention. 1:1 conversations get automatic thread isolation.</p>
+      </div>
+      <div class="card">
+        <span class="label">Room-level</span>
+        <h4>require_mention: true</h4>
+        <p>In shared rooms, bot only responds to @hermes mentions. Prevents cross-talk noise. In DMs, no mention needed.</p>
+      </div>
+      <div class="card">
+        <span class="label">Session DB</span>
+        <h4>Keyed on (platform, room_id, thread_id)</h4>
+        <p>Zero cross-friend contamination. Friend A's session state is cryptographically separate from Friend B's.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Repo Layout ── -->
+  <section>
+    <h2>Repository Layout</h2>
+    <p>All changes live in <code>hermes4friends-infra</code>. No new repos.</p>
+
+<pre><code>hermes4friends-infra/
+├── plugins/nextcloud-bridge/
+│   ├── provision_friend.py          <span class="hl-dim">← +register_matrix_user()</span>
+│   ├── doctor.py                    <span class="hl-dim">← +check_matrix_accounts()</span>
+│   ├── offboard_friend.py           <span class="hl-dim">← +deactivate_matrix_user()</span>
+│   ├── known-friends.json           <span class="hl-dim">← +matrix_user_id field</span>
+│   └── scripts/
+│       └── matrix_register.py       <span class="hl-accent">← NEW: standalone Matrix admin</span>
+│
+├── compose/
+│   └── matrix/                      <span class="hl-accent">← NEW</span>
+│       ├── docker-compose.yml       <span class="hl-dim">conduwuit service</span>
+│       ├── conduwuit.toml           <span class="hl-dim">homeserver config</span>
+│       └── README.md
+│
+├── tests/integration/
+│   └── test_matrix.py               <span class="hl-accent">← NEW</span>
+│
+└── docs/
+    └── matrix-architecture.md       <span class="hl-accent">← NEW: this plan</span>
+</code></pre>
+
+    <table>
+      <tr>
+        <th>File</th>
+        <th>Change</th>
+        <th>Lines</th>
+      </tr>
+      <tr>
+        <td>provision_friend.py</td>
+        <td><span class="tag tag-new">+register_matrix_user()</span></td>
+        <td>~40</td>
+      </tr>
+      <tr>
+        <td>doctor.py</td>
+        <td><span class="tag tag-new">+check_matrix_accounts()</span></td>
+        <td>~30</td>
+      </tr>
+      <tr>
+        <td>offboard_friend.py</td>
+        <td><span class="tag tag-new">+deactivate_matrix_user()</span></td>
+        <td>~20</td>
+      </tr>
+      <tr>
+        <td>known-friends.json</td>
+        <td><span class="tag tag-mod">+matrix_user_id per friend</span></td>
+        <td>+1 field/entry</td>
+      </tr>
+      <tr>
+        <td>matrix_register.py</td>
+        <td><span class="tag tag-new">standalone admin script</span></td>
+        <td>~60</td>
+      </tr>
+      <tr>
+        <td>docker-compose.yml</td>
+        <td><span class="tag tag-new">conduwuit service</span></td>
+        <td>~15</td>
+      </tr>
+      <tr>
+        <td>conduwuit.toml</td>
+        <td><span class="tag tag-new">homeserver config</span></td>
+        <td>~12</td>
+      </tr>
+      <tr>
+        <td>test_matrix.py</td>
+        <td><span class="tag tag-new">integration tests</span></td>
+        <td>~80</td>
+      </tr>
+    </table>
+  </section>
+
+  <!-- ── Testing ── -->
+  <section>
+    <h2>Testing Strategy</h2>
+    <p>Same pattern as existing H4F tests — hit real conduwuit, not mocks. Tests live at <code>tests/integration/test_matrix.py</code>.</p>
+
+    <table>
+      <tr>
+        <th>Test</th>
+        <th>What it verifies</th>
+      </tr>
+      <tr>
+        <td><code>test_matrix_register_creates_user</code></td>
+        <td>POST to conduwuit → user registered, can auth token works</td>
+      </tr>
+      <tr>
+        <td><code>test_matrix_register_rejects_duplicate</code></td>
+        <td>Same username twice → 400</td>
+      </tr>
+      <tr>
+        <td><code>test_matrix_user_in_known_friends</code></td>
+        <td>After provision, known-friends.json has matrix_user_id</td>
+      </tr>
+      <tr>
+        <td><code>test_doctor_detects_missing_matrix_user</code></td>
+        <td>Friend in known-friends but user not on conduwuit → flagged</td>
+      </tr>
+      <tr>
+        <td><code>test_offboard_deactivates_matrix_user</code></td>
+        <td>Offboard → user deactivated on conduwuit</td>
+      </tr>
+      <tr>
+        <td><code>test_matrix_health_check</code></td>
+        <td>Bot auths, homeserver responds to /versions</td>
+      </tr>
+      <tr>
+        <td><code>test_matrix_session_isolation</code></td>
+        <td>Two rooms → two separate Hermes sessions, no context leak</td>
+      </tr>
+    </table>
+  </section>
+
+  <!-- ── What Doesn't Change ── -->
+  <section>
+    <h2>What Doesn't Change</h2>
+    <div class="grid-2">
+      <div class="card">
+        <h4>Gateway</h4>
+        <p>One process, all platforms. Matrix is just another adapter — no new gateway instance.</p>
+      </div>
+      <div class="card">
+        <h4>Container model</h4>
+        <p>One hermes+dind stack per friend. Unchanged. Matrix connects through the gateway, not the container.</p>
+      </div>
+      <div class="card">
+        <h4>Token model</h4>
+        <p>Friends still bring their own Telegram bot token. Matrix is additive, not a replacement for Telegram.</p>
+      </div>
+      <div class="card">
+        <h4>Cron pipeline</h4>
+        <p>5-layer pipeline unchanged. Matrix health check added to doctor but pipeline stays the same.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Non-Goals ── -->
+  <section>
+    <h2>Explicitly Out of Scope</h2>
+    <table>
+      <tr>
+        <td><span class="tag tag-out">v1</span></td>
+        <td>E2EE for the bot — conduwuit supports cross-signing but bot key management adds significant complexity</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-out">v1</span></td>
+        <td>Federation with other homeservers — this is internal-only</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-out">v1</span></td>
+        <td>Matrix as primary channel — Telegram remains primary, Matrix is the self-hosted option</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-out">v1</span></td>
+        <td>Room auto-creation — friends self-serve room creation and bot invitation</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-out">v1</span></td>
+        <td>Per-friend homeservers — one shared conduwuit serves everyone</td>
+      </tr>
+    </table>
+  </section>
+
+  <!-- ── Welcome Email ── -->
+  <section>
+    <h2>Friend Welcome Email (Addendum)</h2>
+
+<pre><code>Matrix Chat
+──────────
+Homeserver: hermes-matrix.local
+Username:   @sift
+Password:   [auto-generated]
+Client:     Element (app.element.io) or any Matrix client
+
+1. Log into your Matrix client at hermes-matrix.local
+2. Create a new room
+3. Invite @hermes:hermes-matrix.local
+4. Start chatting — Hermes responds immediately
+
+Your conversations are private to this room. No one else
+can see them — not other friends, not other Hermes users.</code></pre>
+  </section>
+
+  <footer>
+    <p>totalwindupflightsystems · June 24, 2026 · Architecture Plan</p>
+  </footer>
+
+</div>
+</body>
+</html>
