@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matrix Homeserver Decision — H4F Architecture</title>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface-2: #161622;
+    --border: #252535;
+    --text: #e0e0ea;
+    --text-muted: #8888a0;
+    --text-dim: #555568;
+    --amber: #fbbf24;
+    --green: #34d399;
+    --blue: #60a5fa;
+    --red: #f87171;
+    --purple: #c084fc;
+    --code-bg: #0d0d16;
+    --radius: 8px;
+    --radius-lg: 14px;
+    --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'SF Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+    background: var(--bg);
+    color: var(--text);
+  }
+
+  body {
+    font-family: var(--font);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    padding-bottom: 120px;
+  }
+
+  .container { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+
+  /* Hero */
+  .hero {
+    padding: 80px 0 50px;
+    text-align: center;
+  }
+
+  .hero-badge {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--amber);
+    margin-bottom: 16px;
+  }
+
+  .hero h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: -0.8px;
+    line-height: 1.15;
+    margin-bottom: 14px;
+    background: linear-gradient(135deg, var(--amber) 0%, #fcd34d 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero .subtitle {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    max-width: 640px;
+    margin: 0 auto 24px;
+    line-height: 1.55;
+  }
+
+  .hero-meta {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    display: flex; gap: 16px; justify-content: center;
+  }
+
+  /* Back link */
+  .back-link {
+    display: inline-block;
+    margin-bottom: 32px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .back-link:hover { color: var(--amber); }
+
+  /* Sections */
+  section {
+    margin: 56px 0;
+  }
+
+  section h2 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    margin-bottom: 18px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+  }
+
+  section h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin: 28px 0 10px;
+    color: var(--text);
+  }
+
+  section p {
+    color: var(--text-muted);
+    margin-bottom: 14px;
+    font-size: 0.93rem;
+    line-height: 1.6;
+  }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 18px 0;
+    font-size: 0.88rem;
+  }
+
+  th {
+    text-align: left;
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--text-dim);
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-muted);
+    vertical-align: top;
+  }
+
+  td:first-child {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: var(--text);
+    white-space: nowrap;
+  }
+
+  td strong {
+    color: var(--text);
+  }
+
+  /* Tags */
+  .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+
+  .tag-yes    { background: rgba(52,211,153,0.15); color: var(--green); }
+  .tag-no     { background: rgba(248,113,113,0.12); color: var(--red); }
+  .tag-warn   { background: rgba(251,191,36,0.15); color: var(--amber); }
+  .tag-info   { background: rgba(96,165,250,0.15); color: var(--blue); }
+
+  /* Code */
+  code {
+    font-family: var(--mono);
+    font-size: 0.82em;
+    background: var(--code-bg);
+    padding: 2px 6px;
+    border-radius: 3px;
+    color: var(--amber);
+  }
+
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    overflow-x: auto;
+    margin: 14px 0;
+  }
+
+  pre code {
+    background: none;
+    padding: 0;
+    color: var(--text);
+    font-size: 0.78rem;
+    line-height: 1.65;
+  }
+
+  /* Cards */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 18px 0;
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    margin: 18px 0;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+  }
+
+  .card .label {
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--amber);
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  .card h4 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: var(--text);
+  }
+
+  .card p {
+    font-size: 0.83rem;
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  /* Architecture diagram */
+  .arch-diagram {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px 24px;
+    margin: 20px 0;
+    overflow-x: auto;
+  }
+
+  .arch-diagram pre {
+    font-family: var(--mono);
+    font-size: 0.76rem;
+    line-height: 1.7;
+    color: var(--text);
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    white-space: pre;
+  }
+
+  .hl-amber  { color: var(--amber); }
+  .hl-green  { color: var(--green); }
+  .hl-blue   { color: var(--blue); }
+  .hl-purple { color: var(--purple); }
+  .hl-dim    { color: var(--text-dim); }
+  .hl-red    { color: var(--red); }
+  .hl-muted  { color: var(--text-muted); }
+
+  /* Callout */
+  .callout {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--amber);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    margin: 20px 0;
+  }
+
+  .callout h4 {
+    font-size: 0.88rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: var(--amber);
+  }
+
+  .callout p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  .callout.info { border-left-color: var(--blue); }
+  .callout.info h4 { color: var(--blue); }
+  .callout.warn { border-left-color: var(--red); }
+  .callout.warn h4 { color: var(--red); }
+
+  /* Scenario boxes */
+  .scenario-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 20px 0;
+  }
+
+  .scenario {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+  }
+
+  .scenario.recommended {
+    border-color: rgba(52,211,153,0.4);
+    background: linear-gradient(135deg, var(--surface) 0%, rgba(52,211,153,0.04) 100%);
+  }
+
+  .scenario .scenario-badge {
+    font-family: var(--mono);
+    font-size: 0.64rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .scenario.recommended .scenario-badge { color: var(--green); }
+  .scenario .scenario-badge { color: var(--text-dim); }
+
+  .scenario h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0 0 8px;
+  }
+
+  .scenario ul {
+    list-style: none;
+    margin: 12px 0 0;
+  }
+
+  .scenario ul li {
+    font-size: 0.84rem;
+    color: var(--text-muted);
+    padding: 4px 0;
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .scenario ul li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--text-dim);
+  }
+
+  .scenario ul li.pro::before { content: '+'; color: var(--green); }
+  .scenario ul li.con::before { content: '−'; color: var(--red); }
+
+  .scenario .cost-tag {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    background: rgba(251,191,36,0.12);
+    color: var(--amber);
+  }
+
+  .scenario.recommended .cost-tag {
+    background: rgba(52,211,153,0.12);
+    color: var(--green);
+  }
+
+  /* Progress bar */
+  .bar-group {
+    margin: 12px 0;
+  }
+
+  .bar-label {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .bar-label .val {
+    font-family: var(--mono);
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .bar-track {
+    height: 8px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 4px;
+  }
+
+  .bar-fill.amber { background: var(--amber); }
+  .bar-fill.green { background: var(--green); }
+  .bar-fill.blue  { background: var(--blue); }
+
+  /* Footer */
+  footer {
+    margin-top: 80px;
+    padding: 28px 0;
+    text-align: center;
+    border-top: 1px solid var(--border);
+    color: var(--text-dim);
+    font-size: 0.78rem;
+  }
+
+  @media (max-width: 768px) {
+    .grid-2, .grid-3, .scenario-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 1.8rem; }
+    .hero { padding: 50px 0 32px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <a href="index.html" class="back-link">← Reports</a>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-badge">Architecture Decision · Hermes4Friends</div>
+    <h1>Matrix Homeserver Decision</h1>
+    <p class="subtitle">
+      Which Matrix homeserver to run, whether to enable federation, and how to handle friends who
+      already have Matrix accounts on other servers.
+    </p>
+    <div class="hero-meta">
+      <span>June 24, 2026</span>
+      <span>·</span>
+      <span>Status: Decision Phase</span>
+    </div>
+  </div>
+
+  <!-- Section 1: Homeserver Comparison -->
+  <section>
+    <h2>1. Homeserver Options — Resource Comparison</h2>
+
+    <table>
+      <tr>
+        <th></th>
+        <th>Synapse</th>
+        <th>Dendrite</th>
+        <th>Conduwuit</th>
+      </tr>
+      <tr>
+        <td>Language</td>
+        <td>Python</td>
+        <td>Go</td>
+        <td>Rust</td>
+      </tr>
+      <tr>
+        <td><strong>RAM (idle, ~5 users)</strong></td>
+        <td>~350–500 MB</td>
+        <td>~200 MB</td>
+        <td><strong>~50–100 MB</strong></td>
+      </tr>
+      <tr>
+        <td><strong>RAM (federated, large rooms)</strong></td>
+        <td>2–4 GB+</td>
+        <td>~1 GB</td>
+        <td>~200–500 MB</td>
+      </tr>
+      <tr>
+        <td><strong>CPU</strong></td>
+        <td>1–2 vCPU</td>
+        <td>1 vCPU</td>
+        <td>0.5 vCPU</td>
+      </tr>
+      <tr>
+        <td>External DB</td>
+        <td>PostgreSQL <span class="tag tag-warn">required</span></td>
+        <td>PostgreSQL <span class="tag tag-warn">required</span></td>
+        <td><strong>None (SQLite built-in)</strong></td>
+      </tr>
+      <tr>
+        <td><strong>Disk (OS + DB + media)</strong></td>
+        <td>10–20 GB</td>
+        <td>5–10 GB</td>
+        <td><strong>2–5 GB</strong></td>
+      </tr>
+      <tr>
+        <td>Feature complete</td>
+        <td><span class="tag tag-yes">Full</span></td>
+        <td><span class="tag tag-warn">Stalled</span></td>
+        <td><span class="tag tag-info">Some gaps</span></td>
+      </tr>
+      <tr>
+        <td>E2EE</td>
+        <td><span class="tag tag-yes">Yes</span></td>
+        <td><span class="tag tag-yes">Yes</span></td>
+        <td><span class="tag tag-yes">Yes</span></td>
+      </tr>
+      <tr>
+        <td>Production ready</td>
+        <td><span class="tag tag-yes">Yes</span></td>
+        <td><span class="tag tag-warn">Early</span></td>
+        <td><span class="tag tag-yes">Yes</span></td>
+      </tr>
+      <tr>
+        <td>Status</td>
+        <td>Active, official</td>
+        <td>Maintenance mode</td>
+        <td><strong>Active</strong></td>
+      </tr>
+      <tr>
+        <td><strong>Federation tested at scale</strong></td>
+        <td><span class="tag tag-yes">Battle-tested</span></td>
+        <td><span class="tag tag-warn">Moderate</span></td>
+        <td><span class="tag tag-warn">Limited testing</span></td>
+      </tr>
+    </table>
+
+    <div class="grid-3" style="margin-top: 8px;">
+      <div class="card">
+        <span class="label">1–5 friends</span>
+        <h4>Conduwuit</h4>
+        <p>512 MB RAM, 1 vCPU, 5 GB disk. ~$4–6/mo VPS.</p>
+      </div>
+      <div class="card">
+        <span class="label">5–20 friends</span>
+        <h4>Synapse</h4>
+        <p>2 GB RAM, 2 vCPU, 20 GB disk. ~$12–20/mo.</p>
+      </div>
+      <div class="card">
+        <span class="label">20+ friends</span>
+        <h4>Synapse + workers</h4>
+        <p>4 GB+ RAM, 4 vCPU. ~$30–50/mo.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2: What We Actually Need -->
+  <section>
+    <h2>2. What H4F Actually Needs From a Homeserver</h2>
+
+    <table>
+      <tr>
+        <th>Requirement</th>
+        <th>Why</th>
+        <th>Conduwuit</th>
+        <th>Synapse</th>
+      </tr>
+      <tr>
+        <td>User registration (API)</td>
+        <td>provision_friend.py creates accounts programmatically</td>
+        <td><span class="tag tag-yes">✓</span></td>
+        <td><span class="tag tag-yes">✓</span></td>
+      </tr>
+      <tr>
+        <td>User deactivation (API)</td>
+        <td>offboard_friend.py removes accounts</td>
+        <td><span class="tag tag-yes">✓</span></td>
+        <td><span class="tag tag-yes">✓</span></td>
+      </tr>
+      <tr>
+        <td>Threads (MSC3440)</td>
+        <td>Session isolation per conversation</td>
+        <td><span class="tag tag-yes">✓</span></td>
+        <td><span class="tag tag-yes">✓</span></td>
+      </tr>
+      <tr>
+        <td>Private rooms</td>
+        <td>Each friend's chat is invite-only</td>
+        <td><span class="tag tag-yes">✓</span></td>
+        <td><span class="tag tag-yes">✓</span></td>
+      </tr>
+      <tr>
+        <td>No external PostgreSQL</td>
+        <td>One less service to manage and back up</td>
+        <td><span class="tag tag-yes">✓ SQLite</span></td>
+        <td><span class="tag tag-no">✗ Required</span></td>
+      </tr>
+      <tr>
+        <td>&lt; 200 MB RAM idle</td>
+        <td>Co-hosted with H4F stack or cheap separate VPS</td>
+        <td><span class="tag tag-yes">✓ ~100 MB</span></td>
+        <td><span class="tag tag-no">✗ ~400 MB</span></td>
+      </tr>
+      <tr>
+        <td>Federation (if needed)</td>
+        <td>Friends with existing Matrix accounts connect from their homeserver</td>
+        <td><span class="tag tag-warn">⚠ limited testing</span></td>
+        <td><span class="tag tag-yes">✓ battle-tested</span></td>
+      </tr>
+    </table>
+
+    <div class="callout">
+      <h4>Verdict: Conduwuit for closed mode. Synapse if federation matters.</h4>
+      <p>
+        Conduwuit wins on every axis except federation-at-scale. If we enable federation — so friends
+        with existing matrix.org accounts can message our bot without creating a new account — Synapse's
+        battle-tested federation stack becomes the tiebreaker. Conduwuit federates but hasn't been
+        through the same fire as Synapse with thousands of interconnected servers.
+      </p>
+    </div>
+  </section>
+
+  <!-- Section 3: Federation — The Real Decision -->
+  <section>
+    <h2>3. The Federation Question</h2>
+    <p>
+      This is the architectural fork. It determines which homeserver we choose, what infrastructure
+      we need, and what the friend onboarding experience looks like.
+    </p>
+
+    <div class="arch-diagram">
+<pre>
+<span class="hl-dim">┌────────────────────────────────────────────────────────────┐</span>
+<span class="hl-dim">│</span>              <span class="hl-amber">CLOSED MODE</span> — No Federation                     <span class="hl-dim">│</span>
+<span class="hl-dim">│</span>                                                            <span class="hl-dim">│</span>
+<span class="hl-dim">│</span>  <span class="hl-blue">hermes-matrix.local</span>  (conduwuit, 100 MB, SQLite)       <span class="hl-dim">│</span>
+<span class="hl-dim">│</span>  ├── @hermes (bot)                                        <span class="hl-dim">│</span>
+<span class="hl-dim">│</span>  ├── @wojons ← <span class="hl-green">new account created at provisioning</span>       <span class="hl-dim">│</span>
+<span class="hl-dim">│</span>  ├── @sift   ← <span class="hl-green">new account created at provisioning</span>       <span class="hl-dim">│</span>
+<span class="hl-dim">│</span>  └── @trixie ← <span class="hl-green">new account created at provisioning</span>       <span class="hl-dim">│</span>
+<span class="hl-dim">│</span>                                                            <span class="hl-dim">│</span>
+<span class="hl-dim">│</span>  ✅ No DNS needed (localhost:6167)                        <span class="hl-dim">│</span>
+<span class="hl-dim">│</span>  ✅ No TLS needed                                         <span class="hl-dim">│</span>
+<span class="hl-dim">│</span>  ✅ No public exposure                                    <span class="hl-dim">│</span>
+<span class="hl-dim">│</span>  ❌ Friends with existing Matrix accounts need a new one  <span class="hl-dim">│</span>
+<span class="hl-dim">│</span>  ❌ Can't message @hermes from matrix.org                 <span class="hl-dim">│</span>
+<span class="hl-dim">└────────────────────────────────────────────────────────────┘</span>
+
+<span class="hl-dim">┌────────────────────────────────────────────────────────────┐</span>
+<span class="hl-dim">│</span>            <span class="hl-blue">FEDERATED MODE</span> — Open Federation                 <span class="hl-dim">│</span>
+<span class="hl-dim">│</span>                                                            <span class="hl-dim">│</span>
+<span class="hl-dim">│</span>  <span class="hl-blue">matrix.h4f.example</span>  (Synapse, 400 MB, PostgreSQL)     <span class="hl-dim">│</span>
+<span class="hl-dim">│</span>  ├── @hermes:matrix.h4f.example (bot)                    <span class="hl-dim">│</span>
+<span class="hl-dim">│</span>  │                                                        <span class="hl-dim">│</span>
+<span class="hl-dim">│</span>  │   <span class="hl-purple">@wojons:matrix.org</span>  ──federation──▶  DMs @hermes   <span class="hl-dim">│</span>
+<span class="hl-dim">│</span>  │   <span class="hl-purple">@sift:matrix.org</span>    ──federation──▶  joins room     <span class="hl-dim">│</span>
+<span class="hl-dim">│</span>  │   <span class="hl-green">@trixie:matrix.h4f</span>  ← new local account             <span class="hl-dim">│</span>
+<span class="hl-dim">│</span>  │                                                        <span class="hl-dim">│</span>
+<span class="hl-dim">│</span>  ❗ Needs public domain + TLS cert                        <span class="hl-dim">│</span>
+<span class="hl-dim">│</span>  ❗ Needs DNS SRV record for federation discovery         <span class="hl-dim">│</span>
+<span class="hl-dim">│</span>  ❗ Needs PostgreSQL (external DB)                        <span class="hl-dim">│</span>
+<span class="hl-dim">│</span>  ❗ ~400 MB RAM at idle, 2 GB under federation load       <span class="hl-dim">│</span>
+<span class="hl-dim">│</span>  ✅ Friends keep their existing Matrix accounts            <span class="hl-dim">│</span>
+<span class="hl-dim">│</span>  ✅ Can also create local accounts for friends without one <span class="hl-dim">│</span>
+<span class="hl-dim">└────────────────────────────────────────────────────────────┘</span>
+</pre>
+    </div>
+
+    <div class="scenario-grid">
+      <div class="scenario recommended">
+        <div class="scenario-badge">★ Recommended for v1</div>
+        <h3>Closed — No Federation</h3>
+        <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:12px;">
+          Every friend gets a new account on our homeserver during provisioning. No existing
+          Matrix accounts — clean slate.
+        </p>
+        <ul>
+          <li class="pro">Zero infrastructure beyond a Docker container</li>
+          <li class="pro">No DNS, no TLS, no public exposure</li>
+          <li class="pro">conduwuit: SQLite, 100 MB RAM, one process to manage</li>
+          <li class="pro">Backup: one directory. Migration: copy the data dir</li>
+          <li class="con">Friends with existing Matrix accounts need a second one</li>
+          <li class="con">"Another account to manage" friction for power users</li>
+        </ul>
+        <div class="cost-tag">$0/mo additional (co-hosted on H4F VPS)</div>
+      </div>
+
+      <div class="scenario">
+        <div class="scenario-badge">v2 / Federation-needed</div>
+        <h3>Open — Federation Enabled</h3>
+        <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:12px;">
+          Friends can message @hermes from their existing matrix.org (or any) account. Or create
+          a local one. Maximum flexibility.
+        </p>
+        <ul>
+          <li class="pro">Zero friction for friends who already use Matrix</li>
+          <li class="pro">"Just DM @hermes:matrix.h4f.example" — no account creation</li>
+          <li class="pro">Hybrid: local accounts still available for non-Matrix friends</li>
+          <li class="con">Synapse + PostgreSQL — heavier stack, more maintenance</li>
+          <li class="con">Public domain + TLS cert required</li>
+          <li class="con">Federation moderation: spam, abuse vectors</li>
+          <li class="con">conduwuit federation less tested at scale</li>
+        </ul>
+        <div class="cost-tag">~$12–20/mo (separate VPS or upgraded H4F host)</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 4: "Attach" Model -->
+  <section>
+    <h2>4. The "Attach" Model — Friends With Existing Matrix</h2>
+    <p>
+      If a friend already has <code>@theirname:matrix.org</code> and doesn't want a second account,
+      here's how they connect — depending on which mode we run.
+    </p>
+
+    <table>
+      <tr>
+        <th>Friend's situation</th>
+        <th>Closed mode</th>
+        <th>Federated mode</th>
+      </tr>
+      <tr>
+        <td><strong>No Matrix account</strong></td>
+        <td>Provisioning creates <code>@friend:hermes-matrix.local</code>. They log into Element pointed at our server. Same experience as new email account.</td>
+        <td>Provisioning creates <code>@friend:matrix.h4f.example</code> OR they register on matrix.org and DM our bot. Either works.</td>
+      </tr>
+      <tr>
+        <td><strong>Has matrix.org account</strong></td>
+        <td>Must create a second account on our homeserver. Two Matrix accounts, two clients (or one client with two logged-in sessions). Friction.</td>
+        <td>They DM <code>@hermes:matrix.h4f.example</code> from their existing matrix.org client. No new account. Federation routes the message.</td>
+      </tr>
+      <tr>
+        <td><strong>Runs their own homeserver</strong></td>
+        <td>Same as above — second account required on our server.</td>
+        <td>They add our server to their federation allowlist. Their users DM our bot directly. Enterprise-grade.</td>
+      </tr>
+    </table>
+
+    <div class="callout info">
+      <h4>Progressive migration path</h4>
+      <p>
+        Start closed (conduwuit, no federation). If enough friends complain about the second account,
+        migrate to Synapse with federation. conduwuit's data directory is a RocksDB — migration tools
+        exist for conduwuit → Synapse, and the reverse is possible with the conduwuit import tool.
+        The closed mode doesn't lock us in — it's the v1 that keeps options open for v2.
+      </p>
+    </div>
+  </section>
+
+  <!-- Section 5: Infrastructure Cost -->
+  <section>
+    <h2>5. Infrastructure Cost Projections</h2>
+
+    <table>
+      <tr>
+        <th>Scenario</th>
+        <th>Homeserver</th>
+        <th>Hosting</th>
+        <th>Monthly</th>
+        <th>Notes</th>
+      </tr>
+      <tr>
+        <td><strong>A — Closed, co-hosted</strong></td>
+        <td>Conduwuit on H4F VPS</td>
+        <td>Same Hetzner box</td>
+        <td><strong>$0 added</strong></td>
+        <td>+100 MB RAM, no new services. Just a compose file.</td>
+      </tr>
+      <tr>
+        <td><strong>B — Closed, separate VPS</strong></td>
+        <td>Conduwuit on $4 VPS</td>
+        <td>Hetzner CX22 (2 vCPU, 4 GB, 40 GB)</td>
+        <td><strong>~$4/mo</strong></td>
+        <td>Clean separation. If H4F goes down, Matrix stays up (bot queues messages).</td>
+      </tr>
+      <tr>
+        <td><strong>C — Federated, separate VPS</strong></td>
+        <td>Synapse + PostgreSQL</td>
+        <td>Hetzner CX32 (4 vCPU, 8 GB, 80 GB)</td>
+        <td><strong>~$12/mo</strong></td>
+        <td>PostgreSQL needs RAM. Federation traffic adds CPU load.</td>
+      </tr>
+      <tr>
+        <td><strong>D — Federated, upgraded H4F host</strong></td>
+        <td>Synapse + PostgreSQL on H4F box</td>
+        <td>Upgrade H4F VPS to CX42 (8 vCPU, 16 GB)</td>
+        <td><strong>~$8/mo added</strong></td>
+        <td>Heavier single box. Everything in one place. Larger blast radius.</td>
+      </tr>
+    </table>
+
+    <div class="bar-group" style="margin-top: 20px;">
+      <div style="font-size:0.78rem;color:var(--text-dim);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.06em;">Monthly cost per scenario (USD)</div>
+      <div class="bar-group">
+        <div class="bar-label"><span>A — Closed, co-hosted</span><span class="val">$0</span></div>
+        <div class="bar-track"><div class="bar-fill green" style="width:0%"></div></div>
+      </div>
+      <div class="bar-group">
+        <div class="bar-label"><span>B — Closed, separate $4 VPS</span><span class="val">~$4</span></div>
+        <div class="bar-track"><div class="bar-fill green" style="width:20%"></div></div>
+      </div>
+      <div class="bar-group">
+        <div class="bar-label"><span>C — Federated, separate $12 VPS</span><span class="val">~$12</span></div>
+        <div class="bar-track"><div class="bar-fill amber" style="width:60%"></div></div>
+      </div>
+      <div class="bar-group">
+        <div class="bar-label"><span>D — Federated, upgraded H4F host (+$8)</span><span class="val">~$8 added</span></div>
+        <div class="bar-track"><div class="bar-fill amber" style="width:40%"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 6: Decision Matrix -->
+  <section>
+    <h2>6. Decision Matrix</h2>
+
+    <table>
+      <tr>
+        <th>If...</th>
+        <th>Then...</th>
+      </tr>
+      <tr>
+        <td>None of your friends use Matrix today</td>
+        <td><strong>Conduwuit, closed, co-hosted.</strong> Zero cost, zero complexity. Friends get accounts at provisioning time — same flow as email.</td>
+      </tr>
+      <tr>
+        <td>1–2 friends already have Matrix and would resist a second account</td>
+        <td><strong>Conduwuit, closed, co-hosted.</strong> The friction of a second account for 1–2 people is lower than the infrastructure cost of federation. They can run two sessions in Element.</td>
+      </tr>
+      <tr>
+        <td>Multiple friends actively use Matrix and refuse second accounts</td>
+        <td><strong>Synapse, federated, separate $12 VPS.</strong> Federation is the only way to meet them where they are. Bite the PostgreSQL bullet.</td>
+      </tr>
+      <tr>
+        <td>You want federation but refuse PostgreSQL</td>
+        <td><strong>Conduwuit, federated, with monitoring.</strong> It works — conduwuit federates. It just hasn't been through matrix.org-scale fire. For a private friend group (not public rooms), the federation load is negligible.</td>
+      </tr>
+      <tr>
+        <td>You want to start simple, keep options open</td>
+        <td><strong>Conduwuit, closed, co-hosted. Migrate later if needed.</strong> Conduwuit's RocksDB is portable. Migration tools exist. v1 is not a trap.</td>
+      </tr>
+    </table>
+
+    <div class="callout warn">
+      <h4>One thing you can't defer: public DNS</h4>
+      <p>
+        If there's any chance you'll enable federation later, register the domain NOW and point it
+        at the server. Matrix user IDs include the server name (<code>@user:matrix.h4f.example</code>),
+        and changing the server name later requires a database wipe — every user loses their account.
+        You can run closed on a public domain. You can't add a domain later without nuking accounts.
+      </p>
+    </div>
+  </section>
+
+  <!-- Section 7: Recommendation -->
+  <section>
+    <h2>7. Recommendation</h2>
+
+    <div class="grid-2">
+      <div class="card" style="border-color: rgba(52,211,153,0.4);">
+        <span class="label" style="color:var(--green);">V1 — Ship Now</span>
+        <h4>Conduwuit, closed, co-hosted</h4>
+        <p style="font-size:0.84rem;color:var(--text-muted);">
+          Add <code>compose/matrix/</code> to the H4F repo. One <code>docker compose up -d</code>.
+          provision_friend.py registers Matrix users alongside email. Zero new cost. Zero new services.
+        </p>
+        <p style="font-size:0.78rem;color:var(--text-dim);margin-top:8px;">
+          Use a real domain as server name from day one (not localhost) — preserves the federation
+          upgrade path without account wipes.
+        </p>
+      </div>
+      <div class="card">
+        <span class="label">V2 — If Federation Needed</span>
+        <h4>Synapse, federated, separate VPS</h4>
+        <p style="font-size:0.84rem;color:var(--text-muted);">
+          Spin up a $12/mo CX32. Migrate conduwuit data. Enable federation. Friends on matrix.org
+          DM <code>@hermes:matrix.h4f.example</code> without creating accounts.
+        </p>
+        <p style="font-size:0.78rem;color:var(--text-dim);margin-top:8px;">
+          Trigger: &gt;2 friends already on Matrix AND unwilling to create second accounts.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 8: Provisioning Impact -->
+  <section>
+    <h2>8. Provisioning Pipeline Impact</h2>
+
+    <p>Regardless of which mode we choose, the code changes are the same shape:</p>
+
+    <table>
+      <tr>
+        <th>File</th>
+        <th>Change</th>
+        <th>~Lines</th>
+      </tr>
+      <tr>
+        <td><code>provision_friend.py</code></td>
+        <td><span class="tag tag-yes">+ register_matrix_user()</span></td>
+        <td>~40</td>
+      </tr>
+      <tr>
+        <td><code>doctor.py</code></td>
+        <td><span class="tag tag-yes">+ check_matrix_accounts()</span></td>
+        <td>~30</td>
+      </tr>
+      <tr>
+        <td><code>offboard_friend.py</code></td>
+        <td><span class="tag tag-yes">+ deactivate_matrix_user()</span></td>
+        <td>~20</td>
+      </tr>
+      <tr>
+        <td><code>known-friends.json</code></td>
+        <td><span class="tag tag-yes">+ matrix_user_id field</span></td>
+        <td>+1 field/entry</td>
+      </tr>
+      <tr>
+        <td><code>compose/matrix/</code></td>
+        <td><span class="tag tag-yes">conduwuit docker-compose + config</span></td>
+        <td>~30</td>
+      </tr>
+      <tr>
+        <td><code>tests/integration/test_matrix.py</code></td>
+        <td><span class="tag tag-yes">7 integration tests</span></td>
+        <td>~80</td>
+      </tr>
+    </table>
+
+    <p style="margin-top:16px;font-size:0.85rem;color:var(--text-dim);">
+      Total: ~200 net new lines across 6 files. All additive — no existing code paths change.
+    </p>
+  </section>
+
+  <footer>
+    <p>totalwindupflightsystems · June 24, 2026 · Architecture Decision Document</p>
+  </footer>
+
+</div>
+
+</body>
+</html>
