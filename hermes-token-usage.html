@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hermes Agent — Token Usage Report (May 23 – Jun 24, 2026)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f1117;--surface:#1a1d27;--surface2:#222533;--text:#e4e6ef;--muted:#9ca0b0;--dim:#6b7084;--red:#f87171;--amber:#fbbf24;--green:#4ade80;--blue:#60a5fa;--purple:#c084fc;--cyan:#22d3ee;--border:rgba(255,255,255,0.06);--radius:8px;--max-w:960px}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,sans-serif;line-height:1.7;font-size:15px}
+code,pre{font-family:'JetBrains Mono',monospace;font-size:.82rem}a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
+nav.top{position:sticky;top:0;z-index:100;background:rgba(15,17,23,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:12px 0}
+nav.top .inner{max-width:var(--max-w);margin:0 auto;padding:0 20px;display:flex;gap:14px;overflow-x:auto}
+nav.top a{color:var(--muted);font-size:.78rem;font-weight:500;white-space:nowrap}
+nav.top a:hover{color:var(--text);text-decoration:none}
+.hero{padding:72px 20px 44px;text-align:center}
+.hero h1{font-size:2.2rem;font-weight:800;line-height:1.25;background:linear-gradient(135deg,var(--purple),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:10px}
+.hero .sub{color:var(--muted);font-size:1rem;max-width:640px;margin:0 auto}
+.hero .meta{margin-top:14px;color:var(--dim);font-size:.8rem}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin:24px 0}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px 14px;text-align:center}
+.stat-card .value{font-size:1.7rem;font-weight:700;letter-spacing:-.5px}
+.stat-card .label{color:var(--muted);font-size:.72rem;margin-top:3px;text-transform:uppercase;letter-spacing:.5px}
+.value.green{color:var(--green)}.value.amber{color:var(--amber)}.value.purple{color:var(--purple)}.value.blue{color:var(--blue)}.value.cyan{color:var(--cyan)}
+main{max-width:var(--max-w);margin:0 auto;padding:0 20px 80px}
+section{margin-bottom:48px}
+section h2{font-size:1.45rem;font-weight:700;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid var(--border)}
+section h3{font-size:1.1rem;font-weight:600;margin:24px 0 10px;color:var(--blue)}
+p{margin-bottom:12px;color:var(--muted)}p strong{color:var(--text);font-weight:600}
+hr{height:1px;background:var(--border);border:none;margin:20px 0}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.85rem}
+thead{background:var(--surface2)}
+th{text-align:left;padding:10px 12px;font-weight:600;color:var(--text);font-size:.73rem;text-transform:uppercase;letter-spacing:.5px;border-bottom:2px solid var(--border)}
+td{padding:9px 12px;border-bottom:1px solid var(--border);color:var(--muted)}
+td.num{text-align:right;font-family:'JetBrains Mono',monospace;font-size:.79rem}
+td.green{color:var(--green)}td.amber{color:var(--amber)}td.purple{color:var(--purple)}td.cyan{color:var(--cyan)}
+tr:hover td{background:rgba(255,255,255,.012)}
+.bar-wrap{background:var(--surface2);border-radius:4px;height:8px;margin-top:4px;overflow:hidden}
+.bar-fill{height:100%;border-radius:4px;min-width:4px}
+.bar-fill.green{background:var(--green)}.bar-fill.blue{background:var(--blue)}.bar-fill.purple{background:var(--purple)}.bar-fill.amber{background:var(--amber)}.bar-fill.cyan{background:var(--cyan)}
+.note{background:var(--surface);border-left:3px solid var(--blue);padding:12px 16px;border-radius:0 var(--radius) var(--radius) 0;margin:16px 0;font-size:.85rem;color:var(--muted)}
+.note strong{color:var(--text)}
+.footer{text-align:center;color:var(--dim);font-size:.75rem;padding:20px 0}
+.footer a{color:var(--dim)}
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <div class="inner">
+    <a href="#">← Reports</a>
+    <a href="#overview">Overview</a>
+    <a href="#alltime">All-Time</a>
+    <a href="#weekly">Weekly</a>
+    <a href="#models">Models</a>
+    <a href="#platforms">Platforms</a>
+    <a href="#tools">Tools</a>
+    <a href="#skills">Skills</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <h1>Hermes Agent<br>Token Usage Report</h1>
+  <p class="sub">33 days of continuous AI agent operation — 14.9B tokens, 198K messages, 110K tool calls, zero downtime.</p>
+  <p class="meta">May 23 – June 24, 2026 &nbsp;·&nbsp; Generated June 24, 2026 22:30 UTC</p>
+</div>
+
+<main>
+
+<!-- OVERVIEW -->
+<section id="overview">
+  <h2>📊 Overview</h2>
+  <div class="stat-grid">
+    <div class="stat-card"><div class="value purple">14,932,102,139</div><div class="label">Total Tokens</div></div>
+    <div class="stat-card"><div class="value green">198,139</div><div class="label">Total Messages</div></div>
+    <div class="stat-card"><div class="value cyan">4,063</div><div class="label">Sessions</div></div>
+    <div class="stat-card"><div class="value blue">110,616</div><div class="label">Tool Calls</div></div>
+    <div class="stat-card"><div class="value green">33 / 33</div><div class="label">Days Active</div></div>
+    <div class="stat-card"><div class="value amber">87.1d</div><div class="label">Active Time (parallel)</div></div>
+    <div class="stat-card"><div class="value">5,259</div><div class="label">Human Messages</div></div>
+    <div class="stat-card"><div class="value">48.8</div><div class="label">Avg Msgs / Session</div></div>
+  </div>
+
+  <div class="note">
+    <strong>Runtime:</strong> 33 consecutive days with zero missed. Longest session: 11.9 days (Jun 9). Most messages in a single session: 430 (Jun 13 cron). Most tokens in a single session: 14.9M (Jun 9).<br>
+    <strong>Busiest day:</strong> Sunday (682 sessions). Peak hour: 1 PM (234 sessions).
+  </div>
+</section>
+
+<!-- ALL-TIME -->
+<section id="alltime">
+  <h2>🏆 All-Time Totals (May 23 – Jun 24)</h2>
+
+  <h3>By Platform</h3>
+  <table>
+    <thead><tr><th>Platform</th><th class="num">Sessions</th><th class="num">Messages</th><th class="num">Tokens</th><th></th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Cron (autonomous)</td>
+        <td class="num">3,218</td><td class="num">146,569</td><td class="num">5,157,537,574</td>
+        <td><div class="bar-wrap"><div class="bar-fill green" style="width:34.5%"></div></div></td>
+      </tr>
+      <tr>
+        <td>Telegram (human)</td>
+        <td class="num">596</td><td class="num">42,517</td><td class="num purple">9,474,143,938</td>
+        <td><div class="bar-wrap"><div class="bar-fill purple" style="width:63.5%"></div></div></td>
+      </tr>
+      <tr>
+        <td>CLI</td>
+        <td class="num">249</td><td class="num">9,053</td><td class="num">300,420,627</td>
+        <td><div class="bar-wrap"><div class="bar-fill blue" style="width:2.0%"></div></div></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="note">
+    <strong>Insight:</strong> Telegram drives 63.5% of total token spend — that's the human conversation, tool use, and deep analysis. Cron (autonomous scheduled jobs) is 34.5% — 3,218 automated sessions doing background work. CLI is just 2%.
+  </div>
+
+  <h3>By Model</h3>
+  <table>
+    <thead><tr><th>Model</th><th class="num">Sessions</th><th class="num">Tokens</th><th class="num">Share</th></tr></thead>
+    <tbody>
+      <tr><td>DeepSeek V4 Pro</td><td class="num">3,509</td><td class="num purple">13,426,584,221</td><td class="num purple">89.9%</td></tr>
+      <tr><td>DeepSeek V4 Flash</td><td class="num">259</td><td class="num">1,099,992,719</td><td class="num">7.4%</td></tr>
+      <tr><td>MiniMax M3</td><td class="num">95</td><td class="num">166,497,201</td><td class="num">1.1%</td></tr>
+      <tr><td>GLM 5.2</td><td class="num">100</td><td class="num">125,598,538</td><td class="num">0.8%</td></tr>
+      <tr><td>Owl Alpha</td><td class="num">80</td><td class="num">103,777,302</td><td class="num">0.7%</td></tr>
+      <tr><td>Kimi K2.7 (coding)</td><td class="num">9</td><td class="num">6,368,223</td><td class="num">&lt;0.1%</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- 14-DAY -->
+<section id="weekly">
+  <h2>📅 Last 14 Days (Jun 10 – Jun 24)</h2>
+  <div class="stat-grid">
+    <div class="stat-card"><div class="value purple">7,012,407,368</div><div class="label">Tokens (14d)</div></div>
+    <div class="stat-card"><div class="value green">150,546</div><div class="label">Messages (14d)</div></div>
+    <div class="stat-card"><div class="value cyan">3,185</div><div class="label">Sessions (14d)</div></div>
+    <div class="stat-card"><div class="value blue">84,442</div><div class="label">Tool Calls (14d)</div></div>
+  </div>
+
+  <h3>7-Day — Human Only (Telegram)</h3>
+  <div class="stat-grid">
+    <div class="stat-card"><div class="value purple">1,351,297,178</div><div class="label">Tokens (7d Telegram)</div></div>
+    <div class="stat-card"><div class="value green">11,077</div><div class="label">Messages (7d)</div></div>
+    <div class="stat-card"><div class="value">357</div><div class="label">Human Messages</div></div>
+    <div class="stat-card"><div class="value blue">6,479</div><div class="label">Tool Calls</div></div>
+  </div>
+
+  <h3>Last 24 Hours</h3>
+  <div class="stat-grid">
+    <div class="stat-card"><div class="value purple">574,928,551</div><div class="label">Tokens (24h)</div></div>
+    <div class="stat-card"><div class="value green">16,233</div><div class="label">Messages (24h)</div></div>
+    <div class="stat-card"><div class="value">345</div><div class="label">Sessions (24h)</div></div>
+    <div class="stat-card"><div class="value blue">9,105</div><div class="label">Tool Calls (24h)</div></div>
+  </div>
+
+  <h3>Activity by Day of Week (14d)</h3>
+  <table>
+    <thead><tr><th>Day</th><th class="num">Sessions</th><th></th></tr></thead>
+    <tbody>
+      <tr><td>Monday</td><td class="num">536</td><td><div class="bar-wrap"><div class="bar-fill cyan" style="width:89.6%"></div></div></td></tr>
+      <tr><td>Tuesday</td><td class="num">381</td><td><div class="bar-wrap"><div class="bar-fill blue" style="width:63.7%"></div></div></td></tr>
+      <tr><td>Wednesday</td><td class="num">442</td><td><div class="bar-wrap"><div class="bar-fill cyan" style="width:73.9%"></div></div></td></tr>
+      <tr><td>Thursday</td><td class="num">363</td><td><div class="bar-wrap"><div class="bar-fill blue" style="width:60.7%"></div></div></td></tr>
+      <tr><td>Friday</td><td class="num">362</td><td><div class="bar-wrap"><div class="bar-fill blue" style="width:60.5%"></div></div></td></tr>
+      <tr><td>Saturday</td><td class="num">503</td><td><div class="bar-wrap"><div class="bar-fill cyan" style="width:84.1%"></div></div></td></tr>
+      <tr><td>Sunday</td><td class="num">598</td><td><div class="bar-wrap"><div class="bar-fill green" style="width:100%"></div></div></td></tr>
+    </tbody>
+  </table>
+  <div class="note"><strong>Pattern:</strong> Sunday is the busiest day. Mid-week (Tue–Fri) is lighter. Hermes runs heaviest when you have time to work with it.</div>
+</section>
+
+<!-- MODELS -->
+<section id="models">
+  <h2>🤖 Model Usage Deep-Dive</h2>
+
+  <table>
+    <thead><tr><th>Model</th><th class="num">Sessions</th><th class="num">Input Tokens</th><th class="num">Output Tokens</th><th class="num">Total Tokens</th><th class="num">%</th></tr></thead>
+    <tbody>
+      <tr><td>DeepSeek V4 Pro</td><td class="num">3,509</td><td class="num">303,002,855</td><td class="num">48,897,760</td><td class="num purple">13,426,584,221</td><td class="num purple">89.9</td></tr>
+      <tr><td>DeepSeek V4 Flash</td><td class="num">259</td><td class="num">31,254,231</td><td class="num">5,694,577</td><td class="num">1,099,992,719</td><td class="num">7.4</td></tr>
+      <tr><td>MiniMax M3</td><td class="num">95</td><td class="num">5,434,107</td><td class="num">759,582</td><td class="num">166,497,201</td><td class="num">1.1</td></tr>
+      <tr><td>GLM 5.2</td><td class="num">100</td><td class="num">4,067,504</td><td class="num">514,248</td><td class="num">125,598,538</td><td class="num">0.8</td></tr>
+      <tr><td>Owl Alpha</td><td class="num">80</td><td class="num">1,580,007</td><td class="num">117,249</td><td class="num">103,777,302</td><td class="num">0.7</td></tr>
+    </tbody>
+  </table>
+
+  <div class="note">
+    <strong>Model strategy:</strong> DeepSeek V4 Pro does 89.9% of the work — it's the primary reasoning engine. Flash handles high-throughput background tasks (cron summarization, bulk operations). MiniMax M3 and GLM 5.2 are specialist models used for specific delegation tasks. The mix is efficient: Flash costs ~10x less than Pro but handles 7.4% of volume.
+  </div>
+</section>
+
+<!-- PLATFORMS -->
+<section id="platforms">
+  <h2>📱 Platform Breakdown</h2>
+
+  <h3>Telegram (Human Interface) — Last 7 Days</h3>
+  <table>
+    <thead><tr><th>Metric</th><th class="num">Value</th></tr></thead>
+    <tbody>
+      <tr><td>Sessions</td><td class="num">168</td></tr>
+      <tr><td>Messages</td><td class="num">11,077</td></tr>
+      <tr><td>Human messages sent</td><td class="num">357</td></tr>
+      <tr><td>Tool calls on human behalf</td><td class="num">6,479</td></tr>
+      <tr><td>Tokens consumed</td><td class="num purple">1,351,297,178</td></tr>
+      <tr><td>Avg tokens per human message</td><td class="num">~3,785,706</td></tr>
+      <tr><td>Model used</td><td class="num">DeepSeek V4 Pro (100%)</td></tr>
+    </tbody>
+  </table>
+
+  <div class="note">
+    <strong>Efficiency:</strong> Each human message triggers an average of ~3.8M tokens of agent work across tool calls, research, and responses. That's a 3,785,700:1 amplification ratio — you type ~50 words, the agent does the equivalent of reading a small library.
+  </div>
+
+  <h3>Cron (Autonomous) — Last 24 Hours</h3>
+  <table>
+    <thead><tr><th>Metric</th><th class="num">Value</th></tr></thead>
+    <tbody>
+      <tr><td>Sessions</td><td class="num">292</td></tr>
+      <tr><td>Messages</td><td class="num">12,732</td></tr>
+      <tr><td>Tokens consumed</td><td class="num purple">499,628,753</td></tr>
+      <tr><td>Active models</td><td class="num">DeepSeek V4 Pro (318 sessions), GLM 5.2 (17), MiniMax M3 (8)</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- TOOLS -->
+<section id="tools">
+  <h2>🔧 Tool Usage (All-Time)</h2>
+
+  <table>
+    <thead><tr><th>Tool</th><th class="num">Calls</th><th class="num">%</th><th>Category</th></tr></thead>
+    <tbody>
+      <tr><td>terminal</td><td class="num">51,516</td><td class="num">46.6%</td><td>Shell / Execution</td></tr>
+      <tr><td>read_file</td><td class="num">19,467</td><td class="num">17.6%</td><td>File I/O</td></tr>
+      <tr><td>search_files</td><td class="num">8,557</td><td class="num">7.7%</td><td>Code Search</td></tr>
+      <tr><td>patch</td><td class="num">7,031</td><td class="num">6.4%</td><td>Code Editing</td></tr>
+      <tr><td>write_file</td><td class="num">6,067</td><td class="num">5.5%</td><td>File Creation</td></tr>
+      <tr><td>process</td><td class="num">3,788</td><td class="num">3.4%</td><td>Process Mgmt</td></tr>
+      <tr><td>web_search</td><td class="num">1,992</td><td class="num">1.8%</td><td>Web</td></tr>
+      <tr><td>session_search</td><td class="num">1,826</td><td class="num">1.7%</td><td>Memory Recall</td></tr>
+      <tr><td>skill_view</td><td class="num">1,374</td><td class="num">1.2%</td><td>Skill Loading</td></tr>
+      <tr><td>execute_code</td><td class="num">987</td><td class="num">0.9%</td><td>Python Sandbox</td></tr>
+      <tr><td>vision_analyze</td><td class="num">457</td><td class="num">0.4%</td><td>Vision</td></tr>
+      <tr><td>memory</td><td class="num">307</td><td class="num">0.3%</td><td>Durable Memory</td></tr>
+      <tr><td colspan="2" style="color:var(--dim);font-size:.78rem">+ 66 more tools (2,407 calls combined)</td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="note">
+    <strong>Pattern:</strong> 46.6% terminal — Hermes is primarily a coding and systems agent. 37.2% file operations (read, search, patch, write) — it reads and edits code constantly. Web search is only 1.8% — research is a small fraction of the workload; most work is local development.
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <h2>🧠 Skills Ecosystem (All-Time)</h2>
+
+  <table>
+    <thead><tr><th>Skill</th><th class="num">Loads</th><th class="num">Edits</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>hermes-axiom-cron-loop</td><td class="num">256</td><td class="num">3</td><td class="green">Active</td></tr>
+      <tr><td>opencode-containers</td><td class="num">142</td><td class="num">4</td><td class="green">Active</td></tr>
+      <tr><td>obsidian</td><td class="num">123</td><td class="num">0</td><td class="green">Active</td></tr>
+      <tr><td>axiom-orchestration</td><td class="num">58</td><td class="num">11</td><td class="green">Active</td></tr>
+      <tr><td>context-sync-duckbrain</td><td class="num">36</td><td class="num">29</td><td class="amber">Heavily modified</td></tr>
+      <tr><td>axiom-opencode-build-loop</td><td class="num">57</td><td class="num">5</td><td class="green">Active</td></tr>
+      <tr><td>axiom-platform</td><td class="num">31</td><td class="num">28</td><td class="amber">Heavily modified</td></tr>
+      <tr><td>totalstack-testing</td><td class="num">43</td><td class="num">2</td><td class="green">Active</td></tr>
+      <tr><td>coding-hermes</td><td class="num">44</td><td class="num">0</td><td class="green">Active</td></tr>
+      <tr><td>gitreins-workflow</td><td class="num">28</td><td class="num">13</td><td class="amber">Heavily modified</td></tr>
+    </tbody>
+  </table>
+
+  <div class="note">
+    <strong>Totals:</strong> 131 distinct skills, 1,374 loads, 134 edits. The most heavily modified skills (context-sync-duckbrain: 29 edits, axiom-platform: 28 edits, gitreins-workflow: 13 edits) represent the infrastructure that's been tuned hardest. Skills are the self-improvement loop — each edit makes Hermes better at that task next time.
+  </div>
+</section>
+
+<hr>
+
+<div class="footer">
+  <p>
+    Generated by <strong>KaraHermes</strong> — a <a href="https://github.com/NousResearch/hermes-agent">Hermes Agent</a> instance.<br>
+    Data source: <code>hermes insights</code> + <code>hermes sessions stats</code> · Repo: <a href="https://github.com/totalwindupflightsystems/reports">totalwindupflightsystems/reports</a>
+  </p>
+</div>
+
+</main>
+</body>
+</html>
