@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Holographic Memory vs DuckBrain — Agent Memory Architectures Compared</title>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface-2: #161622;
+    --border: #252535;
+    --text: #e0e0ea;
+    --text-muted: #8888a0;
+    --accent: #00d4aa;
+    --accent-glow: #00ffcc;
+    --warn: #ff9944;
+    --fail: #ff4466;
+    --pass: #00d4aa;
+    --code-bg: #0d0d16;
+    --radius: 8px;
+    --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'SF Mono', monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: var(--font); line-height: 1.7; padding: 2rem 1.5rem; max-width: 860px; margin: 0 auto; }
+  h1 { font-size: 2.2rem; margin-bottom: 0.3rem; letter-spacing: -0.5px; }
+  .subtitle { color: var(--text-muted); font-size: 1.05rem; margin-bottom: 2rem; }
+  h2 { font-size: 1.4rem; margin: 2.5rem 0 1rem; color: var(--accent); }
+  h3 { font-size: 1.1rem; margin: 1.5rem 0 0.5rem; color: var(--text); }
+  p { margin: 0.8rem 0; }
+  table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.92rem; }
+  th, td { padding: 0.7rem 0.9rem; text-align: left; border-bottom: 1px solid var(--border); }
+  th { color: var(--text-muted); font-weight: 600; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.5px; }
+  td:first-child { font-weight: 600; color: var(--accent); }
+  .tag { display: inline-block; padding: 0.15rem 0.6rem; border-radius: 4px; font-size: 0.78rem; font-weight: 600; margin-right: 0.4rem; }
+  .tag-hrr { background: rgba(0,212,170,0.12); color: var(--accent); }
+  .tag-git { background: rgba(255,153,68,0.12); color: var(--warn); }
+  ul, ol { margin: 0.8rem 0 0.8rem 1.5rem; }
+  li { margin: 0.4rem 0; }
+  blockquote { border-left: 3px solid var(--border); padding: 0.6rem 1rem; margin: 1.2rem 0; color: var(--text-muted); font-style: italic; background: var(--surface); border-radius: 0 var(--radius) var(--radius) 0; }
+  .verdict { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; margin: 2rem 0; }
+  .verdict h3 { color: var(--accent-glow); margin-top: 0; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.3rem; }
+  .card h4 { color: var(--accent); margin-bottom: 0.6rem; font-size: 1rem; }
+  .card p { font-size: 0.9rem; color: var(--text-muted); }
+</style>
+</head>
+<body>
+
+<h1>Holographic Memory vs DuckBrain</h1>
+<p class="subtitle">A comparison of two agent memory architectures — one inspired by neuroscience, the other by DevOps. June 2026.</p>
+
+<h2>The Contenders</h2>
+
+<div class="grid">
+  <div class="card">
+    <h4>🧠 Hermes Holographic Memory</h4>
+    <p>Built into Hermes Agent by Nous Research. Uses HRR (Holographic Reduced Representations) algebra — memories are superposed complex-valued vectors with algebraic recall. Local SQLite, fully air-gapped, trust-scored.</p>
+  </div>
+  <div class="card">
+    <h4>📦 DuckBrain</h4>
+    <p>Git-native memory bank built by totalwindupflightsystems. JSONL files in version-controlled git repos, pgvector for vector search, FTS5 for keyword search, hierarchical keys, namespace isolation, soft-delete with compaction.</p>
+  </div>
+</div>
+
+<h2>Side-by-Side</h2>
+
+<table>
+  <thead>
+    <tr><th>Dimension</th><th>Hermes Holographic</th><th>DuckBrain</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Math model</td>
+      <td><span class="tag tag-hrr">HRR algebra</span> Complex-valued vectors, superposition, algebraic recall</td>
+      <td><span class="tag tag-git">Brute force</span> Cosine similarity via pgvector/brute-force + FTS5 full-text</td>
+    </tr>
+    <tr>
+      <td>Storage</td>
+      <td>Local SQLite</td>
+      <td>JSONL files in git repos → Parquet compaction</td>
+    </tr>
+    <tr>
+      <td>Recall</td>
+      <td>Algebraic — distributed patterns, approximate</td>
+      <td>Exact — vector similarity + keyword match</td>
+    </tr>
+    <tr>
+      <td>Structure</td>
+      <td>Flat vector space</td>
+      <td>Hierarchical keys (<code>/project/asce/build-status</code>), 6 domains</td>
+    </tr>
+    <tr>
+      <td>Versioning</td>
+      <td>None</td>
+      <td>Git-native — every memory is a commit with author + timestamp</td>
+    </tr>
+    <tr>
+      <td>Multi-agent</td>
+      <td>Single DB per agent</td>
+      <td>Namespaces — isolated repos per agent/project</td>
+    </tr>
+    <tr>
+      <td>Deletion</td>
+      <td>Hard delete</td>
+      <td>Tombstones (soft-delete) + squash compaction</td>
+    </tr>
+    <tr>
+      <td>Scale behavior</td>
+      <td>Graceful degradation — fuzzier recall, no cliff</td>
+      <td>Sharp limits — JSONL scan time, git repo size</td>
+    </tr>
+    <tr>
+      <td>Audit trail</td>
+      <td>None</td>
+      <td>Full git history — who wrote what, when, from which session</td>
+    </tr>
+    <tr>
+      <td>Air-gapped</td>
+      <td>✅ Fully local</td>
+      <td>✅ Fully local</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Where They Converge</h2>
+
+<p>Both solve the same fundamental problem: <strong>how does an AI agent remember things across sessions without an external API?</strong></p>
+
+<p>Both are local, air-gapped, and agent-native. Both store structured facts with metadata. Both support querying by semantics and keywords. Both are designed for long-running autonomous agent loops where context windows don't survive across sessions.</p>
+
+<h2>Where They Diverge</h2>
+
+<h3>Philosophy</h3>
+
+<p><strong>Hermes Holographic</strong> takes the neuroscience-inspired route. Memories are distributed patterns across a vector space. No single neuron stores a memory — the memory <em>is</em> the pattern. HRR algebra means recall is a mathematical operation on superposed vectors, not a database lookup. You get approximate recall, and it degrades gracefully under load — more memories means fuzzier results, not a hard failure.</p>
+
+<p><strong>DuckBrain</strong> takes the DevOps route. Every memory is a line in a JSONL file, version-controlled in git. You get exact retrieval with full provenance — who wrote this, when, from which session, verified against which source. The trade-off is that it doesn't degrade gracefully — git repos have size limits, JSONL scanning has linear cost, and compaction is a batch operation.</p>
+
+<h3>When the math matters</h3>
+
+<blockquote>
+  Hermes Holographic gives you <em>"what's the closest thing to what I'm looking for?"</em><br>
+  DuckBrain gives you <em>"give me every fact about ASCE from June 2026, sorted by recency."</em>
+</blockquote>
+
+<h3>When the audit trail matters</h3>
+
+<p>DuckBrain's git-native architecture means every single memory has a commit hash, author, timestamp, and diff. If an agent hallucinates a "fact" or writes stale data, you can <code>git log</code> to find exactly when it was written and by whom. Hermes Holographic has no equivalent — memories are superposed in vector space with no per-entry provenance.</p>
+
+<h2>The Architecture Diagram</h2>
+
+<div class="card" style="margin: 1.5rem 0;">
+  <p style="font-family: var(--mono); font-size: 0.85rem; white-space: pre; line-height: 1.6;">
+    ┌─────────────────────────────────┐   ┌─────────────────────────────────┐
+    │   <strong>Hermes Holographic Memory</strong>         │   │   <strong>DuckBrain</strong>                      │
+    │                                 │   │                                 │
+    │   Agent ──→ Memory.write()      │   │   Agent ──→ mcp.remember()      │
+    │              │                  │   │              │                  │
+    │              ▼                  │   │              ▼                  │
+    │         HRR Encoder             │   │         JSONL append             │
+    │         (text → vector)         │   │         (structured fact)        │
+    │              │                  │   │              │                  │
+    │              ▼                  │   │              ▼                  │
+    │         Vector superposition    │   │         git commit               │
+    │         (distributed storage)   │   │         (versioned)              │
+    │              │                  │   │              │                  │
+    │              ▼                  │   │              ▼                  │
+    │         SQLite (.db)            │   │         Parquet partition        │
+    │         single file             │   │         git repo                 │
+    │                                 │   │                                 │
+    │   Agent ──→ Memory.query()      │   │   Agent ──→ mcp.recall()        │
+    │              │                  │   │              │                  │
+    │              ▼                  │   │              ▼                  │
+    │         HRR algebraic decode    │   │         Vector similarity        │
+    │         (approximate recall)    │   │         + FTS5 keyword           │
+    │              │                  │   │         (exact retrieval)        │
+    │              ▼                  │   │              │                  │
+    │         Trust-scored results    │   │              ▼                  │
+    │         (sorted by confidence)  │   │         Exact entries            │
+    │                                 │   │         (with full provenance)   │
+    └─────────────────────────────────┘   └─────────────────────────────────┘
+  </p>
+</div>
+
+<h2>Our Stack: How We Use DuckBrain</h2>
+
+<p>We run DuckBrain as an MCP server with 12 tools, serving 400+ entries across two namespaces (<code>hermes-memory</code> and <code>frontiers-ghost</code>). Three crons keep it alive:</p>
+
+<ul>
+  <li><strong>Context-Sync</strong> (every 6h) — scans Hermes sessions, GitHub, GitLab, Obsidian vault. Extracts durable facts with traceability metadata.</li>
+  <li><strong>Deep Reflection</strong> (every 12h) — synthesizes patterns across sessions, flags stale entries, auto-patches skills on recurring errors.</li>
+  <li><strong>Dreaming</strong> (nightly at 3am) — synthetic memory generation, associative linking between project entries.</li>
+</ul>
+
+<p>All entries carry 6+ attributes: certainty, severity, source_type, source_ref, verification method, and discovery method. Every fact is traceable back to a specific session, git commit, or file.</p>
+
+<h2>Which One Should You Use?</h2>
+
+<div class="verdict">
+  <h3>Use Hermes Holographic when…</h3>
+  <ul>
+    <li>You want <strong>zero setup</strong> — it's built into Hermes Agent</li>
+    <li>You have <strong>high volume</strong> of unstructured memories (conversation logs, thoughts)</li>
+    <li>You don't need audit trails or per-entry provenance</li>
+    <li>You want graceful degradation under scale</li>
+  </ul>
+
+  <h3 style="margin-top: 1.5rem;">Use DuckBrain when…</h3>
+  <ul>
+    <li>You need <strong>exact retrieval</strong> with full provenance</li>
+    <li>You run <strong>multiple agents</strong> that need isolated memory spaces</li>
+    <li>You want <strong>git-native version control</strong> — every memory is reviewable</li>
+    <li>You need structured, queryable metadata per entry</li>
+    <li>You're running autonomous agent loops that need cron-driven memory maintenance</li>
+  </ul>
+</div>
+
+<h2>Bottom Line</h2>
+
+<p>They're not competitors — they solve different points on the spectrum of memory fidelity vs recall flexibility. Hermes Holographic gives you approximate recall with elegant math and zero overhead. DuckBrain gives you exact retrieval with full audit trail and DevOps-style maintenance.</p>
+
+<p>We chose DuckBrain because we run 20+ autonomous cron loops across 14 projects. When an agent claims "ASCE build passes" at 3am, we need to trace that fact back to the exact session that verified it — not get a fuzzy vector match.</p>
+
+<p style="color: var(--text-dim); margin-top: 3rem; font-size: 0.85rem;">
+  Written: June 25, 2026 · Based on the Vectorize.io deep dive "Hermes Agent Holographic Memory: A Technical Deep Dive" (April 21, 2026) and live DuckBrain deployment data from the hermes-memory namespace (415 entries, 19MB, 4 MCP processes).
+</p>
+
+</body>
+</html>
