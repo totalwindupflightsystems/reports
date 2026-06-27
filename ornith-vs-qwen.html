@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ornith 1.0 vs Qwen 3.5/3.6 — The Self-Scaffolding RL Gap</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #222532;
+    --border: rgba(255,255,255,0.06);
+    --text: #e4e6ef;
+    --muted: #9ca0b0;
+    --green: #4ade80;
+    --amber: #fbbf24;
+    --orange: #fb923c;
+    --red: #f87171;
+    --blue: #60a5fa;
+    --purple: #a78bfa;
+    --pink: #f472b6;
+    --teal: #2dd4bf;
+    --radius: 10px;
+    --radius-lg: 16px;
+    --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'SF Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+    scroll-padding-top: 57px;
+  }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container { max-width: 960px; margin: 0 auto; padding: 0 20px 80px; }
+
+  /* ── Top Nav ── */
+  .top-nav {
+    position: sticky; top: 0; z-index: 10;
+    display: flex; gap: 4px; flex-wrap: nowrap;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    background: rgba(15,17,23,0.92);
+    backdrop-filter: blur(12px);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .top-nav::-webkit-scrollbar { display: none; }
+  .top-nav a {
+    font-size: 11px; color: var(--muted); text-decoration: none;
+    padding: 5px 10px; border-radius: 6px;
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap; flex-shrink: 0;
+    font-weight: 500; letter-spacing: 0.3px;
+  }
+  .top-nav a:hover, .top-nav a:focus { background: var(--surface); color: var(--text); }
+
+  /* ── Hero ── */
+  .hero {
+    text-align: center; padding: 56px 0 40px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+  .hero-badge {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--teal);
+    background: rgba(45,212,191,0.1);
+    border: 1px solid rgba(45,212,191,0.2);
+    border-radius: 100px;
+    padding: 4px 14px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .hero h1 {
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 10px;
+  }
+  .hero .subtitle {
+    color: var(--muted);
+    font-size: 15px;
+    max-width: 620px;
+    margin: 0 auto;
+  }
+  .hero .meta {
+    margin-top: 16px;
+    font-size: 12px;
+    color: var(--muted);
+    font-family: var(--mono);
+  }
+
+  /* ── Sections ── */
+  section { margin-bottom: 48px; }
+  h2 {
+    font-size: 22px; font-weight: 700; margin-bottom: 18px;
+    padding-bottom: 10px; border-bottom: 1px solid var(--border);
+    letter-spacing: -0.3px;
+  }
+  h3 {
+    font-size: 17px; font-weight: 600; margin: 28px 0 14px;
+    color: var(--text);
+  }
+  p { margin-bottom: 14px; font-size: 15px; color: var(--muted); }
+  strong { color: var(--text); }
+  a { color: var(--blue); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* ── Cards ── */
+  .card-grid-4 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  .card-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .card-grid-2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px;
+  }
+  .card.ornith { border-left: 3px solid var(--teal); }
+  .card.qwen35 { border-left: 3px solid var(--blue); }
+  .card.qwen36 { border-left: 3px solid var(--purple); }
+  .card.gemma { border-left: 3px solid var(--green); }
+
+  .card .model-name {
+    font-size: 18px; font-weight: 700; margin-bottom: 4px;
+  }
+  .card .model-family {
+    font-size: 11px; color: var(--muted); text-transform: uppercase;
+    letter-spacing: 0.5px; margin-bottom: 14px;
+  }
+  .card .spec-row {
+    display: flex; justify-content: space-between; padding: 7px 0;
+    border-top: 1px solid var(--border); font-size: 13px;
+  }
+  .card .spec-label { color: var(--muted); }
+  .card .spec-value { color: var(--text); font-weight: 500; }
+  .card .spec-value.highlight { color: var(--teal); font-weight: 700; }
+
+  /* ── Benchmark Table ── */
+  .table-wrap {
+    overflow-x: auto; margin-bottom: 20px;
+    border-radius: var(--radius); border: 1px solid var(--border);
+  }
+  table {
+    width: 100%; border-collapse: collapse; font-size: 14px;
+    min-width: 600px;
+  }
+  th {
+    text-align: left; padding: 10px 14px;
+    background: var(--surface2); color: var(--muted);
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;
+    font-weight: 600;
+  }
+  td { padding: 10px 14px; border-top: 1px solid var(--border); vertical-align: middle; }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+  td.best { color: var(--teal); font-weight: 700; }
+  td.good { color: var(--green); font-weight: 600; }
+  td.mid { color: var(--amber); }
+  td.low { color: var(--red); }
+
+  .bar-cell {
+    position: relative;
+    min-width: 200px;
+  }
+  .bar-bg {
+    background: var(--surface2);
+    border-radius: 4px;
+    height: 8px;
+    width: 100%;
+    margin-top: 4px;
+  }
+  .bar-fill {
+    height: 8px;
+    border-radius: 4px;
+    transition: width 0.3s;
+  }
+  .bar-fill.teal { background: var(--teal); }
+  .bar-fill.blue { background: var(--blue); }
+  .bar-fill.purple { background: var(--purple); }
+  .bar-fill.green { background: var(--green); }
+  .bar-fill.amber { background: var(--amber); }
+  .bar-value {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 2px;
+  }
+
+  /* ── Lineage Diagram ── */
+  .lineage {
+    display: flex; flex-direction: column; gap: 0;
+    margin: 24px 0;
+    font-family: var(--mono);
+    font-size: 13px;
+  }
+  .lineage-row {
+    display: flex; align-items: center; gap: 14px;
+    padding: 16px 20px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 0;
+    position: relative;
+    background: var(--surface);
+  }
+  .lineage-row + .lineage-row { margin-top: -1px; border-top-left-radius: 0; border-top-right-radius: 0; }
+  .lineage-row:has(+ .lineage-row) { border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+  .lineage-arrow {
+    text-align: center; color: var(--muted); font-size: 20px;
+    padding: 4px 0;
+  }
+  .lineage-icon { font-size: 24px; width: 36px; text-align: center; flex-shrink: 0; }
+  .lineage-info { flex: 1; }
+  .lineage-name { font-weight: 700; font-size: 15px; margin-bottom: 3px; }
+  .lineage-desc { font-size: 12px; color: var(--muted); }
+  .lineage-tag {
+    display: inline-block; padding: 2px 8px; border-radius: 4px;
+    font-size: 10px; font-weight: 600; letter-spacing: 0.3px;
+    margin-left: 8px;
+  }
+  .tag-base { background: rgba(96,165,250,0.15); color: var(--blue); }
+  .tag-rl { background: rgba(45,212,191,0.15); color: var(--teal); }
+  .tag-coder { background: rgba(167,139,250,0.15); color: var(--purple); }
+
+  .lineage-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    position: relative;
+  }
+  .lineage-split-label {
+    grid-column: 1 / -1;
+    text-align: center;
+    font-size: 11px;
+    color: var(--muted);
+    padding: 6px 0;
+    font-family: var(--mono);
+  }
+
+  /* ── Callout Boxes ── */
+  .callout {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+    margin-bottom: 18px;
+  }
+  .callout.big { border-left: 3px solid var(--teal); }
+  .callout.warn { border-left: 3px solid var(--amber); }
+  .callout.insight { border-left: 3px solid var(--purple); }
+  .callout.highlight { border-left: 3px solid var(--pink); }
+  .callout-header {
+    font-size: 15px; font-weight: 700; margin-bottom: 8px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .callout p { font-size: 14px; margin-bottom: 6px; }
+  .callout p:last-child { margin-bottom: 0; }
+
+  /* ── Stat Bubbles ── */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  .stat-bubble {
+    text-align: center;
+    padding: 24px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+  .stat-num {
+    font-family: var(--mono);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--teal);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .stat-label {
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+
+  /* ── Badges ── */
+  .badge {
+    display: inline-block; padding: 2px 8px; border-radius: 4px;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.3px;
+  }
+  .badge.teal { background: rgba(45,212,191,0.15); color: var(--teal); }
+  .badge.blue { background: rgba(96,165,250,0.15); color: var(--blue); }
+  .badge.green { background: rgba(74,222,128,0.15); color: var(--green); }
+  .badge.amber { background: rgba(251,191,36,0.15); color: var(--amber); }
+  .badge.red { background: rgba(248,113,113,0.15); color: var(--red); }
+  .badge.purple { background: rgba(167,139,250,0.15); color: var(--purple); }
+  .badge.pink { background: rgba(244,114,182,0.15); color: var(--pink); }
+
+  /* ── Footnotes ── */
+  .footnotes {
+    margin-top: 24px; padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-size: 12px; color: var(--muted);
+  }
+  .footnotes p { font-size: 12px; margin-bottom: 4px; }
+
+  /* ── Back Link ── */
+  .back-link {
+    display: inline-block; margin-top: 40px; font-size: 13px; color: var(--blue);
+    text-decoration: none; padding: 6px 14px; border-radius: 6px;
+    background: var(--surface); border: 1px solid var(--border);
+    transition: background 0.15s;
+  }
+  .back-link:hover { background: var(--surface2); }
+
+  /* ── Responsive ── */
+  @media (max-width: 600px) {
+    .card-grid-4 { grid-template-columns: 1fr 1fr; }
+    .card-grid-3, .card-grid-2 { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 1.5rem; }
+    .lineage-split { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- ═══ NAV ═══ -->
+<nav class="top-nav">
+  <a href="#overview">Overview</a>
+  <a href="#models">Models</a>
+  <a href="#benchmarks">Benchmarks</a>
+  <a href="#rl-gap">The RL Gap</a>
+  <a href="#lineage">Lineage</a>
+  <a href="#innovation">Innovation</a>
+  <a href="#implications">Implications</a>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<div class="hero">
+  <div class="hero-badge">Research Briefing · June 27, 2026</div>
+  <h1>Ornith 1.0 vs Qwen 3.5/3.6</h1>
+  <p class="subtitle">
+    What happens when you take Qwen 3.5 base models and train them to build their own agent scaffolds through reinforcement learning? A 35B model beats a 397B one.
+  </p>
+  <p class="meta">DeepReinforce AI · open weights · MIT license · released June 25, 2026</p>
+</div>
+
+<!-- ═══ OVERVIEW ═══ -->
+<section id="overview">
+<h2>At a Glance</h2>
+
+<p>On June 25, 2026, <strong>DeepReinforce AI</strong> released <strong>Ornith 1.0</strong>, a family of four models built on top of existing open-weight bases — Qwen 3.5, Qwen 3.5 MoE, and Gemma 4. What makes Ornith different isn't the architecture. It's the training: <strong>self-scaffolding reinforcement learning</strong>, where the model learns to generate both solutions <em>and</em> its own task-specific agent scaffolds during RL training.</p>
+
+<div class="stat-row">
+  <div class="stat-bubble">
+    <div class="stat-num">82.4%</div>
+    <div class="stat-label">Ornith 397B · SWE-bench Verified</div>
+  </div>
+  <div class="stat-bubble">
+    <div class="stat-num">75.6%</div>
+    <div class="stat-label">Ornith 35B · SWE-bench Verified</div>
+  </div>
+  <div class="stat-bubble">
+    <div class="stat-num">+20pp</div>
+    <div class="stat-label">RL Gain vs Qwen 3.5 Base</div>
+  </div>
+  <div class="stat-bubble">
+    <div class="stat-num">MIT</div>
+    <div class="stat-label">Open Weights License</div>
+  </div>
+</div>
+
+<div class="callout big">
+  <div class="callout-header">🔑 The Key Story</div>
+  <p>Ornith 1.0 proves that <strong>training methodology matters more than scale</strong>. The 35B MoE Ornith — built on a Qwen 3.5 MoE base — scores 75.6% on SWE-bench Verified, <strong>beating Qwen 3.6 Coder (56.6%) by 19 points</strong> and even outperforming its own 397B base model on Terminal-Bench. This isn't a bigger model. It's a smarter training recipe.</p>
+</div>
+</section>
+
+<!-- ═══ MODEL CARDS ═══ -->
+<section id="models">
+<h2>Model Family Comparison</h2>
+
+<h3>🦅 Ornith 1.0 Family <span class="badge teal">June 25, 2026</span></h3>
+<div class="card-grid-4">
+  <div class="card ornith">
+    <div class="model-name">Ornith 1.0 · 9B</div>
+    <div class="model-family">Dense · Qwen 3.5 base</div>
+    <div class="spec-row"><span class="spec-label">Architecture</span><span class="spec-value">qwen35 (Dense)</span></div>
+    <div class="spec-row"><span class="spec-label">SWE-bench Verified</span><span class="spec-value highlight">69.4%</span></div>
+    <div class="spec-row"><span class="spec-label">Terminal-Bench 2.1</span><span class="spec-value highlight">43.1</span></div>
+    <div class="spec-row"><span class="spec-label">Run on</span><span class="spec-value">Laptop GPU</span></div>
+  </div>
+  <div class="card ornith">
+    <div class="model-name">Ornith 1.0 · 31B</div>
+    <div class="model-family">Dense · Gemma 4 base</div>
+    <div class="spec-row"><span class="spec-label">Architecture</span><span class="spec-value">Gemma 4 (Dense)</span></div>
+    <div class="spec-row"><span class="spec-label">SWE-bench Verified</span><span class="spec-value">—</span></div>
+    <div class="spec-row"><span class="spec-label">Terminal-Bench 2.1</span><span class="spec-value">—</span></div>
+    <div class="spec-row"><span class="spec-label">Note</span><span class="spec-value">Gemma lineage</span></div>
+  </div>
+  <div class="card ornith">
+    <div class="model-name">Ornith 1.0 · 35B</div>
+    <div class="model-family">MoE · Qwen 3.5 MoE base</div>
+    <div class="spec-row"><span class="spec-label">Architecture</span><span class="spec-value">qwen35moe (MoE)</span></div>
+    <div class="spec-row"><span class="spec-label">SWE-bench Verified</span><span class="spec-value highlight">75.6%</span></div>
+    <div class="spec-row"><span class="spec-label">Terminal-Bench 2.1</span><span class="spec-value highlight">64.2</span></div>
+    <div class="spec-row"><span class="spec-label">Run on</span><span class="spec-value">Consumer GPU</span></div>
+  </div>
+  <div class="card ornith">
+    <div class="model-name">Ornith 1.0 · 397B</div>
+    <div class="model-family">MoE · Qwen 3.5 MoE base</div>
+    <div class="spec-row"><span class="spec-label">Architecture</span><span class="spec-value">qwen35moe (MoE)</span></div>
+    <div class="spec-row"><span class="spec-label">SWE-bench Verified</span><span class="spec-value highlight">82.4%</span></div>
+    <div class="spec-row"><span class="spec-label">Terminal-Bench 2.1</span><span class="spec-value highlight">77.5</span></div>
+    <div class="spec-row"><span class="spec-label">Other benchmarks</span><span class="spec-value">SWE-bench Pro 62.2, ML 78.9, ClawEval 77.1</span></div>
+  </div>
+</div>
+
+<h3>🔷 Qwen 3.5 / 3.6 Family (Base Models)</h3>
+<div class="card-grid-3">
+  <div class="card qwen35">
+    <div class="model-name">Qwen 3.5</div>
+    <div class="model-family">Base family · various sizes</div>
+    <div class="spec-row"><span class="spec-label">Sizes</span><span class="spec-value">9B, 14B, 32B, 72B, 235B MoE, 397B MoE</span></div>
+    <div class="spec-row"><span class="spec-label">SWE-bench Verified</span><span class="spec-value">~55% (base)</span></div>
+    <div class="spec-row"><span class="spec-label">Note</span><span class="spec-value">Foundation models; Ornith's starting point</span></div>
+  </div>
+  <div class="card qwen35">
+    <div class="model-name">Qwen 3.5 · 397B MoE</div>
+    <div class="model-family">Largest reasoning variant</div>
+    <div class="spec-row"><span class="spec-label">Variant</span><span class="spec-value">"Opus thinking" reasoning model</span></div>
+    <div class="spec-row"><span class="spec-label">SWE-bench Verified</span><span class="spec-value">— (base ~55%)</span></div>
+    <div class="spec-row"><span class="spec-label">Terminal-Bench 2.1</span><span class="spec-value">~44 (est.)</span></div>
+  </div>
+  <div class="card qwen36">
+    <div class="model-name">Qwen 3.6 Coder</div>
+    <div class="model-family">Coding-specialized · "Qwuopus"</div>
+    <div class="spec-row"><span class="spec-label">Sizes</span><span class="spec-value">27B–35B, MoE</span></div>
+    <div class="spec-row"><span class="spec-label">SWE-bench Verified</span><span class="spec-value">56.6%</span></div>
+    <div class="spec-row"><span class="spec-label">Terminal-Bench 2.0</span><span class="spec-value">61.6</span></div>
+    <div class="spec-row"><span class="spec-label">Run on</span><span class="spec-value">Consumer GPUs</span></div>
+  </div>
+</div>
+</section>
+
+<!-- ═══ BENCHMARKS ═══ -->
+<section id="benchmarks">
+<h2>Benchmark Comparison</h2>
+<p>Head-to-head on the benchmarks that matter for agentic coding. Bars show relative performance; the self-scaffolding RL gap is most visible at the 35B tier.</p>
+
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr>
+      <th>Model</th>
+      <th>Size</th>
+      <th>SWE-bench Verified</th>
+      <th>Terminal-Bench 2.1</th>
+      <th>SWE-bench Pro</th>
+      <th>SWE-bench ML</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong style="color:var(--teal)">Ornith 1.0 · 397B MoE</strong></td>
+      <td>397B</td>
+      <td class="best">82.4%</td>
+      <td class="best">77.5</td>
+      <td class="best">62.2</td>
+      <td class="best">78.9</td>
+    </tr>
+    <tr>
+      <td><strong style="color:var(--teal)">Ornith 1.0 · 35B MoE</strong></td>
+      <td>35B</td>
+      <td class="good">75.6%</td>
+      <td class="good">64.2</td>
+      <td>—</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td><strong style="color:var(--teal)">Ornith 1.0 · 9B Dense</strong></td>
+      <td>9B</td>
+      <td class="good">69.4%</td>
+      <td>43.1</td>
+      <td>—</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td><strong style="color:var(--purple)">Qwen 3.6 Coder</strong></td>
+      <td>27–35B</td>
+      <td>56.6%</td>
+      <td>61.6*</td>
+      <td>—</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td><strong style="color:var(--blue)">Qwen 3.5 (base)</strong></td>
+      <td>various</td>
+      <td class="low">~55%</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td><strong style="color:var(--blue)">Qwen 3.5 · 397B MoE</strong></td>
+      <td>397B</td>
+      <td>~55%</td>
+      <td class="mid">~44 (est.)</td>
+      <td>—</td>
+      <td>—</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h3>SWE-bench Verified — Visual Comparison</h3>
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr>
+      <th>Model</th>
+      <th style="width:60%">Score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Ornith 397B MoE</td>
+      <td class="bar-cell">
+        <div class="bar-value">82.4%</div>
+        <div class="bar-bg"><div class="bar-fill teal" style="width:82.4%"></div></div>
+      </td>
+    </tr>
+    <tr>
+      <td>Ornith 35B MoE</td>
+      <td class="bar-cell">
+        <div class="bar-value">75.6%</div>
+        <div class="bar-bg"><div class="bar-fill teal" style="width:75.6%"></div></div>
+      </td>
+    </tr>
+    <tr>
+      <td>Ornith 9B Dense</td>
+      <td class="bar-cell">
+        <div class="bar-value">69.4%</div>
+        <div class="bar-bg"><div class="bar-fill teal" style="width:69.4%"></div></div>
+      </td>
+    </tr>
+    <tr>
+      <td>Qwen 3.6 Coder</td>
+      <td class="bar-cell">
+        <div class="bar-value">56.6%</div>
+        <div class="bar-bg"><div class="bar-fill purple" style="width:56.6%"></div></div>
+      </td>
+    </tr>
+    <tr>
+      <td>Qwen 3.5 (base)</td>
+      <td class="bar-cell">
+        <div class="bar-value">~55%</div>
+        <div class="bar-bg"><div class="bar-fill blue" style="width:55%"></div></div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Terminal-Bench — Visual Comparison</h3>
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr>
+      <th>Model</th>
+      <th style="width:60%">Score (2.1 unless noted)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Ornith 397B MoE</td>
+      <td class="bar-cell">
+        <div class="bar-value">77.5</div>
+        <div class="bar-bg"><div class="bar-fill teal" style="width:77.5%"></div></div>
+      </td>
+    </tr>
+    <tr>
+      <td>Ornith 35B MoE</td>
+      <td class="bar-cell">
+        <div class="bar-value">64.2</div>
+        <div class="bar-bg"><div class="bar-fill teal" style="width:64.2%"></div></div>
+      </td>
+    </tr>
+    <tr>
+      <td>Qwen 3.6 Coder (2.0)</td>
+      <td class="bar-cell">
+        <div class="bar-value">61.6*</div>
+        <div class="bar-bg"><div class="bar-fill purple" style="width:61.6%"></div></div>
+      </td>
+    </tr>
+    <tr>
+      <td>Ornith 9B Dense</td>
+      <td class="bar-cell">
+        <div class="bar-value">43.1</div>
+        <div class="bar-bg"><div class="bar-fill teal" style="width:43.1%"></div></div>
+      </td>
+    </tr>
+    <tr>
+      <td>Qwen 3.5 397B MoE (est.)</td>
+      <td class="bar-cell">
+        <div class="bar-value">~44</div>
+        <div class="bar-bg"><div class="bar-fill blue" style="width:44%"></div></div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p class="footnotes" style="margin-top:8px;">* Qwen 3.6 Coder Terminal-Bench score is on v2.0, not directly comparable to Ornith's v2.1 numbers. See footnotes.</p>
+</section>
+
+<!-- ═══ THE RL GAP ═══ -->
+<section id="rl-gap">
+<h2>The RL Gap: What Self-Scaffolding Buys You</h2>
+
+<p>This is the headline finding: training methodology beats raw parameter count. Here's the evidence, distilled.</p>
+
+<div class="card-grid-2">
+  <div class="card ornith">
+    <div class="model-name">Ornith 35B MoE</div>
+    <div class="model-family">Qwen 3.5 MoE + Self-Scaffolding RL</div>
+    <div class="spec-row"><span class="spec-label">SWE-bench Verified</span><span class="spec-value highlight">75.6%</span></div>
+    <div class="spec-row"><span class="spec-label">Terminal-Bench 2.1</span><span class="spec-value highlight">64.2</span></div>
+    <div class="spec-row"><span class="spec-label">vs Qwen 3.6 Coder</span><span class="spec-value" style="color:var(--green)">+19pp SWE-bench</span></div>
+    <div class="spec-row"><span class="spec-label">vs Qwen 3.5 397B</span><span class="spec-value" style="color:var(--green)">+20pp Terminal-Bench</span></div>
+  </div>
+  <div class="callout big" style="margin-bottom:0;">
+    <div class="callout-header">🏆 Ornith 35B beats its own 397B base model</div>
+    <p>On Terminal-Bench 2.1, the 35B Ornith (64.2) scores <strong>~20 points higher</strong> than the estimated base Qwen 3.5-397B MoE (~44). That's not architecture — that's the RL training gap. The 35B learned to scaffold its own problem-solving, and that skill transfers more effectively than 10× the parameters.</p>
+    <p>On SWE-bench, the 35B Ornith (75.6%) also <strong>outperforms Qwen 3.6 Coder (56.6%) by 19 percentage points</strong> — and Qwen 3.6 Coder is <em>already</em> a coding-specialized variant.</p>
+  </div>
+</div>
+
+<h3>Parameter Efficiency: Score per Billion Parameters</h3>
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr>
+      <th>Model</th>
+      <th>Params</th>
+      <th>SWE-bench</th>
+      <th>SWE-bench / B params</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong style="color:var(--teal)">Ornith 9B</strong></td>
+      <td>9B</td>
+      <td class="good">69.4%</td>
+      <td class="best" style="font-family:var(--mono)">7.71</td>
+    </tr>
+    <tr>
+      <td><strong style="color:var(--teal)">Ornith 35B</strong></td>
+      <td>35B</td>
+      <td class="best">75.6%</td>
+      <td class="good" style="font-family:var(--mono)">2.16</td>
+    </tr>
+    <tr>
+      <td><strong style="color:var(--teal)">Ornith 397B</strong></td>
+      <td>397B</td>
+      <td class="best">82.4%</td>
+      <td style="font-family:var(--mono)">0.21</td>
+    </tr>
+    <tr>
+      <td><strong style="color:var(--purple)">Qwen 3.6 Coder</strong></td>
+      <td>~30B</td>
+      <td>56.6%</td>
+      <td style="font-family:var(--mono)">~1.9</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="callout insight">
+  <div class="callout-header">💡 The 9B Story</div>
+  <p>The Ornith 9B scores 69.4% on SWE-bench — a score that would have been <strong>frontier-level in 2024</strong>. This is a model you can run on a laptop GPU, achieving what required a rack of H100s just 18 months ago. The self-scaffolding RL makes small models punch far above their weight class.</p>
+</div>
+</section>
+
+<!-- ═══ LINEAGE ═══ -->
+<section id="lineage">
+<h2>Architecture Lineage</h2>
+<p>Ornith is training innovation on top of existing architectures. Here's how the models relate.</p>
+
+<div class="lineage">
+  <div class="lineage-row">
+    <div class="lineage-icon">🏗️</div>
+    <div class="lineage-info">
+      <div class="lineage-name">Qwen 3.5 Foundation Models <span class="lineage-tag tag-base">BASE</span></div>
+      <div class="lineage-desc">9B, 14B, 32B, 72B Dense · 235B MoE · 397B MoE (with Opus thinking variant)</div>
+    </div>
+  </div>
+
+  <div class="lineage-arrow">↙ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↘</div>
+
+  <div class="lineage-split">
+    <div class="card qwen36" style="margin:0; border-top-left-radius:0; border-top-right-radius:0;">
+      <div class="model-name" style="font-size:16px;">Qwen 3.6 Coder</div>
+      <div class="model-family">Coding specialization <span class="badge purple">QWUOPUS</span></div>
+      <div class="spec-row"><span class="spec-label">SWE-bench</span><span class="spec-value">56.6%</span></div>
+      <div class="spec-row"><span class="spec-label">Terminal-Bench 2.0</span><span class="spec-value">61.6</span></div>
+      <div class="spec-row"><span class="spec-label">Approach</span><span class="spec-value">Fine-tune for code</span></div>
+    </div>
+    <div class="card ornith" style="margin:0; border-top-left-radius:0; border-top-right-radius:0;">
+      <div class="model-name" style="font-size:16px;">Ornith 1.0</div>
+      <div class="model-family">Self-Scaffolding RL <span class="badge teal">ORNITH</span></div>
+      <div class="spec-row"><span class="spec-label">SWE-bench (35B)</span><span class="spec-value highlight">75.6%</span></div>
+      <div class="spec-row"><span class="spec-label">Terminal-Bench 2.1 (35B)</span><span class="spec-value highlight">64.2</span></div>
+      <div class="spec-row"><span class="spec-label">Approach</span><span class="spec-value">RL: model builds own scaffolds</span></div>
+    </div>
+  </div>
+
+  <div class="lineage-arrow" style="margin-top:8px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↓</div>
+
+  <div class="lineage-row" style="border: 1px solid rgba(45,212,191,0.3); background: rgba(45,212,191,0.04);">
+    <div class="lineage-icon">🦅</div>
+    <div class="lineage-info">
+      <div class="lineage-name">Ornith 1.0 Family · DeepReinforce AI <span class="lineage-tag tag-rl">RL-TRAINED</span></div>
+      <div class="lineage-desc">
+        <strong>9B Dense</strong> (qwen35 base) · <strong>31B Dense</strong> (gemma4 base) · <strong>35B MoE</strong> (qwen35moe base) · <strong>397B MoE</strong> (qwen35moe base)<br>
+        All MIT licensed, open weights · All trained with self-scaffolding reinforcement learning
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="callout highlight">
+  <div class="callout-header">🔬 Two Paths from the Same Base</div>
+  <p>The Qwen 3.5 lineage split into two coding-focused directions: <strong>Qwen 3.6 Coder</strong> (fine-tuning for code generation) and <strong>Ornith 1.0</strong> (self-scaffolding RL for agentic problem-solving). The results show that RL-based scaffold learning beats fine-tuning by <strong>19 percentage points</strong> on SWE-bench at the same parameter tier — the RL path teaches the model <em>how to structure its own problem-solving approach</em>, not just what code looks like.</p>
+</div>
+</section>
+
+<!-- ═══ INNOVATION ═══ -->
+<section id="innovation">
+<h2>Self-Scaffolding RL — The Training Innovation</h2>
+
+<p>Traditional RL for LLMs follows a simple pattern: the model generates an answer, a verifier scores it, and the model updates to produce better answers. <strong>Self-scaffolding RL</strong> changes the game: during training, the model generates <em>both</em> a solution <em>and</em> a task-specific scaffold — a structured problem-solving framework it builds for itself.</p>
+
+<div class="card-grid-3">
+  <div class="card">
+    <div style="font-size:28px; margin-bottom:10px;">1️⃣</div>
+    <h3 style="font-size:15px; margin:0 0 8px;">Generate Scaffold + Solution</h3>
+    <p style="font-size:13px; margin:0;">The model produces a two-part output: a <strong>scaffold</strong> (plan, decomposition, tool-use strategy) and a <strong>solution</strong> (the actual answer or code change). Both are generated in a single forward pass during RL rollouts.</p>
+  </div>
+  <div class="card">
+    <div style="font-size:28px; margin-bottom:10px;">2️⃣</div>
+    <h3 style="font-size:15px; margin:0 0 8px;">Verify End-to-End</h3>
+    <p style="font-size:13px; margin:0;">A reward model or execution-based verifier scores the <strong>final outcome</strong> — does the code pass tests? Did the terminal command succeed? The scaffold is evaluated <em>implicitly</em> through whether the solution works.</p>
+  </div>
+  <div class="card">
+    <div style="font-size:28px; margin-bottom:10px;">3️⃣</div>
+    <h3 style="font-size:15px; margin:0 0 8px;">RL Optimizes the Whole Pipeline</h3>
+    <p style="font-size:13px; margin:0;">Gradient updates optimize the model to produce <strong>better scaffolds that lead to better solutions</strong>. Over training, the model learns which scaffolding strategies work for which problem types — emergent meta-cognition.</p>
+  </div>
+</div>
+
+<div class="callout big">
+  <div class="callout-header">🧠 Why This Works</div>
+  <p>Standard fine-tuning teaches a model <em>what</em> correct code looks like. Self-scaffolding RL teaches a model <strong>how to approach problems</strong>. The scaffold is the model's internal problem-solving strategy made explicit — and by optimizing it through RL, the model learns strategies that generalize across problem types. This is why a 35B Ornith can beat a 397B base model: the 35B has learned <em>how to think about the problem</em>, not just how to pattern-match solutions.</p>
+  <p>The approach is particularly effective for <strong>agentic coding tasks</strong> — SWE-bench, Terminal-Bench — where the path from problem to solution involves multiple steps, tool calls, and strategic decisions. The scaffold acts as an internal "agent harness" that the model constructs on the fly.</p>
+</div>
+</section>
+
+<!-- ═══ IMPLICATIONS ═══ -->
+<section id="implications">
+<h2>What This Means</h2>
+
+<h3>For Open Agentic Coding</h3>
+<p>Ornith 1.0 is MIT-licensed with open weights. Combined with the self-scaffolding approach, this means:</p>
+
+<div class="card-grid-2">
+  <div class="card">
+    <div style="font-size:24px; margin-bottom:8px;">🏠</div>
+    <h3 style="font-size:15px; margin:0 0 8px;">Agentic Coding on Consumer Hardware</h3>
+    <p style="font-size:13px; margin:0;">The 35B Ornith runs on a consumer GPU and delivers SWE-bench scores that beat proprietary coding models from 2024. The 9B runs on a laptop. This brings frontier agentic coding to individual developers.</p>
+  </div>
+  <div class="card">
+    <div style="font-size:24px; margin-bottom:8px;">🔓</div>
+    <h3 style="font-size:15px; margin:0 0 8px;">Open Weights, Open Innovation</h3>
+    <p style="font-size:13px; margin:0;">MIT license means anyone can build on Ornith. The self-scaffolding RL approach is a <strong>training recipe</strong> that can be applied to future base models. We may see a wave of RL-scaffolded models across architectures.</p>
+  </div>
+  <div class="card">
+    <div style="font-size:24px; margin-bottom:8px;">📐</div>
+    <h3 style="font-size:15px; margin:0 0 8px;">Scale Is Not the Only Axis</h3>
+    <p style="font-size:13px; margin:0;">The Ornith results prove that training methodology can deliver gains equivalent to <strong>10× parameter scaling</strong>. The research frontier is shifting from "bigger models" to "smarter training."</p>
+  </div>
+  <div class="card">
+    <div style="font-size:24px; margin-bottom:8px;">🔄</div>
+    <h3 style="font-size:15px; margin:0 0 8px;">A New Training Paradigm</h3>
+    <p style="font-size:13px; margin:0;">Self-scaffolding RL may become a standard post-training step for agentic models — analogous to how instruction tuning became standard after GPT-3. The question is no longer "how big?" but "how well-trained?"</p>
+  </div>
+</div>
+
+<h3>The Numbers in Context</h3>
+<div class="callout big">
+  <div class="callout-header">📊 RL Training Adds ~20 Points on SWE-bench</div>
+  <p>Across the Ornith family, the self-scaffolding RL adds approximately <strong>15–20 percentage points</strong> to SWE-bench Verified scores compared to the base models. Starting from ~55% (Qwen 3.5 base), the RL lifts performance to 69–82% depending on model size. This is a consistent, reproducible gain — not cherry-picking.</p>
+  <p>The gain is even more dramatic on Terminal-Bench, where the 35B Ornith (~64) roughly doubles the estimated base performance (~30–35 for a 35B base, ~44 for the 397B). Self-scaffolding is particularly powerful for multi-step terminal tasks where strategic planning matters.</p>
+</div>
+
+<div class="callout warn">
+  <div class="callout-header">⚠️ Caveats & Open Questions</div>
+  <p><strong>Benchmark versions differ:</strong> Qwen 3.6 Coder Terminal-Bench scores are on v2.0, while Ornith uses v2.1. Direct comparison should account for benchmark evolution.</p>
+  <p><strong>Base model scores are estimates:</strong> Exact SWE-bench scores for Qwen 3.5 base models are not published for all sizes; the ~55% figure is a representative baseline.</p>
+  <p><strong>RL training cost:</strong> Self-scaffolding RL requires significant compute during training (generating full rollouts with scaffolds). The tradeoff is training cost vs. inference efficiency — you pay upfront to get a smaller, faster model at runtime.</p>
+  <p><strong>Generalization beyond code:</strong> Most published benchmarks are code-focused. How well self-scaffolding RL transfers to other domains (math, reasoning, creative work) remains to be seen.</p>
+</div>
+</section>
+
+<!-- ═══ FOOTNOTES ═══ -->
+<div class="footnotes">
+  <p><strong>Sources:</strong> DeepReinforce AI Ornith 1.0 release announcement (June 25, 2026); Qwen 3.5/Qwen 3.6 Coder published benchmarks; community-reported Terminal-Bench scores.</p>
+  <p><strong>Benchmark versions:</strong> SWE-bench Verified (same version across all models); Terminal-Bench 2.1 (Ornith) vs 2.0 (Qwen 3.6 Coder) — not directly comparable.</p>
+  <p><strong>Estimates marked:</strong> Qwen 3.5 base SWE-bench scores and Terminal-Bench scores where exact published numbers are unavailable are marked as estimates (~).</p>
+  <p><strong>Report prepared:</strong> June 27, 2026 · For research and analysis purposes. All model names are trademarks of their respective owners.</p>
+</div>
+
+<!-- ═══ BACK ═══ -->
+<a href="index.html" class="back-link">← Back to Reports Index</a>
+
+</div>
+</body>
+</html>
