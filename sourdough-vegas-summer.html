@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sourdough in Las Vegas Summer — Desert Baking Guide</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #222532;
+    --border: rgba(255,255,255,0.06);
+    --text: #e4e6ef;
+    --text2: #9ca0b0;
+    --green: #4ade80;
+    --amber: #fbbf24;
+    --orange: #fb923c;
+    --red: #f87171;
+    --blue: #60a5fa;
+    --purple: #a78bfa;
+    --radius: 10px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+  }
+  .container { max-width: 860px; margin: 0 auto; padding: 20px 16px 60px; }
+
+  .hero { text-align:center; padding:48px 0 36px; border-bottom:1px solid var(--border); margin-bottom:32px; }
+  .hero .icon { font-size:52px; margin-bottom:12px; }
+  .hero h1 { font-size:30px; font-weight:800; letter-spacing:-0.5px; }
+  .hero .subtitle { color:var(--text2); font-size:15px; margin-top:6px; }
+
+  .top-nav {
+    display:flex; gap:6px; flex-wrap:nowrap; margin-bottom:28px;
+    padding:10px 0; border-bottom:1px solid var(--border);
+    position:sticky; top:0; background:var(--bg); z-index:10;
+    overflow-x:auto; scroll-behavior:smooth;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+  }
+  .top-nav::-webkit-scrollbar { display:none; }
+  .top-nav a { font-size:11px; color:var(--text2); text-decoration:none; padding:4px 9px; border-radius:6px; transition:background 0.15s; white-space:nowrap; flex-shrink:0; }
+  .top-nav a:hover { background:var(--surface); color:var(--text); }
+
+  section { margin-bottom:40px; }
+  h2 { font-size:22px; font-weight:700; margin-bottom:18px; padding-bottom:10px; border-bottom:1px solid var(--border); letter-spacing:-0.3px; }
+  h3 { font-size:17px; font-weight:600; margin:24px 0 14px; color:var(--text); }
+  p { margin-bottom:14px; font-size:15px; color:var(--text2); }
+  strong { color:var(--text); }
+
+  .table-wrap { overflow-x:auto; margin-bottom:20px; border-radius:var(--radius); border:1px solid var(--border); }
+  table { width:100%; border-collapse:collapse; font-size:14px; }
+  th { text-align:left; padding:10px 14px; background:var(--surface2); color:var(--text2); font-size:11px; text-transform:uppercase; letter-spacing:0.5px; font-weight:600; }
+  td { padding:10px 14px; border-top:1px solid var(--border); vertical-align:top; }
+  tr:hover td { background:rgba(255,255,255,0.02); }
+
+  .alert {
+    background:var(--surface); border-radius:var(--radius); padding:16px;
+    margin-bottom:16px; font-size:14px;
+  }
+  .alert.warn { border-left:3px solid var(--amber); }
+  .alert.good { border-left:3px solid var(--green); }
+  .alert.tip { border-left:3px solid var(--blue); }
+  .alert.danger { border-left:3px solid var(--red); }
+
+  .badge {
+    display:inline-block; padding:2px 8px; border-radius:4px;
+    font-size:11px; font-weight:700; letter-spacing:0.4px;
+  }
+  .badge.green { background:rgba(74,222,128,0.15); color:var(--green); }
+  .badge.amber { background:rgba(251,191,36,0.15); color:var(--amber); }
+  .badge.red { background:rgba(248,113,113,0.15); color:var(--red); }
+  .badge.blue { background:rgba(96,165,250,0.15); color:var(--blue); }
+
+  .recipe-card {
+    background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
+    padding:22px; margin-bottom:16px;
+  }
+  .recipe-card h3 { margin-top:0; margin-bottom:12px; font-size:16px; }
+  .recipe-card .step { padding:8px 0; border-top:1px solid var(--border); font-size:14px; }
+  .recipe-card .step:first-child { border-top:none; }
+  .recipe-card .step .step-num { color:var(--blue); font-weight:700; margin-right:8px; }
+
+  .testimonial {
+    background:rgba(96,165,250,0.04); border-left:3px solid var(--blue);
+    padding:14px 18px; margin-bottom:14px; border-radius:0 var(--radius) var(--radius) 0;
+    font-size:14px; font-style:italic;
+  }
+  .testimonial .author { display:block; margin-top:6px; font-size:12px; color:var(--text2); font-style:normal; }
+  .testimonial .author a { color:var(--blue); text-decoration:none; }
+
+  .ref-link {
+    display:block; padding:10px 14px; background:var(--surface); border:1px solid var(--border);
+    border-radius:var(--radius); margin-bottom:8px; font-size:14px; color:var(--text); text-decoration:none;
+    transition:border-color 0.2s;
+  }
+  .ref-link:hover { border-color:var(--blue); }
+  .ref-link .ref-desc { font-size:12px; color:var(--text2); margin-top:2px; }
+
+  .back-link {
+    display:inline-block; margin-top:16px; font-size:13px; color:var(--blue);
+    text-decoration:none; padding:6px 12px; border-radius:6px; background:var(--surface);
+  }
+  .back-link:hover { background:var(--surface2); }
+
+  @media (max-width: 500px) {
+    .hero h1 { font-size:22px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="hero">
+  <div class="icon">🥖🌵</div>
+  <h1>Sourdough in Las Vegas Summer</h1>
+  <div class="subtitle">How to bake sourdough bread when it's 115°F outside and bone-dry inside</div>
+</div>
+
+<nav class="top-nav">
+  <a href="#problem">The Problem</a>
+  <a href="#dry-vs-humid">Dry vs Humid</a>
+  <a href="#techniques">Key Techniques</a>
+  <a href="#recipe">Desert Recipe</a>
+  <a href="#starter">Starter Care</a>
+  <a href="#testimonials">Testimonials</a>
+  <a href="#vegas-bakeries">Vegas Bakeries</a>
+  <a href="#references">References</a>
+</nav>
+
+<!-- THE PROBLEM -->
+<section id="problem">
+  <h2>🌡️ The Las Vegas Summer Problem</h2>
+
+  <p>Vegas summer is not like summer elsewhere. <strong>June through September</strong> brings outdoor temperatures of <strong>105–118°F (40–48°C)</strong> with humidity often below <strong>10%</strong>. Inside a home with AC running, kitchens typically sit at <strong>75–82°F (24–28°C)</strong> — still 10–17°F above ideal fermentation temperature.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Summer Condition</th><th>Las Vegas</th><th>Typical Summer (e.g. Midwest)</th></tr></thead>
+      <tbody>
+        <tr><td>Outdoor temp</td><td>105–118°F</td><td>80–95°F</td></tr>
+        <tr><td>Outdoor humidity</td><td><strong>5–15%</strong></td><td>55–80%</td></tr>
+        <tr><td>Indoor kitchen temp (AC)</td><td>75–82°F</td><td>72–78°F</td></tr>
+        <tr><td>Indoor humidity (AC)</td><td><strong>15–30%</strong></td><td>45–60%</td></tr>
+        <tr><td>Ideal dough temp</td><td>75–78°F</td><td>75–78°F</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="alert danger">
+    <strong>AC is a dehydrator.</strong> Refrigerated air in Vegas might be 72°F, but it's also <strong>15% humidity</strong> — drier than the Mojave outside. Your dough will form a skin in minutes if left uncovered. This is the single biggest pitfall that transplants don't anticipate.
+  </div>
+
+  <h3>Three Simultaneous Wars</h3>
+  <p><strong>1. Temperature:</strong> Kitchen is too warm → fermentation runs 2–3x faster than recipes assume. Overproofing happens in hours, not hours.</p>
+  <p><strong>2. Evaporation:</strong> Air is too dry → dough surface crusts over rapidly. That skin traps gas, ruins oven spring, and creates a leather top crust.</p>
+  <p><strong>3. Hydration math:</strong> Flour absorbs ambient moisture. In Vegas, there IS no ambient moisture — your 75% hydration dough behaves like 68%. Dramatically different handling.</p>
+</section>
+
+<!-- DRY VS HUMID -->
+<section id="dry-vs-humid">
+  <h2>🏜️ Dry Heat ≠ Humid Heat — Opposite Advice</h2>
+  <p>Most summer sourdough guides are written for humid climates (US South, East Coast, Europe). <strong>Their advice is backwards for Vegas.</strong></p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Advice</th><th>Humid Climate (what you'll read)</th><th>Vegas Desert (what to do)</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Hydration adjustment</strong></td>
+          <td>Drop hydration 2–5%</td>
+          <td><span class="badge amber">Raise hydration 2–5%</span></td>
+        </tr>
+        <tr>
+          <td><strong>Reason</strong></td>
+          <td>Flour absorbs water from air</td>
+          <td>Flour stays dry, dough loses water to air</td>
+        </tr>
+        <tr>
+          <td><strong>Dough covering</strong></td>
+          <td>Linen towel is fine</td>
+          <td><span class="badge red">Plastic wrap or shower cap mandatory</span></td>
+        </tr>
+        <tr>
+          <td><strong>Bulk ferment time</strong></td>
+          <td>Shorten (watch dough, not clock)</td>
+          <td>Shorten <strong>drastically</strong> and use fridge pauses</td>
+        </tr>
+        <tr>
+          <td><strong>Starter feeding</strong></td>
+          <td>Increase ratio to slow it</td>
+          <td>Same, but keep starter covered air-tight</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="alert tip">
+    <strong>Key insight:</strong> A Vegas kitchen at 78°F and 20% humidity ferments dough differently than a Florida kitchen at 78°F and 70% humidity. Same temperature, completely different dough behavior. The air is the invisible ingredient.
+  </div>
+</section>
+
+<!-- KEY TECHNIQUES -->
+<section id="techniques">
+  <h2>🔑 Seven Techniques for Vegas Summer Sourdough</h2>
+
+  <h3>1. Use Ice-Cold Water</h3>
+  <p>"Using cold water when mixing and kneading is my number one method for combating the heat" — <em>The Perfect Loaf</em>. Drop your dough starting temperature 10–15°F below ambient by using <strong>water straight from a refrigerated pitcher</strong> (40°F / 4°C). This buys you hours of controlled fermentation before the dough warms up. In extreme heat, replace 20% of water weight with an ice cube.</p>
+
+  <h3>2. Cover Everything — All the Time</h3>
+  <p>In 15% humidity, uncovered dough forms a skin in <strong>under 3 minutes</strong>. Use: <strong>plastic shower caps</strong> (stretch over bowls perfectly), <strong>plastic wrap pressed directly onto dough surface</strong>, or <strong>airtight containers</strong>. Cloth towels are useless in Vegas — they let moisture escape immediately. Do not uncover dough "just to check." Every exposure costs you.</p>
+
+  <h3>3. Reduce Starter Percentage</h3>
+  <p>Standard recipes use 20% starter (100g per 500g flour). Drop to <strong>10–15%</strong> (50–75g) in Vegas summer. Less starter = slower initial fermentation = more time for gluten to develop before the dough overproofs. This also improves flavor — longer fermentation at lower yeast load develops more complexity.</p>
+
+  <h3>4. The Fridge Is Your Co-Fermenter</h3>
+  <p>Your refrigerator is a temperature-controlled fermentation chamber. Use it aggressively:</p>
+  <p>• <strong>Autolyse in the fridge</strong> — mix flour + water, cover, fridge for 1–4 hours. Gluten develops without fermentation starting.</p>
+  <p>• <strong>Cold bulk ferment</strong> — after stretch-and-folds, fridge for 8–16 hours instead of counter for 4–6. Slower, safer, better flavor.</p>
+  <p>• <strong>Cold final proof</strong> — shaped loaves in bannetons, fridge overnight (12–18 hours). Standard technique, but non-negotiable in Vegas.</p>
+
+  <h3>5. Watch the Dough, Not the Clock</h3>
+  <p>Recipes say "bulk ferment 4 hours." In a 78°F Vegas kitchen, that dough might be overproofed at <strong>2.5 hours</strong>. Signs to watch: <strong>50% volume increase</strong> (not double — in dry air, doubling often means overproofed), <strong>jiggly but not liquid</strong> surface, <strong>bubbles visible on sides and top</strong>, dough pulls away from bowl edges cleanly. Use a clear straight-sided container to see volume change.</p>
+
+  <h3>6. Higher Hydration Than You Think</h3>
+  <p>Vegas bakers on Reddit consistently report that dough from standard recipes feels "too tight" and "not as loose as what I see online." That's the dry air stealing moisture. <strong>Start at 78% hydration</strong> (390g water per 500g flour) instead of the standard 70–75%. If it's too slack after autolyse, you can always add flour — but you can't add water back after it evaporates. One Vegas baker reported doing a <strong>17-hour bulk ferment at 70°F</strong> with higher hydration to compensate.</p>
+
+  <h3>7. Steam Aggressively During Baking</h3>
+  <p>Oven spring depends on steam keeping the crust flexible. In dry air, you need more steam than usual: <strong>preheat Dutch oven for 45 minutes</strong> at 500°F, <strong>spray the loaf with water mist</strong> immediately before closing lid, add <strong>2–3 ice cubes</strong> under parchment paper (they create steam for 5+ minutes), and bake <strong>covered for 25 minutes</strong> (not 20) before removing lid.</p>
+</section>
+
+<!-- DESERT RECIPE -->
+<section id="recipe">
+  <h2>📋 Las Vegas Summer Sourdough Recipe</h2>
+  <p>Adapted for 78°F kitchen, 20% humidity. Makes 1 boule (~900g).</p>
+
+  <div class="recipe-card">
+    <h3>Ingredients <span class="badge amber">Desert-Adjusted</span></h3>
+    <table style="margin-top:12px;">
+      <thead><tr><th>Ingredient</th><th>Standard Recipe</th><th>Vegas Summer</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td>Bread flour</td><td>500g</td><td><strong>500g</strong></td><td>No change — King Arthur organic recommended</td></tr>
+        <tr><td>Water</td><td>350g (70%)</td><td><strong>390g (78%)</strong></td><td>Compensates for evaporation</td></tr>
+        <tr><td>Active starter</td><td>100g (20%)</td><td><strong>60g (12%)</strong></td><td>Slower fermentation in hot kitchen</td></tr>
+        <tr><td>Salt</td><td>10g</td><td><strong>10g</strong></td><td>No change</td></tr>
+        <tr><td>Water temp</td><td>Room temp (70°F)</td><td><strong>Refrigerated (40°F)</strong></td><td>Cools dough to extend fermentation window</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="recipe-card">
+    <h3>Method</h3>
+    <div class="step"><span class="step-num">1.</span> <strong>Autolyse (fridge):</strong> Mix flour + 380g cold water. Cover with plastic wrap pressed to surface. Refrigerate 2 hours. (Reserve 10g water for salt.)</div>
+    <div class="step"><span class="step-num">2.</span> <strong>Mix:</strong> Add starter + salt + reserved water. Mix by hand 5 min until incorporated. Dough temp target: <strong>68–72°F</strong>.</div>
+    <div class="step"><span class="step-num">3.</span> <strong>Stretch & fold:</strong> 4 sets, 30 min apart. Keep covered with shower cap between sets. Work fast — do not let dough sit uncovered.</div>
+    <div class="step"><span class="step-num">4.</span> <strong>Bulk ferment (fridge):</strong> After last fold, transfer covered container to fridge. Bulk ferment <strong>8–16 hours</strong> overnight. Check: 50% volume increase, domed surface, bubbles visible.</div>
+    <div class="step"><span class="step-num">5.</span> <strong>Pre-shape:</strong> Turn onto LIGHTLY floured surface (dry air makes flour sticker-resistant — use less than you think). Pre-shape, bench rest covered 20 min.</div>
+    <div class="step"><span class="step-num">6.</span> <strong>Final shape:</strong> Shape into boule or batard. Into floured banneton, seam-side up. Cover with plastic (shower cap).</div>
+    <div class="step"><span class="step-num">7.</span> <strong>Cold proof:</strong> Fridge 12–18 hours. The cold proof is non-negotiable in Vegas — it develops flavor AND makes scoring possible.</div>
+    <div class="step"><span class="step-num">8.</span> <strong>Bake:</strong> Preheat Dutch oven at 500°F for 45 min. Turn dough onto parchment. Score immediately (cold dough scores clean). Spray loaf with water. Add 3 ice cubes under parchment. Lid on, 500°F for 25 min. Lid off, 450°F for 20–25 min until deep mahogany. Internal temp 208–210°F.</div>
+    <div class="step"><span class="step-num">9.</span> <strong>Cool:</strong> On rack minimum 2 hours before slicing. Cutting hot bread in dry air = the crumb turns to dust.</div>
+  </div>
+</section>
+
+<!-- STARTER CARE -->
+<section id="starter">
+  <h2>🫙 Starter Care in Vegas Summer</h2>
+
+  <div class="alert warn">
+    <strong>Surface crust is the #1 starter killer in Vegas.</strong> A starter left uncovered or loosely covered will form a dry crust in under an hour. That crust can trap gas and cause overflow, or worse — mold spores love the dry surface. Use an <strong>airtight container</strong> (mason jar with lid slightly loose, or Weck jar with rubber seal removed but glass lid on).
+  </div>
+
+  <h3>Feeding Schedule (Summer)</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Frequency</th><th>Ratio</th><th>Water Temp</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Daily (counter)</td><td>1:2:2 or 1:3:3</td><td>Cold (40°F)</td><td>Higher ratio = slower peak. Use cold water to delay</td></tr>
+        <tr><td>Twice daily (if kitchen 80°F+)</td><td>1:2:2</td><td>Cold</td><td>Starter may peak in 3–4 hours at high temp</td></tr>
+        <tr><td>Weekly (fridge)</td><td>1:2:2</td><td>Room temp (for revival)</td><td>Feed, let sit 1 hour, then fridge. Feed once per week</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Starter Hydration</h3>
+  <p>Consider running a <strong>stiffer starter</strong> (60–65% hydration instead of 100%) in summer. Stiffer starters ferment slower and are more resistant to surface drying. Feed at 1:1:0.65 (50g starter : 50g flour : 32g water).</p>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <h2>🗣️ Vegas Baker Testimonials</h2>
+
+  <div class="testimonial">
+    "I live in Las Vegas, NV and new to sourdough baking. I have tried 100g starter, 300g water, 500g King Arthur's bread flour — and it's alright. I feel like my dough is not as loose as what I see online. I thought maybe bulk ferment process was too short so I have tried a 17 hour bulk ferment at 70 degrees and the dough is still not as loose…"
+    <span class="author">— Reddit r/Sourdough, Nevada baker, 2024 · <a href="https://www.reddit.com/r/Sourdough/comments/1bl10kw/recipe_request_for_dry_climate_nevada_usa/" target="_blank">Full thread</a></span>
+  </div>
+
+  <div class="testimonial">
+    "Hi, also in Vegas. The elevation/dryness definitely makes a difference. I've had more success with a little higher hydration and using the fridge to my advantage. Don't follow the clock — the dough is ready when it's jiggly and bubbly, not when the recipe says."
+    <span class="author">— Reddit r/Sourdough, Vegas local · <a href="https://www.reddit.com/r/Sourdough/comments/1bl10kw/recipe_request_for_dry_climate_nevada_usa/" target="_blank">Same thread</a></span>
+  </div>
+
+  <div class="testimonial">
+    "Bread Day has been baking sourdough in Las Vegas since 2012. Our classic sourdough uses a blend of organic bread and whole wheat flours, naturally fermented, well hydrated, and seasoned with sea salt."
+    <span class="author">— Bread Day Las Vegas · <a href="https://bread-day.com/" target="_blank">bread-day.com</a></span>
+  </div>
+
+  <div class="testimonial">
+    "Desert Bread was named the best sourdough in Las Vegas, Nevada. Brett Boyer and Brendon Wilharber sell bread, pastries, and seasonal baked goods. Everything I tried was wonderful — you can really taste the care and dedication in every bite."
+    <span class="author">— Thrillist / Wanderlog reviews · <a href="https://www.desertbreadlv.com/" target="_blank">desertbreadlv.com</a></span>
+  </div>
+
+  <div class="testimonial">
+    "Warm kitchens accelerate fermentation faster than gluten can strengthen. Dough becomes sticky, spreads after shaping, and collapses when scored. Shortening time alone rarely fixes this — temperature must be lowered. Keep dough covered to avoid skin."
+    <span class="author">— Sourdough Archive · <a href="https://sourdougharchive.com/sourdough-proofing-temperature/" target="_blank">Proofing temperature guide</a></span>
+  </div>
+</section>
+
+<!-- VEGAS BAKERIES -->
+<section id="vegas-bakeries">
+  <h2>🥖 Las Vegas Sourdough Bakeries</h2>
+  <p>Real sourdough bakeries operating in the Vegas desert. All have been baking here for years — they've solved the problems you're facing.</p>
+
+  <div class="recipe-card">
+    <h3>Desert Bread 🏆</h3>
+    <p>Named <strong>Best Sourdough in Nevada</strong>. Operated by Brett Boyer and Brendon Wilharber. Cottage bakery near Sunset Park in Paradise, NV. Specializes in fermented sourdough with freshly milled grains, locally inspired breads, and unique pastries. They bake in the desert — if they can run a sourdough bakery in Vegas, you can bake one loaf.</p>
+    <p style="font-size:13px;">📍 Paradise, NV (east of airport) · <a href="https://www.desertbreadlv.com/" target="_blank" style="color:var(--blue);">desertbreadlv.com</a></p>
+  </div>
+
+  <div class="recipe-card">
+    <h3>Bread Day</h3>
+    <p>Baking sourdough in Las Vegas <strong>since 2012</strong> — over a decade of desert fermentation. Organic bread flour, whole wheat, rye, and 12-grain blends. All naturally fermented. Also sells <strong>sourdough starter</strong> — a Vegas-adapted culture that's already acclimated to desert conditions.</p>
+    <p style="font-size:13px;">📍 Las Vegas · <a href="https://bread-day.com/" target="_blank" style="color:var(--blue);">bread-day.com</a></p>
+  </div>
+
+  <div class="recipe-card">
+    <h3>5098 Bread</h3>
+    <p>Sells sourdough starter and finished loaves. Local favorite mentioned across r/vegaslocals. Good starter source if you want a Vegas-native culture.</p>
+    <p style="font-size:13px;">📍 Las Vegas · <a href="https://www.5098bread.com/" target="_blank" style="color:var(--blue);">5098bread.com</a></p>
+  </div>
+</section>
+
+<!-- REFERENCES -->
+<section id="references">
+  <h2>📚 References & Deep Dives</h2>
+
+  <a href="https://www.theperfectloaf.com/how-to-bake-sourdough-bread-in-summer/" target="_blank" class="ref-link">
+    <strong>How to Bake Sourdough Bread in Summer</strong>
+    <span class="ref-desc">The Perfect Loaf — Comprehensive guide to cold water, fridge fermentation, and hydration adjustments. Maurizio Leo is one of the most respected sourdough educators.</span>
+  </a>
+
+  <a href="https://pantrymama.com/how-to-make-sourdough-in-hot-humid-weather/" target="_blank" class="ref-link">
+    <strong>How to Make Sourdough in Hot Weather</strong>
+    <span class="ref-desc">The Pantry Mama — Practical, kitchen-tested tips for high-temperature baking. Covers starter maintenance in heat.</span>
+  </a>
+
+  <a href="https://sourdougharchive.com/sourdough-proofing-temperature/" target="_blank" class="ref-link">
+    <strong>Sourdough Proofing Temperature Guide (60°F–85°F Chart)</strong>
+    <span class="ref-desc">Sourdough Archive — Detailed temperature-fermentation relationship with specific timing charts and altitude adjustments.</span>
+  </a>
+
+  <a href="https://www.sourdough.co.uk/glossary/hydration/" target="_blank" class="ref-link">
+    <strong>Sourdough Hydration Guide</strong>
+    <span class="ref-desc">Sourdough.co.uk — Hydration fundamentals: how water ratio changes dough behavior, crumb structure, and handling.</span>
+  </a>
+
+  <a href="https://sourdoughgeek.com/how-do-i-adjust-my-sourdough-baking-process-in-a-very-dry-or-humid-climate/" target="_blank" class="ref-link">
+    <strong>Adjusting Sourdough for Dry or Humid Climates</strong>
+    <span class="ref-desc">Sourdough Geek — Climate-specific adjustments for hydration, fermentation time, and starter management.</span>
+  </a>
+
+  <a href="https://www.reddit.com/r/Sourdough/comments/1bl10kw/recipe_request_for_dry_climate_nevada_usa/" target="_blank" class="ref-link">
+    <strong>r/Sourdough: Recipe Request for Dry Climate (Nevada, USA)</strong>
+    <span class="ref-desc">Reddit — Direct discussion between Vegas sourdough bakers sharing recipes and dry-climate tips. Real experience, real results.</span>
+  </a>
+
+  <a href="https://www.desertbreadlv.com/" target="_blank" class="ref-link">
+    <strong>Desert Bread — Artisanal Sourdough in Las Vegas</strong>
+    <span class="ref-desc">Named best sourdough in Nevada. Brett Boyer and Brendon Wilharber bake in Paradise, NV — proof that world-class sourdough comes from the desert.</span>
+  </a>
+
+  <a href="https://bread-day.com/" target="_blank" class="ref-link">
+    <strong>Bread Day — Baking Sourdough in Las Vegas Since 2012</strong>
+    <span class="ref-desc">Over a decade of desert baking. Sells Vegas-adapted sourdough starter. Local institution.</span>
+  </a>
+</section>
+
+<a class="back-link" href="index.html">← Back to Reports Index</a>
+
+</div>
+</body>
+</html>
