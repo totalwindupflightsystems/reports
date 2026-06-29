@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Swiss Scenic Trains — Alexis & Estrella</title>
+<style>
+  :root {
+    --bg:#0d1117; --card:#161b22; --border:#30363d; --text:#e6edf3;
+    --muted:#8b949e; --gold:#d4a853; --rose:#e8a0bf; --blue:#79c0ff;
+    --green:#7ee787; --red:#ff7b72;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui,sans-serif; line-height:1.6; }
+
+  .hero {
+    text-align:center; padding:80px 20px 60px;
+    background:linear-gradient(135deg,#0d1117 0%,#1a2332 40%,#1b2d3a 100%);
+    border-bottom:1px solid var(--border); position:relative; overflow:hidden;
+  }
+  .hero::before {
+    content:''; position:absolute; inset:0;
+    background:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300"><path d="M0 250 Q150 100 300 220 Q450 340 600 200 Q750 60 900 180 Q1050 300 1200 150 L1200 300 L0 300Z" fill="rgba(255,255,255,0.03)"/><path d="M0 280 Q200 180 400 260 Q600 340 800 230 Q1000 120 1200 200 L1200 300 L0 300Z" fill="rgba(255,255,255,0.02)"/></svg>') bottom/cover no-repeat;
+  }
+  .hero h1 { font-size:2.8em; font-weight:300; letter-spacing:2px; position:relative; }
+  .hero h1 span { color:var(--gold); }
+  .hero .sub { color:var(--muted); font-size:1.2em; margin-top:10px; position:relative; }
+  .hero .for { color:var(--rose); margin-top:12px; font-size:1.05em; position:relative; }
+
+  /* Train cards */
+  .train-section { max-width:1200px; margin:0 auto; padding:60px 20px; }
+  .train-section h2 { font-size:2em; font-weight:300; text-align:center; margin-bottom:50px; }
+  .train-section h2 .num { color:var(--gold); font-size:0.7em; font-weight:600; display:block; margin-bottom:5px; }
+
+  .train-card {
+    display:grid; grid-template-columns:1fr 1fr; gap:0; margin-bottom:40px;
+    background:var(--card); border:1px solid var(--border); border-radius:16px; overflow:hidden;
+    transition:transform 0.2s,box-shadow 0.2s;
+  }
+  .train-card:hover { transform:translateY(-3px); box-shadow:0 12px 40px rgba(0,0,0,0.4); }
+  .train-card:last-child { margin-bottom:0; }
+
+  .train-img {
+    min-height:320px; background-size:cover; background-position:center;
+    position:relative;
+  }
+  .train-img .rank {
+    position:absolute; top:20px; left:20px;
+    background:var(--gold); color:#000; width:44px; height:44px; border-radius:12px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:1.4em; font-weight:700;
+  }
+  .train-img .badge {
+    position:absolute; bottom:20px; left:20px;
+    background:rgba(0,0,0,0.7); backdrop-filter:blur(8px); 
+    padding:6px 14px; border-radius:20px; font-size:0.78em; font-weight:500;
+  }
+
+  .train-info { padding:35px; display:flex; flex-direction:column; justify-content:center; }
+  .train-info h3 { font-size:1.6em; font-weight:400; margin-bottom:5px; }
+  .train-info .route { color:var(--gold); font-size:0.9em; margin-bottom:18px; }
+  .train-info .stat-row { display:flex; gap:25px; margin-bottom:18px; flex-wrap:wrap; }
+  .train-info .stat { text-align:center; }
+  .train-info .stat .val { font-size:1.4em; font-weight:600; color:var(--text); }
+  .train-info .stat .lbl { font-size:0.72em; color:var(--muted); text-transform:uppercase; letter-spacing:1px; }
+  .train-info .desc { color:var(--muted); font-size:0.92em; line-height:1.6; margin-bottom:20px; }
+  .train-info .highlights { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:20px; }
+  .train-info .hl { padding:5px 12px; border-radius:20px; font-size:0.78em; font-weight:500; background:rgba(121,192,255,0.1); color:var(--blue); }
+  .train-info .btn {
+    display:inline-block; padding:11px 28px; background:var(--gold); color:#000;
+    text-decoration:none; border-radius:8px; font-weight:600; font-size:0.9em;
+    align-self:flex-start; transition:opacity 0.2s;
+  }
+  .train-info .btn:hover { opacity:0.85; }
+
+  /* Comparison table */
+  .compare { max-width:900px; margin:60px auto; padding:0 20px; }
+  .compare h2 { font-size:1.8em; font-weight:300; text-align:center; margin-bottom:30px; }
+  .compare table { width:100%; border-collapse:collapse; }
+  .compare th { text-align:left; padding:14px 16px; font-size:0.78em; text-transform:uppercase; letter-spacing:1px; color:var(--muted); border-bottom:2px solid var(--border); }
+  .compare td { padding:14px 16px; border-bottom:1px solid var(--border); font-size:0.92em; }
+  .compare tr:hover td { background:rgba(255,255,255,0.02); }
+  .compare .pick { color:var(--gold); font-weight:600; }
+
+  /* Recommendation */
+  .rec { max-width:800px; margin:0 auto 60px; padding:30px; background:linear-gradient(135deg,rgba(212,168,83,0.08),rgba(212,168,83,0.03)); border:1px solid rgba(212,168,83,0.2); border-radius:16px; text-align:center; }
+  .rec h2 { font-size:1.5em; margin-bottom:15px; }
+  .rec p { color:var(--muted); line-height:1.7; }
+
+  @media (max-width:768px) {
+    .train-card { grid-template-columns:1fr; }
+    .train-img { min-height:220px; }
+    .hero h1 { font-size:1.8em; }
+    .train-info { padding:25px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>Swiss <span>Scenic Trains</span></h1>
+  <p class="sub">Alpine panoramas · Glaciers · UNESCO routes</p>
+  <p class="for">For Alexis & Estrella · Summer 2026</p>
+</div>
+
+<!-- Train 1: Bernina Express -->
+<div class="train-section">
+  <h2><span class="num">★ Best for a Weekend</span>The Contenders</h2>
+
+  <div class="train-card">
+    <div class="train-img" style="background-image:url('https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?w=800&q=80'),linear-gradient(135deg,#1a3a2a,#0d2818);">
+      <div class="rank">1</div>
+      <div class="badge">🏔️ UNESCO World Heritage</div>
+    </div>
+    <div class="train-info">
+      <h3>Bernina Express</h3>
+      <p class="route">🚂 Tirano (Italy) → St. Moritz (Switzerland)</p>
+      <div class="stat-row">
+        <div class="stat"><div class="val">4h</div><div class="lbl">Duration</div></div>
+        <div class="stat"><div class="val">55</div><div class="lbl">Tunnels</div></div>
+        <div class="stat"><div class="val">196</div><div class="lbl">Bridges</div></div>
+        <div class="stat"><div class="val">2,253m</div><div class="lbl">Max Altitude</div></div>
+        <div class="stat"><div class="val">~€60</div><div class="lbl">From</div></div>
+      </div>
+      <p class="desc">From Alpine glaciers to Italian palm trees in 4 hours. Crosses the famous Landwasser Viaduct and the Brusio spiral viaduct. Widely considered the most spectacular train ride in Europe — and it starts in Italy, making it perfect for your route.</p>
+      <div class="highlights">
+        <span class="hl">🏔️ Landwasser Viaduct</span>
+        <span class="hl">🌀 Brusio Spiral</span>
+        <span class="hl">🧊 Morteratsch Glacier</span>
+        <span class="hl">🌴 Palm trees at the end</span>
+      </div>
+      <a href="https://www.rhb.ch/en/panoramic-journeys/bernina-express/" target="_blank" class="btn">Book Bernina Express →</a>
+    </div>
+  </div>
+
+  <!-- Train 2: Glacier Express -->
+  <div class="train-card">
+    <div class="train-img" style="background-image:url('https://images.unsplash.com/photo-1527719327850-c6a0e8efaf0c?w=800&q=80'),linear-gradient(135deg,#1b2d3a,#0d1a28);">
+      <div class="rank">2</div>
+      <div class="badge">🍽️ 3-Course Lunch Onboard</div>
+    </div>
+    <div class="train-info">
+      <h3>Glacier Express</h3>
+      <p class="route">🚂 Zermatt → St. Moritz (or reverse)</p>
+      <div class="stat-row">
+        <div class="stat"><div class="val">8h</div><div class="lbl">Duration</div></div>
+        <div class="stat"><div class="val">91</div><div class="lbl">Tunnels</div></div>
+        <div class="stat"><div class="val">291</div><div class="lbl">Bridges</div></div>
+        <div class="stat"><div class="val">2,033m</div><div class="lbl">Max Altitude</div></div>
+        <div class="stat"><div class="val">~€170</div><div class="lbl">From</div></div>
+      </div>
+      <p class="desc">"The slowest express train in the world." 8 hours of Matterhorn views, the Oberalp Pass, and the Rhine Gorge — Switzerland's Grand Canyon. A 3-course lunch with wine is served at your panoramic seat. The most iconic Swiss train journey.</p>
+      <div class="highlights">
+        <span class="hl">🗻 Matterhorn views</span>
+        <span class="hl">🍷 Wine served at your seat</span>
+        <span class="hl">🌉 Oberalp Pass (2,033m)</span>
+        <span class="hl">🏞️ Rhine Gorge</span>
+      </div>
+      <a href="https://www.glacierexpress.ch/en" target="_blank" class="btn">Book Glacier Express →</a>
+    </div>
+  </div>
+
+  <!-- Train 3: Golden Pass -->
+  <div class="train-card">
+    <div class="train-img" style="background-image:url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80'),linear-gradient(135deg,#2a1a3a,#1a0d28);">
+      <div class="rank">3</div>
+      <div class="badge">✨ Belle Époque Carriages</div>
+    </div>
+    <div class="train-info">
+      <h3>Golden Pass Express</h3>
+      <p class="route">🚂 Montreux → Interlaken</p>
+      <div class="stat-row">
+        <div class="stat"><div class="val">3h15</div><div class="lbl">Duration</div></div>
+        <div class="stat"><div class="val">Direct</div><div class="lbl">Changes</div></div>
+        <div class="stat"><div class="val">1,274m</div><div class="lbl">Max Altitude</div></div>
+        <div class="stat"><div class="val">~€50</div><div class="lbl">From</div></div>
+      </div>
+      <p class="desc">Lake Geneva vineyards → Alpine peaks → Lake Thun. The Belle Époque carriages with their 1930s Pullman elegance make this the most romantic option. Champagne while rolling past Swiss vineyards and alpine meadows.</p>
+      <div class="highlights">
+        <span class="hl">🍇 Lake Geneva vineyards</span>
+        <span class="hl">🥂 Belle Époque cars</span>
+        <span class="hl">🏔️ Lake Thun views</span>
+        <span class="hl">🏘️ Gstaad</span>
+      </div>
+      <a href="https://www.myswissalps.com/activity/goldenpass/" target="_blank" class="btn">Golden Pass Info →</a>
+    </div>
+  </div>
+
+  <!-- Train 4: Gornergrat -->
+  <div class="train-card">
+    <div class="train-img" style="background-image:url('https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=800&q=80'),linear-gradient(135deg,#1a1a3a,#0d0d28);">
+      <div class="rank">4</div>
+      <div class="badge">🗻 Face-to-Face with Matterhorn</div>
+    </div>
+    <div class="train-info">
+      <h3>Gornergrat Bahn</h3>
+      <p class="route">🚂 Zermatt → Gornergrat (round trip)</p>
+      <div class="stat-row">
+        <div class="stat"><div class="val">33m</div><div class="lbl">Each Way</div></div>
+        <div class="stat"><div class="val">29</div><div class="lbl">Peaks >4000m</div></div>
+        <div class="stat"><div class="val">3,089m</div><div class="lbl">Summit</div></div>
+        <div class="stat"><div class="val">~€50</div><div class="lbl">Round Trip</div></div>
+      </div>
+      <p class="desc">The most dramatic 33 minutes in Switzerland. Stand face-to-face with the Matterhorn and 29 peaks over 4,000 meters. The viewing platform at the top is the single best photo spot in the Swiss Alps. Combine with the Glacier Express for the ultimate day.</p>
+      <div class="highlights">
+        <span class="hl">🗻 Matterhorn</span>
+        <span class="hl">📸 Best photo in Alps</span>
+        <span class="hl">🏔️ 29 peaks over 4000m</span>
+        <span class="hl">❄️ Year-round snow</span>
+      </div>
+      <a href="https://www.gornergrat.ch/en/" target="_blank" class="btn">Gornergrat Info →</a>
+    </div>
+  </div>
+</div>
+
+<!-- Comparison Table -->
+<div class="compare">
+  <h2>Quick Comparison</h2>
+  <table>
+    <tr><th>Train</th><th>Time</th><th>Cost</th><th>Best For</th><th>Route Fits?</th></tr>
+    <tr>
+      <td><strong>Bernina Express</strong></td>
+      <td>4h</td><td>~€60</td><td>Pure drama, half-day</td>
+      <td class="pick">✅ Starts in Italy!</td>
+    </tr>
+    <tr>
+      <td><strong>Glacier Express</strong></td>
+      <td>8h</td><td>~€170</td><td>Full-day luxury, iconic</td>
+      <td>⚠️ Need to get to Zermatt</td>
+    </tr>
+    <tr>
+      <td><strong>Golden Pass</strong></td>
+      <td>3h15</td><td>~€50</td><td>Romance, shorter trip</td>
+      <td>✅ Western Switzerland</td>
+    </tr>
+    <tr>
+      <td><strong>Gornergrat</strong></td>
+      <td>1h RT</td><td>~€50</td><td>Matterhorn, quick hit</td>
+      <td>⚠️ Pair with Glacier Express</td>
+    </tr>
+  </table>
+</div>
+
+<!-- Recommendation -->
+<div class="rec">
+  <h2>🏆 Our Recommendation</h2>
+  <p>
+    <strong>Do the Bernina Express.</strong> It's the perfect weekend train — 4 hours, UNESCO route, and it starts in Tirano, Italy — just 2.5 hours from Milan.<br><br>
+    <strong>Your weekend:</strong> Milan (Armani Silos + lunch) → Tirano → Bernina Express → St. Moritz (overnight) → explore the Engadin valley → back Sunday evening.<br><br>
+    If you have more time, add the <strong>Gornergrat Bahn</strong> as a side trip from Zermatt — 33 minutes for the most insane Matterhorn view you'll ever see.
+  </p>
+</div>
+
+</body>
+</html>
