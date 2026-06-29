@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paris & Europe Travel Plan — Alexis & Estrella</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --card: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --gold: #d4a853;
+    --rose: #e8a0bf;
+    --blue: #79c0ff;
+    --green: #7ee787;
+    --purple: #d2a8ff;
+    --red: #ff7b72;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui,sans-serif; line-height:1.6; }
+  
+  /* Header */
+  .hero { 
+    text-align:center; padding:80px 20px 60px; 
+    background:linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    border-bottom:1px solid var(--border);
+  }
+  .hero h1 { font-size:2.8em; font-weight:300; letter-spacing:2px; margin-bottom:10px; }
+  .hero h1 span { color:var(--gold); }
+  .hero .subtitle { color:var(--muted); font-size:1.2em; font-style:italic; }
+  .hero .for { color:var(--rose); margin-top:15px; font-size:1.1em; }
+
+  /* Nav */
+  .nav-container { position:sticky; top:0; z-index:100; background:rgba(13,17,23,0.95); backdrop-filter:blur(12px); border-bottom:1px solid var(--border); }
+  .nav-scroll { display:flex; overflow-x:auto; gap:0; padding:0 20px; scroll-behavior:smooth; }
+  .nav-scroll::-webkit-scrollbar { height:4px; }
+  .nav-scroll::-webkit-scrollbar-thumb { background:var(--border); border-radius:2px; }
+  .nav-scroll a {
+    color:var(--muted); text-decoration:none; padding:16px 20px; white-space:nowrap;
+    font-size:0.9em; font-weight:500; letter-spacing:0.5px; 
+    border-bottom:2px solid transparent; transition:all 0.2s;
+  }
+  .nav-scroll a:hover, .nav-scroll a.active { color:var(--text); border-bottom-color:var(--gold); }
+
+  /* Sections */
+  section { padding:60px 20px; max-width:1100px; margin:0 auto; }
+  section h2 { font-size:2em; font-weight:300; margin-bottom:10px; border-bottom:2px solid var(--border); padding-bottom:10px; }
+  section h2 .emoji { margin-right:10px; }
+  .section-intro { color:var(--muted); margin-bottom:40px; font-size:1.05em; max-width:700px; }
+
+  /* Cards */
+  .card-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(320px,1fr)); gap:20px; margin-top:25px; }
+  .card {
+    background:var(--card); border:1px solid var(--border); border-radius:12px; 
+    padding:25px; cursor:pointer; transition:all 0.2s; position:relative;
+  }
+  .card:hover { border-color:var(--gold); transform:translateY(-2px); box-shadow:0 8px 30px rgba(0,0,0,0.3); }
+  .card h3 { font-size:1.15em; font-weight:500; margin-bottom:8px; }
+  .card .location { color:var(--muted); font-size:0.85em; margin-bottom:10px; }
+  .card .desc { color:var(--muted); font-size:0.9em; line-height:1.5; }
+  .card .tags { display:flex; gap:8px; flex-wrap:wrap; margin-top:15px; }
+  .tag { padding:4px 10px; border-radius:20px; font-size:0.75em; font-weight:500; }
+  .tag-romance { background:rgba(232,160,191,0.15); color:var(--rose); }
+  .tag-fashion { background:rgba(210,168,255,0.15); color:var(--purple); }
+  .tag-culture { background:rgba(121,192,255,0.15); color:var(--blue); }
+  .tag-scenery { background:rgba(126,231,135,0.15); color:var(--green); }
+  .tag-food { background:rgba(212,168,83,0.15); color:var(--gold); }
+  .tag-luxury { background:rgba(255,123,114,0.1); color:var(--red); }
+
+  /* Day markers */
+  .day-header { 
+    color:var(--gold); font-size:0.85em; font-weight:600; letter-spacing:1px; 
+    text-transform:uppercase; margin-bottom:15px; 
+  }
+
+  /* Modal */
+  .modal-overlay { 
+    display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); z-index:200;
+    justify-content:center; align-items:center; padding:20px;
+  }
+  .modal-overlay.active { display:flex; }
+  .modal {
+    background:var(--card); border:1px solid var(--border); border-radius:16px;
+    max-width:600px; width:100%; max-height:85vh; overflow-y:auto; padding:35px;
+    position:relative;
+  }
+  .modal h2 { font-size:1.5em; border:none; padding:0; margin-bottom:5px; }
+  .modal .modal-loc { color:var(--gold); margin-bottom:20px; }
+  .modal .detail { margin:12px 0; }
+  .modal .detail strong { color:var(--text); display:inline-block; width:100px; }
+  .modal .detail span { color:var(--muted); }
+  .modal .close { 
+    position:absolute; top:15px; right:20px; background:none; border:none;
+    color:var(--muted); font-size:1.5em; cursor:pointer;
+  }
+  .modal .close:hover { color:var(--text); }
+  .modal .btn { 
+    display:inline-block; margin-top:20px; padding:10px 24px; 
+    background:var(--gold); color:#000; text-decoration:none; border-radius:8px;
+    font-weight:600; transition:opacity 0.2s;
+  }
+  .modal .btn:hover { opacity:0.85; }
+
+  /* Route map */
+  .route-flow { 
+    display:flex; flex-wrap:wrap; align-items:center; gap:12px; padding:30px 0;
+    justify-content:center; font-size:0.95em; 
+  }
+  .route-stop { 
+    background:var(--card); border:1px solid var(--border); padding:12px 20px;
+    border-radius:8px; text-align:center; 
+  }
+  .route-arrow { color:var(--muted); font-size:1.3em; }
+
+  /* Progress bar */
+  .progress-section { margin:40px 0; }
+  .progress-item { display:flex; align-items:center; gap:15px; margin:12px 0; }
+  .progress-dot { 
+    width:14px;height:14px;border-radius:50%;flex-shrink:0;
+  }
+  .progress-dot.done { background:var(--green); }
+  .progress-dot.current { background:var(--gold); box-shadow:0 0 10px var(--gold); }
+  .progress-dot.upcoming { background:var(--border); }
+  .progress-label { color:var(--muted); font-size:0.9em; }
+  .progress-label .done-text { color:var(--green); }
+
+  /* Responsive */
+  @media (max-width:768px) {
+    .hero h1 { font-size:1.8em; }
+    section { padding:40px 15px; }
+    .card-grid { grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>Paris & <span>Europe</span></h1>
+  <p class="subtitle">Romance · Fashion · Culture · Landscapes</p>
+  <p class="for">For Alexis & Estrella</p>
+</div>
+
+<nav class="nav-container" id="nav">
+  <div class="nav-scroll" id="navScroll">
+    <a href="#progress">📍 Progress</a>
+    <a href="#overview">🗺️ Overview</a>
+    <a href="#paris">🥐 Paris</a>
+    <a href="#croatia">🌊 Croatia</a>
+    <a href="#italy">🍝 Italy</a>
+    <a href="#switzerland">🏔️ Switzerland</a>
+    <a href="#austria">🏰 Austria</a>
+    <a href="#bruges">🛶 Bruges</a>
+    <a href="#experiences">⭐ Top 8</a>
+  </div>
+</nav>
+
+<!-- Progress -->
+<section id="progress">
+  <h2><span class="emoji">📍</span>Where You Are Now</h2>
+  <p class="section-intro">Live trip progress. You're currently near Naples, heading to Croatia via Trieste.</p>
+  <div class="card-grid">
+    <div class="card">
+      <div class="progress-section">
+        <div class="progress-item"><span class="progress-dot done"></span><span class="progress-label"><span class="done-text">✓</span> <strong>Paris</strong> — 3 days complete</span></div>
+        <div class="progress-item"><span class="progress-dot current"></span><span class="progress-label"><strong>Italy (Naples/Caserta)</strong> — here now</span></div>
+        <div class="progress-item"><span class="progress-dot upcoming"></span><span class="progress-label">Croatia — Dubrovnik & Hvar</span></div>
+        <div class="progress-item"><span class="progress-dot upcoming"></span><span class="progress-label">Italy — Amalfi Coast & Fashion</span></div>
+        <div class="progress-item"><span class="progress-dot upcoming"></span><span class="progress-label">Switzerland — Scenic Trains</span></div>
+        <div class="progress-item"><span class="progress-dot upcoming"></span><span class="progress-label">Austria — Hallstatt / Vienna</span></div>
+        <div class="progress-item"><span class="progress-dot upcoming"></span><span class="progress-label">Bruges — Canals & Romance</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>🚄 Next Move</h3>
+      <div class="desc">
+        <p><strong>Today:</strong> Caserta → Roma Termini (~1h10, €15-35)</p>
+        <p style="margin-top:8px;"><strong>Then:</strong> Roma Termini → Trieste Centrale (~5h30 direct, €32-46)</p>
+        <p style="margin-top:8px;"><strong>Friends pick up:</strong> Trieste → Rijeka, Croatia (~1h drive)</p>
+      </div>
+      <div class="tags" style="margin-top:15px;">
+        <span class="tag tag-scenery">Total ~7h</span>
+        <span class="tag tag-culture">~€60-80</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Overview Map -->
+<section id="overview">
+  <h2><span class="emoji">🗺️</span>Route Overview</h2>
+  <p class="section-intro">The grand European loop — starting and ending in Paris.</p>
+  <div class="route-flow">
+    <div class="route-stop">🥐<br><strong>Paris</strong></div>
+    <span class="route-arrow">→</span>
+    <div class="route-stop">🌊<br><strong>Dubrovnik</strong></div>
+    <span class="route-arrow">→</span>
+    <div class="route-stop">🌊<br><strong>Hvar</strong></div>
+    <span class="route-arrow">→</span>
+    <div class="route-stop">🍝<br><strong>Naples</strong></div>
+    <span class="route-arrow">→</span>
+    <div class="route-stop">🏖️<br><strong>Amalfi</strong></div>
+    <span class="route-arrow">→</span>
+    <div class="route-stop">👗<br><strong>Milan</strong></div>
+    <span class="route-arrow">→</span>
+    <div class="route-stop">🏔️<br><strong>Swiss Alps</strong></div>
+    <span class="route-arrow">→</span>
+    <div class="route-stop">🛶<br><strong>Bruges</strong></div>
+  </div>
+</section>
+
+<!-- Paris -->
+<section id="paris">
+  <h2><span class="emoji">🥐</span>Paris — 3 Days</h2>
+  <p class="section-intro">Romance, fashion, and timeless beauty. The city where it all began.</p>
+  <div class="card-grid">
+    <div class="card" onclick="openModal('paris1')">
+      <div class="day-header">Day 1 — Classic Paris</div>
+      <h3>Seine Romance</h3>
+      <p class="desc">Café de Flore, Saint-Germain, Trocadéro, Champ de Mars, sunset cruise.</p>
+      <div class="tags"><span class="tag tag-romance">Romance</span><span class="tag tag-culture">Culture</span></div>
+    </div>
+    <div class="card" onclick="openModal('paris2')">
+      <div class="day-header">Day 2 — Fashion & Luxury</div>
+      <h3>La Galerie Dior & Palais Royal</h3>
+      <p class="desc">Dior museum, Avenue Montaigne, Palais Galliera, Palais Royal Gardens.</p>
+      <div class="tags"><span class="tag tag-fashion">Fashion</span><span class="tag tag-luxury">Luxury</span></div>
+    </div>
+    <div class="card" onclick="openModal('paris3')">
+      <div class="day-header">Day 3 — Versailles</div>
+      <h3>Marie Antoinette's World</h3>
+      <p class="desc">Palace of Versailles, Hall of Mirrors, Petit Trianon, the Queen's Hamlet.</p>
+      <div class="tags"><span class="tag tag-culture">History</span><span class="tag tag-luxury">Royal</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- Croatia -->
+<section id="croatia">
+  <h2><span class="emoji">🌊</span>Croatia — 3 Days</h2>
+  <p class="section-intro">Medieval walls, crystal-clear Adriatic waters, and island escapes.</p>
+  <div class="card-grid">
+    <div class="card" onclick="openModal('dubrovnik')">
+      <div class="day-header">Days 1–2</div>
+      <h3>Dubrovnik</h3>
+      <p class="desc">Walk the medieval walls, sunset dinners over the Adriatic, Old Town exploration.</p>
+      <div class="tags"><span class="tag tag-romance">Romance</span><span class="tag tag-culture">History</span></div>
+    </div>
+    <div class="card" onclick="openModal('hvar')">
+      <div class="day-header">Day 3</div>
+      <h3>Hvar Island</h3>
+      <p class="desc">Ferry from Dubrovnik. Lavender fields, beach clubs, crystalline water.</p>
+      <div class="tags"><span class="tag tag-scenery">Island</span><span class="tag tag-romance">Romance</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- Italy -->
+<section id="italy">
+  <h2><span class="emoji">🍝</span>Italy — 5–6 Days</h2>
+  <p class="section-intro">Pizza in Naples, cliffs of Amalfi, and a fashion pilgrimage.</p>
+  <div class="card-grid">
+    <div class="card" onclick="openModal('naples')">
+      <div class="day-header">Days 1–2</div>
+      <h3>Naples</h3>
+      <p class="desc">Historic center, authentic Neapolitan pizza, views of Mount Vesuvius.</p>
+      <div class="tags"><span class="tag tag-food">Food</span><span class="tag tag-culture">Culture</span></div>
+    </div>
+    <div class="card" onclick="openModal('amalfi')">
+      <div class="day-header">Days 3–5</div>
+      <h3>Amalfi Coast</h3>
+      <p class="desc">Positano, Capri, Ravello, scenic boat rides, coastal romance.</p>
+      <div class="tags"><span class="tag tag-romance">Romance</span><span class="tag tag-scenery">Coastal</span></div>
+    </div>
+    <div class="card" onclick="openModal('fashion')">
+      <div class="day-header">Day 6 — Fashion Stop</div>
+      <h3>Milan or Florence</h3>
+      <p class="desc">Armani Silos (Milan) or Ferragamo Museum (Florence). Pick one.</p>
+      <div class="tags"><span class="tag tag-fashion">Fashion</span><span class="tag tag-luxury">Luxury</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- Switzerland -->
+<section id="switzerland">
+  <h2><span class="emoji">🏔️</span>Switzerland — 2–3 Days</h2>
+  <p class="section-intro">The world's most beautiful train rides through the Alps.</p>
+  <div class="card-grid">
+    <div class="card" onclick="openModal('bernina')">
+      <div class="day-header">Option A</div>
+      <h3>Bernina Express</h3>
+      <p class="desc">Tirano → St. Moritz. UNESCO route over spiral viaducts and glaciers.</p>
+      <div class="tags"><span class="tag tag-scenery">Scenic</span><span class="tag tag-culture">UNESCO</span></div>
+    </div>
+    <div class="card" onclick="openModal('glacier')">
+      <div class="day-header">Option B</div>
+      <h3>Glacier Express</h3>
+      <p class="desc">Zermatt → St. Moritz. "Slowest express train in the world." Matterhorn views.</p>
+      <div class="tags"><span class="tag tag-scenery">Alps</span><span class="tag tag-luxury">Luxury</span></div>
+    </div>
+    <div class="card" onclick="openModal('swiss-route')">
+      <div class="day-header">Suggested Route</div>
+      <h3>Milan → St. Moritz → Zermatt → Interlaken</h3>
+      <p class="desc">Panoramic trains, fairytale villages, alpine lakes, Matterhorn.</p>
+      <div class="tags"><span class="tag tag-scenery">Mountains</span><span class="tag tag-romance">Fairytale</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- Austria -->
+<section id="austria">
+  <h2><span class="emoji">🏰</span>Austria — Optional</h2>
+  <p class="section-intro">Fairytale villages and imperial elegance.</p>
+  <div class="card-grid">
+    <div class="card" onclick="openModal('hallstatt')">
+      <h3>Hallstatt</h3>
+      <p class="desc">Lakeside village surrounded by mountains. One of the most photographed places in Europe.</p>
+      <div class="tags"><span class="tag tag-scenery">Lakeside</span><span class="tag tag-romance">Romance</span></div>
+    </div>
+    <div class="card" onclick="openModal('vienna')">
+      <h3>Vienna</h3>
+      <p class="desc">Imperial palaces, elegant cafés, Schönbrunn, opera, Sacher torte.</p>
+      <div class="tags"><span class="tag tag-culture">Imperial</span><span class="tag tag-luxury">Elegance</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- Bruges -->
+<section id="bruges">
+  <h2><span class="emoji">🛶</span>Bruges, Belgium</h2>
+  <p class="section-intro">One of Europe's most romantic cities — canals, chocolate, cobblestones.</p>
+  <div class="card-grid">
+    <div class="card" onclick="openModal('bruges-det')">
+      <h3>Bruges</h3>
+      <p class="desc">Canal boat rides, Belfry Tower, Markt square, Belgian chocolate and waffles.</p>
+      <div class="tags"><span class="tag tag-romance">Romance</span><span class="tag tag-culture">Medieval</span><span class="tag tag-food">Food</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- Top 8 -->
+<section id="experiences">
+  <h2><span class="emoji">⭐</span>Top 8 Experiences</h2>
+  <p class="section-intro">The absolute highlights of the trip.</p>
+  <div class="card-grid">
+    <div class="card"><h3>1. Palace of Versailles</h3><p class="desc">Hall of Mirrors & Marie Antoinette's Hamlet. The most opulent day trip in Europe.</p><div class="tags"><span class="tag tag-luxury">Royal</span></div></div>
+    <div class="card"><h3>2. La Galerie Dior</h3><p class="desc">The ultimate fashion pilgrimage. Stunning museum in Paris.</p><div class="tags"><span class="tag tag-fashion">Fashion</span></div></div>
+    <div class="card"><h3>3. Amalfi Coast & Capri</h3><p class="desc">Positano's pastel cliffs, Capri's Blue Grotto. Pure Mediterranean romance.</p><div class="tags"><span class="tag tag-romance">Romance</span></div></div>
+    <div class="card"><h3>4. Bernina Express</h3><p class="desc">UNESCO World Heritage train ride through the Swiss Alps.</p><div class="tags"><span class="tag tag-scenery">UNESCO</span></div></div>
+    <div class="card"><h3>5. Dubrovnik & Hvar</h3><p class="desc">Medieval walls, island escapes, Adriatic sunsets.</p><div class="tags"><span class="tag tag-culture">History</span></div></div>
+    <div class="card"><h3>6. Seine River Cruise</h3><p class="desc">Sunset on the Seine, Eiffel Tower sparkling. Paris at its most romantic.</p><div class="tags"><span class="tag tag-romance">Romance</span></div></div>
+    <div class="card"><h3>7. Hallstatt</h3><p class="desc">Austrian lakeside village that looks like a painting.</p><div class="tags"><span class="tag tag-scenery">Fairytale</span></div></div>
+    <div class="card"><h3>8. Bruges</h3><p class="desc">Canals, chocolate, cobblestone streets. Europe's most romantic small city.</p><div class="tags"><span class="tag tag-romance">Romance</span></div></div>
+  </div>
+</section>
+
+<!-- Modals -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal" id="modalContent" onclick="event.stopPropagation()">
+    <button class="close" onclick="closeModal()">✕</button>
+    <div id="modalInner"></div>
+  </div>
+</div>
+
+<script>
+const modals = {
+  paris1: {
+    title:'Day 1 — Classic Paris',
+    loc:'Saint-Germain-des-Prés & Eiffel Tower',
+    details:[
+      ['Start','Breakfast at Café de Flore, 172 Bd Saint-Germain'],
+      ['Walk','Saint-Germain-des-Prés — galleries, bookshops, cafés'],
+      ['Views','Trocadéro for the best Eiffel Tower photos'],
+      ['Stroll','Champ de Mars — the long green lawn beneath the tower'],
+      ['Sunset','Seine River Cruise — Vedettes du Pont Neuf or Bateaux Mouches'],
+      ['Dinner','Romantic dinner — try L\'Oiseau Blanc at Peninsula for rooftop views']
+    ],
+    tips:'Book the river cruise in advance. Sunset is around 9:45 PM in summer.',
+    links:[['Vedettes du Pont Neuf','https://www.vedettesdupontneuf.com']]
+  },
+  paris2: {
+    title:'Day 2 — Fashion & Luxury',
+    loc:'8th Arrondissement — The Golden Triangle',
+    details:[
+      ['Morning','La Galerie Dior, 11 Rue François 1er — stunning fashion museum'],
+      ['Walk','Avenue Montaigne — Chanel, Dior, Louis Vuitton flagship stores'],
+      ['Afternoon','Palais Galliera — Paris Fashion Museum, always a stunning exhibition'],
+      ['Garden','Palais Royal Gardens — the striped Buren columns, quiet courtyards'],
+      ['Evening','Eiffel Tower at night — sparkling every hour on the hour from dusk'],
+    ],
+    tips:'Book La Galerie Dior tickets 2-3 weeks ahead — they sell out. The Palais Royal is free and never crowded.',
+    links:[['La Galerie Dior','https://www.galeriedior.com']]
+  },
+  paris3: {
+    title:'Day 3 — Versailles',
+    loc:'Palace of Versailles, 30 min train from Paris',
+    details:[
+      ['Train','RER C from central Paris → Versailles Château Rive Gauche (30 min)'],
+      ['Palace','Hall of Mirrors, King\'s Apartments, Royal Chapel'],
+      ['Gardens','Versailles Gardens — fountains, groves, the Grand Canal'],
+      ['Trianon','Petit Trianon — Marie Antoinette\'s private escape'],
+      ['Hamlet','The Queen\'s Hamlet — a fake village where she played peasant'],
+    ],
+    tips:'Get the Passport ticket (€28.50) for full access. Go on a musical fountain day (Tue/Fri/Sun) for the best experience. Book the earliest slot — 9 AM.',
+    links:[['Book Versailles','https://en.chateauversailles.fr']]
+  },
+  dubrovnik: {
+    title:'Dubrovnik — 2 Days',
+    loc:'Southern Croatia, Adriatic Coast',
+    details:[
+      ['Walls','Walk the full circuit (2 km, ~2 hours) — best at sunset'],
+      ['Old Town','Stradun main street, Rector\'s Palace, Franciscan Monastery'],
+      ['Cable Car','Mount Srđ — panoramic views of the Old Town and islands'],
+      ['Food','Seafood at Proto or Nautika — cliffside tables over the water'],
+      ['Game of Thrones','Walk of Shame stairs, Red Keep, Blackwater Bay filming locations'],
+    ],
+    tips:'Buy the Dubrovnik Pass — includes walls entry + museums. Go early (8 AM) or late (5 PM) to avoid cruise ship crowds.',
+    links:[[]]
+  },
+  hvar: {
+    title:'Hvar Island — 1 Day',
+    loc:'Ferry from Dubrovnik or Split',
+    details:[
+      ['Ferry','Jadrolinija or Krilo catamaran — 3-4 hours from Dubrovnik'],
+      ['Town','Hvar Town — marble streets, yacht harbor, 13th-century walls'],
+      ['Fortress','Fortica Španjola — hike up for panoramic views of the Pakleni Islands'],
+      ['Beaches','Dubovica or Palmižana — crystalline Adriatic water'],
+      ['Lavender','Buy lavender products — Hvar is famous for its fields'],
+    ],
+    tips:'If short on time, take a day trip from Dubrovnik. The catamaran ride itself is scenic.',
+    links:[['Jadrolinija Ferries','https://www.jadrolinija.hr']]
+  },
+  naples: {
+    title:'Naples — 2 Days',
+    loc:'Campania, Southern Italy',
+    details:[
+      ['Pizza','L\'Antica Pizzeria da Michele or Sorbillo — the real thing'],
+      ['Centro Storico','Spaccanapoli, San Gregorio Armeno, Duomo'],
+      ['Archaeology','Naples National Archaeological Museum — Pompeii treasures'],
+      ['Views','Castel Sant\'Elmo — best panoramic view of Vesuvius and the bay'],
+    ],
+    tips:'Naples is chaotic, loud, and wonderful. Watch your pockets in crowded areas. Eat pizza for every meal — it\'s the law.',
+    links:[[]]
+  },
+  amalfi: {
+    title:'Amalfi Coast — 3 Days',
+    loc:'Positano, Capri, Ravello',
+    details:[
+      ['Positano','Pastel houses cascading to the sea. Beach clubs, boutiques, Spiaggia Grande'],
+      ['Capri','Ferry from Positano. Blue Grotto, chairlift to Monte Solaro, Piazzetta'],
+      ['Ravello','Villa Rufolo & Villa Cimbrone — the most romantic gardens in Italy'],
+      ['Boat','Rent a small boat or take a coastal tour — see the coast from the water'],
+      ['Drive','The SS163 Amalfi Drive — one of the most scenic roads in the world'],
+    ],
+    tips:'Stay in Positano or Praiano. Avoid driving yourself — use ferries and SITA buses. Capri is a full day trip. Book Blue Grotto early morning.',
+    links:[['Capri Ferries','https://www.nlg.it']]
+  },
+  fashion: {
+    title:'Fashion Stop — Pick One',
+    loc:'Milan or Florence',
+    details:[
+      ['Armani Silos','Milan — Giorgio Armani\'s career spanning 40 years. Stunning space. Via Bergognone 40.'],
+      ['Quadrilatero','Milan — Via Montenapoleone, the fashion shopping district'],
+      ['Ferragamo Museum','Florence — Salvatore Ferragamo\'s shoe archive. Palazzo Spini Feroni.'],
+    ],
+    tips:'If going to Switzerland next → pick Milan (Armani Silos). If heading back to Paris → Florence is more romantic. Milan is 3h from Interlaken by train.',
+    links:[['Armani Silos','https://www.armanisilos.com'],['Ferragamo Museum','https://www.ferragamo.com/museo']]
+  },
+  bernina: {
+    title:'Bernina Express',
+    loc:'Tirano (Italy) → St. Moritz (Switzerland)',
+    details:[
+      ['Route','Tirano → St. Moritz. 4 hours, 55 tunnels, 196 bridges. UNESCO World Heritage.'],
+      ['Highlights','Brusio spiral viaduct, Morteratsch Glacier, Alp Grüm — 2,091m'],
+      ['Panoramic Cars','Book the panoramic car with huge windows for the full experience'],
+      ['Extend','Continue St. Moritz → Zermatt on the Glacier Express the next day'],
+    ],
+    tips:'Seat reservation mandatory (€16 winter, €20 summer). Sit on the right side going north for best glacier views. Book months ahead for summer.',
+    links:[['Bernina Express','https://www.rhb.ch/en/panoramic-trains/bernina-express']]
+  },
+  glacier: {
+    title:'Glacier Express',
+    loc:'Zermatt → St. Moritz (or reverse)',
+    details:[
+      ['Route','Zermatt → St. Moritz. 8 hours, 291 bridges, 91 tunnels. "Slowest express train in the world."'],
+      ['Highlights','Matterhorn views, Oberalp Pass (2,033m), Rhine Gorge ("Swiss Grand Canyon")'],
+      ['Onboard','3-course lunch served at your seat, panoramic windows, audio guide'],
+      ['Stops','Consider breaking at Andermatt or Chur for an overnight'],
+    ],
+    tips:'Excellence Class = the premium experience with champagne and 5-course meal (~€450). Standard 1st class panoramic is ~€170. Book months ahead.',
+    links:[['Glacier Express','https://www.glacierexpress.ch']]
+  },
+  'swiss-route': {
+    title:'Swiss Route: Milan → Zermatt',
+    loc:'Northern Italy to Swiss Alps',
+    details:[
+      ['Leg 1','Milan → Tirano (train, 2h30)'],
+      ['Leg 2','Tirano → St. Moritz (Bernina Express, 4h)'],
+      ['Leg 3','St. Moritz → Zermatt (Glacier Express, 8h)'],
+      ['Leg 4','Zermatt → Interlaken (train, 2h15)'],
+      ['Highlights','Matterhorn, Jungfrau, alpine lakes, fairytale villages'],
+    ],
+    tips:'Can be done in 2 intense days or 3 relaxed days. Overnight in St. Moritz and Zermatt.',
+    links:[[]]
+  },
+  hallstatt: {
+    title:'Hallstatt, Austria',
+    loc:'Salzkammergut region, ~1h from Salzburg',
+    details:[
+      ['Village','Lakeside town on Hallstätter See. 16th-century alpine houses reflected in the water.'],
+      ['Skywalk','Hallstatt Skywalk — viewing platform 360m above the lake'],
+      ['Salt Mine','Salzwelten — the oldest salt mine in the world, reached by funicular'],
+      ['Photo Spot','The classic postcard view — from the north end of town at dawn'],
+    ],
+    tips:'Stay overnight — daytrippers leave by 5 PM and the village becomes magical. Book accommodation months ahead — it\'s tiny.',
+    links:[[]]
+  },
+  vienna: {
+    title:'Vienna, Austria',
+    loc:'Capital of Austria',
+    details:[
+      ['Palaces','Schönbrunn Palace — the Habsburg summer residence. 1,441 rooms.'],
+      ['Cafés','Café Central, Café Sacher — Viennese coffee house culture, Sachertorte'],
+      ['Opera','Vienna State Opera — standing tickets from €4'],
+      ['Art','Belvedere — Klimt\'s "The Kiss." Kunsthistorisches Museum.'],
+    ],
+    tips:'The efficient option — Vienna is a major rail hub. Direct trains to Paris (10h) or fly back from here.',
+    links:[[]]
+  },
+  'bruges-det': {
+    title:'Bruges, Belgium',
+    loc:'Flanders, ~1h from Brussels',
+    details:[
+      ['Canals','Boat ride through the canals — "Venice of the North"'],
+      ['Belfry','Climb the 366 steps of the Belfry Tower for panoramic views'],
+      ['Markt','The main square — guild houses, horse carriages, medieval architecture'],
+      ['Chocolate','Belgian chocolate shops everywhere. Try The Chocolate Line.'],
+      ['Beer','De Halve Maan brewery — the only brewery still operating in the city center'],
+    ],
+    tips:'Easy day trip from Paris! Thalys train Paris → Brussels (1h22), then 1h to Bruges. Or stay overnight — it\'s most romantic after the daytrippers leave.',
+    links:[['Thalys','https://www.thalys.com']]
+  }
+};
+
+function openModal(key) {
+  const m = modals[key];
+  if (!m) return;
+  let html = `<h2>${m.title}</h2><p class="modal-loc">📍 ${m.loc}</p>`;
+  m.details.forEach(d => {
+    html += `<p class="detail"><strong>${d[0]}</strong> <span>${d[1]}</span></p>`;
+  });
+  if (m.tips) html += `<p style="margin-top:20px;padding:15px;background:rgba(212,168,83,0.08);border-radius:8px;font-size:0.9em;">💡 <strong>Tip:</strong> ${m.tips}</p>`;
+  if (m.links && m.links[0] && m.links[0][0]) {
+    m.links.forEach(l => { if(l[0]) html += `<a href="${l[1]}" target="_blank" class="btn" style="margin-right:10px;">🔗 ${l[0]}</a>`; });
+  }
+  document.getElementById('modalInner').innerHTML = html;
+  document.getElementById('modalOverlay').classList.add('active');
+}
+
+function closeModal(e) {
+  if (e && e.target !== document.getElementById('modalOverlay')) return;
+  document.getElementById('modalOverlay').classList.remove('active');
+}
+
+// Scrollspy nav
+window.addEventListener('scroll', () => {
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-scroll a');
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 120) current = s.id;
+  });
+  navLinks.forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  });
+  // Auto-scroll nav to active link
+  const active = document.querySelector('.nav-scroll a.active');
+  if (active) active.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+});
+
+// Keyboard close
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+</script>
+
+</body>
+</html>
