@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Preloop × Helix — Borrow, Extend, Build</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #222532;
+    --border: rgba(255,255,255,0.06);
+    --text: #e4e6ef;
+    --muted: #9ca0b0;
+    --green: #4ade80;
+    --amber: #fbbf24;
+    --orange: #fb923c;
+    --red: #f87171;
+    --blue: #60a5fa;
+    --purple: #a78bfa;
+    --pink: #f472b6;
+    --teal: #2dd4bf;
+    --radius: 10px;
+    --radius-lg: 16px;
+    --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'SF Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+    scroll-padding-top: 57px;
+  }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container { max-width: 960px; margin: 0 auto; padding: 0 20px 80px; }
+
+  /* ── Top Nav ── */
+  .top-nav {
+    position: sticky; top: 0; z-index: 10;
+    display: flex; gap: 4px; flex-wrap: nowrap;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    background: rgba(15,17,23,0.92);
+    backdrop-filter: blur(12px);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .top-nav::-webkit-scrollbar { display: none; }
+  .top-nav a {
+    font-size: 11px; color: var(--muted); text-decoration: none;
+    padding: 5px 10px; border-radius: 6px;
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap; flex-shrink: 0;
+    font-weight: 500; letter-spacing: 0.3px;
+  }
+  .top-nav a:hover, .top-nav a:focus { background: var(--surface); color: var(--text); }
+
+  /* ── Hero ── */
+  .hero {
+    text-align: center; padding: 56px 0 40px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+  .hero-badge {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--teal);
+    background: rgba(45,212,191,0.1);
+    border: 1px solid rgba(45,212,191,0.2);
+    border-radius: 100px;
+    padding: 4px 14px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .hero h1 {
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 10px;
+  }
+  .hero .subtitle {
+    color: var(--muted);
+    font-size: 15px;
+    max-width: 620px;
+    margin: 0 auto;
+  }
+  .hero .meta {
+    margin-top: 16px;
+    font-size: 12px;
+    color: var(--muted);
+    font-family: var(--mono);
+  }
+
+  /* ── Sections ── */
+  section { margin-bottom: 48px; }
+  h2 {
+    font-size: 22px; font-weight: 700; margin-bottom: 18px;
+    padding-bottom: 10px; border-bottom: 1px solid var(--border);
+    letter-spacing: -0.3px;
+  }
+  h3 {
+    font-size: 17px; font-weight: 600; margin: 28px 0 14px;
+    color: var(--text);
+  }
+  h4 {
+    font-size: 14px; font-weight: 600; margin: 20px 0 10px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  p { margin-bottom: 14px; font-size: 15px; color: var(--muted); }
+  strong { color: var(--text); }
+  a { color: var(--blue); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  code {
+    font-family: var(--mono);
+    font-size: 0.85em;
+    background: var(--surface2);
+    padding: 1px 7px;
+    border-radius: 4px;
+    color: var(--teal);
+  }
+  pre {
+    font-family: var(--mono);
+    font-size: 12px;
+    background: var(--surface2);
+    padding: 16px 20px;
+    border-radius: var(--radius);
+    overflow-x: auto;
+    margin-bottom: 18px;
+    line-height: 1.5;
+    color: var(--muted);
+    border: 1px solid var(--border);
+  }
+
+  /* ── Cards ── */
+  .card-grid-4 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  .card-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .card-grid-2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px;
+  }
+  .card.green { border-left: 3px solid var(--green); }
+  .card.amber { border-left: 3px solid var(--amber); }
+  .card.red { border-left: 3px solid var(--red); }
+  .card.blue { border-left: 3px solid var(--blue); }
+  .card.teal { border-left: 3px solid var(--teal); }
+  .card.purple { border-left: 3px solid var(--purple); }
+
+  .card .card-title {
+    font-size: 16px; font-weight: 700; margin-bottom: 6px;
+  }
+  .card .card-subtitle {
+    font-size: 11px; color: var(--muted); text-transform: uppercase;
+    letter-spacing: 0.5px; margin-bottom: 14px;
+  }
+  .card .spec-row {
+    display: flex; justify-content: space-between; padding: 7px 0;
+    border-top: 1px solid var(--border); font-size: 13px;
+  }
+  .card .spec-label { color: var(--muted); }
+  .card .spec-value { color: var(--text); font-weight: 500; }
+
+  /* ── Tables ── */
+  .table-wrap {
+    overflow-x: auto; margin-bottom: 20px;
+    border-radius: var(--radius); border: 1px solid var(--border);
+  }
+  table {
+    width: 100%; border-collapse: collapse; font-size: 14px;
+    min-width: 600px;
+  }
+  th {
+    text-align: left; padding: 10px 14px;
+    background: var(--surface2); color: var(--muted);
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;
+    font-weight: 600;
+  }
+  td { padding: 10px 14px; border-top: 1px solid var(--border); vertical-align: middle; }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+  td.green { color: var(--green); font-weight: 600; }
+  td.amber { color: var(--amber); font-weight: 600; }
+  td.red { color: var(--red); font-weight: 600; }
+
+  /* ── Flow Diagram ── */
+  .flow {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px 20px;
+    margin-bottom: 20px;
+    overflow-x: auto;
+  }
+  .flow-line {
+    display: flex; align-items: center; gap: 8px;
+    font-family: var(--mono); font-size: 12px;
+    margin-bottom: 10px; flex-wrap: wrap;
+  }
+  .flow-box {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 6px 12px;
+    white-space: nowrap;
+    color: var(--text);
+  }
+  .flow-box.highlight { border-color: var(--teal); color: var(--teal); }
+  .flow-box.key { border-color: var(--purple); color: var(--purple); }
+  .flow-arrow { color: var(--muted); font-size: 16px; }
+  .flow-branch {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin: 10px 0;
+  }
+  .flow-branch-item {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 12px;
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 11px;
+  }
+  .flow-branch-item.deny { border-color: var(--red); color: var(--red); }
+  .flow-branch-item.approve { border-color: var(--amber); color: var(--amber); }
+  .flow-branch-item.allow { border-color: var(--green); color: var(--green); }
+
+  /* ── Callout Boxes ── */
+  .callout {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+    margin-bottom: 18px;
+  }
+  .callout.big { border-left: 3px solid var(--teal); }
+  .callout.warn { border-left: 3px solid var(--amber); }
+  .callout.insight { border-left: 3px solid var(--purple); }
+  .callout.highlight { border-left: 3px solid var(--pink); }
+  .callout.green { border-left: 3px solid var(--green); }
+  .callout.red { border-left: 3px solid var(--red); }
+  .callout-header {
+    font-size: 15px; font-weight: 700; margin-bottom: 8px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .callout p { font-size: 14px; margin-bottom: 6px; }
+  .callout p:last-child { margin-bottom: 0; }
+
+  /* ── Architecture Diagram ── */
+  .arch-diagram {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .arch-layer {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    margin-bottom: 10px;
+    text-align: left;
+  }
+  .arch-layer.helix { border-color: var(--teal); background: rgba(45,212,191,0.04); }
+  .arch-layer.adapter { border-color: var(--purple); background: rgba(167,139,250,0.04); }
+  .arch-layer.preloop { border-color: var(--blue); background: rgba(96,165,250,0.04); }
+  .arch-layer-title {
+    font-weight: 700; font-size: 15px; margin-bottom: 8px;
+  }
+  .arch-layer-title .helix-label { color: var(--teal); }
+  .arch-layer-title .adapter-label { color: var(--purple); }
+  .arch-layer-title .preloop-label { color: var(--blue); }
+  .arch-layer-items {
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+  .arch-item {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 5px 12px;
+    font-size: 12px;
+    font-family: var(--mono);
+    color: var(--muted);
+  }
+  .arch-arrow-down {
+    text-align: center; color: var(--muted); font-size: 20px;
+    margin: 6px 0;
+  }
+
+  /* ── Stat Bubbles ── */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  .stat-bubble {
+    text-align: center;
+    padding: 24px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+  .stat-num {
+    font-family: var(--mono);
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .stat-num.teal { color: var(--teal); }
+  .stat-num.blue { color: var(--blue); }
+  .stat-num.green { color: var(--green); }
+  .stat-num.purple { color: var(--purple); }
+  .stat-label {
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+
+  /* ── Badges ── */
+  .badge {
+    display: inline-block; padding: 2px 8px; border-radius: 4px;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.3px;
+  }
+  .badge.teal { background: rgba(45,212,191,0.15); color: var(--teal); }
+  .badge.blue { background: rgba(96,165,250,0.15); color: var(--blue); }
+  .badge.green { background: rgba(74,222,128,0.15); color: var(--green); }
+  .badge.amber { background: rgba(251,191,36,0.15); color: var(--amber); }
+  .badge.red { background: rgba(248,113,113,0.15); color: var(--red); }
+  .badge.purple { background: rgba(167,139,250,0.15); color: var(--purple); }
+
+  /* ── Back Link ── */
+  .back-link {
+    display: inline-block; margin-top: 40px; font-size: 13px; color: var(--blue);
+    text-decoration: none; padding: 6px 14px; border-radius: 6px;
+    background: var(--surface); border: 1px solid var(--border);
+    transition: background 0.15s;
+  }
+  .back-link:hover { background: var(--surface2); }
+
+  /* ── Responsive ── */
+  @media (max-width: 600px) {
+    .card-grid-4 { grid-template-columns: 1fr 1fr; }
+    .card-grid-3, .card-grid-2 { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 1.5rem; }
+    .flow-branch { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- ═══ NAV ═══ -->
+<nav class="top-nav">
+  <a href="#overview">Overview</a>
+  <a href="#architecture">Architecture</a>
+  <a href="#firewall">MCP Firewall</a>
+  <a href="#gateway">Model Gateway</a>
+  <a href="#enrollment">Enrollment</a>
+  <a href="#control">Agent Control</a>
+  <a href="#matrix">Borrow/Build</a>
+  <a href="#decision">Decision</a>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<div class="hero">
+  <div class="hero-badge">Architecture Analysis · June 28, 2026</div>
+  <h1>Preloop × Helix</h1>
+  <p class="subtitle">
+    Deep technical breakdown of Preloop's AI agent control plane — how they built the MCP firewall, model gateway, agent enrollment, and live control channel — and what Helix should borrow vs. build from scratch.
+  </p>
+  <p class="meta">preloop.ai · Apache 2.0 · GitHub: preloop/preloop · Co-founder: Yannis</p>
+</div>
+
+<!-- ═══ OVERVIEW ═══ -->
+<section id="overview">
+<h2>Executive Summary</h2>
+
+<p>Preloop is the <strong>open-source AI agent control plane</strong> — a single self-hostable platform that unifies an MCP firewall, AI model gateway, human approvals, cost tracking, runtime observability, and audit trails. It works with <strong>Hermes, OpenClaw, Claude Code, Codex CLI, Cursor, Gemini CLI, OpenCode</strong>, and any MCP-compatible agent.</p>
+
+<div class="stat-row">
+  <div class="stat-bubble">
+    <div class="stat-num teal">5</div>
+    <div class="stat-label">Governance Layers in One Binary</div>
+  </div>
+  <div class="stat-bubble">
+    <div class="stat-num blue">7+</div>
+    <div class="stat-label">Agent Runtimes Supported</div>
+  </div>
+  <div class="stat-bubble">
+    <div class="stat-num green">Apache 2.0</div>
+    <div class="stat-label">Open Source License</div>
+  </div>
+  <div class="stat-bubble">
+    <div class="stat-num purple">1 cmd</div>
+    <div class="stat-label">Agent Onboarding</div>
+  </div>
+</div>
+
+<div class="callout big">
+  <div class="callout-header">🔑 The Key Insight</div>
+  <p>Preloop has already built the governance layer Helix needs — and it's open source. Helix shouldn't rebuild the MCP firewall, model gateway, or approval workflows. It should <strong>run Preloop as a sidecar</strong> and focus on what only Helix can do: the git forge, agent marketplace, prompt infrastructure, and agent-to-agent collaboration primitives.</p>
+</div>
+
+<div class="callout green">
+  <div class="callout-header">✅ What Preloop Replaces for Helix</div>
+  <p>Instead of buying 4+ separate products (MintMCP for tool governance, Portkey/Helicone for model gateway, LangFuse for observability, custom Slack bots for approvals), Preloop ships all of it as one Apache 2.0 binary. Helix gets battle-tested enforcement without rebuilding it.</p>
+</div>
+</section>
+
+<!-- ═══ ARCHITECTURE OVERVIEW ═══ -->
+<section id="architecture">
+<h2>Architecture Overview</h2>
+<p>Preloop sits between every agent and every system. Tool calls flow through the MCP firewall. Model traffic flows through the gateway. Approvals, budgets, and audit trails are enforced at every step.</p>
+
+<div class="flow">
+  <div class="flow-line">
+    <span class="flow-box">Hermes / OpenClaw / Claude Code</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box highlight">Preloop MCP Firewall</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box">Policy Evaluator</span>
+  </div>
+  <div class="flow-branch">
+    <div class="flow-branch-item deny">🚫 DENY<br>Return error to agent</div>
+    <div class="flow-branch-item approve">⏳ REQUIRE APPROVAL<br>Notify human → wait</div>
+    <div class="flow-branch-item allow">✅ ALLOW<br>Execute tool</div>
+  </div>
+  <div class="flow-line" style="margin-top: 10px;">
+    <span class="flow-box">Agent model call</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box key">Preloop Model Gateway</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box">Budget check → LiteLLM → Provider</span>
+  </div>
+</div>
+
+<div class="card-grid-3">
+  <div class="card blue">
+    <div class="card-title">Stack</div>
+    <div class="card-subtitle">Technology choices</div>
+    <div class="spec-row"><span class="spec-label">API Server</span><span class="spec-value">FastAPI + Pydantic</span></div>
+    <div class="spec-row"><span class="spec-label">Frontend</span><span class="spec-value">Lit + Shoelace + Vite</span></div>
+    <div class="spec-row"><span class="spec-label">Database</span><span class="spec-value">PostgreSQL + PGVector</span></div>
+    <div class="spec-row"><span class="spec-label">Queue</span><span class="spec-value">NATS (JetStream)</span></div>
+    <div class="spec-row"><span class="spec-label">Model Proxy</span><span class="spec-value">LiteLLM</span></div>
+    <div class="spec-row"><span class="spec-label">Policy Language</span><span class="spec-value">YAML + CEL</span></div>
+  </div>
+  <div class="card teal">
+    <div class="card-title">Data Model</div>
+    <div class="card-subtitle">Key entities</div>
+    <div class="spec-row"><span class="spec-label">ManagedAgent</span><span class="spec-value">Enrolled agent identity</span></div>
+    <div class="spec-row"><span class="spec-label">RuntimeSession</span><span class="spec-value">Per-session timeline</span></div>
+    <div class="spec-row"><span class="spec-label">ApiUsage</span><span class="spec-value">Canonical cost ledger</span></div>
+    <div class="spec-row"><span class="spec-label">ToolAccessRule</span><span class="spec-value">Per-tool policy rules</span></div>
+    <div class="spec-row"><span class="spec-label">ApprovalRequest</span><span class="spec-value">Human-in-the-loop state</span></div>
+    <div class="spec-row"><span class="spec-label">SecretReference</span><span class="spec-value">Provider credential custody</span></div>
+  </div>
+  <div class="card purple">
+    <div class="card-title">Security Model</div>
+    <div class="card-subtitle">Key boundaries</div>
+    <div class="spec-row"><span class="spec-label">Agent Auth</span><span class="spec-value">Short-lived runtime tokens</span></div>
+    <div class="spec-row"><span class="spec-label">API Keys</span><span class="spec-value">Never exposed to agents</span></div>
+    <div class="spec-row"><span class="spec-label">Secret Custody</span><span class="spec-value">local_encrypted or Vault</span></div>
+    <div class="spec-row"><span class="spec-label">Redaction</span><span class="spec-value">Secrets masked in logs</span></div>
+    <div class="spec-row"><span class="spec-label">Multi-Tenant</span><span class="spec-value">account_id isolation</span></div>
+    <div class="spec-row"><span class="spec-label">Plugin System</span><span class="spec-value">Enterprise features gated</span></div>
+  </div>
+</div>
+</section>
+
+<!-- ═══ MCP FIREWALL ═══ -->
+<section id="firewall">
+<h2>1. MCP Firewall — The Core Interception Layer</h2>
+
+<div class="callout big">
+  <div class="callout-header">🎯 The Trick</div>
+  <p>Preloop doesn't modify any agent. Instead, it <strong>subclasses FastMCP to create DynamicFastMCP</strong> — an MCP server that the agent connects to <em>instead of</em> the real MCP server. The agent thinks it's talking to a normal MCP server. Preloop is actually in the middle, evaluating every tool call against access rules before forwarding.</p>
+</div>
+
+<h3>Execution Flow</h3>
+<div class="flow">
+  <div class="flow-line">
+    <span class="flow-box">Agent</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box highlight">POST /mcp/v1</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box key">PreloopBearerAuthBackend</span>
+  </div>
+  <div class="flow-line">
+    <span class="flow-arrow" style="margin-left:40px;">↓</span>
+  </div>
+  <div class="flow-line">
+    <span class="flow-box">DynamicFastMCP._call_tool()</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box highlight">policy_evaluator</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box">_evaluate_rule_candidates()</span>
+  </div>
+  <div class="flow-line" style="font-size:11px; color:var(--muted); margin-top:4px;">
+    <span style="margin-left:40px;">First matching rule wins (priority-ordered). No match = ALLOW (audited).</span>
+  </div>
+  <div class="flow-branch">
+    <div class="flow-branch-item deny">Action: DENY<br><span style="font-size:10px;">Return error to agent<br>with rule description</span></div>
+    <div class="flow-branch-item approve">Action: REQUIRE_APPROVAL<br><span style="font-size:10px;">Notify Slack/Mobile/Webhook<br>Agent waits or polls async</span></div>
+    <div class="flow-branch-item allow">Action: ALLOW<br><span style="font-size:10px;">Execute tool<br>Return result to agent</span></div>
+  </div>
+</div>
+
+<h3>Access Rules — YAML + CEL</h3>
+<pre># Policy-as-code, stored in account metadata, evaluated at runtime
+version: "1.0"
+metadata:
+  name: "Production Safeguards"
+
+tools:
+  - name: "bash"
+    source: mcp
+    approval_workflow: "deploy-approval"
+    justification: required
+    conditions:
+      - expression: "args.command.contains('deploy') &amp;&amp; args.command.contains('production')"
+        action: require_approval
+      - expression: "args.file_path.endsWith('.env')"
+        action: deny</pre>
+
+<h3>Subject-Scoped Governance</h3>
+<p>Every tool call carries a <strong>subject context</strong> (API key ID, managed agent ID). The scope chain resolves: <code>API key scope → managed agent scope → account defaults</code>. Each scope can have its own <code>allowed_models</code>, <code>model_budgets</code>, <code>tool_rules</code>, and <code>tool_enabled_overrides</code> — stored as JSONB in account metadata.</p>
+
+<div class="callout insight">
+  <div class="callout-header">💡 What to Borrow</div>
+  <p>The <code>DynamicFastMCP</code> subclassing pattern is clean and reusable. CEL for policy conditions is standard and well-supported. The priority-ordered, first-match-wins rule model is correct. The subject-scope chain resolution (<code>subject_scope_chain()</code> in <code>subject_governance.py</code>) is elegant and Helix should adopt it.</p>
+</div>
+
+<div class="callout warn">
+  <div class="callout-header">⚠️ What to Build Differently for Helix</div>
+  <p>Preloop stores policies in account <code>meta_data</code> JSONB — no version history, no audit trail for policy changes. Helix needs proper <code>agent_policies</code> tables with versioning. Preloop's tool filtering is account-level; Helix needs per-repo, per-branch scoping. Helix should add <code>AGENTOWNERS</code> files (like CODEOWNERS) to auto-assign approval to specific humans.</p>
+</div>
+</section>
+
+<!-- ═══ MODEL GATEWAY ═══ -->
+<section id="gateway">
+<h2>2. Model Gateway — Proxy + Budget + Secret Custody</h2>
+
+<div class="callout big">
+  <div class="callout-header">🎯 The Trick</div>
+  <p>Preloop runs an OpenAI-compatible and Anthropic-compatible API that agents connect to <em>instead of</em> the real provider API. Behind the scenes, it proxies to the real provider using <strong>LiteLLM</strong> — but only after budget checks, attribution tagging, and credential resolution. Agents never see real API keys.</p>
+</div>
+
+<h3>Request Flow</h3>
+<div class="flow">
+  <div class="flow-line">
+    <span class="flow-box">Agent</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box highlight">POST /openai/v1/chat/completions</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box">Bearer: short-lived runtime token</span>
+  </div>
+  <div class="flow-line">
+    <span class="flow-arrow" style="margin-left:40px;">↓</span>
+  </div>
+  <div class="flow-line">
+    <span class="flow-box key">authenticate_bearer_token()</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box">ModelGatewayAuthContext</span>
+  </div>
+  <div class="flow-line">
+    <span class="flow-arrow" style="margin-left:40px;">↓</span>
+  </div>
+  <div class="flow-line">
+    <span class="flow-box key">budget_enforcer.check_budget()</span>
+    <span class="flow-arrow" style="color:var(--red)">→ BLOCK or</span>
+    <span class="flow-arrow" style="color:var(--green)">→ ALLOW</span>
+  </div>
+  <div class="flow-line">
+    <span class="flow-arrow" style="margin-left:40px;">↓</span>
+  </div>
+  <div class="flow-line">
+    <span class="flow-box">resolve_ai_model_runtime()</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box">Model → Provider → Credentials</span>
+  </div>
+  <div class="flow-line">
+    <span class="flow-arrow" style="margin-left:40px;">↓</span>
+  </div>
+  <div class="flow-line">
+    <span class="flow-box key">get_secret_service().resolve()</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box">API key from vault/local_encrypted</span>
+  </div>
+  <div class="flow-line">
+    <span class="flow-arrow" style="margin-left:40px;">↓</span>
+  </div>
+  <div class="flow-line">
+    <span class="flow-box highlight">LiteLLMModelGatewayBackend.completion()</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box">Real provider API</span>
+  </div>
+  <div class="flow-line">
+    <span class="flow-arrow" style="margin-left:40px;">↓</span>
+  </div>
+  <div class="flow-line">
+    <span class="flow-box">estimate_cost() → ApiUsage ledger</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box">GatewayUsageSearchService</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box">realtime dashboard update</span>
+  </div>
+</div>
+
+<h3>Key Design Decisions</h3>
+<div class="card-grid-2">
+  <div class="card teal">
+    <div class="card-title">LiteLLM as Backend</div>
+    <div class="card-subtitle">100+ providers, one API</div>
+    <p style="font-size:13px;">Preloop maps <code>provider_name</code> to LiteLLM's routing. DeepSeek → deepseek, Qwen → OpenAI-compatible, Bedrock → AWS. Handles streaming, OAuth, and OAuth token injection for Claude Code and Codex CLI.</p>
+  </div>
+  <div class="card purple">
+    <div class="card-title">Secret Custody</div>
+    <div class="card-subtitle">Agents never see real API keys</div>
+    <p style="font-size:13px;">Provider credentials stored in <code>SecretReference</code> (local_encrypted or Vault/OpenBao). Agents receive short-lived <code>preloop_rt_*</code> bearer tokens. Revocation is instant.</p>
+  </div>
+  <div class="card green">
+    <div class="card-title">Budget Enforcement</div>
+    <div class="card-subtitle">Pre-flight, not post-hoc</div>
+    <p style="font-size:13px;"><code>ModelGatewayBudgetService</code> checks account/flow/subject limits <em>before</em> upstream dispatch. Blocks the call if over budget. No post-hoc surprises.</p>
+  </div>
+  <div class="card blue">
+    <div class="card-title">ApiUsage Ledger</div>
+    <div class="card-subtitle">Canonical cost tracking</div>
+    <p style="font-size:13px;">Every model call writes one row: tokens in/out, estimated cost, provider, model, account, runtime principal, session ID. Single source of truth for all cost analytics.</p>
+  </div>
+</div>
+
+<h3>Provider Routing</h3>
+<pre>_PROVIDER_PREFIX = {
+    "openai": "openai",
+    "openai-codex": "openai",
+    "anthropic": "anthropic",
+    "google": "gemini",
+    "gemini": "gemini",
+    "bedrock": "bedrock",
+    "amazon-bedrock": "bedrock",
+    "qwen": "openai",
+    "deepseek": "deepseek",
+}</pre>
+
+<div class="callout insight">
+  <div class="callout-header">💡 What to Borrow</div>
+  <p>The gateway-as-proxy pattern with short-lived tokens is perfect for Helix. LiteLLM is battle-tested. The <code>ApiUsage</code> canonical ledger is the right design. Budget check pre-dispatch prevents runaway spend. OAuth passthrough for Claude Code/Codex CLI is essential.</p>
+</div>
+
+<div class="callout warn">
+  <div class="callout-header">⚠️ What to Build Differently for Helix</div>
+  <p>Helix needs <strong>per-repo/per-PR budget scoping</strong> — "this PR has $5 budget, stop when exceeded." Helix needs <strong>model fallback chains</strong>: try v4-pro → on budget exhaust → v4-flash → on 404 → step-3.5-flash. Preloop's cost analytics are shallow in OSS; Helix should build session-value analysis into core. Pricing should pull live from OpenRouter API daily.</p>
+</div>
+</section>
+
+<!-- ═══ AGENT ENROLLMENT ═══ -->
+<section id="enrollment">
+<h2>3. Agent Enrollment — Config Rewrite Pattern</h2>
+
+<div class="callout big">
+  <div class="callout-header">🎯 The Trick</div>
+  <p><code>preloop agents discover</code> finds agent configs on disk, imports MCP servers and model metadata into Preloop's DB, mints a managed runtime identity, and then <strong>rewrites the agent's local config files</strong> to point to Preloop instead of the original endpoints. The agent doesn't know it's been enrolled — it just starts routing through Preloop.</p>
+</div>
+
+<h3>Hermes Enrollment Flow</h3>
+<pre># One-command discovery and onboarding
+preloop agents discover          # Scans ~/.hermes/config.yaml
+
+preloop agents onboard hermes    # Creates ManagedAgent + credential
+preloop agents install-plugin hermes  # Installs runtime plugin
+preloop agents validate hermes   # Verifies plugin connects</pre>
+
+<h3>Config Rewrite — Before & After</h3>
+<div class="card-grid-2">
+  <div class="card">
+    <div class="card-title">Before Enrollment</div>
+    <div class="card-subtitle">Direct provider access</div>
+    <pre style="font-size:11px; margin:0; padding:12px;">model:
+  provider: deepseek
+  model: deepseek-v4-pro
+  api_key: sk-actual-key
+mcp_servers:
+  github:
+    command: npx
+    args: [-y, @modelcontextprotocol/server-github]</pre>
+  </div>
+  <div class="card teal">
+    <div class="card-title">After Enrollment</div>
+    <div class="card-subtitle">Routed through Preloop</div>
+    <pre style="font-size:11px; margin:0; padding:12px;">model:
+  provider: openai
+  model: deepseek-v4-pro
+  base_url: https://preloop/openai/v1
+  api_key: preloop_rt_abc123
+mcp_servers:
+  preloop:  # Managed MCP proxy
+    url: https://preloop/mcp/v1
+    transport: http-streaming
+    headers:
+      Authorization: Bearer preloop_rt_abc123
+  github:  # Preserved original
+    command: npx
+    args: [-y, @...server-github]
+preloop:
+  control:
+    control_ws_url: wss://preloop/.../control/ws
+    runtime_bearer_token: preloop_rt_abc123</pre>
+  </div>
+</div>
+
+<h3>Data Model</h3>
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr><th>Entity</th><th>Purpose</th><th>Key Fields</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>ManagedAgent</code></td>
+      <td>One row per enrolled agent</td>
+      <td>agent_kind, session_source_type, session_source_id, lifecycle_state</td>
+    </tr>
+    <tr>
+      <td><code>ManagedAgentCredential</code></td>
+      <td>Runtime bearer token</td>
+      <td>token_hash, expires_at, scopes</td>
+    </tr>
+    <tr>
+      <td><code>ManagedAgentEnrollment</code></td>
+      <td>Audit trail of onboarding</td>
+      <td>enrollment_type (cli_managed_config / runtime_plugin_control), validation_result</td>
+    </tr>
+    <tr>
+      <td><code>ManagedAgentAIModelBinding</code></td>
+      <td>Which models this agent can use</td>
+      <td>model_id, is_default, config_slot</td>
+    </tr>
+    <tr>
+      <td><code>RuntimeSession</code></td>
+      <td>Per-session timeline</td>
+      <td>session_source_type, session_source_id, agent_session_reference</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>The config rewrite is <strong>conservative</strong> — it adds Preloop as an MCP server, rewrites the model endpoint to the gateway, and preserves all existing MCP servers. Two-layer enrollment: CLI config gives MCP/gateway routing immediately; runtime plugin adds Agent Control later.</p>
+
+<div class="callout insight">
+  <div class="callout-header">💡 What to Borrow</div>
+  <p>The config rewrite pattern is battle-tested for Hermes specifically. The <code>ManagedAgent</code> + <code>ManagedAgentCredential</code> + <code>RuntimeSession</code> data model is clean. Two-layer enrollment (CLI + plugin) is the right separation.</p>
+</div>
+
+<div class="callout warn">
+  <div class="callout-header">⚠️ What to Build Differently for Helix</div>
+  <p>Helix should manage agents <strong>per repo</strong>, not just per account. An agent enrolled for <code>reports</code> should have different tools than one for <code>helix-core</code>. Config should be declarative and version-controlled in <code>.helix/agent-policies.yaml</code> in the repo. Helix needs batch enrollment for Kubernetes namespaces.</p>
+</div>
+</section>
+
+<!-- ═══ AGENT CONTROL ═══ -->
+<section id="control">
+<h2>4. Agent Control — Live Bidirectional Channel</h2>
+
+<div class="callout big">
+  <div class="callout-header">🎯 The Trick</div>
+  <p>A persistent WebSocket from the agent back to Preloop lets a human operator send commands (including voice) directly into the agent's runtime session. The agent's plugin receives the command and injects it as the next user turn — audited, governed, and routed through the same MCP firewall and model gateway.</p>
+</div>
+
+<div class="arch-diagram">
+  <div style="display:flex;justify-content:space-around;align-items:center;flex-wrap:wrap;gap:20px;">
+    <div style="text-align:center;">
+      <div style="font-weight:700;margin-bottom:8px;">🖥️ Hermes (plugin)</div>
+      <div style="font-size:12px;color:var(--muted);">
+        WebSocket Client<br>
+        heartbeat/status/presence<br>
+        receives send_message<br>
+        injects as user turn
+      </div>
+    </div>
+    <div style="color:var(--teal);font-size:24px;">⟷</div>
+    <div style="text-align:center;">
+      <div style="font-weight:700;margin-bottom:8px;">🔌 Preloop Server</div>
+      <div style="font-size:12px;color:var(--muted);">
+        AgentControlConnectionManager<br>
+        WS /api/v1/agents/control/ws<br>
+        NATS pub/sub distribution
+      </div>
+    </div>
+    <div style="color:var(--purple);font-size:24px;">⟷</div>
+    <div style="text-align:center;">
+      <div style="font-weight:700;margin-bottom:8px;">👤 Operator</div>
+      <div style="font-size:12px;color:var(--muted);">
+        Console / Mobile / Watch<br>
+        POST /agents/{id}/control/commands<br>
+        Voice → STT → text turn
+      </div>
+    </div>
+  </div>
+</div>
+
+<h3>Connection Manager</h3>
+<pre>class AgentControlConnectionManager:
+    """In-process registry for connected managed agents."""
+    _connections: dict[str, WebSocket]       # connection_id → WebSocket
+    _agent_connections: dict[str, str]       # agent_id → connection_id
+    _connection_agents: dict[str, str]       # connection_id → agent_id
+
+    # New connection for same agent evicts old one.
+    # Heartbeats every 15s. Missed heartbeat → disconnect.</pre>
+
+<h3>Command Lifecycle</h3>
+<div class="flow">
+  <div class="flow-line">
+    <span class="flow-box">Operator sends command</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box highlight">REST API</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box key">Persist to DB (audited)</span>
+  </div>
+  <div class="flow-line">
+    <span class="flow-arrow" style="margin-left:40px;">↓</span>
+  </div>
+  <div class="flow-line">
+    <span class="flow-box key">Publish to NATS</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box">Deliver via WebSocket (if connected)</span>
+  </div>
+  <div class="flow-line">
+    <span class="flow-arrow" style="margin-left:40px;">↓</span>
+  </div>
+  <div class="flow-line">
+    <span class="flow-box">Plugin receives send_message envelope</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-box highlight">Inject as next user turn in agent</span>
+  </div>
+</div>
+
+<div class="callout insight">
+  <div class="callout-header">💡 What to Borrow</div>
+  <p>The plugin-based architecture for Agent Control — don't modify Hermes core, ship a runtime plugin. The <code>preloop.control</code> config block pattern is declarative and versionable. WebSocket + NATS for horizontal scaling. Heartbeat + reconnect + command persistence for durability.</p>
+</div>
+
+<div class="callout warn">
+  <div class="callout-header">⚠️ What to Build Differently for Helix</div>
+  <p>Helix needs Agent Control <strong>scoped to git operations</strong>: "review PR #42", "fix CI failure in commit abc123", "rebase onto main." Helix should integrate with git webhooks — new PR automatically notifies the assigned agent. Voice is secondary; Helix's primary Operator surface should be the PR interface itself.</p>
+</div>
+</section>
+
+<!-- ═══ BORROW/BUILD MATRIX ═══ -->
+<section id="matrix">
+<h2>5. Borrow, Extend, Build — The Full Matrix</h2>
+
+<h3><span class="badge green">BORROW</span> — Integrate directly or steal the architecture</h3>
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr><th>Feature</th><th>Why</th><th>How for Helix</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Preloop as a whole</strong></td>
+      <td>Already built the governance layer. Apache 2.0. Works with Hermes.</td>
+      <td class="green">Run as sidecar. Helix focuses on forge + marketplace + prompt infra.</td>
+    </tr>
+    <tr>
+      <td><strong>MCP Firewall pattern</strong></td>
+      <td>DynamicFastMCP + CEL + subject-scoped governance. Proven code.</td>
+      <td class="green">Steal architecture. Extend with repo-scoped rules.</td>
+    </tr>
+    <tr>
+      <td><strong>LiteLLM as gateway</strong></td>
+      <td>100+ providers, streaming, OAuth. Preloop's wrapper is thin.</td>
+      <td class="green">Use directly. Add Helix-specific budget/fallback layers.</td>
+    </tr>
+    <tr>
+      <td><strong>Agent enrollment rewrite</strong></td>
+      <td>Hermes adapter handles ~/.hermes/config.yaml. One command.</td>
+      <td class="green">Run Preloop's CLI. Extend with batch enrollment.</td>
+    </tr>
+    <tr>
+      <td><strong>Subject-scope chain</strong></td>
+      <td>API key → managed agent → account. Simple priority chain.</td>
+      <td class="green">Adopt pattern. Add repo scope: repo → team → account.</td>
+    </tr>
+    <tr>
+      <td><strong>ApiUsage ledger</strong></td>
+      <td>Canonical cost source of truth per model call.</td>
+      <td class="green">Extend with repo_id, pr_id, branch columns.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h3><span class="badge amber">EXTEND</span> — Borrow architecture, build cleaner</h3>
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr><th>Feature</th><th>Preloop's Approach</th><th>Helix Should</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Policy storage</strong></td>
+      <td>JSONB in account meta_data. No version history.</td>
+      <td class="amber">Proper tables + versioning + AGENTOWNERS file in repo.</td>
+    </tr>
+    <tr>
+      <td><strong>Tool scoping</strong></td>
+      <td>Account-level. Based on tracker presence.</td>
+      <td class="amber">Per-repo, per-branch. <code>bash</code> on feat/* vs main.</td>
+    </tr>
+    <tr>
+      <td><strong>Cost analytics</strong></td>
+      <td>OSS: overview only. Enterprise: deep analysis.</td>
+      <td class="amber">Session-value analysis in core. "This PR cost $3.47 → merged."</td>
+    </tr>
+    <tr>
+      <td><strong>Model fallback</strong></td>
+      <td>Allowed-model lists (hard allow/deny).</td>
+      <td class="amber">Fallback chains with budget-aware routing.</td>
+    </tr>
+    <tr>
+      <td><strong>Approval UX</strong></td>
+      <td>Slack, mobile, webhook, email.</td>
+      <td class="amber">In-forge approvals in PR UI. Mobile as secondary.</td>
+    </tr>
+    <tr>
+      <td><strong>Agent identity</strong></td>
+      <td>Tied to account, not repo.</td>
+      <td class="amber">Repo-scoped credentials. Different perms per repo.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h3><span class="badge red">BUILD</span> — From scratch, only Helix can do this</h3>
+<div class="card-grid-3">
+  <div class="card red">
+    <div class="card-title">Git Forge</div>
+    <div class="card-subtitle">Forgejo-based</div>
+    <p style="font-size:13px;">Preloop is governance middleware, not a forge. Helix IS the forge — the place where code lives, PRs happen, and agents work alongside humans.</p>
+  </div>
+  <div class="card red">
+    <div class="card-title">Agent Marketplace</div>
+    <div class="card-subtitle">Discoverability & reputation</div>
+    <p style="font-size:13px;">No agent registry in Preloop. Helix needs discoverable agent catalog with per-agent reputation, custom definitions, and one-click install.</p>
+  </div>
+  <div class="card red">
+    <div class="card-title">Prompt Infrastructure</div>
+    <div class="card-subtitle">Versioning, CI/CD, replay</div>
+    <p style="font-size:13px;">Preloop governs model calls, not prompt engineering. Helix needs prompt-as-code, versioned prompts, PromptFoo evaluation in CI.</p>
+  </div>
+  <div class="card red">
+    <div class="card-title">Agent-to-Agent PR Review</div>
+    <div class="card-subtitle">Bidirectional collaboration</div>
+    <p style="font-size:13px;">Preloop governs tool access. It doesn't facilitate agent-to-agent negotiation. Helix's agent-to-agent PR review is a new primitive.</p>
+  </div>
+  <div class="card red">
+    <div class="card-title">Git-Level Agent Control</div>
+    <div class="card-subtitle">PR-scoped commands</div>
+    <p style="font-size:13px;">Preloop's Agent Control is generic. Helix needs git-aware: "review PR #42", "fix CI in abc123", "rebase onto main."</p>
+  </div>
+  <div class="card red">
+    <div class="card-title">Agent Attestation</div>
+    <div class="card-subtitle">Signed agent commits</div>
+    <p style="font-size:13px;">Not in Preloop's model. Helix needs signed agent commits with model+prompt provenance per line of code.</p>
+  </div>
+</div>
+</section>
+
+<!-- ═══ ARCHITECTURE DECISION ═══ -->
+<section id="decision">
+<h2>6. Architecture Decision — Helix + Preloop Sidecar</h2>
+
+<div class="arch-diagram">
+  <div class="arch-layer helix">
+    <div class="arch-layer-title"><span class="helix-label">🧬 Helix</span> — Git-native agent platform</div>
+    <div class="arch-layer-items">
+      <span class="arch-item">Forgejo (git)</span>
+      <span class="arch-item">Agent Registry</span>
+      <span class="arch-item">Prompt Infra</span>
+      <span class="arch-item">Agent-to-Agent PR Review</span>
+      <span class="arch-item">AGENTOWNERS</span>
+      <span class="arch-item">Agent Attestation</span>
+      <span class="arch-item">Per-PR Budgets</span>
+      <span class="arch-item">CI/CD for Agents</span>
+    </div>
+  </div>
+  <div class="arch-arrow-down">↓ MCP calls + model traffic ↓</div>
+  <div class="arch-layer adapter">
+    <div class="arch-layer-title"><span class="adapter-label">🔌 Helix Governance Adapter</span> — Thin translation layer</div>
+    <div class="arch-layer-items">
+      <span class="arch-item">Repo → subject mapping</span>
+      <span class="arch-item">.helix/policies.yaml → Preloop rules</span>
+      <span class="arch-item">AGENTOWNERS → approval routing</span>
+      <span class="arch-item">PR scope → budget enforcement</span>
+      <span class="arch-item">Agent attestation verification</span>
+    </div>
+  </div>
+  <div class="arch-arrow-down">↓ governed tool calls + routed model traffic ↓</div>
+  <div class="arch-layer preloop">
+    <div class="arch-layer-title"><span class="preloop-label">🛡️ Preloop</span> — Governance middleware (Apache 2.0)</div>
+    <div class="arch-layer-items">
+      <span class="arch-item">MCP Firewall</span>
+      <span class="arch-item">Model Gateway</span>
+      <span class="arch-item">Human Approvals</span>
+      <span class="arch-item">Cost Tracking</span>
+      <span class="arch-item">Audit Trails</span>
+      <span class="arch-item">Agent Control WS</span>
+      <span class="arch-item">Secret Custody</span>
+      <span class="arch-item">Runtime Sessions</span>
+    </div>
+  </div>
+</div>
+
+<div class="callout big">
+  <div class="callout-header">🧬 Helix Owns</div>
+  <p>Git, agents, prompts, marketplace, per-repo/per-PR policies, agent attestation, agent-to-agent collaboration, PR-scoped cost accounting.</p>
+</div>
+
+<div class="callout insight">
+  <div class="callout-header">🛡️ Preloop Owns</div>
+  <p>Tool governance, model routing, human approvals, cost accounting, audit trails, live agent control, secret custody. Battle-tested. Apache 2.0. Already works with Hermes.</p>
+</div>
+
+<div class="callout highlight">
+  <div class="callout-header">🔌 The Adapter — ~2,000 lines of Python</div>
+  <p>A thin translation layer that maps Helix's repo-scoped policies into Preloop's subject-scoped governance. Reads <code>.helix/policies.yaml</code> from each repo, translates <code>AGENTOWNERS</code> into approval routing, maps PR scope to budget enforcement, and verifies agent attestation on commit. This is the only new code Helix needs for governance — everything else is Preloop.</p>
+</div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<a href="https://totalwindupflightsystems.github.io/reports/" class="back-link">← Back to Reports Index</a>
+
+</div>
+</body>
+</html>
