@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Helix Unified — Agent-First Forge with Preloop Backend</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #222532;
+    --border: rgba(255,255,255,0.06);
+    --text: #e4e6ef;
+    --muted: #9ca0b0;
+    --green: #4ade80;
+    --amber: #fbbf24;
+    --orange: #fb923c;
+    --red: #f87171;
+    --blue: #60a5fa;
+    --purple: #a78bfa;
+    --pink: #f472b6;
+    --teal: #2dd4bf;
+    --cyan: #22d3ee;
+    --radius: 10px;
+    --radius-lg: 16px;
+    --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'SF Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+    scroll-padding-top: 57px;
+  }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container { max-width: 960px; margin: 0 auto; padding: 0 20px 80px; }
+
+  /* ── Top Nav ── */
+  .top-nav {
+    position: sticky; top: 0; z-index: 10;
+    display: flex; gap: 4px; flex-wrap: nowrap;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    background: rgba(15,17,23,0.92);
+    backdrop-filter: blur(12px);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .top-nav::-webkit-scrollbar { display: none; }
+  .top-nav a {
+    font-size: 11px; color: var(--muted); text-decoration: none;
+    padding: 5px 10px; border-radius: 6px;
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap; flex-shrink: 0;
+    font-weight: 500; letter-spacing: 0.3px;
+  }
+  .top-nav a:hover, .top-nav a:focus { background: var(--surface); color: var(--text); }
+
+  /* ── Hero ── */
+  .hero {
+    text-align: center; padding: 56px 0 40px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+  .hero-badge {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--teal);
+    background: rgba(45,212,191,0.1);
+    border: 1px solid rgba(45,212,191,0.2);
+    border-radius: 100px;
+    padding: 4px 14px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .hero h1 {
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 10px;
+  }
+  .hero .subtitle {
+    color: var(--muted);
+    font-size: 15px;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+  .hero .meta {
+    margin-top: 16px;
+    font-size: 12px;
+    color: var(--muted);
+    font-family: var(--mono);
+  }
+
+  /* ── Sections ── */
+  section { margin-bottom: 48px; }
+  h2 {
+    font-size: 22px; font-weight: 700; margin-bottom: 18px;
+    padding-bottom: 10px; border-bottom: 1px solid var(--border);
+    letter-spacing: -0.3px;
+  }
+  h3 {
+    font-size: 17px; font-weight: 600; margin: 28px 0 14px;
+    color: var(--text);
+  }
+  h4 {
+    font-size: 14px; font-weight: 600; margin: 20px 0 10px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  p { margin-bottom: 14px; font-size: 15px; color: var(--muted); }
+  strong { color: var(--text); }
+  a { color: var(--blue); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  code {
+    font-family: var(--mono);
+    font-size: 0.85em;
+    background: var(--surface2);
+    padding: 1px 7px;
+    border-radius: 4px;
+    color: var(--teal);
+  }
+  pre {
+    font-family: var(--mono);
+    font-size: 12px;
+    background: var(--surface2);
+    padding: 16px 20px;
+    border-radius: var(--radius);
+    overflow-x: auto;
+    margin-bottom: 18px;
+    line-height: 1.5;
+    color: var(--muted);
+    border: 1px solid var(--border);
+  }
+
+  /* ── Cards ── */
+  .card-grid-4 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  .card-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .card-grid-2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px;
+  }
+  .card.teal { border-left: 3px solid var(--teal); }
+  .card.blue { border-left: 3px solid var(--blue); }
+  .card.purple { border-left: 3px solid var(--purple); }
+  .card.green { border-left: 3px solid var(--green); }
+  .card.amber { border-left: 3px solid var(--amber); }
+  .card.red { border-left: 3px solid var(--red); }
+  .card.pink { border-left: 3px solid var(--pink); }
+
+  .card .card-title {
+    font-size: 16px; font-weight: 700; margin-bottom: 6px;
+  }
+  .card .card-subtitle {
+    font-size: 11px; color: var(--muted); text-transform: uppercase;
+    letter-spacing: 0.5px; margin-bottom: 14px;
+  }
+  .card .spec-row {
+    display: flex; justify-content: space-between; padding: 7px 0;
+    border-top: 1px solid var(--border); font-size: 13px;
+  }
+  .card .spec-label { color: var(--muted); }
+  .card .spec-value { color: var(--text); font-weight: 500; }
+
+  /* ── Tables ── */
+  .table-wrap {
+    overflow-x: auto; margin-bottom: 20px;
+    border-radius: var(--radius); border: 1px solid var(--border);
+  }
+  table {
+    width: 100%; border-collapse: collapse; font-size: 14px;
+    min-width: 600px;
+  }
+  th {
+    text-align: left; padding: 10px 14px;
+    background: var(--surface2); color: var(--muted);
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;
+    font-weight: 600;
+  }
+  td { padding: 10px 14px; border-top: 1px solid var(--border); vertical-align: top; }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+
+  /* ── Callout Boxes ── */
+  .callout {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+    margin-bottom: 18px;
+  }
+  .callout.big { border-left: 3px solid var(--teal); }
+  .callout.warn { border-left: 3px solid var(--amber); }
+  .callout.insight { border-left: 3px solid var(--purple); }
+  .callout.green { border-left: 3px solid var(--green); }
+  .callout-header {
+    font-size: 15px; font-weight: 700; margin-bottom: 8px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .callout p { font-size: 14px; margin-bottom: 6px; }
+  .callout p:last-child { margin-bottom: 0; }
+
+  /* ── Architecture Diagram ── */
+  .arch-diagram {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .arch-layer {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    margin-bottom: 8px;
+    text-align: left;
+  }
+  .arch-layer.helix-user { border-color: var(--teal); background: rgba(45,212,191,0.04); }
+  .arch-layer.helix-core { border-color: var(--purple); background: rgba(167,139,250,0.04); }
+  .arch-layer.helix-adapter { border-color: var(--blue); background: rgba(96,165,250,0.04); }
+  .arch-layer.preloop-api { border-color: var(--amber); background: rgba(251,191,36,0.04); }
+  .arch-layer.preloop-core { border-color: var(--green); background: rgba(74,222,128,0.04); }
+  .arch-layer-title {
+    font-weight: 700; font-size: 14px; margin-bottom: 8px;
+  }
+  .arch-layer-items {
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+  .arch-item {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 5px 12px;
+    font-size: 12px;
+    font-family: var(--mono);
+    color: var(--muted);
+  }
+  .arch-arrow {
+    text-align: center; color: var(--muted); font-size: 18px;
+    margin: 4px 0;
+  }
+  .arch-label {
+    display: inline-block;
+    font-size: 10px;
+    font-family: var(--mono);
+    color: var(--muted);
+    background: var(--surface2);
+    padding: 2px 10px;
+    border-radius: 4px;
+    margin: 2px 0 6px;
+  }
+
+  /* ── UI Mockup ── */
+  .ui-mockup {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  .ui-mockup-header {
+    background: var(--surface2);
+    padding: 12px 20px;
+    display: flex; align-items: center; gap: 12px;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .ui-mockup-header .tab {
+    padding: 4px 12px; border-radius: 4px;
+    font-size: 12px; color: var(--muted);
+  }
+  .ui-mockup-header .tab.active {
+    background: var(--surface);
+    color: var(--text);
+    font-weight: 600;
+  }
+  .ui-mockup-body {
+    padding: 24px;
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 20px;
+    min-height: 300px;
+  }
+  .ui-sidebar {
+    border-right: 1px solid var(--border);
+    padding-right: 16px;
+    font-size: 13px;
+  }
+  .ui-sidebar-item {
+    padding: 6px 10px; border-radius: 4px;
+    color: var(--muted); margin-bottom: 2px;
+  }
+  .ui-sidebar-item.active {
+    background: var(--surface2);
+    color: var(--text);
+    font-weight: 600;
+  }
+  .ui-main h4 {
+    font-size: 13px; margin: 0 0 12px; color: var(--muted);
+    text-transform: none; letter-spacing: 0;
+  }
+  .ui-table-row {
+    display: grid; grid-template-columns: 1fr 80px 100px 120px 100px;
+    padding: 8px 0; border-bottom: 1px solid var(--border);
+    font-size: 13px; align-items: center;
+  }
+  .ui-table-row.header {
+    color: var(--muted); font-size: 11px; text-transform: uppercase;
+    letter-spacing: 0.5px; border-bottom: 2px solid var(--border);
+  }
+  .ui-badge {
+    display: inline-block; padding: 2px 8px; border-radius: 4px;
+    font-size: 11px; font-weight: 600;
+  }
+  .ui-badge.green { background: rgba(74,222,128,0.15); color: var(--green); }
+  .ui-badge.amber { background: rgba(251,191,36,0.15); color: var(--amber); }
+  .ui-badge.blue { background: rgba(96,165,250,0.15); color: var(--blue); }
+
+  /* ── Badges ── */
+  .badge {
+    display: inline-block; padding: 2px 8px; border-radius: 4px;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.3px;
+  }
+  .badge.teal { background: rgba(45,212,191,0.15); color: var(--teal); }
+  .badge.blue { background: rgba(96,165,250,0.15); color: var(--blue); }
+  .badge.green { background: rgba(74,222,128,0.15); color: var(--green); }
+  .badge.amber { background: rgba(251,191,36,0.15); color: var(--amber); }
+  .badge.red { background: rgba(248,113,113,0.15); color: var(--red); }
+  .badge.purple { background: rgba(167,139,250,0.15); color: var(--purple); }
+
+  /* ── Workflow Diagram ── */
+  .workflow {
+    display: flex; flex-direction: column; gap: 0;
+    margin: 24px 0;
+  }
+  .workflow-step {
+    display: flex; align-items: flex-start; gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .workflow-number {
+    width: 32px; height: 32px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 700;
+    flex-shrink: 0;
+    color: var(--teal);
+  }
+  .workflow-content { flex: 1; }
+  .workflow-title {
+    font-weight: 600; font-size: 14px; margin-bottom: 4px;
+  }
+  .workflow-desc {
+    font-size: 13px; color: var(--muted);
+  }
+  .workflow-detail {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    background: var(--surface2);
+    padding: 4px 10px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-top: 6px;
+  }
+  .workflow-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 8px;
+  }
+  .workflow-split-box {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px;
+    font-size: 12px;
+  }
+  .workflow-split-box.helix-box { border-color: rgba(167,139,250,0.3); }
+  .workflow-split-box.preloop-box { border-color: rgba(74,222,128,0.3); }
+  .workflow-split-label {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px;
+    margin-bottom: 6px; font-weight: 700;
+  }
+
+  /* ── Back Link ── */
+  .back-link {
+    display: inline-block; margin-top: 40px; font-size: 13px; color: var(--blue);
+    text-decoration: none; padding: 6px 14px; border-radius: 6px;
+    background: var(--surface); border: 1px solid var(--border);
+    transition: background 0.15s;
+  }
+  .back-link:hover { background: var(--surface2); }
+
+  /* ── Stat Bubbles ── */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  .stat-bubble {
+    text-align: center;
+    padding: 24px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+  .stat-num {
+    font-family: var(--mono);
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .stat-num.teal { color: var(--teal); }
+  .stat-num.blue { color: var(--blue); }
+  .stat-num.green { color: var(--green); }
+  .stat-num.purple { color: var(--purple); }
+  .stat-label {
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 700px) {
+    .card-grid-4 { grid-template-columns: 1fr 1fr; }
+    .card-grid-3, .card-grid-2 { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 1.5rem; }
+    .ui-mockup-body { grid-template-columns: 1fr; }
+    .ui-sidebar { border-right: none; border-bottom: 1px solid var(--border); padding-bottom: 12px; }
+    .ui-table-row { grid-template-columns: 1fr 60px 80px; }
+    .workflow-split { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- ═══ NAV ═══ -->
+<nav class="top-nav">
+  <a href="#vision">Vision</a>
+  <a href="#interface">Interface</a>
+  <a href="#architecture">Architecture</a>
+  <a href="#workflows">Workflows</a>
+  <a href="#api-surface">API Surface</a>
+  <a href="#config-as-code">Config-as-Code</a>
+  <a href="#pricing-lifecycle">PR Lifecycle</a>
+  <a href="#conclusion">Conclusion</a>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<div class="hero">
+  <div class="hero-badge">Unified Architecture · June 28, 2026</div>
+  <h1>Helix Unified</h1>
+  <p class="subtitle">
+    What Helix looks like when all features are assembled — Helix's own agent-first forge + marketplace + prompt infrastructure, with Preloop running headless as the invisible governance engine. Every setting configured programmatically. No Preloop UI exposed.
+  </p>
+  <p class="meta">Helix + Preloop · Apache 2.0 · One unified developer experience</p>
+</div>
+
+<!-- ═══ VISION ═══ -->
+<section id="vision">
+<h2>The End State</h2>
+
+<p>A developer opens Helix. They see a <strong>git forge</strong> where agents and humans are equal contributors. They configure everything — tool policies, model budgets, approval rules, agent permissions — through Helix's UI and <code>.helix/</code> config files in each repo. They never see Preloop. They never log into Preloop. Preloop is infrastructure — like PostgreSQL or NATS — running silently, doing the enforcement, routing, and auditing. Helix calls Preloop's REST API for everything.</p>
+
+<div class="stat-row">
+  <div class="stat-bubble">
+    <div class="stat-num teal">1</div>
+    <div class="stat-label">Unified UI (Helix)</div>
+  </div>
+  <div class="stat-bubble">
+    <div class="stat-num green">0</div>
+    <div class="stat-label">Preloop UI Exposed</div>
+  </div>
+  <div class="stat-bubble">
+    <div class="stat-num blue">100%</div>
+    <div class="stat-label">API-Driven Config</div>
+  </div>
+  <div class="stat-bubble">
+    <div class="stat-num purple">.helix/</div>
+    <div class="stat-label">Config-as-Code</div>
+  </div>
+</div>
+
+<div class="callout big">
+  <div class="callout-header">🎯 The Design Principle</div>
+  <p>Helix owns the developer experience. Preloop owns the enforcement. The boundary is a <strong>REST API contract</strong> — Helix never uses Preloop's frontend. Every Preloop feature (agent enrollment, policy creation, budget configuration, approval workflow setup) has a REST endpoint that Helix calls programmatically. The developer configures everything through Helix; Helix translates it to Preloop API calls.</p>
+</div>
+</section>
+
+<!-- ═══ THE INTERFACE ═══ -->
+<section id="interface">
+<h2>What the Developer Sees — Helix UI</h2>
+
+<h3>Agent Dashboard — All Repos, All Agents, One View</h3>
+<div class="ui-mockup">
+  <div class="ui-mockup-header">
+    <span style="font-weight:700;">🧬 Helix</span>
+    <span class="tab active">Agents</span>
+    <span class="tab">Repositories</span>
+    <span class="tab">Policies</span>
+    <span class="tab">Cost</span>
+    <span class="tab">Audit</span>
+    <span class="tab" style="margin-left:auto;">Settings</span>
+  </div>
+  <div class="ui-mockup-body">
+    <div class="ui-sidebar">
+      <div class="ui-sidebar-item active">📊 All Agents</div>
+      <div class="ui-sidebar-item">🧬 helix-reviewer</div>
+      <div class="ui-sidebar-item">🧬 helix-builder</div>
+      <div class="ui-sidebar-item">🧬 helix-tester</div>
+      <div class="ui-sidebar-item" style="margin-top: 12px; color: var(--muted); font-size: 11px; padding: 4px 10px;">REPOSITORIES</div>
+      <div class="ui-sidebar-item">📁 reports</div>
+      <div class="ui-sidebar-item">📁 helix-core</div>
+      <div class="ui-sidebar-item">📁 warpfs</div>
+    </div>
+    <div class="ui-main">
+      <h4>Managed Agents — 7 enrolled, 4 active</h4>
+      <div class="ui-table-row header">
+        <span>Agent</span><span>Status</span><span>Repo</span><span>Spend (Today)</span><span>Budget</span>
+      </div>
+      <div class="ui-table-row">
+        <span style="font-weight:600;">helix-reviewer</span>
+        <span><span class="ui-badge green">active</span></span>
+        <span>reports</span>
+        <span style="font-family:var(--mono);">$2.14</span>
+        <span style="font-family:var(--mono);">$5.00/day</span>
+      </div>
+      <div class="ui-table-row">
+        <span style="font-weight:600;">helix-builder</span>
+        <span><span class="ui-badge green">active</span></span>
+        <span>helix-core</span>
+        <span style="font-family:var(--mono);">$8.73</span>
+        <span style="font-family:var(--mono);">$20.00/day</span>
+      </div>
+      <div class="ui-table-row">
+        <span style="font-weight:600;">helix-tester</span>
+        <span><span class="ui-badge green">active</span></span>
+        <span>warpfs</span>
+        <span style="font-family:var(--mono);">$1.42</span>
+        <span style="font-family:var(--mono);">$10.00/day</span>
+      </div>
+      <div class="ui-table-row">
+        <span style="font-weight:600;">hermes-h4f</span>
+        <span><span class="ui-badge amber">idle</span></span>
+        <span>—</span>
+        <span style="font-family:var(--mono);">$0.00</span>
+        <span style="font-family:var(--mono);">$3.00/day</span>
+      </div>
+      <div class="ui-table-row">
+        <span style="font-weight:600;">claude-code-dev</span>
+        <span><span class="ui-badge green">active</span></span>
+        <span>helix-core</span>
+        <span style="font-family:var(--mono);">$4.91</span>
+        <span style="font-family:var(--mono);">$20.00/day</span>
+      </div>
+      <div style="margin-top: 12px; font-size: 12px; color: var(--muted);">
+        + 2 more · All governed through Preloop (headless) · <a href="#" style="color: var(--blue);">Enroll new agent</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h3>Policy Configuration — Per-Repo, Per-Agent, Per-Branch</h3>
+<div class="ui-mockup">
+  <div class="ui-mockup-header">
+    <span style="font-weight:700;">🧬 Helix</span>
+    <span class="tab">Agents</span>
+    <span class="tab">Repositories</span>
+    <span class="tab active">Policies</span>
+    <span class="tab">Cost</span>
+    <span class="tab">Audit</span>
+    <span class="tab" style="margin-left:auto;">Settings</span>
+  </div>
+  <div class="ui-mockup-body">
+    <div class="ui-sidebar">
+      <div class="ui-sidebar-item">📋 All Policies</div>
+      <div class="ui-sidebar-item active">📁 reports</div>
+      <div class="ui-sidebar-item">📁 helix-core</div>
+      <div class="ui-sidebar-item">📁 warpfs</div>
+      <div style="margin-top: 12px; font-size: 11px; color: var(--muted); padding: 4px 10px;">Policy templates loaded from <code>.helix/policies.yaml</code> in each repo.</div>
+    </div>
+    <div class="ui-main" style="display:block;">
+      <h4>Repo: totalwindupflightsystems/reports — Tool Policies</h4>
+      <pre style="font-size:11px; margin:12px 0;"># .helix/policies.yaml — committed in repo, version-controlled
+version: "1"
+repo: totalwindupflightsystems/reports
+
+agents:
+  helix-reviewer:
+    allowed_models: [deepseek-v4-pro, deepseek-v4-flash]
+    daily_budget: 5.00
+    model_fallback: deepseek-v4-pro → v4-flash → step-3.5-flash
+
+tools:
+  bash:
+    branches:
+      "feat/*": allow
+      "main": require_approval
+      "gh-pages": allow
+    conditions:
+      - "args.command.contains('deploy') → require_approval"
+      - "args.command.contains('rm -rf') → deny"
+
+  file_write:
+    branches:
+      "*": allow
+    conditions:
+      - "args.path.contains('.env') → deny"
+
+  github:
+    branches:
+      "*": allow
+    conditions:
+      - "args.action == 'merge' &amp;&amp; args.target == 'main' → require_approval"
+
+approvals:
+  default_workflow:
+    timeout: 600
+    required_approvers: 1
+    channels: [slack, helix-ui]
+    AGENTOWNERS:
+      "reports/*": "@bane"
+      "helix-core/*": "@kara"</pre>
+    </div>
+  </div>
+</div>
+
+<div class="callout insight">
+  <div class="callout-header">💡 This Is the Key Pattern</div>
+  <p>The developer edits <code>.helix/policies.yaml</code> in their repo and pushes. Helix detects the change via git webhook, parses the file, and calls Preloop's REST API to create/update the corresponding <code>ToolAccessRule</code>, <code>ApprovalWorkflow</code>, and <code>ManagedAgentAIModelBinding</code> records. No one logs into Preloop. No one sees Preloop's policy UI. The repo is the source of truth.</p>
+</div>
+</section>
+
+<!-- ═══ ARCHITECTURE ═══ -->
+<section id="architecture">
+<h2>Full Architecture — Helix + Headless Preloop</h2>
+
+<div class="arch-diagram">
+  <div class="arch-layer helix-user">
+    <div class="arch-layer-title" style="color: var(--teal);">🧬 Helix — Developer-Facing UI (Lit + Shoelace)</div>
+    <div class="arch-layer-items">
+      <span class="arch-item">Agent Dashboard</span>
+      <span class="arch-item">Repo Browser</span>
+      <span class="arch-item">PR Review (human+agent)</span>
+      <span class="arch-item">Policy Editor</span>
+      <span class="arch-item">Cost Analytics</span>
+      <span class="arch-item">Audit Explorer</span>
+      <span class="arch-item">Agent Marketplace</span>
+      <span class="arch-item">Prompt Studio</span>
+    </div>
+  </div>
+  <div class="arch-arrow">↓ REST API calls ↓</div>
+  <div class="arch-layer helix-core">
+    <div class="arch-layer-title" style="color: var(--purple);">🔮 Helix Core Services</div>
+    <div class="arch-layer-items">
+      <span class="arch-item">Forgejo (git + PRs)</span>
+      <span class="arch-item">Agent Registry</span>
+      <span class="arch-item">Prompt Versioning</span>
+      <span class="arch-item">Agent-to-Agent PR Review</span>
+      <span class="arch-item">AGENTOWNERS Resolution</span>
+      <span class="arch-item">Agent Attestation</span>
+      <span class="arch-item">CI/CD (Gitea Actions)</span>
+      <span class="arch-item">.helix/ Config Parser</span>
+    </div>
+  </div>
+  <div class="arch-arrow">↓ Helix Governance Adapter (REST client) ↓</div>
+  <div class="arch-label">The adapter is ~2,000 lines of Python that translates Helix concepts → Preloop API calls</div>
+  <div class="arch-layer preloop-api">
+    <div class="arch-layer-title" style="color: var(--amber);">🔌 Preloop REST API (headless — UI not exposed)</div>
+    <div class="arch-layer-items">
+      <span class="arch-item">POST /api/v1/agents/onboard</span>
+      <span class="arch-item">PUT /api/v1/tool-configurations</span>
+      <span class="arch-item">POST /api/v1/access-rules</span>
+      <span class="arch-item">POST /api/v1/approval-workflows</span>
+      <span class="arch-item">PUT /api/v1/managed-agents/{id}/bindings</span>
+      <span class="arch-item">GET /api/v1/api-usage</span>
+      <span class="arch-item">GET /api/v1/audit/logs</span>
+      <span class="arch-item">WS /api/v1/agents/control/ws</span>
+    </div>
+  </div>
+  <div class="arch-arrow">↓ enforcement ↓</div>
+  <div class="arch-layer preloop-core">
+    <div class="arch-layer-title" style="color: var(--green);">🛡️ Preloop Core — Headless Enforcement Engine</div>
+    <div class="arch-layer-items">
+      <span class="arch-item">MCP Firewall (DynamicFastMCP)</span>
+      <span class="arch-item">Model Gateway (LiteLLM)</span>
+      <span class="arch-item">Policy Evaluator (CEL)</span>
+      <span class="arch-item">Approval Service</span>
+      <span class="arch-item">Budget Enforcer</span>
+      <span class="arch-item">ApiUsage Ledger</span>
+      <span class="arch-item">Audit Trail</span>
+      <span class="arch-item">Secret Custody</span>
+    </div>
+  </div>
+</div>
+
+<div class="callout big">
+  <div class="callout-header">🔑 The Contract</div>
+  <p>Helix never touches Preloop's database directly. Helix never renders Preloop's frontend. All configuration flows through Preloop's REST API. All enforcement flows through Preloop's MCP firewall and model gateway. Helix queries Preloop for cost data, audit logs, and agent status — then renders them in its own UI. Preloop is PostgreSQL. Preloop is NATS. Preloop is infrastructure.</p>
+</div>
+</section>
+
+<!-- ═══ WORKFLOWS ═══ -->
+<section id="workflows">
+<h2>Key Workflows — What Happens When</h2>
+
+<h3>1. Developer Pushes a New <code>.helix/policies.yaml</code></h3>
+<div class="workflow">
+  <div class="workflow-step">
+    <div class="workflow-number">1</div>
+    <div class="workflow-content">
+      <div class="workflow-title">Git push triggers Helix webhook</div>
+      <div class="workflow-desc">Developer commits <code>.helix/policies.yaml</code> to repo and pushes. Forgejo fires a push webhook to Helix Core.</div>
+    </div>
+  </div>
+  <div class="workflow-step">
+    <div class="workflow-number">2</div>
+    <div class="workflow-content">
+      <div class="workflow-title">Helix parses and validates the policy file</div>
+      <div class="workflow-desc">The <code>.helix/ config parser</code> validates YAML syntax, checks that referenced agents exist in the registry, verifies branch names match the repo's actual branches, and resolves AGENTOWNERS to actual user IDs.</div>
+    </div>
+  </div>
+  <div class="workflow-step">
+    <div class="workflow-number">3</div>
+    <div class="workflow-content">
+      <div class="workflow-title">Helix Governance Adapter translates to Preloop API calls</div>
+      <div class="workflow-desc">Each policy rule becomes a Preloop REST API call. The adapter handles batching, error recovery, and idempotency (same config pushed twice = same Preloop state).</div>
+      <div class="workflow-split">
+        <div class="workflow-split-box helix-box">
+          <div class="workflow-split-label" style="color: var(--purple);">Helix → Preloop Translation</div>
+          <code>bash on feat/* → allow</code><br>
+          <span style="font-size:10px; color: var(--muted);">→ POST /api/v1/access-rules<br>
+          {action: "allow", condition: "args.branch.matches('feat/*')", priority: 10}</span>
+        </div>
+        <div class="workflow-split-box preloop-box">
+          <div class="workflow-split-label" style="color: var(--green);">Preloop Response</div>
+          <code>201 Created</code><br>
+          <span style="font-size:10px; color: var(--muted);">Rule stored in tool_access_rule table.<br>
+          Active immediately for next tool call.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="workflow-step">
+    <div class="workflow-number">4</div>
+    <div class="workflow-content">
+      <div class="workflow-title">Policy is live — agents governed immediately</div>
+      <div class="workflow-desc">The next time <code>helix-reviewer</code> makes a tool call, Preloop's MCP firewall evaluates the new rules. No restart. No redeploy. Policy-as-code, pushed to git, enforced in real time.</div>
+    </div>
+  </div>
+</div>
+
+<h3>2. Developer Enrolls a New Agent</h3>
+<div class="workflow">
+  <div class="workflow-step">
+    <div class="workflow-number">1</div>
+    <div class="workflow-content">
+      <div class="workflow-title">Developer clicks "Enroll Agent" in Helix UI</div>
+      <div class="workflow-desc">Selects agent type (Hermes, Claude Code, Codex CLI), names it, assigns it to repos, sets initial budget.</div>
+    </div>
+  </div>
+  <div class="workflow-step">
+    <div class="workflow-number">2</div>
+    <div class="workflow-content">
+      <div class="workflow-title">Helix calls Preloop to create the managed agent</div>
+      <div class="workflow-split">
+        <div class="workflow-split-box helix-box">
+          <div class="workflow-split-label" style="color: var(--purple);">Helix creates:</div>
+          <span style="font-size: 12px;">• Agent Registry entry (agent marketplace ID)<br>
+          • Repo permissions (which repos this agent can access)<br>
+          • Budget allocation ($/day/repo)</span>
+        </div>
+        <div class="workflow-split-box preloop-box">
+          <div class="workflow-split-label" style="color: var(--green);">Helix calls Preloop:</div>
+          <code style="font-size: 11px;">POST /api/v1/agents/onboard<br>
+PUT /api/v1/managed-agents/{id}/bindings<br>
+PUT /api/v1/accounts/{id}/budgets</code>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="workflow-step">
+    <div class="workflow-number">3</div>
+    <div class="workflow-content">
+      <div class="workflow-title">Helix generates the agent's config and rewrites it</div>
+      <div class="workflow-desc">Helix runs <code>preloop agents onboard hermes</code> (or the equivalent API call) to rewrite the agent's local config to route through Preloop. The agent gets a short-lived runtime token. Its MCP servers are proxied. Its model traffic routes through the gateway.</div>
+    </div>
+  </div>
+  <div class="workflow-step">
+    <div class="workflow-number">4</div>
+    <div class="workflow-content">
+      <div class="workflow-title">Agent appears in Helix dashboard — ready to work</div>
+      <div class="workflow-desc">The agent shows up in Helix's agent dashboard with status, repo assignments, budget tracking, and policy bindings. The developer never visited Preloop.</div>
+    </div>
+  </div>
+</div>
+
+<h3>3. Agent Makes a Risky Tool Call</h3>
+<div class="workflow">
+  <div class="workflow-step">
+    <div class="workflow-number">1</div>
+    <div class="workflow-content">
+      <div class="workflow-title">Agent calls <code>bash deploy production</code></div>
+      <div class="workflow-desc">The agent issues a tool call. It routes through Preloop's MCP proxy (the agent's config was rewritten to point there).</div>
+    </div>
+  </div>
+  <div class="workflow-step">
+    <div class="workflow-number">2</div>
+    <div class="workflow-content">
+      <div class="workflow-title">Preloop evaluates the policy</div>
+      <div class="workflow-desc">The policy says: <code>bash on main with args containing 'deploy' → require_approval</code>. Preloop creates an <code>ApprovalRequest</code>.</div>
+    </div>
+  </div>
+  <div class="workflow-step">
+    <div class="workflow-number">3</div>
+    <div class="workflow-content">
+      <div class="workflow-title">Helix receives the approval request and surfaces it</div>
+      <div class="workflow-desc">Preloop's webhook (or Helix polling Preloop's API) delivers the approval request to Helix. Helix shows it in the PR UI — a banner: "helix-reviewer wants to deploy to production. [Approve] [Deny]." It also sends a Slack notification.</div>
+    </div>
+  </div>
+  <div class="workflow-step">
+    <div class="workflow-number">4</div>
+    <div class="workflow-content">
+      <div class="workflow-title">Human approves in Helix UI → Helix tells Preloop → tool executes</div>
+      <div class="workflow-desc">The human clicks Approve. Helix calls <code>POST /approval/{id}/decide</code> on Preloop's API. Preloop releases the blocked tool call. The agent's <code>bash deploy production</code> runs. Everything is audited.</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══ API SURFACE ═══ -->
+<section id="api-surface">
+<h2>The Programmatic API Surface</h2>
+<p>Every Preloop feature has a REST endpoint. Helix's Governance Adapter calls these. Here's the complete mapping of what Helix configures and how:</p>
+
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr><th>Helix Action</th><th>Preloop REST Call</th><th>What It Creates/Updates</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Enroll agent</strong></td>
+      <td><code>POST /api/v1/agents/onboard</code></td>
+      <td>ManagedAgent, ManagedAgentCredential, config rewrite</td>
+    </tr>
+    <tr>
+      <td><strong>Install runtime plugin</strong></td>
+      <td><code>POST /api/v1/agents/{id}/install-plugin</code></td>
+      <td>Agent Control WebSocket channel enabled</td>
+    </tr>
+    <tr>
+      <td><strong>Assign models to agent</strong></td>
+      <td><code>PUT /api/v1/managed-agents/{id}/bindings</code></td>
+      <td>ManagedAgentAIModelBinding (which models, budgets, fallback)</td>
+    </tr>
+    <tr>
+      <td><strong>Set agent budget</strong></td>
+      <td><code>PUT /api/v1/accounts/{id}/budgets</code></td>
+      <td>Per-agent daily/monthly spend limits</td>
+    </tr>
+    <tr>
+      <td><strong>Create tool policy</strong></td>
+      <td><code>POST /api/v1/access-rules</code></td>
+      <td>ToolAccessRule with CEL conditions</td>
+    </tr>
+    <tr>
+      <td><strong>Update tool policy</strong></td>
+      <td><code>PUT /api/v1/access-rules/{id}</code></td>
+      <td>Updated conditions, priority, action</td>
+    </tr>
+    <tr>
+      <td><strong>Create approval workflow</strong></td>
+      <td><code>POST /api/v1/approval-workflows</code></td>
+      <td>ApprovalWorkflow (timeout, required approvers, channels)</td>
+    </tr>
+    <tr>
+      <td><strong>Set allowed models</strong></td>
+      <td><code>PUT /api/v1/subject-governance/{id}</code></td>
+      <td>Subject-scoped allowed_models, model_budgets</td>
+    </tr>
+    <tr>
+      <td><strong>Query agent spend</strong></td>
+      <td><code>GET /api/v1/api-usage?agent_id={id}</code></td>
+      <td>Token usage, cost by model, by session</td>
+    </tr>
+    <tr>
+      <td><strong>Query audit trail</strong></td>
+      <td><code>GET /api/v1/audit/logs?agent_id={id}</code></td>
+      <td>All tool calls, policy decisions, approvals</td>
+    </tr>
+    <tr>
+      <td><strong>Send operator command</strong></td>
+      <td><code>POST /api/v1/agents/{id}/control/commands</code></td>
+      <td>Delivers message to agent via WebSocket</td>
+    </tr>
+    <tr>
+      <td><strong>Respond to approval</strong></td>
+      <td><code>POST /approval/{id}/decide</code></td>
+      <td>Approve or deny a pending tool call</td>
+    </tr>
+    <tr>
+      <td><strong>Add API key for provider</strong></td>
+      <td><code>POST /api/v1/secrets</code></td>
+      <td>Encrypted-at-rest provider credential</td>
+    </tr>
+    <tr>
+      <td><strong>Register external MCP server</strong></td>
+      <td><code>POST /api/v1/mcp-servers</code></td>
+      <td>External MCP server available for proxying</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="callout green">
+  <div class="callout-header">✅ Everything Is Programmable</div>
+  <p>There is no feature in Preloop that requires the UI. Every operation has a REST endpoint. Helix can configure every aspect of governance — agent enrollment, policy creation, budget setup, approval workflows, model bindings, secret management — through API calls. The Helix Governance Adapter is purely a REST client with translation logic.</p>
+</div>
+</section>
+
+<!-- ═══ CONFIG-AS-CODE ═══ -->
+<section id="config-as-code">
+<h2>Configuration-as-Code — The <code>.helix/</code> Directory</h2>
+<p>Every repo gets a <code>.helix/</code> directory. These files are version-controlled, reviewed in PRs, and automatically applied by Helix on push. Here's the complete layout:</p>
+
+<pre>my-repo/
+├── .helix/
+│   ├── policies.yaml          # Tool access rules, agent permissions, branch policies
+│   ├── AGENTOWNERS             # Who is responsible for which paths (like CODEOWNERS)
+│   ├── agents.yaml             # Which agents are assigned to this repo
+│   ├── budgets.yaml            # Per-agent, per-PR budget limits
+│   ├── prompts/                # Prompt-as-code directory
+│   │   ├── review.yaml         # Prompt template for code review
+│   │   ├── test.yaml           # Prompt template for test generation
+│   │   └── refactor.yaml       # Prompt template for refactoring
+│   ├── evaluation/             # PromptFoo evaluation tests
+│   │   └── review-quality.yaml # Assertions for code review quality
+│   └── models.yaml             # Allowed models + fallback chains for this repo
+├── src/
+├── tests/
+└── README.md</pre>
+
+<div class="callout insight">
+  <div class="callout-header">💡 How It Works</div>
+  <p>On every push to the repo, Helix's webhook handler:</p>
+  <p>1. Reads <code>.helix/policies.yaml</code> → translates to Preloop <code>ToolAccessRule</code> API calls<br>
+  2. Reads <code>.helix/agents.yaml</code> → creates/updates ManagedAgent bindings in Preloop<br>
+  3. Reads <code>.helix/budgets.yaml</code> → sets budget enforcement rules in Preloop<br>
+  4. Reads <code>.helix/models.yaml</code> → configures allowed models + fallback chains in Preloop<br>
+  5. Reads <code>.helix/AGENTOWNERS</code> → configures approval routing in Preloop<br>
+  6. Loads <code>.helix/prompts/*.yaml</code> → registers prompt templates in Helix Prompt Registry<br>
+  7. Queues <code>.helix/evaluation/*.yaml</code> → runs PromptFoo evaluation in CI</p>
+  <p>All enforcement is live immediately. No manual steps. No Preloop UI. Git is the control plane.</p>
+</div>
+</section>
+
+<!-- ═══ PRICING LIFECYCLE ═══ -->
+<section id="pricing-lifecycle">
+<h2>Full PR Lifecycle — End to End</h2>
+<p>Here's what happens from the moment a PR is opened to when it's merged — with agents and humans working together, governed by Preloop, orchestrated by Helix.</p>
+
+<div class="workflow">
+  <div class="workflow-step">
+    <div class="workflow-number">1</div>
+    <div class="workflow-content">
+      <div class="workflow-title">Developer opens PR #142</div>
+      <div class="workflow-desc">Forgejo fires a webhook. Helix reads <code>.helix/agents.yaml</code> to find the assigned agent for this repo (<code>helix-reviewer</code>).</div>
+    </div>
+  </div>
+  <div class="workflow-step">
+    <div class="workflow-number">2</div>
+    <div class="workflow-content">
+      <div class="workflow-title">Helix dispatches agent for automated review</div>
+      <div class="workflow-desc">Helix loads the review prompt from <code>.helix/prompts/review.yaml</code>, injects the PR diff and context, and sends it to <code>helix-reviewer</code> via the Agent Control WebSocket (through Preloop). The agent begins reviewing.</div>
+      <div class="workflow-detail">Model call → Preloop Gateway → budget check ($5.00/day for this agent on this repo) → LiteLLM → DeepSeek V4 Pro</div>
+    </div>
+  </div>
+  <div class="workflow-step">
+    <div class="workflow-number">3</div>
+    <div class="workflow-content">
+      <div class="workflow-title">Agent posts review comments</div>
+      <div class="workflow-desc">The agent finds issues and wants to post comments on the PR. It calls the <code>github</code> MCP tool (proxied through Preloop). Preloop checks the policy: <code>github on any branch → allow</code>. Tool executes. Comments appear on the PR.</div>
+    </div>
+  </div>
+  <div class="workflow-step">
+    <div class="workflow-number">4</div>
+    <div class="workflow-content">
+      <div class="workflow-title">Agent wants to fix an issue — calls <code>file_write</code></div>
+      <div class="workflow-desc">The agent generates a fix and calls <code>file_write src/config.py</code>. Preloop checks policy: <code>file_write on feat/* → allow</code>. Tool executes. File is written.</div>
+    </div>
+  </div>
+  <div class="workflow-step">
+    <div class="workflow-number">5</div>
+    <div class="workflow-content">
+      <div class="workflow-title">Agent wants to commit and push — triggers approval</div>
+      <div class="workflow-desc">The agent calls <code>bash git push origin feat/pr-142</code>. Preloop evaluates: <code>bash containing 'push' on feat/* → require_approval</code>. Preloop creates an ApprovalRequest and notifies Helix.</div>
+    </div>
+  </div>
+  <div class="workflow-step">
+    <div class="workflow-number">6</div>
+    <div class="workflow-content">
+      <div class="workflow-title">Human approves in Helix UI</div>
+      <div class="workflow-desc">The developer sees an approval prompt in the PR page: "helix-reviewer wants to push changes. [Approve] [Deny] [View Diff]." They click Approve. Helix calls <code>POST /approval/{id}/decide</code> on Preloop. The blocked <code>git push</code> executes.</div>
+    </div>
+  </div>
+  <div class="workflow-step">
+    <div class="workflow-number">7</div>
+    <div class="workflow-content">
+      <div class="workflow-title">CI runs, agent monitors</div>
+      <div class="workflow-desc">Gitea Actions runs the CI pipeline. If it fails, <code>helix-tester</code> (assigned via <code>.helix/agents.yaml</code>) picks up the failure log, diagnoses the issue, and posts a fix. The cycle repeats until green.</div>
+    </div>
+  </div>
+  <div class="workflow-step">
+    <div class="workflow-number">8</div>
+    <div class="workflow-content">
+      <div class="workflow-title">PR merged — cost summary posted</div>
+      <div class="workflow-desc">The PR is merged. Helix queries Preloop's <code>GET /api/v1/api-usage?session_id={id}</code> and posts a cost summary as a PR comment:</div>
+      <div style="background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 12px; margin-top: 8px; font-family: var(--mono); font-size: 12px;">
+        <strong>PR #142 Cost Summary</strong><br>
+        helix-reviewer: 3 sessions · $2.14<br>
+        helix-tester: 1 session · $0.87<br>
+        Total: $3.01 · Budget: $5.00 · <span style="color: var(--green);">✅ Under budget</span><br>
+        <span style="color: var(--muted);">Audit trail: 47 tool calls · 3 approvals · 0 denials</span>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══ CONCLUSION ═══ -->
+<section id="conclusion">
+<h2>What You Get</h2>
+
+<div class="card-grid-2">
+  <div class="card teal">
+    <div class="card-title">One Interface</div>
+    <div class="card-subtitle">Helix is the only UI</div>
+    <p style="font-size:13px;">Developers configure everything through Helix — the forge UI, the dashboard, or <code>.helix/</code> config files. Preloop's UI is never exposed. Preloop is infrastructure.</p>
+  </div>
+  <div class="card purple">
+    <div class="card-title">Git-Native Configuration</div>
+    <div class="card-subtitle">Everything version-controlled</div>
+    <p style="font-size:13px;">Policies, agent assignments, budgets, prompts, and evaluation tests all live in <code>.helix/</code> in the repo. PRs can change policies. Policy changes are reviewed like code.</p>
+  </div>
+  <div class="card green">
+    <div class="card-title">Battle-Tested Enforcement</div>
+    <div class="card-subtitle">Preloop does the heavy lifting</div>
+    <p style="font-size:13px;">The MCP firewall, model gateway, budget enforcement, approval workflows, secret custody, and audit trails are all Preloop — proven, tested, Apache 2.0.</p>
+  </div>
+  <div class="card blue">
+    <div class="card-title">Fully Programmable</div>
+    <div class="card-subtitle">100% API-driven</div>
+    <p style="font-size:13px;">Every Preloop feature has a REST endpoint. Helix's Governance Adapter is a ~2,000-line REST client. No feature requires the Preloop UI. Everything is scriptable.</p>
+  </div>
+</div>
+
+<div class="callout big">
+  <div class="callout-header">🧬 The Final Architecture</div>
+  <p><strong>Helix</strong> = Forgejo (git + PRs) + Agent Registry + Prompt Infrastructure + Agent-to-Agent PR Review + Marketplace + <code>.helix/</code> Config-as-Code + Unified UI<br>
+  <strong>Helix Governance Adapter</strong> = ~2,000 lines of Python translating <code>.helix/*.yaml</code> → Preloop REST API calls<br>
+  <strong>Preloop</strong> = MCP Firewall + Model Gateway + Budgets + Approvals + Audit + Secret Custody + Agent Control WS<br><br>
+  <strong>The developer sees Helix. The enforcement runs on Preloop. The boundary is a REST API. The repo is the source of truth.</strong></p>
+</div>
+
+<div class="callout insight">
+  <div class="callout-header">💡 Why This Works</div>
+  <p>Preloop's architecture was designed for this. It already separates its REST API from its frontend (Lit + Shoelace). The frontend is optional — every operation is available via the API. Helix simply replaces Preloop's frontend with its own, richer, git-native one. Preloop's backend doesn't know or care which frontend is calling it. This is the cleanest possible integration: Helix as the presentation layer, Preloop as the governance engine, separated by a well-defined API contract.</p>
+</div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<a href="https://totalwindupflightsystems.github.io/reports/" class="back-link">← Back to Reports Index</a>
+
+</div>
+</body>
+</html>
