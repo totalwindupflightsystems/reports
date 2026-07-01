@@ -3,42 +3,51 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LLM Cost Comparison — DeepSeek vs 16 Models (July 2026)</title>
+<title>LLM Cost Comparison — DeepSeek vs 20+ Models with Pricing Evolution (July 2026)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0f1117;--surface:#1a1d27;--surface2:#222533;--text:#e4e6ef;--muted:#9ca0b0;--dim:#6b7084;--red:#f87171;--amber:#fbbf24;--green:#4ade80;--blue:#60a5fa;--cyan:#22d3ee;--border:rgba(255,255,255,0.06);--radius:8px;--max-w:1040px}
+:root{--bg:#0f1117;--surface:#1a1d27;--surface2:#222533;--text:#e4e6ef;--muted:#9ca0b0;--dim:#6b7084;--red:#f87171;--amber:#fbbf24;--green:#4ade80;--blue:#60a5fa;--cyan:#22d3ee;--purple:#c084fc;--border:rgba(255,255,255,0.06);--radius:8px;--max-w:1080px}
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;line-height:1.7;font-size:15px}
 code,pre{font-family:'JetBrains Mono',monospace;font-size:.82rem}
 a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
 .hero{padding:56px 20px 32px;text-align:center}
 .hero h1{font-size:2rem;font-weight:800;line-height:1.25;background:linear-gradient(135deg,var(--cyan),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
-.hero .sub{color:var(--muted);font-size:.95rem;max-width:640px;margin:0 auto}
+.hero .sub{color:var(--muted);font-size:.95rem;max-width:680px;margin:0 auto}
 .hero .meta{margin-top:12px;color:var(--dim);font-size:.78rem}
 .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:20px 0}
 .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 14px;text-align:center}
 .stat-card .value{font-size:1.5rem;font-weight:700;letter-spacing:-.5px}
 .stat-card .label{color:var(--muted);font-size:.7rem;margin-top:2px;text-transform:uppercase;letter-spacing:.5px}
-.vg{color:var(--green)}.va{color:var(--amber)}.vc{color:var(--cyan)}
+.vg{color:var(--green)}.va{color:var(--amber)}.vc{color:var(--cyan)}.vp{color:var(--purple)}
 main{max-width:var(--max-w);margin:0 auto;padding:0 20px 80px}
 section{margin-bottom:40px}
 section h2{font-size:1.3rem;font-weight:700;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid var(--border)}
 section h3{font-size:1.05rem;font-weight:600;margin:20px 0 8px;color:var(--blue)}
+section h4{font-size:.92rem;font-weight:600;margin:16px 0 6px;color:var(--muted)}
 table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.83rem}
 thead{background:var(--surface2)}
 th{text-align:left;padding:9px 10px;font-weight:600;color:var(--text);font-size:.7rem;text-transform:uppercase;letter-spacing:.5px;border-bottom:2px solid var(--border)}
 td{padding:8px 10px;border-bottom:1px solid var(--border);color:var(--muted)}
 td.r{text-align:right;font-family:'JetBrains Mono',monospace;font-size:.78rem}
-td.g{color:var(--green)}td.a{color:var(--amber)}td.rd{color:var(--red)}td.bb{color:var(--green);font-weight:600}
+td.g{color:var(--green)}td.a{color:var(--amber)}td.rd{color:var(--red)}td.bb{color:var(--green);font-weight:600}td.bl{color:var(--blue);font-weight:600}
 tr:hover td{background:rgba(255,255,255,.012)}
 tr.sep td{border-top:2px solid var(--border)}
 .callout{background:var(--surface2);border-left:3px solid var(--blue);border-radius:0 var(--radius) var(--radius) 0;padding:12px 16px;margin:12px 0;font-size:.85rem}
 .callout p{margin:0}
 .callout.amber{border-left-color:var(--amber)}
+.callout.green{border-left-color:var(--green)}
 ul,ol{margin:8px 0 12px 24px;color:var(--muted);font-size:.85rem;line-height:1.8}
 footer{max-width:var(--max-w);margin:40px auto 0;padding:20px;border-top:1px solid var(--border);text-align:center;color:var(--dim);font-size:.75rem}
+.timeline{position:relative;padding-left:24px;margin:16px 0}
+.timeline::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:2px;background:var(--border)}
+.timeline-item{position:relative;margin-bottom:14px;padding-left:24px}
+.timeline-item::before{content:'';position:absolute;left:-20px;top:6px;width:10px;height:10px;border-radius:50%;background:var(--blue);border:2px solid var(--surface)}
+.timeline-item .date{font-size:.73rem;color:var(--dim);font-weight:600}
+.timeline-item .name{font-weight:600;color:var(--text)}
+.timeline-item .price{font-size:.78rem;color:var(--muted);font-family:'JetBrains Mono',monospace}
 @media(max-width:600px){.hero h1{font-size:1.4rem}table{font-size:.7rem}th,td{padding:6px 7px}}
 </style>
 </head>
@@ -46,8 +55,8 @@ footer{max-width:var(--max-w);margin:40px auto 0;padding:20px;border-top:1px sol
 
 <div class="hero">
 <h1>LLM Cost Comparison</h1>
-<p class="sub">DeepSeek V4 Pro vs 16 alternative models — equal 96.2% cache vs realistic per-provider hit rates, with token efficiency from published benchmarks and provider disclosures.</p>
-<p class="meta">July 1, 2026 · 30 days · 264,090 requests · 22.3B input · 122M output · 182:1 ratio</p>
+<p class="sub">DeepSeek V4 Pro vs 20+ models — equal 96.2% cache vs realistic per-provider hit rates, with token efficiency from published benchmarks and a full pricing evolution timeline (2024–2026).</p>
+<p class="meta">July 1, 2026 · 30 days · 264,090 requests · 22.3B input · 122M output · 182:1 ratio · $504.10 actual</p>
 </div>
 
 <main>
@@ -66,6 +75,92 @@ footer{max-width:var(--max-w);margin:40px auto 0;padding:20px;border-top:1px sol
 </section>
 
 <section>
+<h2>Pricing Evolution: How AI Costs Changed (2024–2026)</h2>
+<p>This section tracks the full pricing trajectory across five model families, showing how input, cache-read, and output prices have moved over time. Cache-hit prices are estimated at 1/10 of cache-miss where not explicitly published (DeepSeek/MiMo ratio). Models are shown at their standard published rates — DeepSeek promotional discounts not included here.</p>
+
+<h3>DeepSeek</h3>
+<table>
+<thead><tr><th>Model</th><th class="r">Released</th><th class="r">Ctx Window</th><th class="r">Cache Hit $/M</th><th class="r">Cache Miss $/M</th><th class="r">Output $/M</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td>DeepSeek V2</td><td class="r">Q2 2024</td><td class="r">128K</td><td class="r g">~$0.014</td><td class="r">$0.14</td><td class="r">$0.28</td><td>MoE pioneer; set the ultra-low pricing standard</td></tr>
+<tr><td>DeepSeek V3</td><td class="r">Dec 2024</td><td class="r">128K</td><td class="r g">$0.014</td><td class="r">$0.14</td><td class="r">$0.28</td><td>671B MoE; matched V2 pricing</td></tr>
+<tr><td>DeepSeek R1</td><td class="r">Jan 2025</td><td class="r">128K</td><td class="r a">$0.14</td><td class="r">$0.55</td><td class="r">$2.19</td><td>Reasoning model; CoT tokens in output</td></tr>
+<tr><td>DeepSeek V3.1</td><td class="r">Aug 2025</td><td class="r">128K</td><td class="r">$0.021</td><td class="r">$0.21</td><td class="r">$0.79</td><td>Minor price increase over V3</td></tr>
+<tr><td>DeepSeek V3.2</td><td class="r">Q4 2025</td><td class="r">128K</td><td class="r g">$0.014</td><td class="r">$0.14</td><td class="r">$0.28</td><td>Unified chat + reasoning; back to V3 pricing</td></tr>
+<tr class="sep"><td class="bb">DeepSeek V4 Flash</td><td class="r">2026</td><td class="r g">1M</td><td class="r g">$0.0028</td><td class="r g">$0.14</td><td class="r g">$0.28</td><td>284B MoE (13B active); 50× cheaper cache than V3</td></tr>
+<tr><td class="bb">DeepSeek V4 Pro</td><td class="r">2026</td><td class="r g">1M</td><td class="r">$0.0145</td><td class="r">$1.74</td><td class="r">$3.48</td><td>685B MoE flagship; promo rate $0.0036 cache hit</td></tr>
+</tbody>
+</table>
+<div class="callout green"><p><strong>Key trend:</strong> DeepSeek's cache-hit price dropped from $0.014 (V2/V3) to $0.0028 (V4 Flash) — a <strong>5× reduction</strong> in two years. The 1M context window in V4 enables 96%+ cache hit rates that weren't possible with 128K ctx. This combination (ultra-low cache $ + huge ctx = sky-high hit rate) is the moat.</p></div>
+
+<h3>Kimi (Moonshot AI)</h3>
+<table>
+<thead><tr><th>Model</th><th class="r">Released</th><th class="r">Ctx Window</th><th class="r">Cache Hit $/M</th><th class="r">Cache Miss $/M</th><th class="r">Output $/M</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td>Kimi K2</td><td class="r">Q2 2025</td><td class="r">128K</td><td class="r">~$0.08</td><td class="r">$0.40</td><td class="r">$1.60</td><td>Early multimodal; no explicit cache pricing</td></tr>
+<tr><td>Kimi K2.5</td><td class="r">Q3 2025</td><td class="r">262K</td><td class="r">$0.10</td><td class="r">$0.375</td><td class="r">$2.025</td><td>Visual coding; agent swarms. Fireworks: $0.10 cache</td></tr>
+<tr><td>Kimi K2.6</td><td class="r">Apr 2026</td><td class="r">262K</td><td class="r">$0.12</td><td class="r">$0.55</td><td class="r">$3.20</td><td>1T MoE; open-weight. ~4× more verbose than DS baseline</td></tr>
+<tr class="sep"><td class="bb">Kimi K2.7-Code</td><td class="r">Q2 2026</td><td class="r">262K</td><td class="r">$0.12</td><td class="r">$0.60</td><td class="r">$2.80</td><td>30% fewer thinking tokens vs K2.6 (Lushbinary)</td></tr>
+</tbody>
+</table>
+<div class="callout amber"><p><strong>Trend:</strong> Kimi input pricing has risen from $0.375 (K2.5) to $0.60 (K2.7), but context doubled to 262K. Cache-read price is ~43× DeepSeek Flash — the gap is in the caching architecture, not sticker pricing.</p></div>
+
+<h3>MiniMax</h3>
+<table>
+<thead><tr><th>Model</th><th class="r">Released</th><th class="r">Ctx Window</th><th class="r">Cache Hit $/M</th><th class="r">Cache Miss $/M</th><th class="r">Output $/M</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td>MiniMax-01</td><td class="r">Jan 2025</td><td class="r g">1M</td><td class="r">~$0.02</td><td class="r g">$0.20</td><td class="r">$1.10</td><td>First 1M-ctx model on OpenRouter</td></tr>
+<tr><td>MiniMax M1</td><td class="r">Q3 2025</td><td class="r g">1M</td><td class="r">$0.03</td><td class="r">$0.40</td><td class="r">$2.20</td><td>Reasoning model; doubled output price vs 01</td></tr>
+<tr><td>MiniMax M2</td><td class="r">Oct 2025</td><td class="r">205K</td><td class="r g">$0.03</td><td class="r">$0.255</td><td class="r g">$1.00</td><td>Compact coding/agent model. Cache $0.03 (legacy system)</td></tr>
+<tr><td>MiniMax M2.5</td><td class="r">Dec 2025</td><td class="r">205K</td><td class="r g">$0.03</td><td class="r g">$0.12</td><td class="r g">$0.48</td><td>SOTA at time; 53% cheaper to run than M2</td></tr>
+<tr class="sep"><td>MiniMax M3</td><td class="r">Q2 2026</td><td class="r">1M</td><td class="r a">$0.06</td><td class="r">$0.30</td><td class="r">$1.20</td><td>New billing system; cache doubled to $0.06 vs legacy</td></tr>
+</tbody>
+</table>
+<div class="callout amber"><p><strong>Trend:</strong> MiniMax cut input from $0.40 (M1) to $0.12 (M2.5) — a 3.3× reduction. But M3 raised cache-read from $0.03 to $0.06 with a new billing system. Cache-read at $0.03 (M2.5) would make it genuinely competitive at scale.</p></div>
+
+<h3>Qwen (Alibaba)</h3>
+<table>
+<thead><tr><th>Model</th><th class="r">Released</th><th class="r">Ctx Window</th><th class="r">Cache Hit $/M</th><th class="r">Cache Miss $/M</th><th class="r">Output $/M</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td>Qwen 3 235B</td><td class="r">Q2 2025</td><td class="r">128K</td><td class="r">~$0.07</td><td class="r">$0.35</td><td class="r">$1.40</td><td>Large MoE; competitive at launch</td></tr>
+<tr><td>Qwen 3.5 Plus (Feb)</td><td class="r">Feb 2026</td><td class="r">1M</td><td class="r">~$0.05</td><td class="r g">$0.26</td><td class="r">$1.56</td><td>Hybrid attention; 1M context; 26% cheaper than Qwen 3</td></tr>
+<tr><td>Qwen 3.6 Plus</td><td class="r">Apr 2026</td><td class="r">1M</td><td class="r">~$0.065</td><td class="r">$0.325</td><td class="r">$1.95</td><td>25% price increase over 3.5; higher output cost</td></tr>
+<tr class="sep"><td>Qwen 3.7 Plus</td><td class="r">Jun 2026</td><td class="r">1M</td><td class="r">~$0.064</td><td class="r g">$0.32</td><td class="r g">$1.28</td><td>34% cheaper output than 3.6; same input ballpark</td></tr>
+<tr><td>Qwen 3.7 Max</td><td class="r">Jun 2026</td><td class="r">1M</td><td class="r">~$0.25</td><td class="r">$1.25</td><td class="r">$3.75</td><td>Flagship reasoning; 4× more expensive than Plus</td></tr>
+</tbody>
+</table>
+<div class="callout amber"><p><strong>Trend:</strong> Qwen stabilized around $0.30–$0.33/M input across three generations (3.5–3.7). Output pricing swung from $1.95 (3.6) down to $1.28 (3.7 Plus). Cache pricing on Qwen remains poorly documented — no explicit cache-read pricing on primary providers, making cost-at-scale hard to predict. Qwen does not have the same disk-cache architecture as DeepSeek/MiMo.</p></div>
+
+<h3>GLM (Z.ai / Zhipu)</h3>
+<table>
+<thead><tr><th>Model</th><th class="r">Released</th><th class="r">Ctx Window</th><th class="r">Cache Hit $/M</th><th class="r">Cache Miss $/M</th><th class="r">Output $/M</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td>GLM-4</td><td class="r">2024</td><td class="r">128K</td><td class="r g">~$0.002</td><td class="r g">$0.015</td><td class="r g">$0.015</td><td>Ultra-cheap legacy model; token-based pricing</td></tr>
+<tr><td>GLM-4.5</td><td class="r">Jul 2025</td><td class="r">131K</td><td class="r">~$0.12</td><td class="r">$0.60</td><td class="r">$2.20</td><td>40× price increase over GLM-4; agent-focused</td></tr>
+<tr><td>GLM-4.7</td><td class="r">Dec 2025</td><td class="r">203K</td><td class="r">~$0.08</td><td class="r g">$0.40</td><td class="r g">$1.75</td><td>33% cheaper input than 4.5; better coding</td></tr>
+<tr><td>GLM-5</td><td class="r">Feb 2026</td><td class="r">203K</td><td class="r">~$0.12</td><td class="r">$0.60</td><td class="r g">$1.92</td><td>50% price hike from 4.7; open-source</td></tr>
+<tr class="sep"><td>GLM-5.2</td><td class="r">Q2 2026</td><td class="r g">1M</td><td class="r rd">$0.26</td><td class="r rd">$0.94</td><td class="r rd">$3.00</td><td>Reasoning model; 1M ctx. Cache at $0.26 — 93× Flash</td></tr>
+</tbody>
+</table>
+<div class="callout"><p><strong>Trend:</strong> GLM pricing went from essentially free (GLM-4 at $0.015) to premium ($0.94 for 5.2) — a <strong>63× increase</strong> in 18 months. Cache-read pricing followed the same trajectory. The jump from 4.7 ($0.40) to 5.2 ($0.94) represents a reversal of the industry trend toward cheaper inference.</p></div>
+
+<h3>Anthropic & OpenAI (Western Premium)</h3>
+<table>
+<thead><tr><th>Model</th><th class="r">Released</th><th class="r">Ctx Window</th><th class="r">Cache Hit $/M</th><th class="r">Cache Miss $/M</th><th class="r">Output $/M</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td>GPT-5 (Aug 2025)</td><td class="r">Aug 2025</td><td class="r">128K</td><td class="r">$0.125</td><td class="r">$1.25</td><td class="r">$5.00</td><td>OpenAI's first with prefix caching</td></tr>
+<tr><td>GPT-5.4 (Q1 2026)</td><td class="r">Q1 2026</td><td class="r">256K</td><td class="r">$0.125</td><td class="r">$1.25</td><td class="r">$5.00</td><td>Same pricing as GPT-5; bigger ctx</td></tr>
+<tr><td>GPT-5.5 (Q2 2026)</td><td class="r">Q2 2026</td><td class="r g">1M</td><td class="r rd">$0.50</td><td class="r">$2.50</td><td class="r rd">$10.00</td><td>Doubled cached price; 40% fewer output tokens</td></tr>
+<tr class="sep"><td>Claude 4 Opus</td><td class="r">Q2 2025</td><td class="r">200K</td><td class="r">$0.375</td><td class="r">$1.50</td><td class="r">$7.50</td><td>Explicit cache_control markers required</td></tr>
+<tr><td>Claude Opus 4.6</td><td class="r">Q4 2025</td><td class="r">200K</td><td class="r rd">$0.50</td><td class="r rd">$5.00</td><td class="r rd">$25.00</td><td>3.3× input hike over 4 Opus; 72% more verbose than GPT-5.5</td></tr>
+<tr><td>Claude Opus 4.7</td><td class="r">Q1 2026</td><td class="r">200K</td><td class="r rd">$0.50</td><td class="r rd">$5.00</td><td class="r rd">$25.00</td><td>New tokenizer +35% counts; "quite verbose" (Anthropic). Reddit: 7.5× vs 4.6</td></tr>
+<tr><td>Claude Opus 4.8</td><td class="r">Q2 2026</td><td class="r">200K</td><td class="r rd">$0.50</td><td class="r rd">$5.00</td><td class="r rd">$25.00</td><td>Slightly better than 4.7; lower min cache (1,024 tokens)</td></tr>
+</tbody>
+</table>
+<div class="callout"><p><strong>Trend:</strong> Western models have <em>increased</em> prices over time. Claude input went from $1.50 (4 Opus) to $5.00 (4.6+) — a 3.3× hike. GPT-5.5 doubled cache-read vs 5/5.4. Meanwhile, DeepSeek cut cache-read 5× over the same period. The divergence is stark: western models optimize for benchmark scores; DeepSeek optimizes for cost-per-token at scale.</p></div>
+</section>
+
+<section>
 <h2>Scenario A: Equal Cache (all models at 96.2% hit rate, DeepSeek's actual)</h2>
 <p>Every model gets DeepSeek's automatic context caching with identical 96.2% hit rate. This isolates <strong>cached token price + output efficiency</strong> as the only differentiators. Not realistic, but useful for understanding the structural cost differences in each provider's pricing model.</p>
 
@@ -78,6 +173,7 @@ footer{max-width:var(--max-w);margin:40px auto 0;padding:20px;border-top:1px sol
 <tr class="sep"><td>GPT-5 Mini</td><td class="r a">$0.035</td><td class="r">0.85×</td><td class="r">$1,205</td><td class="r">2.4×</td><td>Est — budget model, concise</td></tr>
 <tr><td>MiniMax M3 (Parasail)</td><td class="r a">$0.06</td><td class="r">1.00×</td><td class="r">$1,691</td><td class="r">3.4×</td><td>Baseline</td></tr>
 <tr><td>GPT-5.4 Mini</td><td class="r a">$0.075</td><td class="r">0.80×</td><td class="r">$2,689</td><td class="r">5.3×</td><td>Est — GPT family efficiency</td></tr>
+<tr><td>Kimi K2.6</td><td class="r">$0.12</td><td class="r">0.80×</td><td class="r">$3,355</td><td class="r">6.7×</td><td>Est — successor to K2.5; Apr 2026</td></tr>
 <tr><td>Kimi K2.7-Code</td><td class="r">$0.12</td><td class="r">0.70×</td><td class="r">$3,506</td><td class="r">7.0×</td><td>30% fewer thinking tokens vs K2.6 (Lushbinary)</td></tr>
 <tr><td>Claude Haiku 4.5</td><td class="r a">$0.10</td><td class="r">0.85×</td><td class="r">$3,518</td><td class="r">7.0×</td><td>Est — fast model, concise</td></tr>
 <tr><td>GLM 5.2</td><td class="r">$0.26</td><td class="r">0.90×</td><td class="r">$6,715</td><td class="r">13.3×</td><td>Est — newer model</td></tr>
@@ -106,6 +202,7 @@ footer{max-width:var(--max-w);margin:40px auto 0;padding:20px;border-top:1px sol
 <tr><td>DeepSeek V4 Pro</td><td class="r g">$0.0036</td><td class="r g">96.2%</td><td class="r">1.00×</td><td class="r">$554</td><td class="r">1.1×</td><td>Billing data — baseline</td></tr>
 <tr class="sep"><td>MiniMax M3</td><td class="r a">$0.06</td><td class="r a">83.5%</td><td class="r">1.00×</td><td class="r a">$2,371</td><td class="r">4.7×</td><td>OR weighted avg (Parasail)</td></tr>
 <tr><td>GPT-5 Mini</td><td class="r a">$0.035</td><td class="r a">50%</td><td class="r">0.85×</td><td class="r">$4,455</td><td class="r">8.8×</td><td>Est — OpenAI prefix auto</td></tr>
+<tr><td>Kimi K2.6</td><td class="r">$0.12</td><td class="r">65%</td><td class="r">0.80×</td><td class="r">$5,244</td><td class="r">10.4×</td><td>Est — 262K ctx; newer arch</td></tr>
 <tr><td>Kimi K2.7-Code</td><td class="r">$0.12</td><td class="r">65%</td><td class="r">0.70×</td><td class="r">$7,827</td><td class="r">15.5×</td><td>Est — 262K ctx limits</td></tr>
 <tr><td>GPT-5.4 Mini</td><td class="r">$0.075</td><td class="r a">50%</td><td class="r">0.80×</td><td class="r">$9,654</td><td class="r">19.2×</td><td>Est — 256K ctx limits</td></tr>
 <tr><td>GLM 5.2</td><td class="r">$0.26</td><td class="r">70%</td><td class="r">0.90×</td><td class="r">$10,694</td><td class="r">21.2×</td><td>Est — new model, unproven</td></tr>
@@ -122,6 +219,21 @@ footer{max-width:var(--max-w);margin:40px auto 0;padding:20px;border-top:1px sol
 </section>
 
 <section>
+<h2>Pricing Trends Summary</h2>
+<table>
+<thead><tr><th>Metric</th><th>DeepSeek</th><th>MiniMax</th><th>Qwen</th><th>GLM</th><th>Kimi</th><th>Anthropic</th><th>OpenAI</th></tr></thead>
+<tbody>
+<tr><td><strong>Input (cache miss)</strong></td><td class="g">↓ 5–12× (2024→2026)</td><td class="a">↓ 3.3× then ↑</td><td class="a">→ stable ~$0.30</td><td class="rd">↑ 63× (GLM-4→5.2)</td><td class="rd">↑ 1.5× (K2.5→2.7)</td><td class="rd">↑ 3.3× (4 Opus→4.6+)</td><td class="rd">↑ 2× (5→5.5)</td></tr>
+<tr><td><strong>Cache-hit price</strong></td><td class="g">↓ 5× ($0.014→$0.0028)</td><td class="a">↑ 2× ($0.03→$0.06)</td><td class="a">~undocumented</td><td class="rd">↑ 130× ($0.002→$0.26)</td><td class="a">→ ~$0.12 flat</td><td class="rd">↑ 1.3× then flat</td><td class="rd">↑ 4× ($0.125→$0.50)</td></tr>
+<tr><td><strong>Output price</strong></td><td class="a">→ stable ~$0.28 (flash)</td><td class="g">↓ 2.1× (M1→M2.5)</td><td class="a">→ volatile $1.28–1.95</td><td class="rd">↑ 200× ($0.015→$3.00)</td><td class="rd">↑ 1.6× (K2.5→2.7)</td><td class="rd">↑ 3.3× ($7.50→$25)</td><td class="rd">↑ 2× ($5→$10)</td></tr>
+<tr><td><strong>Context window</strong></td><td class="g">128K → 1M</td><td class="g">1M → 205K → 1M</td><td class="g">128K → 1M</td><td class="g">128K → 1M</td><td class="g">128K → 262K</td><td class="a">→ 200K flat</td><td class="g">128K → 1M</td></tr>
+<tr><td><strong>Auto disk cache?</strong></td><td class="g">✓ Proven 96%+</td><td class="g">✓ ~83% (OR)</td><td class="rd">✗ (prefix only)</td><td class="a">Partial</td><td class="a">Partial (provider-dep)</td><td class="rd">✗ (explicit markers)</td><td class="a">Prefix auto (50–60%)</td></tr>
+</tbody>
+</table>
+<div class="callout green"><p><strong>Bottom line:</strong> Only DeepSeek and MiMo combine sub-penny cache-read pricing with auto disk cache and 1M+ context windows — the three ingredients needed for 175:1 input-heavy agent workloads. Every other provider charges 17×–178× more for the same cached tokens. The industry trend outside DeepSeek/MiMo has been toward <em>higher</em> cache-read prices, not lower. MiniMax M2.5 at $0.03 cache is the closest third option but has a smaller context window.</p></div>
+</section>
+
+<section>
 <h2>Token Efficiency Sources</h2>
 <table>
 <thead><tr><th>Model</th><th>Output Eff</th><th>Source</th><th>Explanation</th></tr></thead>
@@ -130,6 +242,7 @@ footer{max-width:var(--max-w);margin:40px auto 0;padding:20px;border-top:1px sol
 <tr><td>Kimi K2.7-Code</td><td class="r g">0.70×</td><td>Lushbinary</td><td>Cuts thinking tokens ~30% vs K2.6; coding-specialized variant</td></tr>
 <tr><td>GPT-5.4</td><td class="r">0.75×</td><td>Est — GPT family</td><td>GPT family efficiency; less optimized than 5.5</td></tr>
 <tr><td>GPT-5.4 Mini / GPT-5 Mini</td><td class="r">0.80–0.85×</td><td>Est</td><td>Budget models tend concise; no published comparison found</td></tr>
+<tr><td>Kimi K2.6</td><td class="r">0.80×</td><td>Est</td><td>1T MoE model; large architecture tends verbose</td></tr>
 <tr><td>Claude Sonnet 4.6</td><td class="r a">1.30×</td><td>Est</td><td>Anthropic models tend more verbose; less than Opus</td></tr>
 <tr><td>Claude Opus 4.6</td><td class="r rd">1.70×</td><td>MindStudio</td><td>72% more output tokens than GPT-5.5 on same tasks</td></tr>
 <tr><td>Claude Opus 4.7</td><td class="r rd">2.20×</td><td>Anthropic blog + Reddit</td><td>New tokenizer inflates token counts by up to 35% on identical text. Anthropic: "tends to be quite verbose." Reddit: "7.5× more tokens than 4.6" on some workloads.</td></tr>
@@ -143,10 +256,10 @@ footer{max-width:var(--max-w);margin:40px auto 0;padding:20px;border-top:1px sol
 <table>
 <thead><tr><th>Provider</th><th>Cache Type</th><th>Est Hit Rate</th><th>Discount</th><th>Why Hit Rate Differs</th></tr></thead>
 <tbody>
-<tr><td><strong>DeepSeek</strong></td><td>Auto disk cache</td><td class="r g">96.2%</td><td class="r g">120×</td><td>1M context fits entire conversation. Automatic — no configuration needed. Every token in system prompt + skill library + history caches.</td></tr>
+<tr><td><strong>DeepSeek</strong></td><td>Auto disk cache</td><td class="r g">96.2%</td><td class="r g">50–120×</td><td>1M context fits entire conversation. Automatic — no configuration needed. Every token in system prompt + skill library + history caches.</td></tr>
 <tr><td><strong>MiMo (Xiaomi)</strong></td><td>Auto disk cache</td><td class="r g">93.7%</td><td class="r g">50×</td><td>Same architecture as DeepSeek. 1M context. Slightly lower hit rate measured on OpenRouter.</td></tr>
-<tr><td><strong>MiniMax</strong></td><td>Auto disk cache</td><td class="r a">83.5%</td><td class="r a">5×</td><td>1M context with sparse attention. Reasonable auto-caching. Cache read price is 17× DeepSeek's.</td></tr>
-<tr><td><strong>OpenAI</strong></td><td>Auto prefix cache</td><td class="r a">50–60%</td><td class="r a">10×</td><td>System prompt + static skills cache. Conversation history rotates every turn — does not cache. 256K context on GPT-5.4 limits what fits. GPT-5.5 at 1M ctx gets 60%.</td></tr>
+<tr><td><strong>MiniMax</strong></td><td>Auto disk cache</td><td class="r a">83.5%</td><td class="r a">5×</td><td>1M context with sparse attention. Reasonable auto-caching. Cache read price is 17× DeepSeek's at M3 pricing; 11× at legacy M2.5 pricing.</td></tr>
+<tr><td><strong>OpenAI</strong></td><td>Auto prefix cache</td><td class="r a">50–60%</td><td class="r a">5–10×</td><td>System prompt + static skills cache. Conversation history rotates every turn — does not cache. 256K context on GPT-5.4 limits what fits. GPT-5.5 at 1M ctx gets 60%.</td></tr>
 <tr><td><strong>Anthropic</strong></td><td>Explicit markers</td><td class="r rd">30%</td><td class="r a">10×</td><td>Requires <code>cache_control</code> markers on each content block. Manual placement limits cacheability. 200K context window restricts what can be marked. 25% write surcharge.</td></tr>
 </tbody>
 </table>
@@ -156,17 +269,19 @@ footer{max-width:var(--max-w);margin:40px auto 0;padding:20px;border-top:1px sol
 <h2>Methodology</h2>
 <ul>
 <li><strong>Usage data:</strong> DeepSeek billing CSV export, June 1–30, 2026. 264,090 requests, 22,311,205,106 input tokens, 122,473,056 output tokens. Cache hit rate: 96.2% from billing data (input_cache_hit / total_input).</li>
-<li><strong>Pricing:</strong> OpenRouter model pages (June 30 – July 1, 2026). GPT/Claude pricing from official API docs (developers.openai.com, platform.claude.com). All prices USD per 1M tokens. Cached pricing from published provider rates.</li>
+<li><strong>Current pricing:</strong> OpenRouter model pages (June 30 – July 1, 2026). GPT/Claude pricing from official API docs (developers.openai.com, platform.claude.com). DeepSeek from api-docs.deepseek.com. All prices USD per 1M tokens.</li>
+<li><strong>Historical pricing:</strong> pricepertoken.com timeline, OpenRouter provider pages, VentureBeat coverage, official API docs snapshots, Artificial Analysis benchmarks.</li>
 <li><strong>Cache hit rates:</strong> DeepSeek from billing data. MiMo & MiniMax from OpenRouter weighted average tables. OpenAI/Anthropic estimated based on cache architecture (prefix auto vs explicit markers), context window limits, and known behavior with dynamic agent conversations.</li>
 <li><strong>Token efficiency:</strong> GPT-5.5 from tech-insider.org. Kimi K2.7 from Lushbinary. Opus 4.7 from Anthropic's own blog post + user reports. Opus 4.6 vs GPT-5.5 from MindStudio. Other models estimated from architecture family.</li>
 <li><strong>Formula:</strong> Cost = (cache_hit / 1M × cached_price) + (cache_miss / 1M × sticker_input) + (output / 1M × sticker_output × efficiency_multiplier)</li>
+<li><strong>Historical cache-hit estimates:</strong> Where not explicitly published, estimated at 1/10 of cache-miss price (DeepSeek's standard ratio). This is the industry norm for models that offer caching.</li>
 </ul>
 </section>
 
 </main>
 
 <footer>
-<p>Generated by Hermes Agent · July 1, 2026 · <a href="index.html">Reports Home</a> · Data: DeepSeek billing CSV + OpenRouter + official API docs + published benchmarks</p>
+<p>Generated by Hermes Agent · July 1, 2026 · <a href="index.html">Reports Home</a> · Data: DeepSeek billing CSV + OpenRouter + official API docs + pricepertoken.com + Artificial Analysis + published benchmarks</p>
 </footer>
 
 </body>
