@@ -158,6 +158,41 @@ footer{max-width:var(--max-w);margin:40px auto 0;padding:20px;border-top:1px sol
 </tbody>
 </table>
 <div class="callout"><p><strong>Trend:</strong> Western models have <em>increased</em> prices over time. Claude input went from $1.50 (4 Opus) to $5.00 (4.6+) — a 3.3× hike. GPT-5.5 doubled cache-read vs 5/5.4. Meanwhile, DeepSeek cut cache-read 5× over the same period. The divergence is stark: western models optimize for benchmark scores; DeepSeek optimizes for cost-per-token at scale.</p></div>
+
+<h3>Gemini (Google)</h3>
+<table>
+<thead><tr><th>Model</th><th class="r">Released</th><th class="r">Ctx Window</th><th class="r">Cache Hit $/M</th><th class="r">Cache Miss $/M</th><th class="r">Output $/M</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td>Gemini 1.5 Pro</td><td class="r">2024</td><td class="r">2M</td><td class="r">~$0.3125</td><td class="r">$1.25</td><td class="r">$5.00</td><td>Early long-context pioneer; context caching saved ~75%</td></tr>
+<tr><td>Gemini 2.0 Flash</td><td class="r">Feb 2025</td><td class="r">1M</td><td class="r">~$0.025</td><td class="r g">$0.10</td><td class="r g">$0.40</td><td>Free tier available; deprecated June 2026</td></tr>
+<tr><td>Gemini 2.5 Flash-Lite</td><td class="r">Jul 2025</td><td class="r g">1M</td><td class="r g">~$0.025</td><td class="r g">$0.10</td><td class="r g">$0.40</td><td>Ultra-low latency; cheapest Gemini</td></tr>
+<tr><td>Gemini 2.5 Flash</td><td class="r">Jun 2025</td><td class="r g">1M</td><td class="r">~$0.075</td><td class="r">$0.30</td><td class="r">$2.50</td><td>Workhorse model; paid-only after Apr 2026</td></tr>
+<tr><td>Gemini 2.5 Pro</td><td class="r">2025</td><td class="r g">2M</td><td class="r a">$0.3125</td><td class="r a">$1.25</td><td class="r rd">$10.00</td><td>Flagship; superseded by 3.x. >200K tokens: $2.50/$15</td></tr>
+<tr><td>Gemini 3.1 Pro</td><td class="r">Q1 2026</td><td class="r g">2M</td><td class="r a">~$0.50</td><td class="r rd">$2.00</td><td class="r rd">$12.00</td><td>25% price hike over 2.5 Pro</td></tr>
+<tr class="sep"><td>Gemini 3.5 Flash</td><td class="r">May 2026</td><td class="r g">2M</td><td class="r a">~$0.375</td><td class="r a">$1.50</td><td class="r rd">$9.00</td><td>25% cheaper than 3.1 Pro; higher coding scores</td></tr>
+</tbody>
+</table>
+<div class="callout amber"><p><strong>Trend:</strong> Gemini input prices doubled from 2.0 Flash ($0.10) to 3.1 Pro ($2.00). Context caching is powerful (up to ~90% off) but requires explicit markers — not auto-caching like DeepSeek. Two-tier pricing: cheap under 200K, expensive over. The 2M context window is the largest available, but agent workloads rarely need it.</p></div>
+
+<h3>StepFun</h3>
+<table>
+<thead><tr><th>Model</th><th class="r">Released</th><th class="r">Ctx Window</th><th class="r">Cache Hit $/M</th><th class="r">Cache Miss $/M</th><th class="r">Output $/M</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td class="bb">Step 3.5 Flash</td><td class="r">2025</td><td class="r">262K</td><td class="r g">$0.018</td><td class="r g">$0.09</td><td class="r g">$0.30</td><td>196B MoE (11B active); prompt cache at 20% of token price</td></tr>
+<tr><td>Step 3.7 Flash</td><td class="r">May 2026</td><td class="r">256K</td><td class="r">$0.04</td><td class="r">$0.20</td><td class="r">$1.15</td><td>Multimodal MoE; 2.2× more expensive than 3.5 Flash</td></tr>
+</tbody>
+</table>
+<div class="callout green"><p><strong>Trend:</strong> Step 3.5 Flash at $0.09 input / $0.30 output + $0.018 cache read is <strong>genuinely interesting</strong>. That's only 6.4× DeepSeek Flash's cache price — closer than any other model except MiMo. 20% of token price for cache reads. The 262K context window is the limiting factor for 96%+ hit rates on long agent sessions, but for shorter-context use it's a contender.</p></div>
+
+<h3>Other Notable</h3>
+<table>
+<thead><tr><th>Model</th><th class="r">Provider</th><th class="r">Ctx Window</th><th class="r">Cache Hit $/M</th><th class="r">Cache Miss $/M</th><th class="r">Output $/M</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td>Hy3 Preview</td><td class="r">Tencent</td><td class="r">262K</td><td class="r g">~$0.0126</td><td class="r g">$0.063</td><td class="r g">$0.21</td><td>MoE; lowest sticker price of any current-gen model</td></tr>
+<tr><td>ERNIE 4.5 300B</td><td class="r">Baidu</td><td class="r">131K</td><td class="r">~$0.014</td><td class="r">$0.07</td><td class="r">$0.28</td><td>300B MoE (47B active); limited context, no auto-cache</td></tr>
+</tbody>
+</table>
+<div class="callout"><p><strong>Trend:</strong> Tencent's Hy3 at $0.063 input is <em>the cheapest sticker price</em> of any current-generation model. However, with only 262K context and unproven auto-cache, real-world costs at 96.2% hit rates are uncertain. ERNIE at $0.07 is competitive on sticker but the 131K context window caps cache potential at ~65-70% for agent workloads — insufficient for the 96.2% benchmark.</p></div>
 </section>
 
 <section>
