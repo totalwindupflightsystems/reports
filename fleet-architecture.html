@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coding-Hermes Fleet Architecture — Tiered Orchestration Model</title>
+<style>
+:root{--bg:#0d1117;--card:#161b22;--border:#30363d;--text:#c9d1d9;--accent:#58a6ff;--green:#3fb950;--purple:#bc8cff;--orange:#d2991d;--muted:#8b949e}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.6;padding:2rem;max-width:1100px;margin:0 auto}
+h1{font-size:1.8rem;color:var(--accent);margin-bottom:.25rem}
+h2{font-size:1.3rem;color:var(--accent);margin:2rem 0 1rem;padding-bottom:.4rem;border-bottom:1px solid var(--border)}
+.subtitle{color:var(--muted);margin-bottom:2rem}
+.tiers{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin:1.5rem 0}
+.tier{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.2rem}
+.tier h3{font-size:1.1rem;margin-bottom:.5rem}
+.tier.t1{border-color:var(--purple)}.tier.t1 h3{color:var(--purple)}
+.tier.t2{border-color:var(--accent)}.tier.t2 h3{color:var(--accent)}
+.tier.t3{border-color:var(--green)}.tier.t3 h3{color:var(--green)}
+.tier ul{padding-left:1.2rem;font-size:.85rem}
+.tier li{margin:.25rem 0}
+.flow{text-align:center;font-size:1.3rem;color:var(--muted);margin:.5rem 0}
+.flow span{color:var(--accent)}
+table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.88rem}
+th,td{padding:.5rem .7rem;text-align:left;border:1px solid var(--border)}
+th{background:var(--card);color:var(--accent)}
+.tag{display:inline-block;padding:.1rem .4rem;border-radius:3px;font-size:.7rem;font-weight:600}
+.tag-p{background:rgba(188,140,255,.15);color:var(--purple)}
+.tag-f{background:rgba(88,166,255,.15);color:var(--accent)}
+.tag-w{background:rgba(63,185,80,.15);color:var(--green)}
+code{background:rgba(110,118,129,.15);padding:.1rem .3rem;border-radius:3px;font-size:.85em}
+.footer{text-align:center;color:var(--muted);margin-top:3rem;font-size:.8rem}
+</style>
+</head>
+<body>
+
+<h1>🏗️ Coding-Hermes Fleet Architecture</h1>
+<p class="subtitle">Three-tier autonomous orchestration — agreed model between Bane and Hermes, July 2026</p>
+
+<div class="tiers">
+<div class="tier t1">
+<h3><span class="tag tag-p">TIER 1</span> Supervisor</h3>
+<p style="font-size:.85rem;color:var(--muted)">"The Architect" — Bane's proxy</p>
+<ul>
+<li>Decides models, providers, schedules fleet-wide</li>
+<li>Balances workload across projects</li>
+<li>Migrates projects between pipelines</li>
+<li>Fixes broken configs and PAYG leaks</li>
+<li>Runs as <code>coding-hermes-supervisor</code> cron every 4h</li>
+<li>Also runs interactively when Bane is present</li>
+<li>Delivers HTML fleet report to chat after each run</li>
+</ul>
+</div>
+<div class="tier t2">
+<h3><span class="tag tag-f">TIER 2</span> Foremen</h3>
+<p style="font-size:.85rem;color:var(--muted)">"The Foreman" — 1 per project</p>
+<ul>
+<li>Reads <code>.coding-hermes/tasks.md</code></li>
+<li>Picks highest-priority task</li>
+<li>Compiles prompt through foundry</li>
+<li>Spawns worker with correct model + provider</li>
+<li>Verifies: build → test → lint → guard</li>
+<li>Commits with correct authorship</li>
+<li><strong>Tick 7:</strong> Self-manages own schedule</li>
+<li>Runs on per-project cron (15m–360m)</li>
+</ul>
+</div>
+<div class="tier t3">
+<h3><span class="tag tag-w">TIER 3</span> Workers</h3>
+<p style="font-size:.85rem;color:var(--muted)">"The Builder" — 1 per task</p>
+<ul>
+<li>Spawned via <code>hermes chat -q</code></li>
+<li>Reads specified files, writes code</li>
+<li>Runs tests, fixes compilation errors</li>
+<li>Returns code changes + verification results</li>
+<li>Ephemeral — lives only for one task</li>
+<li>Model selected per-task by foreman</li>
+</ul>
+</div>
+</div>
+
+<div class="flow">Bane → <span>Supervisor</span> → Foremen → Workers</div>
+
+<h2>Communication Flow</h2>
+<table>
+<tr><th>Direction</th><th>What happens</th><th>Example</th></tr>
+<tr><td><strong>Bane → Supervisor</strong></td><td>User gives strategic direction</td><td>"Move dexdat-core to StepFun, slow speclang to 2h"</td></tr>
+<tr><td><strong>Supervisor → Foremen</strong></td><td>Updates skill files on disk; foremen pick up next tick</td><td>Patches <code>coding-hermes-cron</code> with Tick 7 rules</td></tr>
+<tr><td><strong>Supervisor → Cron configs</strong></td><td>Edits <code>jobs.json</code> directly for model/provider/schedule</td><td>Sets <code>provider=zai-glm, model=glm-5.2</code></td></tr>
+<tr><td><strong>Foremen → Workers</strong></td><td>Spawns <code>hermes chat -q</code> with compiled prompt</td><td>"Implement TASK-023 in <code>internal/auth/</code>"</td></tr>
+<tr><td><strong>Foremen → Self</strong></td><td>Tick 7 adjusts own schedule based on workload</td><td>3+ pending → speed to 15m</td></tr>
+<tr><td><strong>Supervisor Cron → Chat</strong></td><td>Delivers HTML fleet report every 4h</td><td>Fleet health dashboard with trends</td></tr>
+</table>
+
+<h2>Skills Architecture</h2>
+<table>
+<tr><th>Skill</th><th>Who loads it</th><th>What it does</th></tr>
+<tr><td><code>coding-hermes</code></td><td>Foremen, Workers</td><td>Core principles, model-stage rules, commit authorship, mock anti-pattern, vitest rules, DuckBrain usage</td></tr>
+<tr><td><code>coding-hermes-cron</code> (v1.7.0)</td><td>Foremen</td><td>Tick loop: CI self-heal → scan → pick → compile → spawn → verify → report → self-manage</td></tr>
+<tr><td><code>coding-hermes-supervisor</code> (v1.24.0)</td><td>Supervisor</td><td>Fleet audit, model/provider alignment, schedule balancing, DuckBrain sync, HTML report</td></tr>
+<tr><td><code>hilo-usage</code></td><td>Foremen</td><td>Blast radius analysis, graph discovery</td></tr>
+<tr><td><code>gitreins</code></td><td>Foremen</td><td>Quality gates, task evaluation</td></tr>
+</table>
+
+<h2>Fleet Composition (22 projects)</h2>
+<table>
+<tr><th>Model</th><th>Provider</th><th>Count</th><th>Projects</th></tr>
+<tr><td>gpt-5.5</td><td>openai-codex</td><td>1</td><td>helios</td></tr>
+<tr><td>gpt-5.4</td><td>openai-codex</td><td>1</td><td>RethinkDB</td></tr>
+<tr><td>glm-5.2</td><td>zai-glm</td><td>5</td><td>helix, hilo, muster, H4F, chimera, EduOS</td></tr>
+<tr><td>MiniMax-M3</td><td>minimax</td><td>3</td><td>gitreins-poc, mafia-benchmark, speclang</td></tr>
+<tr><td>grok-4.3</td><td>xai-oauth</td><td>2</td><td>ai-plays-pokemon, mythos</td></tr>
+<tr><td>step-3.7-flash</td><td>custom:stepfun</td><td>2</td><td>dexdat-core, off-by-one</td></tr>
+<tr><td>kimi-for-coding</td><td>kimi-for-coding</td><td>1</td><td>bunker</td></tr>
+<tr><td>deepseek-v4-flash</td><td>custom:opencode-go</td><td>7</td><td>dexdat-memory, ASCE, musterflow, kobayashi, consensus, hivemind (paused), supervisor</td></tr>
+</table>
+
+<h2>Key Rules</h2>
+<table>
+<tr><th>Rule</th><th>Detail</th></tr>
+<tr><td>Commit authorship</td><td>Primary: <code>totalwindupflightsystems@gmail.com</code> — Co-author: <code>wojonstech@gmail.com</code></td></tr>
+<tr><td>Mocks forbidden</td><td>Wire it real. Mocks only for external APIs, time, LLM transport. Never mock your own code.</td></tr>
+<tr><td>Vitest threads</td><td><code>pool: 'threads'</code>, <code>maxConcurrency: 2</code> — never forks (cgroup deadlock risk)</td></tr>
+<tr><td>DuckBrain per project</td><td>Every project has namespace. Store concept, findings, decisions — not tick logs.</td></tr>
+<tr><td>Pull tooling every tick</td><td><code>git -C ~/gitreins-poc pull && git -C ~/warpfs pull</code> before work</td></tr>
+<tr><td>Skills auto-update</td><td>Cron references skill name, not version. Patch on disk → all foremen update next tick.</td></tr>
+</table>
+
+<p class="footer">Agreed July 6, 2026 · Bane + Hermes · Updated live as architecture evolves</p>
+
+</body>
+</html>
