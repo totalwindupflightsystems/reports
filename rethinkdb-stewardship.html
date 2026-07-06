@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RethinkDB Autonomous Stewardship — totalwindupflightsystems</title>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface-2: #161622;
+    --border: #252535;
+    --text: #e0e0ea;
+    --text-muted: #8888a0;
+    --text-dim: #555568;
+    --accent: #00d4aa;
+    --accent-glow: #00ffcc;
+    --warn: #ff9944;
+    --fail: #ff4466;
+    --pass: #00d4aa;
+    --code-bg: #0d0d16;
+    --radius: 8px;
+    --radius-lg: 16px;
+    --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'SF Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { font-size: 16px; scroll-behavior: smooth; background: var(--bg); color: var(--text); }
+  body { font-family: var(--font); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+  /* ── Hero ── */
+  .hero {
+    padding: 80px 0 60px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 60px;
+  }
+  .hero h1 {
+    font-size: 2.8rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, var(--accent-glow), #66eebb);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero .subtitle {
+    color: var(--text-muted);
+    font-size: 1.15rem;
+    margin-top: 12px;
+    font-weight: 400;
+  }
+  .hero .meta {
+    margin-top: 20px;
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .hero .meta .badge {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+  .hero .meta .badge strong { color: var(--accent); }
+
+  /* ── Sections ── */
+  section { margin-bottom: 64px; }
+  section h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  section h2 .icon { font-size: 1.3rem; }
+  section h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin: 28px 0 12px;
+  }
+
+  /* ── Cards ── */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+  }
+  .card h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text);
+  }
+  .card p { color: var(--text-muted); font-size: 0.92rem; }
+  .card .tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-top: 10px;
+    font-weight: 600;
+  }
+  .tag-done { background: rgba(0,212,170,0.12); color: var(--pass); }
+  .tag-active { background: rgba(0,212,170,0.06); color: var(--accent); border: 1px solid rgba(0,212,170,0.2); }
+  .tag-planned { background: rgba(136,136,160,0.08); color: var(--text-muted); }
+
+  /* ── Tables ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.92rem;
+    margin: 16px 0;
+  }
+  th {
+    text-align: left;
+    font-weight: 600;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+  }
+  tr:last-child td { border-bottom: none; }
+  td.mono { font-family: var(--mono); font-size: 0.85rem; }
+  .status-ok { color: var(--pass); font-weight: 600; }
+  .status-warn { color: var(--warn); }
+  .status-fail { color: var(--fail); }
+
+  /* ── Code ── */
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    overflow-x: auto;
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    line-height: 1.5;
+    margin: 16px 0;
+  }
+  code { font-family: var(--mono); font-size: 0.88em; }
+  pre .kw { color: #c792ea; }
+  pre .str { color: #c3e88d; }
+  pre .cmt { color: var(--text-dim); }
+  pre .fn { color: #82aaff; }
+
+  /* ── Loop diagram ── */
+  .loop {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding: 32px 0;
+  }
+  .loop-step {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px 20px;
+    font-size: 0.9rem;
+    white-space: nowrap;
+  }
+  .loop-arrow { color: var(--accent); font-size: 1.3rem; font-weight: 700; }
+
+  /* ── Footer ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 40px 0;
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    margin-top: 60px;
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  /* ── Checklist ── */
+  .checklist { list-style: none; }
+  .checklist li {
+    padding: 6px 0;
+    font-size: 0.92rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    color: var(--text);
+  }
+  .checklist .check { color: var(--text-dim); font-family: var(--mono); flex-shrink: 0; }
+  .checklist .done .check { color: var(--pass); }
+
+  /* ── Phase timeline ── */
+  .phase {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    margin-bottom: 20px;
+  }
+  .phase h3 { margin-top: 0; }
+
+  ul { padding-left: 20px; margin: 8px 0; color: var(--text-muted); font-size: 0.92rem; }
+  ul li { margin-bottom: 4px; }
+</style>
+</head>
+<body>
+
+<!-- ═══ HERO ═══ -->
+<div class="hero">
+  <h1>RethinkDB<br>Autonomous Stewardship</h1>
+  <p class="subtitle">An AI agent maintains and grows one of the best databases ever built —<br>autonomously, relentlessly, without human intervention.</p>
+  <div class="meta">
+    <span class="badge">Fork <strong>totalwindupflightsystems/rethinkdb</strong></span>
+    <span class="badge">Upstream <strong>26,998 ★</strong></span>
+    <span class="badge">Codebase <strong>367K lines C++</strong></span>
+    <span class="badge">License <strong>Apache 2.0</strong></span>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ═══ THE LOOP ═══ -->
+<section>
+  <h2><span class="icon">⟳</span> The Autonomous Loop</h2>
+  <p style="color: var(--text-muted); margin-bottom: 20px;">
+    Every 6 hours, the steward cron wakes. It reads the task queue, picks the top pending item,
+    researches, codes, runs guards, commits, pushes, and marks it done. It never asks questions.
+    It never waits for approval. It acts.
+  </p>
+  <div class="loop">
+    <span class="loop-step">⏰ Cron wakes</span>
+    <span class="loop-arrow">→</span>
+    <span class="loop-step">📋 Read tasks.md</span>
+    <span class="loop-arrow">→</span>
+    <span class="loop-step">🔬 Research</span>
+    <span class="loop-arrow">→</span>
+    <span class="loop-step">💻 Code</span>
+    <span class="loop-arrow">→</span>
+    <span class="loop-step">🛡️ Guard</span>
+    <span class="loop-arrow">→</span>
+    <span class="loop-step">📦 Commit+Push</span>
+    <span class="loop-arrow">→</span>
+    <span class="loop-step">✅ Mark done</span>
+  </div>
+</section>
+
+<!-- ═══ THREE TIERS ═══ -->
+<section>
+  <h2><span class="icon">🛡️</span> Quality Harness — Three Tiers</h2>
+  <p style="color: var(--text-muted); margin-bottom: 20px;">
+    Every change passes through three independent quality gates. No tier is optional.
+  </p>
+  <table>
+    <tr>
+      <th>Tier</th>
+      <th>What</th>
+      <th>Tools</th>
+      <th>Blocks?</th>
+    </tr>
+    <tr>
+      <td><strong>Tier 1</strong></td>
+      <td>Static guards — secrets, lint, build, tests</td>
+      <td class="mono">gitleaks, cpplint, make build, make test</td>
+      <td class="status-ok">✅ Blocks commit</td>
+    </tr>
+    <tr>
+      <td><strong>Tier 2</strong></td>
+      <td>LLM agentic evaluator — judges code against criteria</td>
+      <td class="mono">DeepSeek V4 Flash, 50 iter, 1M/384k caps</td>
+      <td class="status-ok">✅ Evaluates criteria</td>
+    </tr>
+    <tr>
+      <td><strong>Tier 3</strong></td>
+      <td>Deep C++ static analysis</td>
+      <td class="mono">cppcheck (501 files), clang-tidy-21</td>
+      <td class="status-warn">ℹ️ Informational</td>
+    </tr>
+  </table>
+</section>
+
+<!-- ═══ PHASE 1 ═══ -->
+<section>
+  <h2><span class="icon">🏗️</span> Phase 1 — Foundation <span style="font-size:0.8rem;color:var(--pass);margin-left:8px;">IN PROGRESS</span></h2>
+
+  <div class="phase">
+    <h3>Steward Infrastructure</h3>
+    <ul class="checklist">
+      <li class="done"><span class="check">[x]</span> Fork + clone rethinkdb/rethinkdb</li>
+      <li class="done"><span class="check">[x]</span> Merge upstream v2.4.x → main</li>
+      <li class="done"><span class="check">[x]</span> GitReins init with C++ config</li>
+      <li class="done"><span class="check">[x]</span> Hilo init (7,913 edges across 1,256 files)</li>
+      <li class="done"><span class="check">[x]</span> Wire Tier 2 (LLM evaluator) + Tier 3 (cppcheck + clang-tidy)</li>
+      <li class="done"><span class="check">[x]</span> Bear compile_commands.json (560KB, 18K entries)</li>
+      <li class="done"><span class="check">[x]</span> Cron job (every 6h, autonomous task execution)</li>
+      <li><span class="check">[ ]</span> Cut and publish v2.4.5 release</li>
+      <li><span class="check">[ ]</span> Modernize CI (GCC 15, Clang 19, ARM64, RISC-V)</li>
+      <li><span class="check">[ ]</span> Fix all compiler warnings (~12K from clang-tidy)</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══ PHASE 2 ═══ -->
+<section>
+  <h2><span class="icon">⚡</span> Phase 2 — v2.5 Modernization</h2>
+
+  <div class="phase">
+    <h3>Security &amp; Stability</h3>
+    <ul class="checklist">
+      <li><span class="check">[ ]</span> Cherry-pick marchon's 28 security fixes from PR #7191</li>
+      <li><span class="check">[ ]</span> Audit CVE status of bundled deps (Boost 1.60, OpenSSL, QuickJS)</li>
+      <li><span class="check">[ ]</span> Fix 1,352 open issues — close stale, triage bugs, label</li>
+      <li><span class="check">[ ]</span> Merge open PRs (10 pending, oldest from 2015)</li>
+    </ul>
+  </div>
+
+  <div class="phase">
+    <h3>Toolchain Modernization</h3>
+    <ul class="checklist">
+      <li><span class="check">[ ]</span> C++11 → C++17 upgrade</li>
+      <li><span class="check">[ ]</span> Replace deprecated Python 2 scripts with Python 3</li>
+      <li><span class="check">[ ]</span> Upgrade Boost 1.60 → 1.86</li>
+      <li><span class="check">[ ]</span> Add RISC-V CI target (PR #7194)</li>
+      <li><span class="check">[ ]</span> Windows build revival</li>
+    </ul>
+  </div>
+
+  <div class="phase">
+    <h3>Testing Infrastructure</h3>
+    <ul class="checklist">
+      <li><span class="check">[ ]</span> Property-based testing for ReQL query engine</li>
+      <li><span class="check">[ ]</span> Cluster fault injection (Jepsen-style)</li>
+      <li><span class="check">[ ]</span> Performance regression benchmarks per commit</li>
+      <li><span class="check">[ ]</span> Sanitizer builds (ASan, UBSan, TSan, MSan)</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══ PHASE 3 ═══ -->
+<section>
+  <h2><span class="icon">🚀</span> Phase 3 — v3.0 Feature Parity</h2>
+  <p style="color: var(--text-muted); margin-bottom: 20px;">
+    RethinkDB predates the modern database renaissance. Here's what Postgres added while RethinkDB slept —
+    and what v3.0 brings to parity.
+  </p>
+
+  <table>
+    <tr>
+      <th>Feature</th>
+      <th>RethinkDB Status</th>
+      <th>Postgres Equivalent</th>
+      <th>Priority</th>
+    </tr>
+    <tr>
+      <td><strong>Vector indexes</strong></td>
+      <td class="status-fail">Missing</td>
+      <td class="mono">pgvector (HNSW/IVFFlat)</td>
+      <td class="status-fail">🔴 Critical</td>
+    </tr>
+    <tr>
+      <td><strong>Full-text search</strong></td>
+      <td class="status-fail">Missing</td>
+      <td class="mono">GIN + tsvector + stemming</td>
+      <td class="status-fail">🔴 Critical</td>
+    </tr>
+    <tr>
+      <td><strong>Geo indexes</strong></td>
+      <td class="status-ok">Advanced (S2 library)</td>
+      <td class="mono">PostGIS</td>
+      <td class="status-ok">✅ Done</td>
+    </tr>
+    <tr>
+      <td><strong>BRIN/Bloom indexes</strong></td>
+      <td class="status-fail">Missing</td>
+      <td class="mono">PG 9.5+ BRIN</td>
+      <td class="status-warn">🟡 High</td>
+    </tr>
+    <tr>
+      <td><strong>Table partitioning</strong></td>
+      <td class="status-fail">Missing</td>
+      <td class="mono">PG 10→18 declarative</td>
+      <td class="status-warn">🟡 High</td>
+    </tr>
+    <tr>
+      <td><strong>Parallel query execution</strong></td>
+      <td class="status-fail">Missing</td>
+      <td class="mono">PG 9.6→18 iterative</td>
+      <td class="status-warn">🟡 High</td>
+    </tr>
+    <tr>
+      <td><strong>Logical replication</strong></td>
+      <td class="status-fail">Missing</td>
+      <td class="mono">PG 10→16 bidirectional</td>
+      <td class="status-warn">🟡 High</td>
+    </tr>
+    <tr>
+      <td><strong>Async I/O</strong></td>
+      <td class="status-fail">Missing</td>
+      <td class="mono">PG 18 AIO subsystem</td>
+      <td style="color: var(--text-muted);">🟢 Medium</td>
+    </tr>
+    <tr>
+      <td><strong>Generated columns</strong></td>
+      <td class="status-fail">Missing</td>
+      <td class="mono">PG 12→18 virtual</td>
+      <td style="color: var(--text-muted);">🟢 Medium</td>
+    </tr>
+    <tr>
+      <td><strong>JSONPath / JSON_TABLE</strong></td>
+      <td class="status-fail">Missing</td>
+      <td class="mono">PG 12→17 SQL/JSON</td>
+      <td style="color: var(--text-muted);">🟢 Medium</td>
+    </tr>
+    <tr>
+      <td><strong>WASM UDF sandbox</strong></td>
+      <td class="status-fail">Missing</td>
+      <td class="mono">pgx + WASM extensions</td>
+      <td style="color: var(--text-muted);">🟢 Medium</td>
+    </tr>
+    <tr>
+      <td><strong>Changefeeds</strong></td>
+      <td class="status-ok">Built-in (realtime push)</td>
+      <td class="mono">PG listen/notify + WAL</td>
+      <td class="status-ok">✅ Done</td>
+    </tr>
+  </table>
+</section>
+
+<!-- ═══ TESTING STRATEGY ═══ -->
+<section>
+  <h2><span class="icon">🧪</span> Testing Strategy — 8 Layers</h2>
+  <p style="color: var(--text-muted); margin-bottom: 20px;">
+    This is a database. Testing isn't optional. Every layer catches what the layer above misses.
+  </p>
+
+  <div class="card-grid">
+    <div class="card">
+      <h4>1. Build Matrix</h4>
+      <p>GCC 14/15 + Clang 18/19 × Ubuntu 24.04/26.04 × x86_64, ARM64, RISC-V. Every commit on every platform.</p>
+      <span class="tag tag-planned">Planned</span>
+    </div>
+    <div class="card">
+      <h4>2. Existing Test Suite</h4>
+      <p>40+ unit test files, integration, clustering, changefeed, regression, RQL, scenarios. <code>make test</code> runs all.</p>
+      <span class="tag tag-done">Active</span>
+    </div>
+    <div class="card">
+      <h4>3. Regression Tests</h4>
+      <p>Every bug fix gets a regression test. Criteria in GitReins verify: "repro before, pass after."</p>
+      <span class="tag tag-planned">Per-fix</span>
+    </div>
+    <div class="card">
+      <h4>4. Property-Based Testing</h4>
+      <p>Random ReQL queries validated against invariants: map/filter fusion, write idempotency, index consistency.</p>
+      <span class="tag tag-planned">v2.5</span>
+    </div>
+    <div class="card">
+      <h4>5. Cluster Fault Injection</h4>
+      <p>Jepsen-style: network partitions, primary kills during backfill, split-brain, disk-full behavior.</p>
+      <span class="tag tag-planned">v2.5</span>
+    </div>
+    <div class="card">
+      <h4>6. Performance Regression</h4>
+      <p>Per-commit benchmarks: insert throughput, query p50/p99, changefeed latency, rebalance time, memory.</p>
+      <span class="tag tag-planned">v2.5</span>
+    </div>
+    <div class="card">
+      <h4>7. Fuzzing</h4>
+      <p>ReQL query fuzzer, network protocol fuzzer, disk format fuzzer — random inputs, verify no crashes.</p>
+      <span class="tag tag-planned">v3.0</span>
+    </div>
+    <div class="card">
+      <h4>8. Sanitizer Builds</h4>
+      <p>ASan (use-after-free), UBSan (undefined behavior), TSan (data races), MSan (uninitialized reads).</p>
+      <span class="tag tag-planned">v2.5</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ GITREINS ENFORCEMENT ═══ -->
+<section>
+  <h2><span class="icon">⚖️</span> How GitReins Enforces Quality</h2>
+  <p style="color: var(--text-muted); margin-bottom: 20px;">
+    Every task becomes a GitReins task with criteria the LLM evaluator mechanically verifies.
+    No human judgment — file:line evidence or it didn't happen.
+  </p>
+  <pre><span class="cmt"># Example: "Add vector index support"</span>
+<span class="kw">- id:</span> vec-idx-1
+<span class="kw">  title:</span> <span class="str">"HNSW index data structure"</span>
+<span class="kw">  criteria:</span>
+    <span class="kw">-</span> <span class="str">"src/rdb_protocol/geo/indexing.hpp defines HnswIndex class"</span>
+    <span class="kw">-</span> <span class="str">"src/unittest/geo_indexes.cc tests HNSW insert+search k-NN"</span>
+    <span class="kw">-</span> <span class="str">"cppcheck src/rdb_protocol/geo/ --enable=all returns 0 new warnings"</span>
+    <span class="kw">-</span> <span class="str">"clang-tidy checks='bugprone-*' returns 0 new warnings"</span></pre>
+</section>
+
+<!-- ═══ CURRENT STATUS ═══ -->
+<section>
+  <h2><span class="icon">📡</span> Live Status</h2>
+  <table>
+    <tr><th>Component</th><th>Status</th><th>Detail</th></tr>
+    <tr><td>Cron</td><td class="status-ok">✅ Active</td><td class="mono">Every 6h (next: noon CDT)</td></tr>
+    <tr><td>Tier 1 guard</td><td class="status-ok">✅ Active</td><td>Secrets, lint, build, tests — blocks commit</td></tr>
+    <tr><td>Tier 2 evaluator</td><td class="status-ok">✅ Active</td><td class="mono">DeepSeek V4 Flash, 50 iter, 1M/384k caps</td></tr>
+    <tr><td>Tier 3 cppcheck</td><td class="status-ok">✅ Active</td><td>501/501 files scanned</td></tr>
+    <tr><td>Tier 3 clang-tidy</td><td class="status-ok">✅ Active</td><td class="mono">clang-tidy-21, compile_commands.json (560KB)</td></tr>
+    <tr><td>Hilo</td><td class="status-ok">✅ Active</td><td>7,913 edges, 1,256 files, 5 languages</td></tr>
+    <tr><td>Bear build DB</td><td class="status-ok">✅ Active</td><td>18,226 compilation entries</td></tr>
+    <tr><td>Bunker</td><td class="status-warn">⏳ Pending</td><td>Awaiting DexDat server provisioning</td></tr>
+  </table>
+</section>
+
+<!-- ═══ REPO ═══ -->
+<section>
+  <h2><span class="icon">🔗</span> Links</h2>
+  <div class="card-grid">
+    <div class="card">
+      <h4>Our Fork</h4>
+      <p><a href="https://github.com/totalwindupflightsystems/rethinkdb" style="color:var(--accent);">totalwindupflightsystems/rethinkdb</a></p>
+    </div>
+    <div class="card">
+      <h4>Upstream</h4>
+      <p><a href="https://github.com/rethinkdb/rethinkdb" style="color:var(--accent);">rethinkdb/rethinkdb</a></p>
+    </div>
+    <div class="card">
+      <h4>Task Queue</h4>
+      <p>Defined in <code>.coding-hermes/tasks.md</code> — phased, prioritized, mechanically verifiable.</p>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<footer>
+  <p>RethinkDB Autonomous Stewardship · <a href="https://github.com/totalwindupflightsystems/rethinkdb">totalwindupflightsystems/rethinkdb</a></p>
+  <p style="margin-top:8px;">Last updated: July 6, 2026 · Generated by Hermes Agent</p>
+</footer>
+
+</body>
+</html>
