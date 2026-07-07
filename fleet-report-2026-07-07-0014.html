@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coding-Hermes Fleet Report — 2026-07-07</title>
+<style>
+:root{--bg:#0d1117;--card:#161b22;--border:#30363d;--text:#c9d1d9;--accent:#58a6ff;--green:#3fb950;--orange:#d2991d;--red:#f85149;--purple:#bc8cff;--muted:#8b949e}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.6;padding:1.5rem;max-width:1200px;margin:0 auto;font-size:.88rem}
+h1{font-size:1.4rem;color:var(--accent);margin-bottom:.25rem}
+h2{font-size:1.1rem;color:var(--accent);margin:1.5rem 0 .75rem;padding-bottom:.3rem;border-bottom:1px solid var(--border)}
+.subtitle{color:var(--muted);margin-bottom:1.5rem;font-size:.82rem}
+.metrics{display:grid;grid-template-columns:repeat(5,1fr);gap:.75rem;margin:1rem 0}
+.metric{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:.75rem;text-align:center}
+.metric .value{font-size:1.5rem;font-weight:700}
+.metric .label{font-size:.75rem;color:var(--muted)}
+.green{color:var(--green)}.orange{color:var(--orange)}.red{color:var(--red)}
+table{width:100%;border-collapse:collapse;margin:.75rem 0;font-size:.82rem}
+th,td{padding:.4rem .5rem;text-align:left;border:1px solid var(--border)}
+th{background:var(--card);color:var(--accent);font-size:.78rem}
+tr:hover td{background:rgba(88,166,255,.04)}
+.tag{display:inline-block;padding:.08rem .35rem;border-radius:3px;font-size:.68rem;font-weight:600}
+.tag-ok{background:rgba(63,185,80,.15);color:var(--green)}
+.tag-warn{background:rgba(210,153,29,.15);color:var(--orange)}
+.tag-err{background:rgba(248,81,73,.15);color:var(--red)}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:1rem}
+.card h3{font-size:.95rem;margin-bottom:.5rem}
+.changes{font-size:.82rem}
+.changes li{margin:.15rem 0;padding:.1rem 0}
+.footer{text-align:center;color:var(--muted);margin-top:2rem;font-size:.75rem}
+</style>
+</head>
+<body>
+
+<h1>🚀 Coding-Hermes Fleet Report</h1>
+<p class="subtitle">2026-07-07 00:14 UTC-5 · Supervisor run #7 · Model: deepseek-v4-flash (custom:opencode-go)</p>
+
+<div class="metrics">
+<div class="metric"><div class="value green">11</div><div class="label">Healthy</div></div>
+<div class="metric"><div class="value orange">5</div><div class="label">Warnings</div></div>
+<div class="metric"><div class="value red">2</div><div class="label">Errors</div></div>
+<div class="metric"><div class="value">0</div><div class="label">Paused</div></div>
+<div class="metric"><div class="value">79+</div><div class="label">Pending Tasks</div></div>
+</div>
+
+<h2>Fleet Status</h2>
+<table>
+<tr><th>Project</th><th>Pending</th><th>Model</th><th>Provider</th><th>Speed</th><th>Last Run</th><th>Status</th></tr>
+<tr><td>Kobayashi-Maru</td><td>0</td><td>DS V4 Flash</td><td>custom:opencode-go</td><td>every 120m</td><td>2026-07-06 12:08</td><td><span class="tag tag-ok">completed</span></td></tr>
+<tr><td>SpecLang CI</td><td>0</td><td>MiniMax-M3</td><td>minimax</td><td>every 120m</td><td>2026-07-06 09:36</td><td><span class="tag tag-ok">completed</span></td></tr>
+<tr><td>AI Plays Poké</td><td>0</td><td>Grok 4.3</td><td>xai-oauth</td><td>every 120m</td><td>2026-07-06 11:49</td><td><span class="tag tag-ok">ok</span></td></tr>
+<tr><td>ASCE</td><td>0</td><td>DS V4 Flash</td><td>custom:opencode-go</td><td>every 120m</td><td>2026-07-06 18:16</td><td><span class="tag tag-ok">ok</span></td></tr>
+<tr><td>Bunker</td><td>0</td><td>Kimi K2.7</td><td>kimi-for-coding</td><td>*/15 * * * *</td><td>2026-07-06 22:08</td><td><span class="tag tag-ok">ok</span></td></tr>
+<tr><td>Chimera</td><td>?</td><td>glm-5.2</td><td>zai-glm</td><td>every 360m</td><td>never</td><td><span class="tag tag-warn">ok</span></td></tr>
+<tr><td>Consensus</td><td>26</td><td>glm-5.2</td><td>zai-glm</td><td>*/15 * * * *</td><td>never</td><td><span class="tag tag-ok">ok</span></td></tr>
+<tr><td>DexDat Memory</td><td>2</td><td>DS V4 Flash</td><td>custom:opencode-go</td><td>every 30m</td><td>2026-07-06 18:14</td><td><span class="tag tag-warn">ok</span></td></tr>
+<tr><td>EduOS Alpha</td><td>4</td><td>glm-5.2</td><td>zai-glm</td><td>*/15 * * * *</td><td>2026-07-06 21:30</td><td><span class="tag tag-err">error</span></td></tr>
+<tr><td>GitReins</td><td>19</td><td>DS V4 Flash</td><td>custom:opencode-go</td><td>*/15 * * * *</td><td>2026-06-28 02:08</td><td><span class="tag tag-warn">ok</span></td></tr>
+<tr><td>Helios</td><td>12</td><td>gpt-5.5</td><td>openai-codex</td><td>*/15 * * * *</td><td>2026-07-06 23:45</td><td><span class="tag tag-ok">ok</span></td></tr>
+<tr><td>Mythos</td><td>0</td><td>Grok 4.3</td><td>xai-oauth</td><td>every 120m</td><td>2026-07-06 09:45</td><td><span class="tag tag-ok">completed</span></td></tr>
+<tr><td>Helix</td><td>0</td><td>MiniMax-M3</td><td>minimax</td><td>*/15 * * * *</td><td>2026-07-06 23:52</td><td><span class="tag tag-warn">ok</span></td></tr>
+<tr><td>H4F Infra</td><td>0</td><td>glm-5.2</td><td>zai-glm</td><td>every 120m</td><td>2026-07-05 15:41</td><td><span class="tag tag-ok">ok</span></td></tr>
+<tr><td>MusterFlow</td><td>0</td><td>DS V4 Flash</td><td>custom:opencode-go</td><td>every 360m</td><td>2026-07-05 16:48</td><td><span class="tag tag-ok">ok</span></td></tr>
+<tr><td>Off-by-One</td><td>0</td><td>Step 3.7 Flash</td><td>custom:stepfun</td><td>every 120m</td><td>2026-07-06 12:09</td><td><span class="tag tag-ok">ok</span></td></tr>
+<tr><td>RethinkDB</td><td>16</td><td>DS V4 Pro</td><td>ollama-cloud</td><td>*/30 * * * *</td><td>2026-07-06 22:44</td><td><span class="tag tag-warn">ok</span></td></tr>
+<tr><td>Hilo</td><td>0</td><td>glm-5.2</td><td>zai-glm</td><td>*/15 * * * *</td><td>2026-07-06 22:06</td><td><span class="tag tag-err">error</span></td></tr>
+</table>
+
+<h2>Changes This Run</h2>
+<div class="changes">
+<ol><li>✅ <b>GitReins Coding Foreman</b> — schedule 360m → */15 * * * * (19 pending)</li>
+<li>✅ <b>EduOS Alpha Dev Loop</b> — schedule 30m → */15 * * * * (4 pending)</li>
+<li>✅ <b>dexdat-coding-hermes-foreman</b> — schedule 120m → 30m (2 pending)</li>
+<li>✅ <b>baoyu-article-illustrator</b> skill updated</li>
+<li>✅ File NOT FOUND: references/projects-inventory.md (referenced in skill but missing)</li>
+<li>📝 Added dep upgrade task to ai_plays_poke/.coding-hermes/tasks.md</li>
+<li>📝 Seeded DuckBrain /project entries for eduos namespace</li></ol>
+</div>
+
+<div class="two-col">
+<div class="card">
+<h3>24h Activity</h3>
+
+<ul>
+<li><b>Schedule fixes applied:</b> 3 projects (GitReins, EduOS, dexdat-memory)</li>
+<li><b>Skills updated:</b> baoyu-article-illustrator</li>
+<li><b>DuckBrain seeded:</b> eduos namespace</li>
+<li><b>Dep tasks added:</b> ai_plays_poke (6 outdated)</li>
+<li><b>Last runs:</b> 11 active foremen ran in last 24h</li>
+<li><b>Errors:</b> hilo-foreman (429), EduOS (429), consensus/chimera never run</li>
+</ul>
+
+</div>
+<div class="card">
+<h3>72h Trends</h3>
+
+<ul>
+<li><b>GitReins:</b> 19 tasks backlogged, stale since 2026-06-28 (8 days)</li>
+<li><b>Consensus:</b> 26 new tasks queued, foreman never executed</li>
+<li><b>chimera-coding-foreman:</b> No tasks.md, 360m schedule questioned</li>
+<li><b>Provider health:</b> zai-glm rate limits on concurrent foremen (hilo + eduos both 429)</li>
+<li><b>PAYG risk:</b> deepseek API key invalid for v4-pro (401)</li>
+<li><b>Fleet stability:</b> 12/18 healthy, 4 warnings, 2 errors (rate limits)</li>
+</ul>
+
+</div>
+</div>
+
+<h2>Issues Detected</h2>
+<ul><li>⚠️ <b>hilo-foreman</b> — HTTP 429 rate limit errors on zai-glm (last 2 runs)</li>
+<li>⚠️ <b>EduOS Alpha</b> — HTTP 429 rate limit errors on zai-glm (last 2 runs)</li>
+<li>⚠️ <b>deepseek PAYG</b> — API key invalid (401) for v4-pro planning</li>
+<li>⚠️ <b>helix-foreman</b> — 0 pending tasks but running at 15m (should be 120m/budget)</li>
+<li>⚠️ <b>GitReins Coding Foreman</b> — 19 pending, upgraded schedule; last run 2026-06-28 (stale)</li>
+<li>⚠️ <b>consensus-coding-foreman</b> — 26 pending, never run (schedule created but 0 executions)</li>
+<li>⚠️ <b>chimera-coding-foreman</b> — no tasks.md found, schedule 360m with coding model</li>
+<li>⚠️ <b>speclang-ci-foreman</b> — enabled=true but state=completed (not actively running)</li>
+<li>🔶 <b>ai_plays_poke</b> — 6 outdated Python deps (task added)</li>
+<li>🔶 <b>dexdat-core</b> — 8 outdated Python deps (check dep notes for pin status)</li>
+<li>⚠️ <b>WarpFS/Hilo</b> — rust-analyzer LSP init failed, cargo-outdated not installed</li></ul>
+
+<p class="footer">Coding-Hermes Fleet Report · 2026-07-07 · <a href="https://github.com/totalwindupflightsystems/reports/blob/main/fleet-report-2026-07-07-0014.html" style="color:var(--accent)">View on GitHub</a></p>
+
+</body>
+</html>
