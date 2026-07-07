@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coding-Hermes Fleet Report — 2026-07-07 04:14 CT</title>
+<style>
+:root{--bg:#0d1117;--card:#161b22;--border:#30363d;--text:#c9d1d9;--accent:#58a6ff;--green:#3fb950;--orange:#d2991d;--red:#f85149;--purple:#bc8cff;--muted:#8b949e}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.6;padding:1.5rem;max-width:1200px;margin:0 auto;font-size:.88rem}
+h1{font-size:1.4rem;color:var(--accent);margin-bottom:.25rem}
+h2{font-size:1.1rem;color:var(--accent);margin:1.5rem 0 .75rem;padding-bottom:.3rem;border-bottom:1px solid var(--border)}
+.subtitle{color:var(--muted);margin-bottom:1.5rem;font-size:.82rem}
+.metrics{display:grid;grid-template-columns:repeat(5,1fr);gap:.75rem;margin:1rem 0}
+.metric{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:.75rem;text-align:center}
+.metric .value{font-size:1.5rem;font-weight:700}
+.metric .label{font-size:.75rem;color:var(--muted)}
+.green{color:var(--green)}.orange{color:var(--orange)}.red{color:var(--red)}
+table{width:100%;border-collapse:collapse;margin:.75rem 0;font-size:.82rem}
+th,td{padding:.4rem .5rem;text-align:left;border:1px solid var(--border)}
+th{background:var(--card);color:var(--accent);font-size:.78rem}
+tr:hover td{background:rgba(88,166,255,.04)}
+.tag{display:inline-block;padding:.08rem .35rem;border-radius:3px;font-size:.68rem;font-weight:600}
+.tag-ok{background:rgba(63,185,80,.15);color:var(--green)}
+.tag-warn{background:rgba(210,153,29,.15);color:var(--orange)}
+.tag-err{background:rgba(248,81,73,.15);color:var(--red)}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:1rem}
+.card h3{font-size:.95rem;margin-bottom:.5rem}
+.changes{font-size:.82rem}
+.changes li{margin:.15rem 0;padding:.1rem 0}
+.footer{text-align:center;color:var(--muted);margin-top:2rem;font-size:.75rem}
+</style>
+</head>
+<body>
+
+<h1>🚀 Coding-Hermes Fleet Report</h1>
+<p class="subtitle">2026-07-07 04:14 CT · Supervisor run #26 · Model: deepseek-v4-flash (custom:opencode-go)</p>
+
+<div class="metrics">
+<div class="metric"><div class="value green">5</div><div class="label">Healthy</div></div>
+<div class="metric"><div class="value orange">1</div><div class="label">Warnings</div></div>
+<div class="metric"><div class="value red">15</div><div class="label">Errors</div></div>
+<div class="metric"><div class="value">1</div><div class="label">Paused</div></div>
+<div class="metric"><div class="value">25</div><div class="label">Pending Tasks</div></div>
+</div>
+
+<h2>Fleet Status</h2>
+<table>
+<tr><th>Project</th><th>Pending</th><th>Model</th><th>Provider</th><th>Speed</th><th>Last Run</th><th>Status</th></tr>
+<tr><td>⚫ DeepSeek Dashboard Foreman</td><td>0</td><td>deepseek-v4-flash</td><td>custom:opencode-go</td><td>every 360m</td><td>never</td><td><span class="tag tag-err">?</span></td></tr>
+<tr><td>⚫ Mythos Coding Foreman</td><td>1</td><td>deepseek-v4-flash</td><td>custom:opencode-go</td><td>every 120m</td><td>never</td><td><span class="tag tag-err">?</span></td></tr>
+<tr><td>⚫ hivemind-foreman</td><td>3</td><td>deepseek-v4-flash</td><td>custom:opencode-go</td><td>every 360m</td><td>never</td><td><span class="tag tag-err">?</span></td></tr>
+<tr><td>✅  📌Bunker Coding Hermes</td><td>0</td><td>kimi-for-coding</td><td>kimi-for-coding</td><td>*/15 * * * *</td><td>:10:01.75270</td><td><span class="tag tag-ok">ok</span></td></tr>
+<tr><td>✅ ai-plays-pokemon-foreman</td><td>1</td><td>deepseek-v4-pro</td><td>deepseek</td><td>every 120m</td><td>:42:38.88936</td><td><span class="tag tag-ok">ok</span></td></tr>
+<tr><td>✅  📌helios-coding-hermes-foreman</td><td>10</td><td>gpt-5.5</td><td>openai-codex</td><td>*/15 * * * *</td><td>:02:16.72804</td><td><span class="tag tag-ok">ok</span></td></tr>
+<tr><td>✅ helix-foreman</td><td>0</td><td>deepseek-v4-pro</td><td>deepseek</td><td>*/15 * * * *</td><td>:07:06.01769</td><td><span class="tag tag-ok">ok</span></td></tr>
+<tr><td>✅ musterflow-foreman</td><td>0</td><td>deepseek-v4-flash</td><td>custom:opencode-go</td><td>every 360m</td><td>:40:49.85785</td><td><span class="tag tag-ok">ok</span></td></tr>
+<tr><td>🔴 ASCE Coding Foreman</td><td>0</td><td>deepseek-v4-flash</td><td>custom:opencode-go</td><td>every 120m</td><td>:16:37.18458</td><td><span class="tag tag-ok">ok</span></td></tr>
+<tr><td>🔴 GitReins Coding Foreman</td><td>2</td><td>deepseek-v4-flash</td><td>custom:opencode-go</td><td>*/15 * * * *</td><td>:08:42.35734</td><td><span class="tag tag-ok">ok</span></td></tr>
+<tr><td>🔴 H4F Coding Foreman</td><td>0</td><td>deepseek-v4-pro</td><td>deepseek</td><td>every 120m</td><td>:18:46.70633</td><td><span class="tag tag-err">error</span><br><span style="color:var(--red);font-size:.75rem">429 rate limit</span></td></tr>
+<tr><td>🔴 RethinkDB Steward</td><td>0</td><td>deepseek-v4-pro</td><td>ollama-cloud</td><td>*/30 * * * *</td><td>:00:43.80549</td><td><span class="tag tag-ok">ok</span></td></tr>
+<tr><td>🔴 chimera-coding-foreman</td><td>?</td><td>deepseek-v4-pro</td><td>deepseek</td><td>every 360m</td><td>:41:06.18753</td><td><span class="tag tag-err">error</span><br><span style="color:var(--red);font-size:.75rem">429 rate limit</span></td></tr>
+<tr><td>🔴 consensus-coding-foreman</td><td>0</td><td>deepseek-v4-pro</td><td>deepseek</td><td>*/15 * * * *</td><td>:36:04.21646</td><td><span class="tag tag-err">error</span><br><span style="color:var(--red);font-size:.75rem">429 rate limit</span></td></tr>
+<tr><td>🔴 dexdat-build-loop</td><td>0</td><td>step-3.7-flash</td><td>custom:stepfun</td><td>every 30m</td><td>:48:56.39757</td><td><span class="tag tag-ok">ok</span></td></tr>
+<tr><td>🔴 dexdat-coding-hermes-foreman</td><td>2</td><td>deepseek-v4-flash</td><td>custom:opencode-go</td><td>every 30m</td><td>:14:49.90442</td><td><span class="tag tag-ok">ok</span></td></tr>
+<tr><td>🔴  📌hilo-foreman</td><td>0</td><td>glm-5.2</td><td>zai-glm</td><td>*/15 * * * *</td><td>:07:22.38821</td><td><span class="tag tag-err">error</span><br><span style="color:var(--red);font-size:.75rem">429 rate limit</span></td></tr>
+<tr><td>🔴 kobayashi-maru-foreman</td><td>0</td><td>deepseek-v4-flash</td><td>custom:opencode-go</td><td>every 120m</td><td>:07:05.77110</td><td><span class="tag tag-ok">ok</span></td></tr>
+<tr><td>🔴 mafia-benchmark-dev-loop</td><td>1</td><td>deepseek-v4-pro</td><td>deepseek</td><td>every 120m</td><td>:11:25.61085</td><td><span class="tag tag-ok">ok</span></td></tr>
+<tr><td>🔴 muster-coding-hermes-loop</td><td>1</td><td>deepseek-v4-pro</td><td>deepseek</td><td>every 30m</td><td>:34:25.26400</td><td><span class="tag tag-ok">ok</span></td></tr>
+<tr><td>🔴  📌mythos-coding-foreman</td><td>?</td><td>grok-4.3</td><td>xai-oauth</td><td>every 120m</td><td>:45:23.43524</td><td><span class="tag tag-ok">ok</span></td></tr>
+<tr><td>🔴 off-by-one-foreman</td><td>0</td><td>step-3.7-flash</td><td>custom:stepfun</td><td>every 120m</td><td>:09:21.44853</td><td><span class="tag tag-ok">ok</span></td></tr>
+<tr><td>🔴  📌speclang-ci-foreman</td><td>0</td><td>MiniMax-M3</td><td>minimax</td><td>every 120m</td><td>:36:22.81510</td><td><span class="tag tag-ok">ok</span></td></tr>
+<tr><td>🟡 EduOS Alpha Dev Loop</td><td>4</td><td>deepseek-v4-pro</td><td>deepseek</td><td>*/15 * * * *</td><td>:48:08.84583</td><td><span class="tag tag-ok">ok</span></td></tr>
+</table>
+
+<h2>Changes This Run</h2>
+<div class="changes">
+<ul>
+<li>🔴 <strong>GitReins Coding Foreman</strong> NOT RUNNING since June 28 — needs investigation</li>
+<li>🔴 <strong>4 jobs rate-limited</strong> (HTTP 429 from deepseek): consensus, chimera, H4F foremen</li>
+<li>🟡 <strong>467 Cron tick errors</strong> (KeyError: 'expr') logged historically — previously fixed</li>
+<li>🔴 <strong>5 foremen stale 10-19h</strong>: muster (30m), dexdat-build-loop (30m), dexdat-foreman (30m), speclang-ci (120m), off-by-one (120m), kobayashi-maru (120m)</li>
+<li>✅ Updated skill: <strong>baoyu-article-illustrator</strong></li>
+<li>✅ Fleet report pushed to GitHub</li>
+</ul>
+</div>
+
+<div class="two-col">
+<div class="card">
+<h3>24h Activity</h3>
+<ul>
+<li><strong>Helios</strong>: 16 commits (coverage gap filling, very active)</li>
+<li><strong>Helix</strong>: 24 commits (active feature dev, most active)</li>
+<li><strong>EduOS</strong>: 7 commits</li>
+<li><strong>Hilo (warpfs)</strong>: 5 commits (4-language expansion)</li>
+<li><strong>Muster</strong>: 1 commit (CI fix)</li>
+<li><strong>DexDat Core</strong>: 1 commit</li>
+<li><strong>Kobayashi-Maru</strong>: 1 commit</li>
+<li><strong>GitReins</strong>: 3 commits since July 1</li>
+<li><strong>Off-by-One</strong>: 0 commits — stale</li>
+<li><strong>Consensus</strong>: 0 commits — stale</li>
+</ul>
+</div>
+<div class="card">
+<h3>72h Trends</h3>
+<ul>
+<li><strong>Helix</strong> 🔥 accelerating — 24 commits in 24h</li>
+<li><strong>Helios</strong> 🔥 stable high velocity — 16 commits</li>
+<li><strong>Hilo</strong> 🟡 steady — wrapping Rinnegan-upgrade batch</li>
+<li><strong>Muster</strong> 🟡 slowing — 1 commit, CI issues</li>
+<li><strong>dexdat-core</strong> 🟡 1 commit — all tasks [x]</li>
+<li><strong>Kobayashi-Maru</strong> 🟡 1 commit — all tasks [x]</li>
+<li><strong>off-by-one</strong> 🔴 stalled — 0 commits</li>
+<li><strong>consensus</strong> 🔴 stalled — 0 commits</li>
+</ul>
+</div>
+</div>
+
+<h2>Issues Detected</h2>
+<ul>
+<li>🔴 <strong>CI blocked (billing):</strong> Helios (dexdat org), Kobayashi-Maru (dexdat org), H4F (H4F org)</li>
+<li>🔴 <strong>CI failing (exit code 1):</strong> Muster — test step, unknown cause</li>
+<li>🔴 <strong>Rate limited (deepseek 429):</strong> consensus-coding-foreman, chimera-coding-foreman, H4F Coding Foreman</li>
+<li>🔴 <strong>Cron reliability:</strong> 467 KeyError: 'expr' scheduler crashes — check all cron-kind jobs have <code>expr</code> key</li>
+<li>🟡 <strong>dexdat-memory:</strong> 3 pending tasks BLOCKED on TRUNCATE (needs human)</li>
+<li>🟡 <strong>Helios:</strong> 5 pending UI wiring tasks + Go dep upgrades</li>
+</ul>
+
+<p class="footer">Coding-Hermes Fleet Report · 2026-07-07 04:14 CT · <a href="https://github.com/totalwindupflightsystems/reports/blob/main/fleet-report-2026-07-07-0414.html" style="color:var(--accent)">View on GitHub</a></p>
+
+</body>
+</html>
