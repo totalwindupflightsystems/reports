@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coding-Hermes Fleet Report — 2026-07-08</title>
+<style>
+:root{--bg:#0d1117;--card:#161b22;--border:#30363d;--text:#c9d1d9;--accent:#58a6ff;--green:#3fb950;--orange:#d2991d;--red:#f85149;--purple:#bc8cff;--muted:#8b949e}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.6;padding:1.5rem;max-width:1200px;margin:0 auto;font-size:.88rem}
+h1{font-size:1.4rem;color:var(--accent);margin-bottom:.25rem}
+h2{font-size:1.1rem;color:var(--accent);margin:1.5rem 0 .75rem;padding-bottom:.3rem;border-bottom:1px solid var(--border)}
+.subtitle{color:var(--muted);margin-bottom:1.5rem;font-size:.82rem}
+.metrics{display:grid;grid-template-columns:repeat(5,1fr);gap:.75rem;margin:1rem 0}
+.metric{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:.75rem;text-align:center}
+.metric .value{font-size:1.5rem;font-weight:700}
+.metric .label{font-size:.75rem;color:var(--muted)}
+.green{color:var(--green)}.orange{color:var(--orange)}.red{color:var(--red)}
+table{width:100%;border-collapse:collapse;margin:.75rem 0;font-size:.82rem}
+th,td{padding:.4rem .5rem;text-align:left;border:1px solid var(--border)}
+th{background:var(--card);color:var(--accent);font-size:.78rem}
+tr:hover td{background:rgba(88,166,255,.04)}
+.tag{display:inline-block;padding:.08rem .35rem;border-radius:3px;font-size:.68rem;font-weight:600}
+.tag-ok{background:rgba(63,185,80,.15);color:var(--green)}
+.tag-warn{background:rgba(210,153,29,.15);color:var(--orange)}
+.tag-err{background:rgba(248,81,73,.15);color:var(--red)}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:1rem}
+.card h3{font-size:.95rem;margin-bottom:.5rem}
+.changes{font-size:.82rem}
+.changes li{margin:.15rem 0;padding:.1rem 0}
+.footer{text-align:center;color:var(--muted);margin-top:2rem;font-size:.75rem}
+</style>
+</head>
+<body>
+
+<h1>🚀 Coding-Hermes Fleet Report</h1>
+<p class="subtitle">2026-07-08 05:07 UTC · Supervisor run #43 · Model: deepseek-v4-pro</p>
+
+<div class="metrics">
+<div class="metric"><div class="value green">8</div><div class="label">Healthy</div></div>
+<div class="metric"><div class="value orange">15</div><div class="label">Warnings</div></div>
+<div class="metric"><div class="value red">3</div><div class="label">Errors</div></div>
+<div class="metric"><div class="value">0</div><div class="label">Paused</div></div>
+<div class="metric"><div class="value">39</div><div class="label">Pending Tasks</div></div>
+</div>
+
+<h2>Fleet Status</h2>
+<table>
+<tr><th>Project</th><th>Pending</th><th>Model</th><th>Provider</th><th>Speed</th><th>Last Run</th><th>Status</th></tr>
+<tr><td>ASCE Coding Foreman</td><td>0</td><td>deepseek-v4-flash</td><td>custom:opencode-go</td><td>120m</td><td>524m ago</td><td><span class="tag tag-warn">stale</span></td></tr>
+<tr><td>Bunker Coding Hermes</td><td>0</td><td>kimi-for-coding</td><td>kimi-for-coding</td><td>*/15 * * * *</td><td>282m ago</td><td><span class="tag tag-ok">ok</span></td></tr>
+<tr><td>Coding Hermes Supervisor</td><td>0</td><td>deepseek-v4-pro</td><td>deepseek</td><td>0 */4 * * *</td><td>198m ago</td><td><span class="tag tag-ok">ok</span></td></tr>
+<tr><td>DeepSeek Dashboard Foreman</td><td>0</td><td>deepseek-v4-flash</td><td>custom:opencode-go</td><td>360m</td><td>never</td><td><span class="tag tag-warn">stale</span></td></tr>
+<tr><td>EduOS Alpha Dev Loop</td><td>0</td><td>deepseek-v4-pro</td><td>custom:opencode-go</td><td>30m</td><td>50m ago</td><td><span class="tag tag-ok">ok</span></td></tr>
+<tr><td>GitReins Coding Foreman</td><td>3</td><td>deepseek-v4-pro</td><td>custom:opencode-go</td><td>*/15 * * * *</td><td>311m ago</td><td><span class="tag tag-err">error</span></td></tr>
+<tr><td>H4F Coding Foreman</td><td>0</td><td>deepseek-v4-flash</td><td>custom:opencode-go</td><td>120m</td><td>1104m ago</td><td><span class="tag tag-warn">stale</span></td></tr>
+<tr><td>Hivemind Coding Foreman</td><td>0</td><td>deepseek-v4-pro</td><td>custom:opencode-go</td><td>120m</td><td>never</td><td><span class="tag tag-warn">stale</span></td></tr>
+<tr><td>Mythos Coding Foreman</td><td>1</td><td>deepseek-v4-flash</td><td>custom:opencode-go</td><td>120m</td><td>never</td><td><span class="tag tag-warn">stale</span></td></tr>
+<tr><td>RethinkDB Steward</td><td>0</td><td>MiniMax-M3</td><td>minimax</td><td>120m</td><td>232m ago</td><td><span class="tag tag-ok">ok</span></td></tr>
+<tr><td>ai-plays-pokemon-foreman</td><td>0</td><td>deepseek-v4-flash</td><td>custom:opencode-go</td><td>120m</td><td>873m ago</td><td><span class="tag tag-warn">stale</span></td></tr>
+<tr><td>chimera-coding-foreman</td><td>0</td><td>deepseek-v4-flash</td><td>custom:opencode-go</td><td>360m</td><td>1093m ago</td><td><span class="tag tag-warn">stale</span></td></tr>
+<tr><td>consensus-coding-foreman</td><td>0</td><td>deepseek-v4-flash</td><td>custom:opencode-go</td><td>360m</td><td>471m ago</td><td><span class="tag tag-warn">stale</span></td></tr>
+<tr><td>dexdat-build-loop</td><td>0</td><td>gpt-5.4</td><td>openai-codex</td><td>30m</td><td>0m ago</td><td><span class="tag tag-ok">ok</span></td></tr>
+<tr><td>dexdat-coding-hermes-foreman</td><td>0</td><td>deepseek-v4-flash</td><td>custom:opencode-go</td><td>120m</td><td>208m ago</td><td><span class="tag tag-ok">ok</span></td></tr>
+<tr><td>escalation-doctrine-foreman</td><td>0</td><td>deepseek-v4-flash</td><td>custom:opencode-go</td><td>120m</td><td>never</td><td><span class="tag tag-warn">stale</span></td></tr>
+<tr><td>helios-coding-hermes-foreman</td><td>10</td><td>deepseek-v4-pro</td><td>custom:opencode-go</td><td>*/15 * * * *</td><td>311m ago</td><td><span class="tag tag-err">error</span></td></tr>
+<tr><td>helix-foreman</td><td>24</td><td>deepseek-v4-pro</td><td>custom:opencode-go</td><td>120m</td><td>1200m ago</td><td><span class="tag tag-warn">stale</span></td></tr>
+<tr><td>hilo-foreman</td><td>0</td><td>deepseek-v4-pro</td><td>custom:opencode-go</td><td>*/15 * * * *</td><td>1200m ago</td><td><span class="tag tag-err">error</span></td></tr>
+<tr><td>kobayashi-maru-foreman</td><td>1</td><td>deepseek-v4-flash</td><td>custom:opencode-go</td><td>120m</td><td>908m ago</td><td><span class="tag tag-warn">stale</span></td></tr>
+<tr><td>mafia-benchmark-dev-loop</td><td>0</td><td>deepseek-v4-flash</td><td>custom:opencode-go</td><td>120m</td><td>217m ago</td><td><span class="tag tag-ok">ok</span></td></tr>
+<tr><td>muster-coding-hermes-loop</td><td>0</td><td>deepseek-v4-flash</td><td>custom:opencode-go</td><td>120m</td><td>44m ago</td><td><span class="tag tag-ok">ok</span></td></tr>
+<tr><td>musterflow-foreman</td><td>0</td><td>deepseek-v4-flash</td><td>custom:opencode-go</td><td>360m</td><td>1286m ago</td><td><span class="tag tag-warn">stale</span></td></tr>
+<tr><td>mythos-coding-foreman</td><td>0</td><td>deepseek-v4-flash</td><td>custom:opencode-go</td><td>360m</td><td>927m ago</td><td><span class="tag tag-warn">stale</span></td></tr>
+<tr><td>off-by-one-foreman</td><td>0</td><td>deepseek-v4-pro</td><td>custom:opencode-go</td><td>120m</td><td>907m ago</td><td><span class="tag tag-warn">stale</span></td></tr>
+<tr><td>speclang-ci-foreman</td><td>0</td><td>MiniMax-M3</td><td>minimax</td><td>120m</td><td>904m ago</td><td><span class="tag tag-warn">stale</span></td></tr>
+</table>
+
+<h2>Changes This Run</h2>
+<div class="changes">
+<ul>
+<li>🧟 <strong>Zombie outbreak recovered:</strong> 10 foremen stuck in "already running" state reset to scheduled (GitReins, Helios, Hilo, Bunker, EduOS, dexdat-build, hivemind, totalstack-*, Hermes Plays Pokémon)</li>
+<li>🔧 <strong>Stale state fix:</strong> dexdat-bunker-loader unpaused (had no paused_reason)</li>
+<li>⚠️ <strong>Provider outage detected:</strong> custom:opencode-go returning HTTP 502 — all foremen using it blocked. Mass "already running" cascade caused by provider timeout → zombie state</li>
+<li>⚠️ <strong>Rate limiting:</strong> hilo-foreman hit HTTP 429 (deepseek overloaded)</li>
+<li>📊 <strong>Schedule drift:</strong> GitReins + hilo running */15 instead of 120m/120m (inventory mismatch — foremen model rule allows deepseek-v4-pro for planning)</li>
+</ul>
+</div>
+
+<div class="two-col">
+<div class="card">
+<h3>24h Activity</h3>
+<ul>
+<li>🟢 <strong>Helix:</strong> 24 pending tasks, active dev (last commit 2026-07-07 20:37)</li>
+<li>🟢 <strong>Helios:</strong> 10 pending, 27 done — most active project</li>
+<li>🟡 <strong>GitReins:</strong> 3 pending, CI stalled by provider outage</li>
+<li>⚫ <strong>10 idle projects:</strong> 0 pending tasks (dexdat-memory, dexdat-core, muster, musterflow, warpfs, asce, ai_plays_poke, H4F, off-by-one, SpecLang)</li>
+<li>🟡 <strong>Muster CI:</strong> golangci.yml v1 format issue — 3 consecutive failures</li>
+<li>🟢 <strong>Kobayashi-Maru CI:</strong> All green (Determinism + Security Tests)</li>
+</ul>
+</div>
+<div class="card">
+<h3>72h Trends</h3>
+<ul>
+<li>📉 <strong>Fleet paralysis:</strong> ~20h of no fire for most foremen due to custom:opencode-go 502 outage cascading into zombie state</li>
+<li>📈 <strong>Helix velocity:</strong> 24 new pending tasks queued — hot project needing active foreman</li>
+<li>📈 <strong>Helios velocity:</strong> 10 pending, 27 completed — steady throughput before outage</li>
+<li>⚪ <strong>Stable idle:</strong> 16/26 projects at 0 pending — correctly slowed</li>
+<li>⚠️ <strong>New foremen never fired:</strong> DeepSeek Dashboard, Hivemind Coding, Mythos Coding (wojons), escalation-doctrine — created but zombie state prevented execution</li>
+</ul>
+</div>
+</div>
+
+<h2>Issues Detected</h2>
+<ul>
+<li>🔴 <strong>CRITICAL — custom:opencode-go provider outage:</strong> HTTP 502 errors across all foremen. This is the root cause of the fleet-wide stall. The provider needs attention (server restart, auth check, or fallback activation).</li>
+<li>🔴 <strong>CRITICAL — Mass zombie outbreak (RESOLVED):</strong> 10 foremen accumulated "already running" locks over ~3 hours. Root cause: custom:opencode-go 502 errors caused agent sessions to crash without cleanup, leaving zombie locks. All cleared this run.</li>
+<li>🟡 <strong>Muster CI failing:</strong> golangci.yml v1 format issue across 3 runs. Investigation task exists from 2026-07-06 supervisor.</li>
+<li>🟡 <strong>Helios CI billing-blocked:</strong> All runs from June 22 — org-wide dexdat billing issue, not a code problem.</li>
+<li>🟡 <strong>4 foremen never executed:</strong> DeepSeek Dashboard, Hivemind Coding, Mythos Coding (wojons-mythos), escalation-doctrine. Just cleared zombie locks — should fire next tick.</li>
+<li>🟡 <strong>Helix model drift:</strong> Using deepseek-v4-pro/custom:opencode-go instead of inventory's glm-5.2/ollama-cloud. Foreman model rule allows this (planning model), but 24 pending tasks suggest coding model needed.</li>
+<li>⚪ <strong>Bunker CI queued:</strong> Still stuck as queued in deployBunker org — infra/billing issue.</li>
+</ul>
+
+<p class="footer">Coding-Hermes Fleet Report · 2026-07-08 · <a href="https://github.com/totalwindupflightsystems/reports/blob/main/fleet-report-2026-07-08-0507.html" style="color:var(--accent)">View on GitHub</a></p>
+
+</body>
+</html>
