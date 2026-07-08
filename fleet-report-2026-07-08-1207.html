@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coding Hermes Fleet Report — 2026-07-08 17:08 UTC</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0d1117; color: #c9d1d9; padding: 20px; }
+h1 { color: #58a6ff; margin-bottom: 8px; }
+h2 { color: #8b949e; margin: 24px 0 12px; font-size: 1.2em; }
+.subtitle { color: #8b949e; font-size: 0.9em; margin-bottom: 24px; }
+.metrics { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+.metric { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 16px; min-width: 100px; text-align: center; }
+.metric .value { font-size: 2em; font-weight: bold; color: #58a6ff; }
+.metric .label { font-size: 0.8em; color: #8b949e; margin-top: 4px; }
+.metric.good .value { color: #3fb950; }
+.metric.warn .value { color: #d29922; }
+.metric.bad .value { color: #f85149; }
+table { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
+th, td { padding: 8px 12px; text-align: left; border-bottom: 1px solid #21262d; }
+th { color: #8b949e; font-weight: 600; font-size: 0.85em; }
+tr:hover { background: #161b22; }
+.section { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 16px; margin-bottom: 16px; }
+.section h3 { color: #58a6ff; margin-bottom: 8px; }
+.issue { padding: 4px 0; }
+.issue.bad { color: #f85149; }
+.issue.warn { color: #d29922; }
+.issue.good { color: #3fb950; }
+.footer { color: #484f58; font-size: 0.8em; margin-top: 32px; text-align: center; }
+</style>
+</head>
+<body>
+<h1>🚀 Coding Hermes Fleet Report</h1>
+<p class="subtitle">Generated: 2026-07-08 17:08 UTC | Supervisor Run</p>
+
+<div class="metrics">
+<div class="metric good"><div class="value">3</div><div class="label">Healthy</div></div>
+<div class="metric warn"><div class="value">10</div><div class="label">Warning</div></div>
+<div class="metric bad"><div class="value">12</div><div class="label">Error</div></div>
+<div class="metric"><div class="value">0</div><div class="label">Paused</div></div>
+<div class="metric"><div class="value">40</div><div class="label">Pending Tasks</div></div>
+<div class="metric good"><div class="value">277</div><div class="label">Completed</div></div>
+</div>
+
+<h2>📊 Fleet Status</h2>
+<table>
+<thead><tr><th>Project</th><th>Pending</th><th>Done</th><th>Model</th><th>Provider</th><th>Speed</th><th>Last Run</th></tr></thead>
+<tbody>
+<tr>
+    <td>🟡 helix-foreman</td>
+    <td>21</td>
+    <td>3</td>
+    <td>glm-5.2</td>
+    <td>zai-glm</td>
+    <td>*/15 * * * *</td>
+    <td>2026-07-08T00:31</td>
+</tr><tr>
+    <td>🔴 helios-coding-hermes-foreman</td>
+    <td>10</td>
+    <td>27</td>
+    <td>deepseek-v4-flash</td>
+    <td>custom:opencode-go</td>
+    <td>*/15 * * * *</td>
+    <td>2026-07-07T18:56</td>
+</tr><tr>
+    <td>🟡 kobayashi-maru-foreman</td>
+    <td>4</td>
+    <td>27</td>
+    <td>deepseek-v4-flash</td>
+    <td>custom:opencode-go</td>
+    <td>*/15 * * * *</td>
+    <td>2026-07-08T03:34</td>
+</tr><tr>
+    <td>🔴 GitReins Coding Foreman</td>
+    <td>3</td>
+    <td>42</td>
+    <td>deepseek-v4-pro</td>
+    <td>custom:opencode-go</td>
+    <td>*/15 * * * *</td>
+    <td>2026-07-07T18:55</td>
+</tr><tr>
+    <td>🟢 EduOS Alpha Dev Loop</td>
+    <td>1</td>
+    <td>14</td>
+    <td>deepseek-v4-pro</td>
+    <td>custom:opencode-go</td>
+    <td>every 30m</td>
+    <td>2026-07-08T12:00</td>
+</tr><tr>
+    <td>🟡 mafia-benchmark-dev-loop</td>
+    <td>1</td>
+    <td>0</td>
+    <td>deepseek-v4-flash</td>
+    <td>custom:opencode-go</td>
+    <td>every 30m</td>
+    <td>2026-07-08T06:18</td>
+</tr><tr>
+    <td>🟡 ASCE Coding Foreman</td>
+    <td>0</td>
+    <td>8</td>
+    <td>deepseek-v4-flash</td>
+    <td>custom:opencode-go</td>
+    <td>every 120m</td>
+    <td>2026-07-08T04:44</td>
+</tr><tr>
+    <td>🔴 Bunker Coding Hermes</td>
+    <td>0</td>
+    <td>1</td>
+    <td>kimi-for-coding</td>
+    <td>kimi-for-coding</td>
+    <td>*/15 * * * *</td>
+    <td>2026-07-07T19:25</td>
+</tr><tr>
+    <td>🔴 DeepSeek Dashboard Foreman</td>
+    <td>0</td>
+    <td>0</td>
+    <td>deepseek-v4-flash</td>
+    <td>custom:opencode-go</td>
+    <td>every 360m</td>
+    <td>never</td>
+</tr><tr>
+    <td>🟡 H4F Coding Foreman</td>
+    <td>0</td>
+    <td>6</td>
+    <td>deepseek-v4-flash</td>
+    <td>custom:opencode-go</td>
+    <td>every 120m</td>
+    <td>2026-07-08T05:44</td>
+</tr><tr>
+    <td>🔴 Hivemind Coding Foreman</td>
+    <td>0</td>
+    <td>0</td>
+    <td>deepseek-v4-pro</td>
+    <td>custom:opencode-go</td>
+    <td>every 360m</td>
+    <td>never</td>
+</tr><tr>
+    <td>🔴 Mythos Coding Foreman</td>
+    <td>0</td>
+    <td>3</td>
+    <td>deepseek-v4-flash</td>
+    <td>custom:opencode-go</td>
+    <td>every 360m</td>
+    <td>never</td>
+</tr><tr>
+    <td>🔴 RethinkDB Steward</td>
+    <td>0</td>
+    <td>0</td>
+    <td>deepseek-v4-flash</td>
+    <td>custom:opencode-go</td>
+    <td>every 360m</td>
+    <td>2026-07-07T20:15</td>
+</tr><tr>
+    <td>🟢 ai-plays-pokemon-foreman</td>
+    <td>0</td>
+    <td>6</td>
+    <td>deepseek-v4-flash</td>
+    <td>custom:opencode-go</td>
+    <td>every 120m</td>
+    <td>2026-07-08T10:14</td>
+</tr><tr>
+    <td>🔴 chimera-coding-foreman</td>
+    <td>0</td>
+    <td>0</td>
+    <td>deepseek-v4-flash</td>
+    <td>custom:opencode-go</td>
+    <td>every 360m</td>
+    <td>2026-07-07T05:53</td>
+</tr><tr>
+    <td>🟡 consensus-coding-foreman</td>
+    <td>0</td>
+    <td>0</td>
+    <td>deepseek-v4-flash</td>
+    <td>custom:opencode-go</td>
+    <td>every 360m</td>
+    <td>2026-07-08T04:39</td>
+</tr><tr>
+    <td>🟢 dexdat-build-loop</td>
+    <td>0</td>
+    <td>26</td>
+    <td>deepseek-v4-flash</td>
+    <td>custom:opencode-go</td>
+    <td>every 120m</td>
+    <td>2026-07-08T09:45</td>
+</tr><tr>
+    <td>🟡 dexdat-coding-hermes-foreman</td>
+    <td>0</td>
+    <td>7</td>
+    <td>deepseek-v4-flash</td>
+    <td>custom:opencode-go</td>
+    <td>every 120m</td>
+    <td>2026-07-08T06:38</td>
+</tr><tr>
+    <td>🟡 escalation-doctrine-foreman</td>
+    <td>0</td>
+    <td>0</td>
+    <td>deepseek-v4-flash</td>
+    <td>custom:opencode-go</td>
+    <td>every 360m</td>
+    <td>2026-07-08T06:42</td>
+</tr><tr>
+    <td>🔴 hilo-foreman</td>
+    <td>0</td>
+    <td>6</td>
+    <td>deepseek-v4-flash</td>
+    <td>custom:opencode-go</td>
+    <td>*/15 * * * *</td>
+    <td>2026-07-07T04:07</td>
+</tr><tr>
+    <td>🔴 muster-coding-hermes-loop</td>
+    <td>0</td>
+    <td>76</td>
+    <td>deepseek-v4-flash</td>
+    <td>custom:opencode-go</td>
+    <td>every 120m</td>
+    <td>2026-07-07T23:23</td>
+</tr><tr>
+    <td>🔴 musterflow-foreman</td>
+    <td>0</td>
+    <td>25</td>
+    <td>deepseek-v4-flash</td>
+    <td>custom:opencode-go</td>
+    <td>every 360m</td>
+    <td>2026-07-07T02:40</td>
+</tr><tr>
+    <td>🔴 mythos-coding-foreman</td>
+    <td>0</td>
+    <td>0</td>
+    <td>grok-4.3</td>
+    <td>xai-oauth</td>
+    <td>every 360m</td>
+    <td>2026-07-07T08:39</td>
+</tr><tr>
+    <td>🟡 off-by-one-foreman</td>
+    <td>0</td>
+    <td>0</td>
+    <td>deepseek-v4-pro</td>
+    <td>custom:opencode-go</td>
+    <td>every 120m</td>
+    <td>2026-07-08T01:29</td>
+</tr><tr>
+    <td>🟡 speclang-ci-foreman</td>
+    <td>0</td>
+    <td>0</td>
+    <td>MiniMax-M3</td>
+    <td>minimax</td>
+    <td>every 120m</td>
+    <td>2026-07-08T05:59</td>
+</tr>
+</tbody>
+</table>
+
+<h2>🔧 Changes This Run</h2>
+<div class="section">
+<h3>Phase 0 Auto-Heal (22 fixes)</h3>
+<div class="issue good">✅ Reset stale next_run_at for 22 zombie/stale coding-hermes jobs</div>
+<div class="issue good">✅ Schedule schema verified: all jobs have valid kind/expr/minutes</div>
+<div class="issue">No 0A/0B fixes needed — all schedules valid, no stale states</div>
+
+<h3>Rebalancing (8 changes)</h3>
+<div class="issue good">🔼 kobayashi-maru-foreman: 30m → */15 (4 pending)</div>
+<div class="issue good">🔼 mafia-benchmark-dev-loop: 120m → 30m (1 pending)</div>
+<div class="issue">🔽 dexdat-build-loop: 30m → 120m (0 pending)</div>
+<div class="issue">🔽 Hivemind Coding Foreman: 120m → 360m (0 pending, never fired)</div>
+<div class="issue">🔽 Mythos Coding Foreman: 120m → 360m (0 pending)</div>
+<div class="issue">🔽 RethinkDB Steward: 120m → 360m (0 pending)</div>
+<div class="issue">🔽 escalation-doctrine-foreman: 120m → 360m (0 pending)</div>
+<div class="issue warn">⚠️ FLAG: hilo-foreman schedule regression at */15 (was 120m per inventory, PINNED — not changed)</div>
+</div>
+
+<h2>⚠️ Issues Detected</h2>
+<div class="section">
+<div class="issue bad">🔴 custom:opencode-go provider returning HTTP 502/503 (148 occurrences in logs). Multiple foremen locked in zombie "already running" state.</div>
+<div class="issue bad">🔴 Muster CI failing: Build + Cross-Platform Tests + Docker Build (libseccomp fix marked complete but not effective)</div>
+<div class="issue bad">🔴 Helios CI: billing failure since June 22 (dexdat org)</div>
+<div class="issue bad">🔴 Hivemind CI: billing failure since June 21 (dexdat org)</div>
+<div class="issue warn">🟡 Bunker CI: all runs queued (runner capacity/billing)</div>
+<div class="issue warn">🟡 hilo-foreman: schedule regression */15 (pinned, flagged)</div>
+</div>
+
+<h2>📈 Hot Projects</h2>
+<div class="section">
+<div class="issue good">🔥 Helix: 21 pending tasks, 10 commits in 48h, glm-5.2/zai-glm/15m — CORRECT</div>
+<div class="issue good">🔥 Helios: 10 pending, 23 outdated Go deps, dual-model budget foreman — CORRECT</div>
+<div class="issue">🔥 Kobayashi-Maru: 4 pending, 85 outdated deps, upgraded to */15 this run</div>
+</div>
+
+<h2>🔄 CI Status</h2>
+<div class="section">
+<div class="issue good">✅ Kobayashi-Maru: Security Tests + Determinism CI PASSING</div>
+<div class="issue good">✅ Hilo: All CI PASSING</div>
+<div class="issue good">✅ Hermes4Friends: All CI PASSING</div>
+<div class="issue good">✅ Consensus: All CI PASSING</div>
+<div class="issue good">✅ Off-by-one: Dependabot PASSING</div>
+<div class="issue bad">❌ Muster: Build/Docker/Cross-Platform FAILING (task added)</div>
+<div class="issue bad">❌ Helios: CI billing FAILURE (dexdat org)</div>
+<div class="issue bad">❌ Hivemind: Test/Lint billing FAILURE (dexdat org)</div>
+<div class="issue warn">⏳ Bunker: QUEUED (runner issue)</div>
+</div>
+
+<h2>📦 Dependencies</h2>
+<div class="section">
+<div class="issue">Kobayashi-Maru: 85 outdated Go deps</div>
+<div class="issue">Muster: 100 outdated Go deps</div>
+<div class="issue">Helios: 23 outdated Go deps</div>
+<div class="issue">Helix: 5 outdated Go deps</div>
+<div class="issue warn">⚠️ baoyu-article-illustrator skill has update available</div>
+</div>
+
+<div class="footer">
+Coding Hermes Supervisor · Every 4 Hours · 2026-07-08 17:08 UTC
+</div>
+</body>
+</html>
