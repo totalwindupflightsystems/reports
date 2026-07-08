@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coding Hermes Fleet Report — 2026-07-08-0147</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0d1117;color:#c9d1d9;padding:20px;max-width:1400px;margin:0 auto}
+h1{color:#58a6ff;margin-bottom:6px;font-size:22px}
+h2{color:#8b949e;font-size:13px;margin-bottom:20px;font-weight:400}
+.metrics{display:flex;gap:16px;margin-bottom:20px;flex-wrap:wrap}
+.metric{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:14px 18px;min-width:100px;text-align:center}
+.metric .val{font-size:26px;font-weight:700}
+.metric .lbl{font-size:11px;color:#8b949e;margin-top:2px}
+.vg{color:#3fb950}.vy{color:#d29922}.vr{color:#f85149}.vx{color:#8b949e}
+table{width:100%;border-collapse:collapse;margin-bottom:20px;font-size:12px}
+th{background:#161b22;border:1px solid #30363d;padding:8px 10px;text-align:left;color:#8b949e;font-weight:600;position:sticky;top:0}
+td{border:1px solid #30363d;padding:7px 10px}
+tr:hover{background:#161b22}
+.section{margin-bottom:24px}
+.section h3{color:#58a6ff;margin-bottom:10px;border-bottom:1px solid #30363d;padding-bottom:5px;font-size:15px}
+.changes{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:14px 18px;font-size:12px;line-height:1.6}
+.changes li{margin-left:18px}
+.changes b{color:#d2a8ff}
+.badge{display:inline-block;padding:1px 6px;border-radius:10px;font-size:10px;margin-left:4px;font-weight:600}
+.bp{background:#2a1b38;color:#d2a8ff}
+.bz{background:#3d1f1f;color:#ff7b72}
+.bf{background:#1f3a2b;color:#7ee787}
+.bo{background:#3d2e1f;color:#d29922}
+.issues{font-size:12px;line-height:1.7}
+.issues li{margin-bottom:6px}
+</style>
+</head>
+<body>
+
+<h1>🛡️ Coding Hermes Fleet Report</h1>
+<h2>Wednesday, July 08 2026 — 01:47 UTC | Supervisor Run — 24 fixes applied</h2>
+
+<div class="metrics">
+  <div class="metric"><div class="val vg">20</div><div class="lbl">Healthy</div></div>
+  <div class="metric"><div class="val vy">5</div><div class="lbl">Warn</div></div>
+  <div class="metric"><div class="val vr">2</div><div class="lbl">Error</div></div>
+  <div class="metric"><div class="val vx">0</div><div class="lbl">Paused</div></div>
+  <div class="metric"><div class="val vg">26</div><div class="lbl">Pending</div></div>
+  <div class="metric"><div class="val vx">27</div><div class="lbl">Foremen</div></div>
+</div>
+
+<div class="section">
+  <h3>Changes This Run</h3>
+  <div class="changes">
+    <ul>
+      <li><b>Phase 0F Zombie Recovery:</b> Reset 4 zombie-locked jobs — GitReins, helios, hilo, Bunker (all "already running" 3+ times/hour for hours). See <i>references/zombie-already-running-state.md</i>.</li>
+      <li><b>Phase 0A-POST Force Overdue:</b> 20 overdue jobs (8-65h stale) force-fired + 3 never-ran jobs (DeepSeek Dashboard, Hivemind Coding, Mythos Coding)</li>
+      <li><b>Provider Fixes (5):</b> dexdat-memory: ollama-glm→zai-glm; off-by-one/hivemind/helios/hilo: deepseek-PAYG→custom:opencode-go</li>
+      <li><b>Rebalance:</b> dexdat-coding-hermes-foreman: glm-5.2@30m→Flash@120m (0 pending, all tasks done)</li>
+      <li><b>New Foreman:</b> escalation-doctrine-foreman created — Godot strategy game, 5 pending tasks, @120m Flash</li>
+      <li><b>DuckBrain:</b> escalation-doctrine namespace seeded with project status + concept</li>
+      <li><b>Flagged:</b> mythos-coding-foreman running Flash/opencode-go instead of pinned grok-4.3/xai-oauth</li>
+    </ul>
+  </div>
+</div>
+
+<div class="section">
+  <h3>Fleet Status</h3>
+  <table>
+    <tr><th>Status</th><th>Project</th><th>Model</th><th>Provider</th><th>Speed</th><th>Pend</th><th>CI</th><th>Last Run</th></tr>
+    <tr style="background:#0d1117">
+      <td>✅ ok</td>
+      <td>ASCE Coding Foreman</td>
+      <td>deepseek-v4-flash</td>
+      <td>custom:opencode-go</td>
+      <td>every 120m</td>
+      <td>0</td>
+      <td>—</td>
+      <td>2026-07-07 15:23</td>
+    </tr>
+    <tr>
+      <td>✅ ok</td>
+      <td>Bunker Coding Hermes<span class="badge bp">PIN</span></td>
+      <td>kimi-for-coding</td>
+      <td>kimi-for-coding</td>
+      <td>*/15 * * * *</td>
+      <td>0</td>
+      <td>QUEUED</td>
+      <td>2026-07-07 19:25</td>
+    </tr>
+    <tr style="background:#0d1117">
+      <td>✅ ok</td>
+      <td>Coding Hermes Supervisor</td>
+      <td>deepseek-v4-pro</td>
+      <td>deepseek</td>
+      <td>0 */4 * * *</td>
+      <td>0</td>
+      <td>—</td>
+      <td>2026-07-07 04:16</td>
+    </tr>
+    <tr>
+      <td>🟡 never-ran</td>
+      <td>DeepSeek Dashboard Foreman</td>
+      <td>deepseek-v4-flash</td>
+      <td>custom:opencode-go</td>
+      <td>every 360m</td>
+      <td>0</td>
+      <td>—</td>
+      <td>never</td>
+    </tr>
+    <tr style="background:#0d1117">
+      <td>✅ ok</td>
+      <td>EduOS Alpha Dev Loop</td>
+      <td>deepseek-v4-pro</td>
+      <td>custom:opencode-go</td>
+      <td>every 30m</td>
+      <td>1</td>
+      <td>—</td>
+      <td>2026-07-07 18:54</td>
+    </tr>
+    <tr>
+      <td>🔴 error-502</td>
+      <td>GitReins Coding Foreman</td>
+      <td>deepseek-v4-pro</td>
+      <td>custom:opencode-go</td>
+      <td>*/15 * * * *</td>
+      <td>3</td>
+      <td>—</td>
+      <td>2026-07-07 18:55</td>
+    </tr>
+    <tr style="background:#0d1117">
+      <td>✅ ok</td>
+      <td>H4F Coding Foreman</td>
+      <td>deepseek-v4-flash</td>
+      <td>custom:opencode-go</td>
+      <td>every 120m</td>
+      <td>0</td>
+      <td>PASS</td>
+      <td>2026-07-07 05:43</td>
+    </tr>
+    <tr>
+      <td>🟡 never-ran</td>
+      <td>Hivemind Coding Foreman</td>
+      <td>deepseek-v4-pro</td>
+      <td>custom:opencode-go</td>
+      <td>every 120m</td>
+      <td>0</td>
+      <td>—</td>
+      <td>never</td>
+    </tr>
+    <tr style="background:#0d1117">
+      <td>🟡 never-ran</td>
+      <td>Mythos Coding Foreman</td>
+      <td>deepseek-v4-flash</td>
+      <td>custom:opencode-go</td>
+      <td>every 120m</td>
+      <td>1</td>
+      <td>—</td>
+      <td>never</td>
+    </tr>
+    <tr>
+      <td>✅ ok</td>
+      <td>RethinkDB Steward</td>
+      <td>MiniMax-M3</td>
+      <td>minimax</td>
+      <td>every 120m</td>
+      <td>0</td>
+      <td>—</td>
+      <td>2026-07-07 20:15</td>
+    </tr>
+    <tr style="background:#0d1117">
+      <td>✅ ok</td>
+      <td>ai-plays-pokemon-foreman</td>
+      <td>deepseek-v4-flash</td>
+      <td>custom:opencode-go</td>
+      <td>every 120m</td>
+      <td>0</td>
+      <td>—</td>
+      <td>2026-07-07 09:33</td>
+    </tr>
+    <tr>
+      <td>✅ ok</td>
+      <td>chimera-coding-foreman</td>
+      <td>deepseek-v4-flash</td>
+      <td>custom:opencode-go</td>
+      <td>every 360m</td>
+      <td>0</td>
+      <td>—</td>
+      <td>2026-07-07 05:53</td>
+    </tr>
+    <tr style="background:#0d1117">
+      <td>✅ ok</td>
+      <td>consensus-coding-foreman</td>
+      <td>deepseek-v4-flash</td>
+      <td>custom:opencode-go</td>
+      <td>every 360m</td>
+      <td>0</td>
+      <td>—</td>
+      <td>2026-07-07 16:16</td>
+    </tr>
+    <tr>
+      <td>✅ ok</td>
+      <td>deepseek-dashboard coding-hermes</td>
+      <td>deepseek-v4-flash</td>
+      <td>custom:opencode-go</td>
+      <td>every 360m</td>
+      <td>0</td>
+      <td>—</td>
+      <td>2026-07-07 13:30</td>
+    </tr>
+    <tr style="background:#0d1117">
+      <td>✅ ok</td>
+      <td>dexdat-build-loop</td>
+      <td>gpt-5.4</td>
+      <td>openai-codex</td>
+      <td>every 30m</td>
+      <td>4</td>
+      <td>—</td>
+      <td>2026-07-07 17:56</td>
+    </tr>
+    <tr>
+      <td>✅ ok</td>
+      <td>dexdat-coding-hermes-foreman</td>
+      <td>deepseek-v4-flash</td>
+      <td>custom:opencode-go</td>
+      <td>every 120m</td>
+      <td>0</td>
+      <td>—</td>
+      <td>2026-07-07 20:39</td>
+    </tr>
+    <tr style="background:#0d1117">
+      <td>🟡 never-ran</td>
+      <td>escalation-doctrine-foreman</td>
+      <td>deepseek-v4-flash</td>
+      <td>custom:opencode-go</td>
+      <td>every 120m</td>
+      <td>5</td>
+      <td>—</td>
+      <td>never</td>
+    </tr>
+    <tr>
+      <td>🔴 error-502</td>
+      <td>helios-coding-hermes-foreman<span class="badge bp">PIN</span></td>
+      <td>deepseek-v4-pro</td>
+      <td>custom:opencode-go</td>
+      <td>*/15 * * * *</td>
+      <td>10</td>
+      <td>FAIL</td>
+      <td>2026-07-07 18:56</td>
+    </tr>
+    <tr style="background:#0d1117">
+      <td>✅ ok</td>
+      <td>helix-foreman</td>
+      <td>deepseek-v4-pro</td>
+      <td>custom:opencode-go</td>
+      <td>every 120m</td>
+      <td>0</td>
+      <td>PASS</td>
+      <td>2026-07-07 04:07</td>
+    </tr>
+    <tr>
+      <td>🟡 rate-limit</td>
+      <td>hilo-foreman<span class="badge bp">PIN</span></td>
+      <td>deepseek-v4-pro</td>
+      <td>custom:opencode-go</td>
+      <td>*/15 * * * *</td>
+      <td>0</td>
+      <td>PASS</td>
+      <td>2026-07-07 04:07</td>
+    </tr>
+    <tr style="background:#0d1117">
+      <td>✅ ok</td>
+      <td>kobayashi-maru-foreman</td>
+      <td>deepseek-v4-flash</td>
+      <td>custom:opencode-go</td>
+      <td>every 120m</td>
+      <td>1</td>
+      <td>PASS</td>
+      <td>2026-07-07 08:59</td>
+    </tr>
+    <tr>
+      <td>✅ ok</td>
+      <td>mafia-benchmark-dev-loop</td>
+      <td>deepseek-v4-flash</td>
+      <td>custom:opencode-go</td>
+      <td>every 120m</td>
+      <td>1</td>
+      <td>—</td>
+      <td>2026-07-07 20:30</td>
+    </tr>
+    <tr style="background:#0d1117">
+      <td>✅ ok</td>
+      <td>muster-coding-hermes-loop</td>
+      <td>deepseek-v4-flash</td>
+      <td>custom:opencode-go</td>
+      <td>every 120m</td>
+      <td>0</td>
+      <td>FAIL</td>
+      <td>2026-07-07 16:53</td>
+    </tr>
+    <tr>
+      <td>✅ ok</td>
+      <td>musterflow-foreman</td>
+      <td>deepseek-v4-flash</td>
+      <td>custom:opencode-go</td>
+      <td>every 360m</td>
+      <td>0</td>
+      <td>FAIL</td>
+      <td>2026-07-07 02:40</td>
+    </tr>
+    <tr style="background:#0d1117">
+      <td>✅ ok</td>
+      <td>mythos-coding-foreman<span class="badge bp">PIN</span></td>
+      <td>deepseek-v4-flash</td>
+      <td>custom:opencode-go</td>
+      <td>every 360m</td>
+      <td>0</td>
+      <td>—</td>
+      <td>2026-07-07 08:39</td>
+    </tr>
+    <tr>
+      <td>✅ ok</td>
+      <td>off-by-one-foreman</td>
+      <td>deepseek-v4-pro</td>
+      <td>custom:opencode-go</td>
+      <td>every 120m</td>
+      <td>0</td>
+      <td>—</td>
+      <td>2026-07-07 09:00</td>
+    </tr>
+    <tr style="background:#0d1117">
+      <td>✅ ok</td>
+      <td>speclang-ci-foreman<span class="badge bp">PIN</span></td>
+      <td>MiniMax-M3</td>
+      <td>minimax</td>
+      <td>every 120m</td>
+      <td>0</td>
+      <td>—</td>
+      <td>2026-07-07 09:03</td>
+    </tr>
+  </table>
+</div>
+
+<div class="section">
+  <h3>CI Status</h3>
+  <div class="issues">
+    <li>🔴 <b>Helios:</b> CI billing-blocked since June 22 — 16 days. Both CI + Deploy workflows fail. dexdat org billing.</li>
+    <li>🔴 <b>Muster:</b> CI + Cross-Platform + Build all FAILING on latest run (2026-07-07). Investigation task added last cycle, still broken.</li>
+    <li>⚫ <b>Bunker:</b> CI queued since June 26 — all 3 latest runs queued, never started. deployBunker org.</li>
+    <li>✅ <b>Kobayashi-Maru:</b> Security Tests + Determinism CI all PASS. Deployment pipeline (ci-cd-pipeline.yml) still fails (needs infra secrets).</li>
+    <li>✅ <b>Helix:</b> Helix CI all PASS — healthy.</li>
+    <li>✅ <b>Hilo:</b> CI all PASS — healthy.</li>
+    <li>✅ <b>H4F:</b> CI + Reconstruction Test all PASS — reconstruction test now passing (was failing last cycle with cleanup error).</li>
+  </div>
+</div>
+
+<div class="section">
+  <h3>Dependencies &amp; Maintenance</h3>
+  <div class="issues">
+    <li>⚠️ <b>Hermes v0.17.0</b> — 1883 commits behind upstream. Run <code>hermes update</code>.</li>
+    <li>⚠️ <b>Helios:</b> 10+ outdated Go dependencies (chi, miniredis, cpuid, etc.)</li>
+    <li>⚠️ <b>Bunker:</b> 10+ outdated Go dependencies (chi, fsnotify, protobuf, etc.)</li>
+    <li>✅ <b>Helix:</b> Minor Go dep updates only</li>
+    <li>✅ <b>Hilo (warpfs):</b> Cargo.toml present, cargo-outdated not installed on host</li>
+  </div>
+</div>
+
+<div class="section">
+  <h3>Top 5 Busiest Projects</h3>
+  <div class="issues">
+    <li>🔥 <b>Helios</b> — 10 pending tasks (35 total), */15, deepseek-v4-pro</li>
+    <li>🔥 <b>escalation-doctrine</b> — 5 pending tasks (NEW), every 120m, Flash</li>
+    <li>🔥 <b>dexdat-core</b> — 4 pending tasks, every 30m, gpt-5.4</li>
+    <li>🔥 <b>GitReins</b> — 3 pending tasks, */15, deepseek-v4-pro</li>
+    <li>🟡 <b>Kobayashi-Maru</b> — 1 pending, every 120m, Flash</li>
+  </div>
+</div>
+
+<div class="section">
+  <h3>Issues Requiring Human Attention</h3>
+  <div class="issues">
+    <li>🔴 <b>Helios CI billing:</b> Still blocked since June 22. All 3 recent runs failed. dexdat org needs billing resolution.</li>
+    <li>🔴 <b>Muster CI:</b> Still failing after last cycle's "investigation task." All 3 workflows fail on latest run.</li>
+    <li>🟡 <b>mythos-coding-foreman:</b> Runs Flash/opencode-go instead of pinned grok-4.3/xai-oauth. Supervisor left it alone (pinned).</li>
+    <li>🟡 <b>Bunker CI:</b> Still queued since June 26. 3 most recent runs never started. deployBunker org.</li>
+    <li>⚠️ <b>Hermes update:</b> 1883 commits behind. Recommend updating soon.</li>
+  </div>
+</div>
+
+</body>
+</html>
