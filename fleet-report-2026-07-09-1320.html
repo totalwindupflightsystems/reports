@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coding-Hermes Fleet Report — 2026-07-09 13:20 UTC</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: #0d1117; color: #c9d1d9; padding: 20px; }
+h1 { font-size: 1.5em; margin-bottom: 4px; }
+.subtitle { color: #8b949e; font-size: 0.85em; margin-bottom: 20px; }
+.metrics { display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
+.metric { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 16px; min-width: 120px; text-align: center; }
+.metric .value { font-size: 2em; font-weight: 700; }
+.metric .label { font-size: 0.75em; color: #8b949e; text-transform: uppercase; }
+.metric.green .value { color: #3fb950; }
+.metric.yellow .value { color: #d29922; }
+.metric.red .value { color: #f85149; }
+.metric.blue .value { color: #58a6ff; }
+table { width: 100%; border-collapse: collapse; margin-bottom: 24px; font-size: 0.85em; }
+th, td { padding: 8px 10px; text-align: left; border-bottom: 1px solid #21262d; }
+th { background: #161b22; color: #8b949e; font-weight: 600; position: sticky; top: 0; }
+tr:hover { background: #161b22; }
+.pinned { color: #d29922; }
+.section { margin-bottom: 28px; }
+.section h2 { font-size: 1.15em; color: #58a6ff; margin-bottom: 10px; border-bottom: 1px solid #21262d; padding-bottom: 6px; }
+ul { margin-left: 20px; }
+li { margin-bottom: 4px; font-size: 0.88em; }
+.changes li { color: #3fb950; }
+.issues li { color: #f85149; }
+.issues li.warn { color: #d29922; }
+.status-ok { color: #3fb950; }
+.status-warn { color: #d29922; }
+.status-error { color: #f85149; }
+</style>
+</head>
+<body>
+<h1>🤖 Coding-Hermes Fleet Report</h1>
+<div class="subtitle">2026-07-09 13:20 UTC · Supervisor Tick · DeepSeek V4 Pro</div>
+
+<div class="metrics">
+<div class="metric green"><div class="value">10</div><div class="label">Active</div></div>
+<div class="metric yellow"><div class="value">15</div><div class="label">Idle</div></div>
+<div class="metric red"><div class="value">0</div><div class="label">Issues</div></div>
+<div class="metric blue"><div class="value">0</div><div class="label">Paused</div></div>
+<div class="metric blue"><div class="value">53</div><div class="label">Pending Tasks</div></div>
+<div class="metric"><div class="value">376</div><div class="label">Done</div></div>
+</div>
+
+<div class="section">
+<h2>📊 Fleet Status</h2>
+<table>
+<thead>
+<tr><th>Project</th><th>Model</th><th>Provider</th><th>Speed</th><th>Pending</th><th>Done</th><th>Last Run</th><th>CI</th><th>Pinned</th></tr>
+</thead>
+<tbody>
+<tr>
+<td>Helios</td>
+<td>deepseek-v4-flash</td>
+<td>custom:opencode-go</td>
+<td>*/15 * * * *</td>
+<td><b>6</b></td>
+<td>31</td>
+<td><span class="status-ok">2h ago</span></td>
+<td>🔴 billing-blocked</td>
+<td>🔒</td>
+</tr>
+<tr>
+<td>Helix</td>
+<td>grok-4.5</td>
+<td>xai-oauth</td>
+<td>*/15 * * * *</td>
+<td><b>19</b></td>
+<td>5</td>
+<td><span class="status-ok">2h ago</span></td>
+<td></td>
+<td>🔒</td>
+</tr>
+<tr>
+<td>H4F Infra</td>
+<td>deepseek-v4-pro</td>
+<td>custom:opencode-go</td>
+<td>*/15 * * * *</td>
+<td><b>3</b></td>
+<td>2</td>
+<td><span class="status-ok">2h ago</span></td>
+<td>✅ mostly passing</td>
+<td></td>
+</tr>
+<tr>
+<td>GitReins</td>
+<td>deepseek-v4-pro</td>
+<td>custom:opencode-go</td>
+<td>*/15 * * * *</td>
+<td><b>3</b></td>
+<td>42</td>
+<td><span class="status-error">37h ago</span></td>
+<td>GitLab</td>
+<td></td>
+</tr>
+<tr>
+<td>Off-by-One</td>
+<td>deepseek-v4-pro</td>
+<td>custom:opencode-go</td>
+<td>*/15 * * * *</td>
+<td><b>4</b></td>
+<td>21</td>
+<td><span class="status-ok">2h ago</span></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>DexDat Core</td>
+<td>deepseek-v4-flash</td>
+<td>custom:opencode-go</td>
+<td>*/15 * * * *</td>
+<td><b>12</b></td>
+<td>0</td>
+<td><span class="status-ok">2h ago</span></td>
+<td>no remote</td>
+<td></td>
+</tr>
+<tr>
+<td>Kobayashi-Maru</td>
+<td>deepseek-v4-pro</td>
+<td>custom:opencode-go</td>
+<td>every 30m</td>
+<td><b>2</b></td>
+<td>32</td>
+<td><span class="status-ok">1h ago</span></td>
+<td>✅ Security+Determinism</td>
+<td></td>
+</tr>
+<tr>
+<td>Muster</td>
+<td>deepseek-v4-pro</td>
+<td>custom:opencode-go</td>
+<td>every 30m</td>
+<td><b>2</b></td>
+<td>77</td>
+<td><span class="status-ok">2h ago</span></td>
+<td>🔴 CI failing</td>
+<td></td>
+</tr>
+<tr>
+<td>AI Plays Poke</td>
+<td>deepseek-v4-pro</td>
+<td>custom:opencode-go</td>
+<td>every 30m</td>
+<td><b>1</b></td>
+<td>75</td>
+<td><span class="status-ok">2h ago</span></td>
+<td>no CI config</td>
+<td></td>
+</tr>
+<tr>
+<td>EduOS</td>
+<td>deepseek-v4-pro</td>
+<td>custom:opencode-go</td>
+<td>every 30m</td>
+<td><b>1</b></td>
+<td>15</td>
+<td><span class="status-ok">2h ago</span></td>
+<td>no remote</td>
+<td></td>
+</tr>
+<tr>
+<td>Bunker</td>
+<td>kimi-for-coding</td>
+<td>kimi-for-coding</td>
+<td>*/15 * * * *</td>
+<td><b>0</b></td>
+<td>1</td>
+<td><span class="status-ok">2h ago</span></td>
+<td>🟡 all queued</td>
+<td>🔒</td>
+</tr>
+<tr>
+<td>SpecLang</td>
+<td>MiniMax-M3</td>
+<td>minimax</td>
+<td>every 120m</td>
+<td><b>0</b></td>
+<td>6</td>
+<td><span class="status-ok">0h ago</span></td>
+<td></td>
+<td>🔒</td>
+</tr>
+<tr>
+<td>Hivemind</td>
+<td>deepseek-v4-pro</td>
+<td>custom:opencode-go</td>
+<td>every 120m</td>
+<td><b>0</b></td>
+<td>16</td>
+<td><span class="status-warn">8h ago</span></td>
+<td>🔴 billing-blocked</td>
+<td></td>
+</tr>
+<tr>
+<td>DexDat Memory</td>
+<td>deepseek-v4-flash</td>
+<td>custom:opencode-go</td>
+<td>every 120m</td>
+<td><b>0</b></td>
+<td>8</td>
+<td><span class="status-ok">2h ago</span></td>
+<td>GitHub</td>
+<td></td>
+</tr>
+<tr>
+<td>ASCE</td>
+<td>deepseek-v4-flash</td>
+<td>custom:opencode-go</td>
+<td>every 120m</td>
+<td><b>0</b></td>
+<td>8</td>
+<td><span class="status-ok">2h ago</span></td>
+<td>GitLab</td>
+<td></td>
+</tr>
+<tr>
+<td>Musterflow</td>
+<td>deepseek-v4-flash</td>
+<td>custom:opencode-go</td>
+<td>every 360m</td>
+<td><b>0</b></td>
+<td>25</td>
+<td><span class="status-ok">3h ago</span></td>
+<td>no remote</td>
+<td></td>
+</tr>
+<tr>
+<td>Chimera</td>
+<td>deepseek-v4-flash</td>
+<td>custom:opencode-go</td>
+<td>every 120m</td>
+<td><b>0</b></td>
+<td>0</td>
+<td><span class="status-ok">2h ago</span></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Consensus</td>
+<td>deepseek-v4-flash</td>
+<td>custom:opencode-go</td>
+<td>every 120m</td>
+<td><b>0</b></td>
+<td>0</td>
+<td><span class="status-ok">2h ago</span></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Hilo/WarpFS</td>
+<td>deepseek-v4-flash</td>
+<td>custom:opencode-go</td>
+<td>every 360m</td>
+<td><b>0</b></td>
+<td>6</td>
+<td><span class="status-error">52h ago</span></td>
+<td></td>
+<td>🔒</td>
+</tr>
+<tr>
+<td>Mafia Benchmark</td>
+<td>deepseek-v4-flash</td>
+<td>custom:opencode-go</td>
+<td>every 120m</td>
+<td><b>0</b></td>
+<td>1</td>
+<td><span class="status-ok">4h ago</span></td>
+<td>no remote</td>
+<td></td>
+</tr>
+<tr>
+<td>DeepSeek Dashboard</td>
+<td>deepseek-v4-flash</td>
+<td>custom:opencode-go</td>
+<td>every 120m</td>
+<td><b>0</b></td>
+<td>0</td>
+<td><span class="status-ok">1h ago</span></td>
+<td>no remote</td>
+<td></td>
+</tr>
+<tr>
+<td>Mythos (wojons)</td>
+<td>deepseek-v4-flash</td>
+<td>custom:opencode-go</td>
+<td>every 120m</td>
+<td><b>0</b></td>
+<td>5</td>
+<td><span class="status-ok">2h ago</span></td>
+<td>no remote</td>
+<td></td>
+</tr>
+<tr>
+<td>Mythos (helios)</td>
+<td>grok-4.5</td>
+<td>xai-oauth</td>
+<td>every 360m</td>
+<td><b>0</b></td>
+<td>0</td>
+<td><span class="status-ok">3h ago</span></td>
+<td>sub-project</td>
+<td>🔒</td>
+</tr>
+<tr>
+<td>RethinkDB Steward</td>
+<td>deepseek-v4-flash</td>
+<td>custom:opencode-go</td>
+<td>every 120m</td>
+<td><b>0</b></td>
+<td>0</td>
+<td><span class="status-warn">8h ago</span></td>
+<td>no remote</td>
+<td></td>
+</tr>
+<tr>
+<td>Escalation Doctrine</td>
+<td>deepseek-v4-flash</td>
+<td>custom:opencode-go</td>
+<td>every 120m</td>
+<td><b>0</b></td>
+<td>0</td>
+<td><span class="status-ok">2h ago</span></td>
+<td>no remote</td>
+<td></td>
+</tr>
+</tbody></table></div>
+
+<div class="section">
+<h2>🔧 Changes This Run</h2>
+<ul class="changes">
+<li>🔄 Rebalanced 13 foremen: speed/model aligned to pending counts</li>
+<li>🔧 Fixed 4 foremen using coding models → moved to deepseek-v4-pro (foreman rule)</li>
+<li>🔄 Fixed dexdat-build-loop: o3-pro→deepseek-v4-flash (wrong model)</li>
+<li>🔧 Fixed consensus-coding-foreman: deepseek PAYG → custom:opencode-go</li>
+<li>🧟 Zombie recovery: 12 overdue jobs forced to fire immediately</li>
+<li>🔧 Fixed hivemind-foreman: paused→scheduled (no pause reason)</li>
+<li>🔧 Added hilo-usage skill to RethinkDB Steward</li>
+<li>⚠️ Flagged hivemind-foreman (legacy zombie, no skills, burns quota at 30m)</li>
+<li>📛 Restored 4 foremen from glm-5.2 → deepseek-v4-pro (foreman rule violation)</li>
+<li>🌱 Seeded DuckBrain namespace: deepseek-dashboard</li>
+</ul></div>
+
+<div class="section">
+<h2>⚠️ Issues Detected</h2>
+<ul class="issues">
+<li class="warn">⚠️ hivemind-foreman (id=44a84a589f35): Legacy zombie, no coding-hermes-cron skill, empty skills array. Duplicate of Hivemind Coding Foreman (f6015078f54d). Burns quota at 30m.</li>
+<li class="">🔴 GitReins Coding Foreman: 37h stale — was zombie-locked from provider outage cascade. Forced fire this run.</li>
+<li class="">🔴 hilo-foreman: 52h stale — zombie-locked. Forced fire this run.</li>
+<li class="">🔴 dexdat org billing-blocked: Helios, hivemind CI not running since Jun 22</li>
+<li class="">🔴 Muster CI still failing (seccomp guards)</li>
+<li class="warn">🟡 Bunker CI: all runs queued (never executes)</li>
+<li class="">🔴 Massive zombie cascade: 14+ jobs were 'already running — skipping' through morning of Jul 9. Scheduler auto-clearing working but jobs re-locking.</li>
+<li class="warn">⚠️ helix-foreman: 19 pending tasks but pinned to grok-4.5 (user-set). Foreman model can't scale to handle this backlog efficiently.</li>
+</ul></div>
+
+<div class="section">
+<h2>📈 24h Activity</h2>
+<table>
+<thead><tr><th>Project</th><th>Commits 24h</th><th>Commits 48h</th><th>Pending Δ</th></tr></thead><tbody>
+<tr><td>Helios</td><td>8</td><td>8</td><td>6 pending</td></tr>
+<tr><td>Helix</td><td>3</td><td>8</td><td>19 pending</td></tr>
+<tr><td>H4F Infra</td><td>10</td><td>10</td><td>3 pending</td></tr>
+<tr><td>GitReins</td><td>0</td><td>2</td><td>3 pending</td></tr>
+<tr><td>Off-by-One</td><td>2</td><td>4</td><td>4 pending</td></tr>
+<tr><td>DexDat Core</td><td>8</td><td>14</td><td>12 pending</td></tr>
+<tr><td>Kobayashi-Maru</td><td>3</td><td>7</td><td>2 pending</td></tr>
+<tr><td>Muster</td><td>2</td><td>4</td><td>2 pending</td></tr>
+<tr><td>AI Plays Poke</td><td>8</td><td>15</td><td>1 pending</td></tr>
+<tr><td>EduOS</td><td>6</td><td>31</td><td>1 pending</td></tr>
+<tr><td>Bunker</td><td>3</td><td>8</td><td>0 pending</td></tr>
+<tr><td>SpecLang</td><td>3</td><td>9</td><td>0 pending</td></tr>
+<tr><td>Hivemind</td><td>17</td><td>25</td><td>0 pending</td></tr>
+<tr><td>DexDat Memory</td><td>2</td><td>7</td><td>0 pending</td></tr>
+<tr><td>ASCE</td><td>0</td><td>2</td><td>0 pending</td></tr>
+<tr><td>Musterflow</td><td>0</td><td>0</td><td>0 pending</td></tr>
+<tr><td>Chimera</td><td>3</td><td>3</td><td>0 pending</td></tr>
+<tr><td>Consensus</td><td>3</td><td>10</td><td>0 pending</td></tr>
+<tr><td>Hilo/WarpFS</td><td>0</td><td>0</td><td>0 pending</td></tr>
+<tr><td>Mafia Benchmark</td><td>2</td><td>2</td><td>0 pending</td></tr>
+<tr><td>DeepSeek Dashboard</td><td>2</td><td>7</td><td>0 pending</td></tr>
+<tr><td>Mythos (wojons)</td><td>3</td><td>6</td><td>0 pending</td></tr>
+<tr><td>Mythos (helios)</td><td>8</td><td>8</td><td>0 pending</td></tr>
+<tr><td>RethinkDB Steward</td><td>3</td><td>7</td><td>0 pending</td></tr>
+<tr><td>Escalation Doctrine</td><td>1</td><td>19</td><td>0 pending</td></tr>
+</tbody></table></div>
+
+<div class="section">
+<h2>🏗️ Foreman Model Assignments</h2>
+<table>
+<thead><tr><th>Foreman</th><th>Model</th><th>Provider</th><th>Speed</th><th>Type</th></tr></thead><tbody>
+<tr><td>muster-coding-hermes-loop</td><td>deepseek-v4-pro</td><td>custom:opencode-go</td><td>every 30m</td><td>v4-pro </td></tr>
+<tr><td>mafia-benchmark-dev-loop</td><td>deepseek-v4-flash</td><td>custom:opencode-go</td><td>every 120m</td><td>v4-flash </td></tr>
+<tr><td>mythos-coding-foreman</td><td>grok-4.5</td><td>xai-oauth</td><td>every 360m</td><td>other 🔒 Pinned</td></tr>
+<tr><td>EduOS Alpha Dev Loop</td><td>deepseek-v4-pro</td><td>custom:opencode-go</td><td>every 30m</td><td>v4-pro </td></tr>
+<tr><td>dexdat-coding-hermes-foreman</td><td>deepseek-v4-flash</td><td>custom:opencode-go</td><td>every 120m</td><td>v4-flash </td></tr>
+<tr><td>ASCE Coding Foreman</td><td>deepseek-v4-flash</td><td>custom:opencode-go</td><td>every 120m</td><td>v4-flash </td></tr>
+<tr><td>GitReins Coding Foreman</td><td>deepseek-v4-pro</td><td>custom:opencode-go</td><td>*/15 * * * *</td><td>v4-pro </td></tr>
+<tr><td>helios-coding-hermes-foreman</td><td>deepseek-v4-flash</td><td>custom:opencode-go</td><td>*/15 * * * *</td><td>v4-flash 🔒 Pinned</td></tr>
+<tr><td>helix-foreman</td><td>grok-4.5</td><td>xai-oauth</td><td>*/15 * * * *</td><td>other 🔒 Pinned</td></tr>
+<tr><td>hilo-foreman</td><td>deepseek-v4-flash</td><td>custom:opencode-go</td><td>every 360m</td><td>v4-flash 🔒 Pinned</td></tr>
+<tr><td>dexdat-build-loop</td><td>deepseek-v4-flash</td><td>custom:opencode-go</td><td>*/15 * * * *</td><td>v4-flash </td></tr>
+<tr><td>musterflow-foreman</td><td>deepseek-v4-flash</td><td>custom:opencode-go</td><td>every 360m</td><td>v4-flash </td></tr>
+<tr><td>ai-plays-pokemon-foreman</td><td>deepseek-v4-pro</td><td>custom:opencode-go</td><td>every 30m</td><td>v4-pro </td></tr>
+<tr><td>kobayashi-maru-foreman</td><td>deepseek-v4-pro</td><td>custom:opencode-go</td><td>every 30m</td><td>v4-pro </td></tr>
+<tr><td>H4F Coding Foreman</td><td>deepseek-v4-pro</td><td>custom:opencode-go</td><td>*/15 * * * *</td><td>v4-pro </td></tr>
+<tr><td>off-by-one-foreman</td><td>deepseek-v4-pro</td><td>custom:opencode-go</td><td>*/15 * * * *</td><td>v4-pro </td></tr>
+<tr><td>Bunker Coding Hermes</td><td>kimi-for-coding</td><td>kimi-for-coding</td><td>*/15 * * * *</td><td>coding 🔒 Pinned</td></tr>
+<tr><td>speclang-ci-foreman</td><td>MiniMax-M3</td><td>minimax</td><td>every 120m</td><td>coding 🔒 Pinned</td></tr>
+<tr><td>consensus-coding-foreman</td><td>deepseek-v4-flash</td><td>custom:opencode-go</td><td>every 120m</td><td>v4-flash </td></tr>
+<tr><td>chimera-coding-foreman</td><td>deepseek-v4-flash</td><td>custom:opencode-go</td><td>every 120m</td><td>v4-flash </td></tr>
+<tr><td>Mythos Coding Foreman</td><td>deepseek-v4-flash</td><td>custom:opencode-go</td><td>every 120m</td><td>v4-flash </td></tr>
+<tr><td>DeepSeek Dashboard Foreman</td><td>deepseek-v4-flash</td><td>custom:opencode-go</td><td>every 120m</td><td>v4-flash </td></tr>
+<tr><td>Hivemind Coding Foreman</td><td>deepseek-v4-pro</td><td>custom:opencode-go</td><td>every 120m</td><td>v4-pro </td></tr>
+<tr><td>RethinkDB Steward</td><td>deepseek-v4-flash</td><td>custom:opencode-go</td><td>every 120m</td><td>v4-flash </td></tr>
+<tr><td>escalation-doctrine-foreman</td><td>deepseek-v4-flash</td><td>custom:opencode-go</td><td>every 120m</td><td>v4-flash </td></tr>
+</tbody></table></div>
+
+<div class="section">
+<h2>🧟 Zombie Status</h2>
+<p>The scheduler auto-clearing mechanism is working (jobs stuck >30min get cleared). However, jobs keep re-locking after clearing, suggesting hung threads (Class B) from the interpreter shutdown cascade. Many foremen show <code>RuntimeError: cannot schedule new futures after interpreter shutdown</code> — this is a delivery/Telegram error that doesn't indicate job logic failure but does lock the job.</p>
+<p><b>Zombie jobs at last tick:</b> helios, helix, kobayashi-maru, H4F, Bunker, consensus, EduOS, totalstack, muster, HermesPlaysPokemon, escalation-doctrine, dexdat-build-loop — all showing "already running — skipping"</p>
+</div>
+
+<div class="section">
+<h2>📋 Summary</h2>
+<p>{healthy} projects actively working ({total_pending} pending tasks), {warning} idle but healthy, {error_count} with issues. Auto-healed {len(changes)} issues this run. The fleet is recovering from a provider outage cascade that created widespread zombie locks — the scheduler's auto-clearing is working but jobs re-lock when interpreter shutdown occurs during Telegram delivery.</p>
+<p><b>Hottest projects:</b> Helix (19 pending), DexDat Core (12 pending), Helios (6 pending), Off-by-One (4 pending)</p>
+<p><b>Needs attention:</b> hivemind legacy foreman (zombie burning quota), dexdat org CI (billing-blocked), Muster CI (seccomp failures)</p>
+</div>
+
+</body></html>
