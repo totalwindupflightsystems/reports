@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coding Hermes Fleet Report — 2026-07-09 09:10 UTC</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: #0d1117; color: #c9d1d9; padding: 2rem; }
+h1 { color: #58a6ff; margin-bottom: 0.5rem; }
+.meta { color: #8b949e; font-size: 0.9rem; margin-bottom: 2rem; }
+.metrics { display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap; }
+.metric { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 1rem 1.5rem; text-align: center; min-width: 100px; }
+.metric .value { font-size: 2rem; font-weight: bold; }
+.metric .label { font-size: 0.8rem; color: #8b949e; }
+.metric.green .value { color: #3fb950; }
+.metric.yellow .value { color: #d29922; }
+.metric.red .value { color: #f85149; }
+.metric.blue .value { color: #58a6ff; }
+table { width: 100%; border-collapse: collapse; margin-bottom: 2rem; }
+th { background: #161b22; color: #8b949e; font-weight: 600; text-align: left; padding: 0.75rem; border-bottom: 1px solid #30363d; font-size: 0.85rem; }
+td { padding: 0.6rem 0.75rem; border-bottom: 1px solid #21262d; font-size: 0.9rem; }
+tr:hover { background: #161b22; }
+.section { margin-bottom: 2rem; }
+.section h2 { color: #58a6ff; border-bottom: 1px solid #30363d; padding-bottom: 0.5rem; margin-bottom: 1rem; }
+.issue { background: #161b22; border-left: 3px solid #f85149; padding: 0.75rem; margin-bottom: 0.5rem; border-radius: 4px; }
+.issue.warn { border-left-color: #d29922; }
+.issue.ok { border-left-color: #3fb950; }
+.fix { background: #161b22; border-left: 3px solid #3fb950; padding: 0.75rem; margin-bottom: 0.5rem; border-radius: 4px; }
+code { background: #21262d; padding: 0.1rem 0.3rem; border-radius: 3px; font-size: 0.85em; }
+</style>
+</head>
+<body>
+<h1>🚀 Coding Hermes Fleet Report</h1>
+<p class="meta">Generated 2026-07-09 09:10 UTC | Supervisor run on deepseek-v4-pro</p>
+
+<div class="metrics">
+  <div class="metric green"><div class="value">6</div><div class="label">Healthy</div></div>
+  <div class="metric yellow"><div class="value">17</div><div class="label">Warning</div></div>
+  <div class="metric red"><div class="value">6</div><div class="label">Error/Stale</div></div>
+  <div class="metric blue"><div class="value">45</div><div class="label">Pending Tasks</div></div>
+</div>
+
+<div class="section">
+<h2>📊 Fleet Status</h2>
+<table>
+<thead>
+<tr>
+  <th>Project</th>
+  <th>Model</th>
+  <th>Provider</th>
+  <th>Speed</th>
+  <th>Pending</th>
+  <th>Done</th>
+  <th>48h Commits</th>
+  <th>CI</th>
+  <th>Last Run</th>
+  <th>Health</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><strong>helix</strong></td>
+  <td><code>glm-5.2</code></td>
+  <td>zai-glm</td>
+  <td>*/15 * * * *</td>
+  <td>21</td>
+  <td>3</td>
+  <td>5</td>
+  <td>🟢 pass</td>
+  <td>27.7h ago</td>
+  <td>🟢 active</td>
+</tr>
+<tr>
+  <td><strong>Kobayashi-Maru</strong></td>
+  <td><code>glm-5.2</code></td>
+  <td>zai-glm</td>
+  <td>*/15 * * * *</td>
+  <td>4</td>
+  <td>27</td>
+  <td>7</td>
+  <td>🟢 pass</td>
+  <td>24.6h ago</td>
+  <td>🟢 active</td>
+</tr>
+<tr>
+  <td><strong>hermes4friends-infra</strong></td>
+  <td><code>glm-5.2</code></td>
+  <td>zai-glm</td>
+  <td>*/15 * * * *</td>
+  <td>3</td>
+  <td>2</td>
+  <td>6</td>
+  <td>🟡 running</td>
+  <td>2.2h ago</td>
+  <td>🟢 active</td>
+</tr>
+<tr>
+  <td><strong>muster</strong></td>
+  <td><code>glm-5.2</code></td>
+  <td>zai-glm</td>
+  <td>every 30m</td>
+  <td>2</td>
+  <td>77</td>
+  <td>7</td>
+  <td>🔴 fail</td>
+  <td>3.2h ago</td>
+  <td>🟢 active</td>
+</tr>
+<tr>
+  <td><strong>eduos.dexdat.com.co</strong></td>
+  <td><code>deepseek-v4-pro</code></td>
+  <td>custom:opencode-go</td>
+  <td>every 30m</td>
+  <td>1</td>
+  <td>15</td>
+  <td>35</td>
+  <td>n/a</td>
+  <td>0.6h ago</td>
+  <td>🟢 active</td>
+</tr>
+<tr>
+  <td><strong>SpecLang</strong></td>
+  <td><code>MiniMax-M3</code></td>
+  <td>minimax</td>
+  <td>every 120m</td>
+  <td>1</td>
+  <td>4</td>
+  <td>7</td>
+  <td>🔴 fail</td>
+  <td>1.8h ago</td>
+  <td>🟢 active</td>
+</tr>
+<tr>
+  <td><strong>helios-work</strong></td>
+  <td><code>deepseek-v4-flash</code></td>
+  <td>custom:opencode-go</td>
+  <td>*/15 * * * *</td>
+  <td>10</td>
+  <td>27</td>
+  <td>0</td>
+  <td>🔴 fail</td>
+  <td>33.2h ago</td>
+  <td>🔴 error</td>
+</tr>
+<tr>
+  <td><strong>gitreins-poc</strong></td>
+  <td><code>deepseek-v4-pro</code></td>
+  <td>custom:opencode-go</td>
+  <td>*/15 * * * *</td>
+  <td>3</td>
+  <td>42</td>
+  <td>2</td>
+  <td>n/a</td>
+  <td>33.2h ago</td>
+  <td>🔴 error</td>
+</tr>
+<tr>
+  <td><strong>hivemind-work</strong></td>
+  <td><code>deepseek-v4-pro</code></td>
+  <td>custom:opencode-go</td>
+  <td>every 360m</td>
+  <td>0</td>
+  <td>0</td>
+  <td>25</td>
+  <td>🔴 fail</td>
+  <td>3.7h ago</td>
+  <td>🟡 idle-dev</td>
+</tr>
+<tr>
+  <td><strong>escalation-doctrine</strong></td>
+  <td><code>deepseek-v4-flash</code></td>
+  <td>custom:opencode-go</td>
+  <td>every 360m</td>
+  <td>0</td>
+  <td>0</td>
+  <td>19</td>
+  <td>n/a</td>
+  <td>3.5h ago</td>
+  <td>🟡 idle-dev</td>
+</tr>
+<tr>
+  <td><strong>dexdat-core</strong></td>
+  <td><code>deepseek-v4-flash</code></td>
+  <td>custom:opencode-go</td>
+  <td>every 120m</td>
+  <td>0</td>
+  <td>29</td>
+  <td>16</td>
+  <td>n/a</td>
+  <td>6.8h ago</td>
+  <td>🟡 idle-dev</td>
+</tr>
+<tr>
+  <td><strong>ai_plays_poke</strong></td>
+  <td><code>deepseek-v4-flash</code></td>
+  <td>custom:opencode-go</td>
+  <td>every 120m</td>
+  <td>0</td>
+  <td>7</td>
+  <td>14</td>
+  <td>none</td>
+  <td>0.3h ago</td>
+  <td>🟡 idle-dev</td>
+</tr>
+<tr>
+  <td><strong>consensus</strong></td>
+  <td><code>deepseek-v4-flash</code></td>
+  <td>custom:opencode-go</td>
+  <td>every 360m</td>
+  <td>0</td>
+  <td>0</td>
+  <td>12</td>
+  <td>🟢 pass</td>
+  <td>5.4h ago</td>
+  <td>🟡 idle-dev</td>
+</tr>
+<tr>
+  <td><strong>dexdat-memory</strong></td>
+  <td><code>deepseek-v4-flash</code></td>
+  <td>custom:opencode-go</td>
+  <td>every 120m</td>
+  <td>0</td>
+  <td>8</td>
+  <td>9</td>
+  <td>🟢 pass</td>
+  <td>2.8h ago</td>
+  <td>🟡 idle-dev</td>
+</tr>
+<tr>
+  <td><strong>chimera-v2</strong></td>
+  <td><code>deepseek-v4-flash</code></td>
+  <td>custom:opencode-go</td>
+  <td>every 360m</td>
+  <td>0</td>
+  <td>0</td>
+  <td>8</td>
+  <td>error</td>
+  <td>4.9h ago</td>
+  <td>🟡 idle-dev</td>
+</tr>
+<tr>
+  <td><strong>rethinkdb</strong></td>
+  <td><code>deepseek-v4-flash</code></td>
+  <td>custom:opencode-go</td>
+  <td>every 360m</td>
+  <td>0</td>
+  <td>0</td>
+  <td>8</td>
+  <td>n/a</td>
+  <td>3.5h ago</td>
+  <td>🟡 idle-dev</td>
+</tr>
+<tr>
+  <td><strong>deepseek-dashboard</strong></td>
+  <td><code>deepseek-v4-flash</code></td>
+  <td>custom:opencode-go</td>
+  <td>every 360m</td>
+  <td>0</td>
+  <td>0</td>
+  <td>6</td>
+  <td>n/a</td>
+  <td>4.2h ago</td>
+  <td>🟡 idle-dev</td>
+</tr>
+<tr>
+  <td><strong>bunker</strong></td>
+  <td><code>kimi-for-coding</code></td>
+  <td>kimi-for-coding</td>
+  <td>*/15 * * * *</td>
+  <td>0</td>
+  <td>1</td>
+  <td>5</td>
+  <td>🟡 queued/cancelled</td>
+  <td>32.8h ago</td>
+  <td>🟡 idle-dev</td>
+</tr>
+<tr>
+  <td><strong>wojons-mythos</strong></td>
+  <td><code>deepseek-v4-flash</code></td>
+  <td>custom:opencode-go</td>
+  <td>every 360m</td>
+  <td>0</td>
+  <td>4</td>
+  <td>5</td>
+  <td>n/a</td>
+  <td>4.5h ago</td>
+  <td>🟡 idle-dev</td>
+</tr>
+<tr>
+  <td><strong>mafia-ai-benchmark</strong></td>
+  <td><code>deepseek-v4-flash</code></td>
+  <td>custom:opencode-go</td>
+  <td>every 120m</td>
+  <td>0</td>
+  <td>1</td>
+  <td>3</td>
+  <td>n/a</td>
+  <td>0.9h ago</td>
+  <td>🟡 idle-dev</td>
+</tr>
+<tr>
+  <td><strong>asce</strong></td>
+  <td><code>deepseek-v4-flash</code></td>
+  <td>custom:opencode-go</td>
+  <td>every 120m</td>
+  <td>0</td>
+  <td>8</td>
+  <td>2</td>
+  <td>n/a</td>
+  <td>2.8h ago</td>
+  <td>🟡 idle-dev</td>
+</tr>
+<tr>
+  <td><strong>off-by-one</strong></td>
+  <td><code>deepseek-v4-pro</code></td>
+  <td>custom:opencode-go</td>
+  <td>every 120m</td>
+  <td>0</td>
+  <td>0</td>
+  <td>2</td>
+  <td>🟢 pass</td>
+  <td>2.2h ago</td>
+  <td>🟡 idle-dev</td>
+</tr>
+<tr>
+  <td><strong>mythos</strong></td>
+  <td><code>grok-4.3</code></td>
+  <td>xai-oauth</td>
+  <td>every 360m</td>
+  <td>0</td>
+  <td>0</td>
+  <td>0</td>
+  <td>n/a</td>
+  <td>5.8h ago</td>
+  <td>⚫ idle</td>
+</tr>
+<tr>
+  <td><strong>warpfs</strong></td>
+  <td><code>deepseek-v4-flash</code></td>
+  <td>custom:opencode-go</td>
+  <td>every 360m</td>
+  <td>0</td>
+  <td>6</td>
+  <td>0</td>
+  <td>🟢 pass</td>
+  <td>48.1h ago</td>
+  <td>🔴 stale</td>
+</tr>
+<tr>
+  <td><strong>musterflow</strong></td>
+  <td><code>deepseek-v4-flash</code></td>
+  <td>custom:opencode-go</td>
+  <td>every 360m</td>
+  <td>0</td>
+  <td>25</td>
+  <td>0</td>
+  <td>n/a</td>
+  <td>5.8h ago</td>
+  <td>⚫ idle</td>
+</tr>
+</tbody></table></div>
+
+<div class="section">
+<h2>🔧 Changes This Run</h2>
+<div class="fix">✅ <strong>Zombie Recovery</strong> — 5 jobs stuck in "already running" since Jul 7-8: GitReins, helios, helix, kobayashi-maru, Bunker. Reset state→scheduled + next_run→past. Confirmed: no skips at 04:15 tick.</div>
+<div class="fix">✅ <strong>Schedule Fix: GitReins</strong> — Was */15 (over-active for 0-pending project). Changed to 15m after discovering 3 new pending tasks.</div>
+<div class="fix">✅ <strong>Schedule Fix: kobayashi-maru</strong> — Was */15 with 4 pending. Now 15m + glm-5.2 (correct alignment).</div>
+<div class="fix">✅ <strong>H4F Upgrade</strong> — 3 pending tasks → upgraded from budget 120m to 15m + glm-5.2/zai-glm.</div>
+<div class="fix">✅ <strong>mafia-benchmark Slowdown</strong> — 0 pending, 1 completed, slowed from 30m to 120m.</div>
+<div class="fix">✅ <strong>hilo-foreman zombie fix</strong> — Reset state after Jul 7 error stall.</div>
+<div class="fix">✅ <strong>Worktree cleanup</strong> — Removed abandoned /tmp/gitreins-wt-woiyivx3.</div>
+<div class="fix">✅ <strong>Skills</strong> — Updated baoyu-article-illustrator (1 update available).</div>
+</div>
+
+<div class="section">
+<h2>⚠️ Issues Detected</h2>
+<div class="issue"><strong>🔴 Muster CI:</strong> 3 recent failures — seccomp test guards still failing. Previous fix marked [x] but CI shows all 3 workflows failing. Added to inventory as ongoing issue.</div>
+<div class="issue"><strong>🔴 SpecLang CI:</strong> 3 compliance-task failures. Pinned project (MiniMax-M3/minimax) — foreman should handle. Do NOT change config.</div>
+<div class="issue"><strong>🔴 Helios CI:</strong> Billing-blocked since Jun 22 (dexdat org). All runs fail. Same org as hivemind (also billing-blocked).</div>
+<div class="issue"><strong>🔴 Hivemind CI:</strong> Billing-blocked since Jun 21. Same dexdat org issue.</div>
+<div class="issue"><strong>🟡 Bunker CI:</strong> All 3 recent runs cancelled (queued, never started). Pattern unchanged — likely CI runner capacity.</div>
+<div class="issue warn"><strong>🟡 Hivemind Duplicate Foremen:</strong> Legacy "hivemind-foreman" (44a84a589f35) runs every 30m with NO coding-hermes skills — burns quota with no task inspection. Proper "Hivemind Coding Foreman" (f6015078f54d) runs every 360m with full skills. Legacy zombie should be disabled.</div>
+<div class="issue warn"><strong>🟡 Chimera CI:</strong> No CI configured or empty response from GitHub API.</div>
+<div class="issue warn"><strong>🟡 AI Plays Poke:</strong> No CI workflows configured.</div>
+</div>
+
+<div class="section">
+<h2>📈 72h Trends</h2>
+<table>
+<tr><td>Most active (commits):</td><td>ai_plays_poke (14), muster (7), Kobayashi-Maru (7), SpecLang (7)</td></tr>
+<tr><td>Most pending:</td><td>helix (21), helios-work (10), Kobayashi-Maru (4)</td></tr>
+<tr><td>Recovered from zombie:</td><td>helios, helix, GitReins, kobayashi-maru, Bunker, hilo</td></tr>
+<tr><td>Projects slowed:</td><td>mafia-benchmark (30m→120m)</td></tr>
+<tr><td>Projects accelerated:</td><td>GitReins (360m→15m), H4F (120m→15m), kobayashi-maru (120m→15m)</td></tr>
+</table>
+</div>
+
+<div class="section">
+<h2>🔄 Orphan Check</h2>
+<p>2 orphan task dirs found (test-shallow/shallow-repo, tmp-speclang/shallow-repo) — both are test repos, no foreman needed. No production orphans.</p>
+<p>1 abandoned worktree cleaned: /tmp/gitreins-wt-woiyivx3</p>
+</div>
+
+<p style="color: #484f58; text-align: center; margin-top: 3rem;">Coding Hermes Supervisor · Run every 4h · deepseek-v4-pro</p>
+</body>
+</html>
