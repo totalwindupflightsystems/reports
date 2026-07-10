@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coding Hermes Fleet Report — 2026-07-10-0511</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0d1117; color: #c9d1d9; padding: 20px; }
+h1 { color: #58a6ff; margin-bottom: 8px; }
+h2 { color: #8b949e; font-size: 16px; font-weight: normal; margin-bottom: 24px; }
+.metrics { display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
+.metric { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 16px; min-width: 120px; text-align: center; }
+.metric .value { font-size: 28px; font-weight: bold; }
+.metric .label { font-size: 12px; color: #8b949e; margin-top: 4px; }
+.green { color: #3fb950; }
+.yellow { color: #d29922; }
+.red { color: #f85149; }
+.gray { color: #8b949e; }
+table { width: 100%; border-collapse: collapse; margin-bottom: 24px; font-size: 13px; }
+th { background: #161b22; padding: 8px 12px; text-align: left; border-bottom: 2px solid #30363d; color: #8b949e; }
+td { padding: 6px 12px; border-bottom: 1px solid #21262d; }
+tr:hover { background: #161b22; }
+.section { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 16px; margin-bottom: 16px; }
+.section h3 { color: #58a6ff; margin-bottom: 8px; }
+ul { padding-left: 20px; }
+li { margin-bottom: 4px; }
+.footer { font-size: 11px; color: #484f58; margin-top: 24px; text-align: center; }
+</style>
+</head>
+<body>
+<h1>📊 Coding Hermes Fleet Report</h1>
+<h2>2026-07-10-0511 CT — Supervisor Run on deepseek-v4-pro</h2>
+
+<div class="metrics">
+    <div class="metric"><div class="value green">9</div><div class="label">Healthy</div></div>
+    <div class="metric"><div class="value yellow">12</div><div class="label">Idle/Warn</div></div>
+    <div class="metric"><div class="value red">4</div><div class="label">Errors</div></div>
+    <div class="metric"><div class="value gray">0</div><div class="label">Paused</div></div>
+    <div class="metric"><div class="value">51</div><div class="label">Pending Tasks</div></div>
+    <div class="metric"><div class="value">25</div><div class="label">Foremen</div></div>
+</div>
+
+<div class="section">
+    <h3>🚨 Critical: 7 Class B Zombies — Need External Gateway Restart</h3>
+    <p>7 jobs have hung threads that survive restart. The <code>_STALE_RUNNING_TIMEOUT</code> patch is NOT deployed in the scheduler. Zombies: GitReins Coding Foreman, helios-coding-hermes-foreman, helix-foreman, Bunker Coding Hermes, muster-coding-hermes-loop, totalstack-service-builder, dexdat-loader-watchdog-v2.</p>
+    <p><b>Action:</b> Run <code>hermes gateway restart</code> from outside the gateway process (separate shell/SSH).</p>
+</div>
+
+<div class="section">
+    <h3>Fleet Status</h3>
+    <table>
+        <tr><th></th><th>Project</th><th>Pending</th><th>Model</th><th>Provider</th><th>Speed</th><th>Last Run</th><th>CI</th><th>State</th></tr>
+        
+        <tr>
+            <td>🟢</td>
+            <td>Helios 🔒</td>
+            <td>5</td>
+            <td>deepseek-v4-pro</td>
+            <td>deepseek</td>
+            <td>*/15 * * * *</td>
+            <td>2026-07-09T08:41</td>
+            <td>🔴 failing</td>
+            <td>scheduled</td>
+        </tr>
+        <tr>
+            <td>🟢</td>
+            <td>GitReins</td>
+            <td>3</td>
+            <td>deepseek-v4-pro</td>
+            <td>deepseek</td>
+            <td>*/15 * * * *</td>
+            <td>2026-07-07T18:55</td>
+            <td>❓</td>
+            <td>scheduled</td>
+        </tr>
+        <tr>
+            <td>🟢</td>
+            <td>DexDat Memory</td>
+            <td>6</td>
+            <td>deepseek-v4-pro</td>
+            <td>deepseek</td>
+            <td>every 30m</td>
+            <td>2026-07-09T13:46</td>
+            <td>✅ passing</td>
+            <td>scheduled</td>
+        </tr>
+        <tr>
+            <td>🟢</td>
+            <td>DexDat Core 🔒</td>
+            <td>10</td>
+            <td>deepseek-v4-pro</td>
+            <td>ollama-cloud</td>
+            <td>every 30m</td>
+            <td>2026-07-09T23:16</td>
+            <td>❓</td>
+            <td>scheduled</td>
+        </tr>
+        <tr>
+            <td>🟢</td>
+            <td>Muster</td>
+            <td>3</td>
+            <td>deepseek-v4-pro</td>
+            <td>deepseek</td>
+            <td>every 15m</td>
+            <td>2026-07-09T23:45</td>
+            <td>🔴 failing</td>
+            <td>scheduled</td>
+        </tr>
+        <tr>
+            <td>🟢</td>
+            <td>Musterflow</td>
+            <td>3</td>
+            <td>deepseek-v4-pro</td>
+            <td>deepseek</td>
+            <td>every 30m</td>
+            <td>2026-07-09T17:58</td>
+            <td>❓</td>
+            <td>scheduled</td>
+        </tr>
+        <tr>
+            <td>🟢</td>
+            <td>Helix 🔒</td>
+            <td>18</td>
+            <td>grok-4.5</td>
+            <td>xai-oauth</td>
+            <td>*/15 * * * *</td>
+            <td>2026-07-09T08:52</td>
+            <td>✅ passing</td>
+            <td>scheduled</td>
+        </tr>
+        <tr>
+            <td>🔴</td>
+            <td>Hilo/WarpFS</td>
+            <td>0</td>
+            <td>deepseek-v4-pro</td>
+            <td>deepseek</td>
+            <td>every 360m</td>
+            <td>2026-07-09T14:11</td>
+            <td>🔴 failing</td>
+            <td>scheduled</td>
+        </tr>
+        <tr>
+            <td>🟡</td>
+            <td>ASCE</td>
+            <td>0</td>
+            <td>deepseek-v4-pro</td>
+            <td>deepseek</td>
+            <td>every 120m</td>
+            <td>2026-07-09T13:52</td>
+            <td>❓</td>
+            <td>scheduled</td>
+        </tr>
+        <tr>
+            <td>🟢</td>
+            <td>Kobayashi-Maru</td>
+            <td>2</td>
+            <td>deepseek-v4-pro</td>
+            <td>deepseek</td>
+            <td>every 30m</td>
+            <td>2026-07-09T23:27</td>
+            <td>✅ passing*</td>
+            <td>scheduled</td>
+        </tr>
+        <tr>
+            <td>🟡</td>
+            <td>AI Plays Pokémon</td>
+            <td>0</td>
+            <td>deepseek-v4-pro</td>
+            <td>deepseek</td>
+            <td>every 120m</td>
+            <td>2026-07-09T17:39</td>
+            <td>❓</td>
+            <td>scheduled</td>
+        </tr>
+        <tr>
+            <td>🟡</td>
+            <td>Bunker 🔒</td>
+            <td>0</td>
+            <td>kimi-for-coding</td>
+            <td>kimi-for-coding</td>
+            <td>*/15 * * * *</td>
+            <td>2026-07-09T10:09</td>
+            <td>✅ passing</td>
+            <td>scheduled</td>
+        </tr>
+        <tr>
+            <td>🟢</td>
+            <td>H4F Infra</td>
+            <td>1</td>
+            <td>deepseek-v4-pro</td>
+            <td>deepseek</td>
+            <td>every 30m</td>
+            <td>2026-07-09T22:19</td>
+            <td>❓</td>
+            <td>scheduled</td>
+        </tr>
+        <tr>
+            <td>🔴</td>
+            <td>Chimera</td>
+            <td>0</td>
+            <td>deepseek-v4-pro</td>
+            <td>deepseek</td>
+            <td>every 120m</td>
+            <td>2026-07-09T21:33</td>
+            <td>🔴 failing</td>
+            <td>scheduled</td>
+        </tr>
+        <tr>
+            <td>🔴</td>
+            <td>SpecLang 🔒</td>
+            <td>0</td>
+            <td>MiniMax-M3</td>
+            <td>minimax</td>
+            <td>every 120m</td>
+            <td>2026-07-09T19:35</td>
+            <td>🔴 failing</td>
+            <td>scheduled</td>
+        </tr>
+        <tr>
+            <td>🟡</td>
+            <td>Consensus</td>
+            <td>0</td>
+            <td>deepseek-v4-pro</td>
+            <td>deepseek</td>
+            <td>every 120m</td>
+            <td>2026-07-09T15:28</td>
+            <td>✅ passing</td>
+            <td>scheduled</td>
+        </tr>
+        <tr>
+            <td>🟡</td>
+            <td>Off-by-One</td>
+            <td>0</td>
+            <td>deepseek-v4-pro</td>
+            <td>deepseek</td>
+            <td>every 360m</td>
+            <td>2026-07-09T22:38</td>
+            <td>✅ passing</td>
+            <td>scheduled</td>
+        </tr>
+        <tr>
+            <td>🔴</td>
+            <td>Hivemind</td>
+            <td>0</td>
+            <td>deepseek-v4-pro</td>
+            <td>deepseek</td>
+            <td>every 120m</td>
+            <td>2026-07-09T10:51</td>
+            <td>🔴 failing</td>
+            <td>scheduled</td>
+        </tr>
+        <tr>
+            <td>🟡</td>
+            <td>Wojons Mythos</td>
+            <td>0</td>
+            <td>deepseek-v4-pro</td>
+            <td>deepseek</td>
+            <td>every 120m</td>
+            <td>2026-07-10T00:04</td>
+            <td>❓</td>
+            <td>scheduled</td>
+        </tr>
+        <tr>
+            <td>🟡</td>
+            <td>EduOS</td>
+            <td>0</td>
+            <td>deepseek-v4-pro</td>
+            <td>deepseek</td>
+            <td>every 360m</td>
+            <td>2026-07-09T21:59</td>
+            <td>❓</td>
+            <td>scheduled</td>
+        </tr>
+        <tr>
+            <td>🟡</td>
+            <td>Mafia Benchmark</td>
+            <td>0</td>
+            <td>deepseek-v4-pro</td>
+            <td>deepseek</td>
+            <td>every 120m</td>
+            <td>2026-07-09T15:31</td>
+            <td>⚪ no CI</td>
+            <td>scheduled</td>
+        </tr>
+        <tr>
+            <td>🟡</td>
+            <td>DS Dashboard</td>
+            <td>0</td>
+            <td>deepseek-v4-pro</td>
+            <td>deepseek</td>
+            <td>every 120m</td>
+            <td>2026-07-09T21:57</td>
+            <td>❓</td>
+            <td>scheduled</td>
+        </tr>
+        <tr>
+            <td>🟡</td>
+            <td>Escalation Doctrine</td>
+            <td>0</td>
+            <td>deepseek-v4-pro</td>
+            <td>deepseek</td>
+            <td>every 120m</td>
+            <td>2026-07-09T18:17</td>
+            <td>❓</td>
+            <td>scheduled</td>
+        </tr>
+        <tr>
+            <td>🟡</td>
+            <td>RethinkDB</td>
+            <td>0</td>
+            <td>deepseek-v4-pro</td>
+            <td>deepseek</td>
+            <td>every 120m</td>
+            <td>2026-07-09T15:52</td>
+            <td>❓</td>
+            <td>scheduled</td>
+        </tr>
+        <tr>
+            <td>🟡</td>
+            <td>DuckBrain</td>
+            <td>0</td>
+            <td>deepseek-v4-pro</td>
+            <td>deepseek</td>
+            <td>every 120m</td>
+            <td>never</td>
+            <td>⚪ no CI</td>
+            <td>scheduled</td>
+        </tr>
+    </table>
+</div>
+
+<div class="section">
+    <h3>🔧 Changes This Run</h3>
+    <ul>
+    <li>Speed up: muster (30→15m), dexdat-memory (120→30m), musterflow (360→30m), H4F (120→30m)</li>
+    <li>Paused: mythos-dev-loop, gitreins-poc-dev-loop (replaced by foremen)</li>
+    <li>Force-fired: 14 overdue jobs</li>
+    <li>All foremen confirmed on deepseek-v4-pro/deepseek (no model drift)</li>
+</ul></ul>
+</div>
+
+<div class="section">
+    <h3>⚠️ Issues Detected</h3>
+    <ul>
+    <li>🔴 <b>7 Class B zombie jobs</b> — hung threads (GitReins, Helios, Helix, Bunker, muster, totalstack-service-builder, dexdat-loader-watchdog). Need external `hermes gateway restart` from outside the gateway process.</li>
+    <li>🔴 <b>STALE_RUNNING_TIMEOUT not deployed</b> — scheduler patch to auto-clear zombie locks after 30min is missing. 222 "already running" skips in logs.</li>
+    <li>✅ <b>14 jobs force-fired</b> — overdue jobs had next_run_at set to 5 min in past</li>
+    <li>✅ <b>4 speed rebalances:</b> muster 30m→15m, dexdat-memory 120m→30m, musterflow 360m→30m, H4F 120m→30m</li>
+    <li>✅ <b>2 legacy zombies paused:</b> mythos-dev-loop, gitreins-poc-dev-loop</li>
+    <li>✅ <b>0 schema fixes needed</b> — all schedules valid</li>
+    <li>🔴 <b>Hilo tool = 0 hits</b> — No foreman using blast radius analysis</li>
+    <li>🔴 <b>Broken refs = 4</b> — Skill reference table has dead links</li>
+    <li>🔴 <b>Skill patch fails = 15</b> — Foremen attempting to fix skills and failing</li>
+    <li>🔴 <b>Off-by-One service OFFLINE</b> — Pre-solve lab not available</li>
+</ul></ul>
+</div>
+
+<div class="section">
+    <h3>🔴 CI Failures</h3>
+    <ul>
+    <li><b>Helios</b> (dexdat/Helios): 🔴 Billing-blocked since Jun 22 — 5 pending tasks unaddressable</li>
+    <li><b>Muster</b> (wojons/muster): 🔴 golangci-lint v2→v1 format issue — task marked [x] but CI still fails</li>
+    <li><b>Hivemind</b> (dexdat/hivemind): 🔴 Lint errors — http.Post noctx</li>
+    <li><b>SpecLang</b> (dexdat/SpecLang): 🔴 Dual-view compliance failure</li>
+    <li><b>Chimera</b> (totalwindupflightsystems/chimera): 🔴 CI failing</li>
+    <li><b>WarpFS</b> (totalwindupflightsystems/warpfs): 🔴 Deploy Docs — non-critical</li>
+    <li><b>Kobayashi-Maru</b> (dexdat/KM): ✅ Security Tests pass; ci-cd-pipeline infra secrets</li>
+</ul></ul>
+</div>
+
+<div class="section">
+    <h3>🛠 Tool Health</h3>
+    <table>
+        <tr><th>Tool</th><th>Hits/4h</th><th>Status</th></tr>
+        <tr><td>GitReins</td><td>88</td><td class="green">✅ Healthy</td></tr>
+        <tr><td>DuckBrain</td><td>52</td><td class="green">✅ Healthy</td></tr>
+        <tr><td>Off-by-One</td><td>3</td><td class="green">✅ Healthy</td></tr>
+        <tr><td>Hilo</td><td>0</td><td class="red">🔴 Critical</td></tr>
+        <tr><td>Broken refs</td><td>4</td><td class="red">🔴 Critical</td></tr>
+        <tr><td>Zombie locks</td><td>222</td><td class="red">🔴 Critical</td></tr>
+        <tr><td>Skill patch fails</td><td>15</td><td class="red">🔴 Critical</td></tr>
+    </table>
+    <p style="margin-top:8px;font-size:12px;color:#8b949e">
+    Off-by-One service: OFFLINE | KeyError crashes: 0 (schemas healthy) | Scheduler timeout: NOT deployed
+    </p>
+</div>
+
+<div class="footer">
+    Coding Hermes Supervisor • Run 2026-07-10-0511 • Model: deepseek-v4-pro • Provider: deepseek
+</div>
+</body>
+</html>
