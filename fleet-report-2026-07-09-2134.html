@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fleet Report — 2026-07-09 21:37 CT</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0d1117; color: #c9d1d9; padding: 20px; }
+  h1 { color: #58a6ff; margin-bottom: 5px; }
+  h2 { color: #8b949e; font-size: 14px; margin-bottom: 20px; }
+  .metrics { display: flex; gap: 15px; margin-bottom: 25px; flex-wrap: wrap; }
+  .metric { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 12px 18px; text-align: center; min-width: 90px; }
+  .metric .val { font-size: 28px; font-weight: bold; }
+  .metric .label { font-size: 11px; color: #8b949e; margin-top: 3px; }
+  .green { color: #3fb950; }
+  .yellow { color: #d2991d; }
+  .red { color: #f85149; }
+  .purple { color: #a371f7; }
+  table { width: 100%; border-collapse: collapse; margin-bottom: 25px; font-size: 13px; }
+  th { background: #161b22; padding: 8px 10px; text-align: left; border-bottom: 2px solid #30363d; color: #8b949e; font-weight: 600; }
+  td { padding: 7px 10px; border-bottom: 1px solid #21262d; }
+  tr:hover { background: #1c2128; }
+  .section { margin-bottom: 30px; }
+  .section h3 { color: #58a6ff; margin-bottom: 10px; border-bottom: 1px solid #30363d; padding-bottom: 5px; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+  .badge-ok { background: #1a3a2a; color: #3fb950; }
+  .badge-warn { background: #3d2e00; color: #d2991d; }
+  .badge-err { background: #3d1f1f; color: #f85149; }
+  .badge-info { background: #1a2a3d; color: #58a6ff; }
+  .issue { background: #161b22; border-left: 3px solid #f85149; padding: 8px 12px; margin-bottom: 8px; border-radius: 0 6px 6px 0; }
+  .issue.warn { border-left-color: #d2991d; }
+  .issue.info { border-left-color: #58a6ff; }
+  .tool-ok { color: #3fb950; }
+  .tool-warn { color: #d2991d; }
+  .tool-err { color: #f85149; }
+</style>
+</head>
+<body>
+
+<h1>📊 Coding Hermes Fleet Report</h1>
+<h2>2026-07-09 21:37 CT — Supervisor Run #51 (v1.34.0)</h2>
+
+<div class="metrics">
+  <div class="metric"><div class="val green">27</div><div class="label">Foremen</div></div>
+  <div class="metric"><div class="val yellow">5</div><div class="label">Paused Legacy</div></div>
+  <div class="metric"><div class="val red">145</div><div class="label">Zombie Locks (4h)</div></div>
+  <div class="metric"><div class="val purple">68</div><div class="label">Phase 0 Fixes</div></div>
+  <div class="metric"><div class="val green">0</div><div class="label">Scheduler Errors</div></div>
+  <div class="metric"><div class="val red">1</div><div class="label">Class B Hung</div></div>
+</div>
+
+<div class="section">
+<h3>🔧 Changes This Run</h3>
+
+<div class="issue info"><strong>Phase 0A/0F:</strong> 68 jobs force-fired — 50+ had been stale for hours. GitReins Coding Foreman was 50.7h stale! All next_run_at set to -5min.</div>
+<div class="issue warn"><strong>Phase 2E:</strong> 5 legacy zombies paused (hivemind-foreman, Hermes Plays Pokémon, helios-dev-loop, consensus-watchdog, dexdat-usability-tester). These were old Axiom-based loops burning quota alongside proper coding-hermes foremen.</div>
+<div class="issue info"><strong>Phase 0G:</strong> Foreman model drift confirmed — all 22 unpinned foremen now on deepseek-v4-pro/deepseek (correct for inspection).</div>
+<div class="issue info"><strong>Phase 2E:</strong> DuckBrain Coding Foreman (new) set to deepseek-v4-pro/deepseek.</div>
+<div class="issue warn"><strong>Phase 2E:</strong> dexdat-usability-tester: ollama-cloud→zai-glm (GLM provider fix).</div>
+</div>
+
+<div class="section">
+<h3>⚠️ Critical Issues</h3>
+
+<div class="issue"><strong>🔥 CLASS B ZOMBIE — totalstack-service-builder:</strong> 4 recent skips, hung thread. _STALE_RUNNING_TIMEOUT NOT deployed in scheduler.py. Only fix is <code>hermes gateway restart</code>. This job had 26 total zombie locks and needs manual restart resolution.</div>
+
+<div class="issue"><strong>🔴 145 "already running" skips in last 4 hours:</strong> Massive zombie cascade. Phase 0 forced all overdue jobs to fire, but Class B hung threads will remain locked. Gateway restart needed — last restart was 18:20 CT.</div>
+
+<div class="issue warn"><strong>🟡 Off-by-One tool = 0 hits/4h:</strong> Foremen not using the pre-solve lab. Check: is the service running? (<code>curl localhost:8766/api/v1/queue</code>)</div>
+
+<div class="issue warn"><strong>🟡 Hilo tool = 0 hits/4h:</strong> No blast radius analysis happening. Are foremen skipping step 2?</div>
+
+<div class="issue warn"><strong>🟡 14 Skill patch failures:</strong> Foremen trying to edit skills and failing. May need curator tool permission review.</div>
+
+<div class="issue warn"><strong>🟡 2 Broken refs:</strong> Skill reference table has dead links.</div>
+</div>
+
+<div class="section">
+<h3>📋 Fleet Status</h3>
+<table>
+<tr><th>Project</th><th>Foreman</th><th>Model/Provider</th><th>Speed</th><th>Pending</th><th>Last Run</th><th>CI</th><th>Status</th></tr>
+<tr><td>Helios</td><td>helios-coding-hermes-foreman</td><td>v4-pro/deepseek 🔒</td><td>*/15</td><td>5/37</td><td>08:41 (13h ago)</td><td>🔴 billing</td><td><span class="badge badge-warn">STALE</span></td></tr>
+<tr><td>Helix</td><td>helix-foreman</td><td>grok-4.5/xai-oauth 🔒</td><td>*/15</td><td>18/24</td><td>08:52 (13h ago)</td><td>✅</td><td><span class="badge badge-ok">ACTIVE</span></td></tr>
+<tr><td>Bunker</td><td>Bunker Coding Hermes</td><td>kimi-for-coding 🔒</td><td>*/15</td><td>0/1</td><td>10:09 (11h ago)</td><td>🟡 queued</td><td><span class="badge badge-ok">PINNED</span></td></tr>
+<tr><td>GitReins</td><td>GitReins Coding Foreman</td><td>v4-pro/deepseek</td><td>*/15</td><td>3/45</td><td>Jul 7 (51h ago!)</td><td>⚪ GitLab</td><td><span class="badge badge-err">STALE 51h</span></td></tr>
+<tr><td>Muster</td><td>muster-coding-hermes-loop</td><td>v4-pro/deepseek</td><td>30m</td><td>2/79</td><td>18:31 (3h ago)</td><td>🔴 lint</td><td><span class="badge badge-warn">ACTIVE</span></td></tr>
+<tr><td>DexDat Core</td><td>dexdat-build-loop</td><td>v4-pro/ollama-cloud 🔒</td><td>30m</td><td>12/12</td><td>16:18 (5h ago)</td><td>—</td><td><span class="badge badge-ok">ACTIVE</span></td></tr>
+<tr><td>Kobayashi-Maru</td><td>kobayashi-maru-foreman</td><td>v4-pro/deepseek</td><td>30m</td><td>2/31</td><td>18:43 (3h ago)</td><td>✅</td><td><span class="badge badge-ok">ACTIVE</span></td></tr>
+<tr><td>DexDat Memory</td><td>dexdat-coding-hermes-foreman</td><td>v4-pro/deepseek</td><td>120m</td><td>0/8</td><td>13:46 (8h ago)</td><td>✅</td><td><span class="badge badge-info">IDLE</span></td></tr>
+<tr><td>ASCE</td><td>ASCE Coding Foreman</td><td>v4-pro/deepseek</td><td>120m</td><td>0/8</td><td>13:52 (8h ago)</td><td>⚪ GitLab</td><td><span class="badge badge-info">IDLE</span></td></tr>
+<tr><td>MusterFlow</td><td>musterflow-foreman</td><td>v4-pro/deepseek</td><td>360m</td><td>0/25</td><td>17:58 (4h ago)</td><td>—</td><td><span class="badge badge-info">IDLE</span></td></tr>
+<tr><td>Hilo (warpfs)</td><td>hilo-foreman</td><td>v4-pro/deepseek</td><td>360m</td><td>0/6</td><td>14:11 (7h ago)</td><td>✅</td><td><span class="badge badge-info">IDLE</span></td></tr>
+<tr><td>AI Plays Poké</td><td>ai-plays-pokemon-foreman</td><td>v4-pro/deepseek</td><td>120m</td><td>0/7</td><td>17:39 (4h ago)</td><td>⚪ No CI</td><td><span class="badge badge-info">IDLE</span></td></tr>
+<tr><td>H4F Infra</td><td>H4F Coding Foreman</td><td>v4-pro/deepseek</td><td>120m</td><td>0/5</td><td>09:44 (12h ago)</td><td>✅</td><td><span class="badge badge-info">IDLE</span></td></tr>
+<tr><td>SpecLang</td><td>speclang-ci-foreman</td><td>MiniMax-M3/minimax 🔒</td><td>120m</td><td>0/6</td><td>19:35 (2h ago)</td><td>🔴 dual-view</td><td><span class="badge badge-ok">PINNED</span></td></tr>
+<tr><td>Chimera v2</td><td>chimera-coding-foreman</td><td>v4-pro/deepseek</td><td>120m</td><td>0/0</td><td>21:33 (just ran)</td><td>⚪</td><td><span class="badge badge-ok">FRESH</span></td></tr>
+<tr><td>Consensus</td><td>consensus-coding-foreman</td><td>v4-pro/deepseek</td><td>120m</td><td>0/0</td><td>15:28 (6h ago)</td><td>✅</td><td><span class="badge badge-info">IDLE</span></td></tr>
+<tr><td>Mythos (pinned)</td><td>mythos-coding-foreman</td><td>grok-4.5/xai-oauth 🔒</td><td>360m</td><td>0/0</td><td>17:17 (4h ago)</td><td>—</td><td><span class="badge badge-ok">PINNED</span></td></tr>
+<tr><td>Mythos (wojons)</td><td>Mythos Coding Foreman</td><td>v4-pro/deepseek</td><td>120m</td><td>—</td><td>06:03 (16h ago)</td><td>—</td><td><span class="badge badge-err">STALE</span></td></tr>
+<tr><td>EduOS</td><td>EduOS Alpha Dev Loop</td><td>v4-pro/deepseek</td><td>360m</td><td>0/0</td><td>11:42 (10h ago)</td><td>—</td><td><span class="badge badge-info">IDLE</span></td></tr>
+<tr><td>Mafia Benchmark</td><td>mafia-benchmark-dev-loop</td><td>v4-pro/deepseek</td><td>120m</td><td>0/0</td><td>15:31 (6h ago)</td><td>—</td><td><span class="badge badge-info">IDLE</span></td></tr>
+<tr><td>Off-by-One</td><td>off-by-one-foreman</td><td>v4-pro/deepseek</td><td>360m</td><td>0/0</td><td>NEVER</td><td>✅</td><td><span class="badge badge-err">NEVER RAN</span></td></tr>
+<tr><td>DeepSeek Dashboard</td><td>DeepSeek Dashboard Foreman</td><td>v4-pro/deepseek</td><td>120m</td><td>0/0</td><td>06:52 (15h ago)</td><td>—</td><td><span class="badge badge-err">STALE</span></td></tr>
+<tr><td>Hivemind</td><td>Hivemind Coding Foreman</td><td>v4-pro/deepseek</td><td>120m</td><td>0/0</td><td>10:51 (11h ago)</td><td>🔴 lint</td><td><span class="badge badge-warn">STALE</span></td></tr>
+<tr><td>RethinkDB</td><td>RethinkDB Steward</td><td>v4-pro/deepseek</td><td>120m</td><td>0/0</td><td>15:52 (6h ago)</td><td>—</td><td><span class="badge badge-info">IDLE</span></td></tr>
+<tr><td>Escalation</td><td>escalation-doctrine-foreman</td><td>v4-pro/deepseek</td><td>120m</td><td>0/0</td><td>18:17 (3h ago)</td><td>—</td><td><span class="badge badge-ok">ACTIVE</span></td></tr>
+<tr><td>DuckBrain</td><td>DuckBrain Coding Foreman</td><td>v4-pro/deepseek</td><td>120m</td><td>0/0</td><td>NEVER</td><td>—</td><td><span class="badge badge-err">NEW</span></td></tr>
+</table>
+</div>
+
+<div class="section">
+<h3>🛠 Tool Health</h3>
+<table>
+<tr><th>Tool</th><th>Hits/4h</th><th>Status</th></tr>
+<tr><td>GitReins</td><td>53</td><td><span class="tool-ok">✅ Healthy</span></td></tr>
+<tr><td>DuckBrain</td><td>43</td><td><span class="tool-ok">✅ Healthy</span></td></tr>
+<tr><td>Off-by-One</td><td>0</td><td><span class="tool-err">🔴 Critical</span></td></tr>
+<tr><td>Hilo</td><td>0</td><td><span class="tool-err">🔴 Critical</span></td></tr>
+<tr><td>Broken refs</td><td>2</td><td><span class="tool-warn">🟡 Warning</span></td></tr>
+<tr><td>Zombie locks</td><td>145</td><td><span class="tool-err">🔴 Critical</span></td></tr>
+<tr><td>Skill patch fails</td><td>14</td><td><span class="tool-err">🔴 Critical</span></td></tr>
+</table>
+</div>
+
+<div class="section">
+<h3>🚨 Action Items for Bane</h3>
+
+<div class="issue"><strong>1. GATEWAY RESTART NEEDED:</strong> 145 zombie locks in 4h, 1 Class B hung thread (totalstack-service-builder). _STALE_RUNNING_TIMEOUT not in scheduler. Run: <code>hermes gateway restart</code>. After restart, verify scheduler loads with timeout: <code>grep '_STALE_RUNNING_TIMEOUT' ~/.hermes/hermes-agent/cron/scheduler.py</code> — if missing, re-patch.</div>
+
+<div class="issue warn"><strong>2. Off-by-One service check:</strong> <code>curl localhost:8766/api/v1/queue</code> — if down, restart the pre-solve lab.</div>
+
+<div class="issue warn"><strong>3. GitReins Coding Foreman:</strong> 51 hours stale. Was zombie-locked since July 7. Phase 0 reset state and set next_run to -5min. Should fire on next tick. Monitor.</div>
+
+<div class="issue warn"><strong>4. off-by-one-foreman:</strong> Has NEVER run. Created June 30 but never fired. Phase 0 set next_run to -5min. Should fire now.</div>
+
+<div class="issue info"><strong>5. CI status:</strong> Helios billing-blocked (Jun 22), Muster golangci-lint v2→v1, SpecLang dual-view, Hivemind http.Post noctx. All foremen will handle these — no supervisor action needed.</div>
+</div>
+
+<p style="color: #484f58; font-size: 11px; margin-top: 30px; text-align: center;">
+  Auto-generated by Coding Hermes Supervisor v1.34.0 — 2026-07-09 21:37 CT<br>
+  27 coding-hermes foremen | 68 Phase 0 fixes | 7 Phase 2 fixes | 5 legacy zombies paused
+</p>
+
+</body>
+</html>
