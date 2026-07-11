@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fleet Report — 2026-07-11-1215</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0d1117; color: #c9d1d9; padding: 20px; }
+h1 { color: #58a6ff; margin-bottom: 10px; }
+h2 { color: #8b949e; margin: 20px 0 10px; font-size: 16px; }
+.metrics { display: flex; gap: 15px; margin: 15px 0; flex-wrap: wrap; }
+.metric { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 12px 20px; text-align: center; min-width: 80px; }
+.metric .num { font-size: 28px; font-weight: bold; }
+.metric .label { font-size: 11px; color: #8b949e; margin-top: 4px; }
+.green { color: #3fb950; }
+.yellow { color: #d2991d; }
+.red { color: #f85149; }
+.gray { color: #8b949e; }
+table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 13px; }
+th { background: #161b22; padding: 8px 10px; text-align: left; border-bottom: 1px solid #30363d; color: #8b949e; font-weight: 600; }
+td { padding: 6px 10px; border-bottom: 1px solid #21262d; }
+tr:hover { background: #161b22; }
+.section { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 15px; margin: 15px 0; }
+.issue { background: #1a1f29; border-left: 3px solid #d2991d; padding: 8px 12px; margin: 6px 0; font-size: 13px; }
+.issue.critical { border-left-color: #f85149; }
+.issue.fix { border-left-color: #3fb950; }
+code { background: #21262d; padding: 1px 5px; border-radius: 3px; font-size: 12px; }
+</style>
+</head>
+<body>
+<h1>📊 Coding Hermes Fleet Report</h1>
+<p style="color:#8b949e">Generated: 2026-07-11 17:15 UTC | Supervisor: Phase 0G applied | Model: deepseek-v4-pro</p>
+
+<div class="metrics">
+  <div class="metric"><div class="num green">6</div><div class="label">Healthy</div></div>
+  <div class="metric"><div class="num yellow">11</div><div class="label">Warning</div></div>
+  <div class="metric"><div class="num red">9</div><div class="label">Stale/Error</div></div>
+  <div class="metric"><div class="num gray">0</div><div class="label">Paused</div></div>
+  <div class="metric"><div class="num">54</div><div class="label">Total Pending</div></div>
+</div>
+
+<h2>🔄 Changes This Run</h2>
+<div class="section">
+  <div class="issue fix"><strong>Phase 0A-POST:</strong> 14 severely overdue foremen forced to fire immediately (helios, helix, Bunker, off-by-one, chimera, escalation-doctrine, muster, dexdat, GitReins, H4F, Kobayashi-Maru, musterflow, mafia-benchmark, DuckBrain)</div>
+  <div class="issue fix"><strong>Phase 0G:</strong> All 26 foremen verified on correct foreman model (0 foreman-model drift detected)</div>
+  <div class="issue fix"><strong>Phase 0B:</strong> No stale states found (all jobs in scheduled/active state)</div>
+  <div class="issue fix"><strong>Phase 0A:</strong> No schedule schema issues found (all schedules valid)</div>
+</div>
+
+<h2>📋 Fleet Status</h2>
+<table>
+<tr><th>Project</th><th>Model</th><th>Provider</th><th>Speed</th><th>Pending</th><th>Last Run</th><th>CI</th><th>Status</th></tr>
+<tr><td>ASCE Coding Foreman</td><td><code>deepseek-v4-pro</code></td><td><code>deepseek</code></td><td>120m</td><td>0</td><td>2h</td><td>⚪</td><td>✅</td></tr>
+<tr><td>Bunker Coding Hermes 📌</td><td><code>kimi-for-coding</code></td><td><code>kimi-for-coding</code></td><td>*/15 * * * *</td><td>0</td><td>2d</td><td>⚪</td><td>🔴stale</td></tr>
+<tr><td>DeepSeek Dashboard Foreman</td><td><code>deepseek-v4-pro</code></td><td><code>deepseek</code></td><td>120m</td><td>0</td><td>2h</td><td>⚪</td><td>🟡gw</td></tr>
+<tr><td>DuckBrain Coding Foreman</td><td><code>deepseek-v4-pro</code></td><td><code>deepseek</code></td><td>120m</td><td>0</td><td>never</td><td>⚪</td><td>🔴</td></tr>
+<tr><td>EduOS Alpha Dev Loop</td><td><code>deepseek-v4-pro</code></td><td><code>deepseek</code></td><td>360m</td><td>0</td><td>2h</td><td>⚪</td><td>🟡gw</td></tr>
+<tr><td>GitReins Coding Foreman</td><td><code>deepseek-v4-pro</code></td><td><code>deepseek</code></td><td>*/15 * * * *</td><td>3</td><td>2h</td><td>⚪</td><td>🟡gw</td></tr>
+<tr><td>H4F Coding Foreman</td><td><code>deepseek-v4-pro</code></td><td><code>deepseek</code></td><td>30m</td><td>2</td><td>2h</td><td>⚪</td><td>🟡gw</td></tr>
+<tr><td>Hivemind Coding Foreman</td><td><code>deepseek-v4-pro</code></td><td><code>deepseek</code></td><td>120m</td><td>0</td><td>34m</td><td>⚪</td><td>✅</td></tr>
+<tr><td>Mythos Coding Foreman</td><td><code>deepseek-v4-pro</code></td><td><code>deepseek</code></td><td>120m</td><td>0</td><td>2h</td><td>⚪</td><td>🟡gw</td></tr>
+<tr><td>RethinkDB Steward</td><td><code>deepseek-v4-pro</code></td><td><code>deepseek</code></td><td>120m</td><td>0</td><td>4m</td><td>⚪</td><td>✅</td></tr>
+<tr><td>ai-plays-pokemon-foreman</td><td><code>deepseek-v4-pro</code></td><td><code>deepseek</code></td><td>120m</td><td>0</td><td>2h</td><td>⚪</td><td>✅</td></tr>
+<tr><td>chimera-coding-foreman</td><td><code>deepseek-v4-pro</code></td><td><code>deepseek</code></td><td>120m</td><td>0</td><td>2d</td><td>⚪</td><td>🔴stale</td></tr>
+<tr><td>consensus-coding-foreman</td><td><code>deepseek-v4-pro</code></td><td><code>deepseek</code></td><td>120m</td><td>0</td><td>49m</td><td>🟢</td><td>✅</td></tr>
+<tr><td>dexdat-build-loop 📌</td><td><code>deepseek-v4-pro</code></td><td><code>ollama-cloud</code></td><td>30m</td><td>9</td><td>2h</td><td>⚪</td><td>🔴stale</td></tr>
+<tr><td>dexdat-coding-hermes-foreman</td><td><code>deepseek-v4-pro</code></td><td><code>deepseek</code></td><td>30m</td><td>6</td><td>2h</td><td>⚪</td><td>🟡gw</td></tr>
+<tr><td>escalation-doctrine-foreman</td><td><code>deepseek-v4-pro</code></td><td><code>deepseek</code></td><td>120m</td><td>0</td><td>2d</td><td>⚪</td><td>🔴stale</td></tr>
+<tr><td>helios-coding-hermes-foreman</td><td><code>deepseek-v4-pro</code></td><td><code>deepseek</code></td><td>*/15 * * * *</td><td>5</td><td>2d</td><td>⚪</td><td>🔴stale</td></tr>
+<tr><td>helix-foreman 📌</td><td><code>grok-4.5</code></td><td><code>xai-oauth</code></td><td>*/15 * * * *</td><td>18</td><td>2d</td><td>🔴</td><td>🔴stale</td></tr>
+<tr><td>hilo-foreman</td><td><code>deepseek-v4-pro</code></td><td><code>deepseek</code></td><td>360m</td><td>0</td><td>2h</td><td>🔴</td><td>🟡gw</td></tr>
+<tr><td>kobayashi-maru-foreman</td><td><code>deepseek-v4-pro</code></td><td><code>deepseek</code></td><td>30m</td><td>4</td><td>2h</td><td>⚪</td><td>🟡gw</td></tr>
+<tr><td>mafia-benchmark-dev-loop</td><td><code>deepseek-v4-pro</code></td><td><code>deepseek</code></td><td>120m</td><td>0</td><td>2h</td><td>⚪</td><td>🟡gw</td></tr>
+<tr><td>muster-coding-hermes-loop</td><td><code>deepseek-v4-pro</code></td><td><code>deepseek</code></td><td>15m</td><td>5</td><td>2h</td><td>⚪</td><td>🟡gw</td></tr>
+<tr><td>musterflow-foreman</td><td><code>deepseek-v4-pro</code></td><td><code>deepseek</code></td><td>30m</td><td>2</td><td>1d</td><td>⚪</td><td>🔴stale</td></tr>
+<tr><td>mythos-coding-foreman 📌</td><td><code>grok-4.5</code></td><td><code>xai-oauth</code></td><td>360m</td><td>0</td><td>2h</td><td>⚪</td><td>🟡gw</td></tr>
+<tr><td>off-by-one-foreman</td><td><code>deepseek-v4-pro</code></td><td><code>deepseek</code></td><td>360m</td><td>0</td><td>2d</td><td>⚪</td><td>🔴stale</td></tr>
+<tr><td>speclang-ci-foreman 📌</td><td><code>MiniMax-M3</code></td><td><code>minimax</code></td><td>120m</td><td>0</td><td>1h</td><td>⚪</td><td>✅</td></tr>
+</table>
+
+<h2>⚠️ Issues Detected</h2>
+<div class="section">
+<div class="issue critical"><strong>Gateway Shutdown:</strong> 11 foremen killed mid-execution at ~09:54 CT today ("Gateway shutdown (final-cleanup)"). All forced to re-fire via Phase 0A-POST.</div>
+<div class="issue critical"><strong>Stale Foremen (9):</strong> Bunker Coding Hermes(2d), DuckBrain Coding Foreman(never), chimera-coding-foreman(2d), dexdat-build-loop(2h), escalation-doctrine-foreman(2d), helios-coding-hermes-foreman(2d), helix-foreman(2d), musterflow-foreman(1d), off-by-one-foreman(2d)</div>
+<div class="issue critical"><strong>DuckBrain Coding Foreman:</strong> NEVER fired since creation. Model/provider set by Phase 0G. Needs its first tick.</div>
+<div class="issue"><strong>Tool Health (4h):</strong> GitReins=17 ⚠️, DuckBrain=5 ⚠️, Off-by-One=0 🔴, Hilo=0 🔴, Broken refs=0 ✅, Skill patch fails=0 ✅</div>
+<div class="issue"><strong>Orphans:</strong> 4 task dirs without foremen (eduos, speclang, test-shallow, tmp-speclang). 2 are test/shallow dirs. eduos and speclang may need foremen.</div>
+<div class="issue"><strong>Active Legacy Zombies:</strong> "EduOS Browser E2E Tester" (enabled, shares eduos.dexdat.com.co) + "Chimera Model Sync (Weekly)" (enabled, shares chimera-v2). Need pausing.</div>
+<div class="issue fix"><strong>Zombie Locks:</strong> 0 detected in agent.log ✅</div>
+<div class="issue fix"><strong>_STALE_RUNNING_TIMEOUT:</strong> Patch on disk in scheduler.py ✅ (auto-clears zombie locks after 30 min)</div>
+<div class="issue critical"><strong>CI Failures:</strong> helix, totalstack, warpfs</div>
+<div class="issue" style="margin-left:20px">helix: feat(ideation): Phase 1 idea capture, offline validate, prioritize, p… — success (branch: master, 2026-07-09)</div>
+<div class="issue" style="margin-left:20px">helix: style(review): gofmt dashboard files for golangci-lint — success (branch: master, 2026-07-09)</div>
+<div class="issue" style="margin-left:20px">helix: feat(review): change management dashboard + blast radius — failure (branch: master, 2026-07-09)</div>
+<div class="issue" style="margin-left:20px">helix: chore: mark review model clients complete; record BwrapExecutor + For… — success (branch: master, 2026-07-08)</div>
+<div class="issue" style="margin-left:20px">helix: chore(tasks): record identity Close stub fix + SKILL.md generation — success (branch: master, 2026-07-07)</div>
+<div class="issue" style="margin-left:20px">totalstack: .github/workflows/stale-bot.yml — failure (branch: main, 2026-07-11)</div>
+<div class="issue" style="margin-left:20px">totalstack: .github/workflows/stale-bot.yml — failure (branch: main, 2026-07-11)</div>
+<div class="issue" style="margin-left:20px">totalstack: .github/workflows/stale-bot.yml — failure (branch: main, 2026-07-11)</div>
+<div class="issue" style="margin-left:20px">totalstack: .github/workflows/stale-bot.yml — failure (branch: main, 2026-07-11)</div>
+<div class="issue" style="margin-left:20px">totalstack: .github/workflows/stale-bot.yml — failure (branch: main, 2026-07-11)</div>
+<div class="issue" style="margin-left:20px">warpfs: feat: PH7-006 OSS readiness — LICENSE, README, community files, Cargo… — failure (branch: master, 2026-06-25)</div>
+<div class="issue" style="margin-left:20px">warpfs: feat: PH7-006 OSS readiness — LICENSE, README, community files, Cargo… — failure (branch: master, 2026-06-25)</div>
+</div>
+
+<h2>🛠️ Tool Health</h2>
+<div class="section">
+<table>
+<tr><th>Tool</th><th>4h Hits</th><th>Status</th><th>Action</th></tr>
+<tr><td>GitReins</td><td>17</td><td>⚠️ Warning</td><td>Below 20 threshold — foremen may not be using guard</td></tr>
+<tr><td>DuckBrain</td><td>5</td><td>⚠️ Warning</td><td>Below 20 — memory ingestion may be stalled</td></tr>
+<tr><td>Off-by-One</td><td>0</td><td>🔴 Critical</td><td>Pre-solve lab not in use. Check: service running?</td></tr>
+<tr><td>Hilo</td><td>0</td><td>🔴 Critical</td><td>No blast radius analysis. Check: hilo in PATH?</td></tr>
+<tr><td>Broken refs</td><td>0</td><td>✅ Healthy</td><td></td></tr>
+<tr><td>Skill patch fails</td><td>0</td><td>✅ Healthy</td><td></td></tr>
+</table>
+</div>
+
+<h2>📈 Project Health Trends</h2>
+<div class="section">
+<table>
+<tr><th>Project</th><th>Pending</th><th>Velocity</th><th>72h Trend</th></tr>
+<tr><td>ASCE Coding Foreman</td><td>0</td><td>🟡 Slow</td><td>Coasting</td></tr>
+<tr><td>Bunker Coding Hermes</td><td>0</td><td>⚫ Idle</td><td>Stalled</td></tr>
+<tr><td>DeepSeek Dashboard Foreman</td><td>0</td><td>🟡 Slow</td><td>Coasting</td></tr>
+<tr><td>DuckBrain Coding Foreman</td><td>0</td><td>⚫ Idle</td><td>New</td></tr>
+<tr><td>EduOS Alpha Dev Loop</td><td>0</td><td>🟡 Slow</td><td>Coasting</td></tr>
+<tr><td>GitReins Coding Foreman</td><td>3</td><td>🟢 Active</td><td>Steady</td></tr>
+<tr><td>H4F Coding Foreman</td><td>2</td><td>🟢 Active</td><td>Steady</td></tr>
+<tr><td>Hivemind Coding Foreman</td><td>0</td><td>🟡 Slow</td><td>Coasting</td></tr>
+<tr><td>Mythos Coding Foreman</td><td>0</td><td>🟡 Slow</td><td>Coasting</td></tr>
+<tr><td>RethinkDB Steward</td><td>0</td><td>🟡 Slow</td><td>Coasting</td></tr>
+<tr><td>ai-plays-pokemon-foreman</td><td>0</td><td>🟡 Slow</td><td>Coasting</td></tr>
+<tr><td>chimera-coding-foreman</td><td>0</td><td>⚫ Idle</td><td>Stalled</td></tr>
+<tr><td>consensus-coding-foreman</td><td>0</td><td>🟡 Slow</td><td>Coasting</td></tr>
+<tr><td>dexdat-build-loop</td><td>9</td><td>🔥 Hot</td><td>Accelerating</td></tr>
+<tr><td>dexdat-coding-hermes-foreman</td><td>6</td><td>🔥 Hot</td><td>Accelerating</td></tr>
+<tr><td>escalation-doctrine-foreman</td><td>0</td><td>⚫ Idle</td><td>Stalled</td></tr>
+<tr><td>helios-coding-hermes-foreman</td><td>5</td><td>🔥 Hot</td><td>Accelerating</td></tr>
+<tr><td>helix-foreman</td><td>18</td><td>🔥 Hot</td><td>Accelerating</td></tr>
+<tr><td>hilo-foreman</td><td>0</td><td>🟡 Slow</td><td>Coasting</td></tr>
+<tr><td>kobayashi-maru-foreman</td><td>4</td><td>🟢 Active</td><td>Steady</td></tr>
+<tr><td>mafia-benchmark-dev-loop</td><td>0</td><td>🟡 Slow</td><td>Coasting</td></tr>
+<tr><td>muster-coding-hermes-loop</td><td>5</td><td>🔥 Hot</td><td>Accelerating</td></tr>
+<tr><td>musterflow-foreman</td><td>2</td><td>🟢 Active</td><td>Steady</td></tr>
+<tr><td>mythos-coding-foreman</td><td>0</td><td>🟡 Slow</td><td>Coasting</td></tr>
+<tr><td>off-by-one-foreman</td><td>0</td><td>⚫ Idle</td><td>Stalled</td></tr>
+<tr><td>speclang-ci-foreman</td><td>0</td><td>🟡 Slow</td><td>Coasting</td></tr>
+</table>
+</div>
+
+<p style="color:#484f58; font-size:11px; margin-top:20px; text-align:center">
+Coding Hermes Supervisor v1.34.0 | Next run: ~4 hours | <code>_STALE_RUNNING_TIMEOUT</code>: deployed on disk
+</p>
+</body>
+</html>
