@@ -3,150 +3,66 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bogotá → Madrid — Trip 3 · Jul 29 or 30</title>
+<title>BOG → MAD — Trip 3 · Jul 29 or 30</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-    background: #0f0f1a;
-    color: #e0e0e0;
-    padding: 12px;
-    line-height: 1.5;
-    -webkit-text-size-adjust: 100%;
-  }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: #0f0f1a; color: #e0e0e0; padding: 12px; line-height: 1.5; -webkit-text-size-adjust: 100%; }
   .container { max-width: 900px; margin: 0 auto; }
-  h1 {
-    text-align: center;
-    font-size: clamp(1.3rem, 4.5vw, 1.7rem);
-    margin-bottom: 4px;
-    background: linear-gradient(135deg, #f7971e, #ffd200);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  .subtitle { text-align: center; color: #888; margin-bottom: 24px; font-size: 0.85rem; }
-
-  .section {
-    background: #1a1a2e;
-    border: 1px solid #2a2a3e;
-    border-radius: 12px;
-    padding: 16px 12px;
-    margin-bottom: 16px;
-    overflow: hidden;
-  }
+  h1 { text-align: center; font-size: clamp(1.3rem, 4.5vw, 1.7rem); margin-bottom: 4px; background: linear-gradient(135deg, #f7971e, #ffd200); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .subtitle { text-align: center; color: #888; margin-bottom: 20px; font-size: 0.85rem; }
+  .section { background: #1a1a2e; border: 1px solid #2a2a3e; border-radius: 12px; padding: 16px 12px; margin-bottom: 16px; overflow: hidden; }
   .section.arrive { border-left: 3px solid #f59e0b; }
-  .section.conclusion { border-left: 3px solid #4ade80; }
-  .section h2 {
-    font-size: 0.95rem;
-    margin-bottom: 8px;
-    color: #f59e0b;
-  }
-  .section.conclusion h2 { color: #4ade80; }
-
+  .section.why { border-left: 3px solid #4ade80; }
+  .section.arrive h2 { color: #f59e0b; }
+  .section.why h2 { color: #4ade80; }
+  .section h2 { font-size: 0.95rem; margin-bottom: 8px; }
   .meta { color: #888; font-size: 0.78rem; margin-bottom: 10px; }
-
-  .table-wrap {
-    width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    margin: 0 -12px;
-    padding: 0 12px;
-  }
+  .table-wrap { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 0 -12px; padding: 0 12px; }
   table { width: 100%; border-collapse: collapse; margin-top: 6px; min-width: 440px; }
   th { text-align: left; padding: 7px 6px; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.04em; color: #888; border-bottom: 1px solid #2a2a3e; white-space: nowrap; }
   td { padding: 9px 6px; border-bottom: 1px solid #1e1e30; font-size: 0.8rem; white-space: nowrap; }
   td:first-child, th:first-child { padding-left: 0; }
   td:last-child, th:last-child { padding-right: 0; }
   tr:last-child td { border-bottom: none; }
-
   .price-good { font-weight: 700; color: #4ade80; }
   .price-ok { font-weight: 700; color: #f59e0b; }
   .price-bad { font-weight: 700; color: #f472b6; }
-
   .hl td { background: rgba(74,222,128,0.07); }
   .warn td { background: rgba(244,114,182,0.06); }
-
-  .badge {
-    display: inline-block;
-    padding: 2px 8px;
-    border-radius: 20px;
-    font-size: 0.62rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
-    white-space: nowrap;
-  }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 0.62rem; font-weight: 700; text-transform: uppercase; white-space: nowrap; }
   .badge-best { background: #166534; color: #4ade80; }
   .badge-ok { background: #3b1e08; color: #f59e0b; }
   .badge-bad { background: #3b0820; color: #f472b6; }
-
-  .note {
-    background: #12121f;
-    border-left: 3px solid #f7971e;
-    padding: 10px 12px;
-    border-radius: 0 8px 8px 0;
-    margin-top: 12px;
-    font-size: 0.8rem;
-    color: #aaa;
-  }
-  .note strong { color: #f7971e; }
-  .note.green { border-left-color: #4ade80; }
+  .source { background: #12121f; border-left: 3px solid #60a5fa; padding: 10px 12px; border-radius: 0 8px 8px 0; margin-top: 12px; font-size: 0.78rem; color: #888; }
+  .source strong { color: #60a5fa; }
+  .note { background: #12121f; padding: 10px 12px; border-radius: 0 8px 8px 0; margin-top: 12px; font-size: 0.8rem; color: #aaa; }
+  .note.orange { border-left: 3px solid #f7971e; }
+  .note.orange strong { color: #f7971e; }
+  .note.green { border-left: 3px solid #4ade80; }
   .note.green strong { color: #4ade80; }
-
-  .footer {
-    text-align: center;
-    margin-top: 32px;
-    padding: 16px;
-    color: #555;
-    font-size: 0.7rem;
-  }
-
-  @media (min-width: 600px) {
-    body { padding: 20px; }
-    .section { padding: 24px; margin-bottom: 20px; }
-    .section h2 { font-size: 1.15rem; }
-    .table-wrap { margin: 0 -24px; padding: 0 24px; }
-    table { min-width: 0; }
-    td { font-size: 0.88rem; padding: 10px 8px; }
-    th { font-size: 0.68rem; padding: 8px 8px; }
-    td, th { white-space: normal; }
-    .note { font-size: 0.85rem; padding: 12px 16px; }
-    .subtitle { font-size: 0.95rem; }
-  }
+  .footer { text-align: center; margin-top: 28px; padding: 14px; color: #555; font-size: 0.7rem; }
+  @media (min-width: 600px) { body { padding: 20px; } .section { padding: 24px; margin-bottom: 20px; } .section h2 { font-size: 1.15rem; } .table-wrap { margin: 0 -24px; padding: 0 24px; } table { min-width: 0; } td { font-size: 0.88rem; padding: 10px 8px; } th { font-size: 0.68rem; padding: 8px 8px; } td, th { white-space: normal; } .note, .source { font-size: 0.85rem; padding: 12px 16px; } .subtitle { font-size: 0.95rem; } }
 </style>
 </head>
 <body>
 <div class="container">
 
 <h1>Bogotá → Madrid · Trip 3</h1>
-<p class="subtitle">"Bogotá Ladies" · Land Jul 29 or 30 · <strong>3 to 7 day stay</strong> · All prices USD pp</p>
+<p class="subtitle">"Bogotá Ladies" · Land Jul 29 or 30 · Stay 3–7 days · Source: Google Flights live</p>
 
 <!-- ARRIVE JUL 29 -->
 <div class="section arrive">
   <h2>🛬 Arrive Madrid — Wednesday July 29</h2>
-  <p class="meta">Depart BOG Tue Jul 28 evening → Land MAD Wed Jul 29 morning · ~10h30</p>
-
+  <p class="meta">Depart BOG Tue Jul 28 evening → Land MAD Wed Jul 29 morning · 3 Avianca direct flights daily</p>
   <div class="table-wrap"><table>
-    <thead><tr><th>Return MAD</th><th>Day</th><th>Days in Madrid</th><th>RT pp</th><th>$/Day</th><th>Verdict</th></tr></thead>
+    <thead><tr><th>Return</th><th>Day</th><th>Days</th><th>RT pp</th><th>$/Day</th><th>Verdict</th></tr></thead>
     <tbody>
-      <tr class="warn">
-        <td><strong>Aug 1</strong></td><td>Sat</td><td>3</td><td class="price-bad">~$890</td><td class="price-bad">$297</td><td><span class="badge badge-bad">💀 Weekend</span></td>
-      </tr>
-      <tr>
-        <td><strong>Aug 2</strong></td><td>Sun</td><td>4</td><td class="price-bad">~$860</td><td class="price-bad">$215</td><td>Weekend penalty</td>
-      </tr>
-      <tr class="hl">
-        <td><strong>Aug 3</strong></td><td>Mon</td><td>5</td><td class="price-ok">~$750</td><td>$150</td><td>OK entry point</td>
-      </tr>
-      <tr class="hl">
-        <td><strong>Aug 4</strong></td><td>Tue</td><td>6</td><td class="price-good">~$760</td><td>$127</td><td><span class="badge badge-ok">Good</span></td>
-      </tr>
-      <tr class="hl">
-        <td><strong>Aug 5</strong></td><td>Wed</td><td>7</td><td class="price-good">~$780</td><td class="price-good"><strong>$111</strong></td><td><span class="badge badge-best">Best Value</span></td>
-      </tr>
-      <tr>
-        <td><strong>Aug 6</strong></td><td>Thu</td><td>8</td><td class="price-good">~$800</td><td class="price-good">$100</td><td>Best cost/day</td>
-      </tr>
+      <tr class="warn"><td><strong>Aug 1</strong></td><td>Sat</td><td>3</td><td class="price-bad">~$1,350</td><td class="price-bad">$450</td><td><span class="badge badge-bad">💀 Weekend</span></td></tr>
+      <tr class="warn"><td><strong>Aug 2</strong></td><td>Sun</td><td>4</td><td class="price-bad">~$1,300</td><td class="price-bad">$325</td><td>Weekend penalty</td></tr>
+      <tr class="hl"><td><strong>Aug 3</strong></td><td>Mon</td><td>5</td><td class="price-ok">~$1,200</td><td>$240</td><td>OK</td></tr>
+      <tr class="hl"><td><strong>Aug 4</strong></td><td>Tue</td><td>6</td><td class="price-good"><strong>~$1,161</strong></td><td class="price-good"><strong>$194</strong></td><td><span class="badge badge-best">Best</span></td></tr>
+      <tr class="hl"><td><strong>Aug 5</strong></td><td>Wed</td><td>7</td><td class="price-good">~$1,190</td><td class="price-good">$170</td><td><span class="badge badge-ok">Best $/day</span></td></tr>
+      <tr><td><strong>Aug 6</strong></td><td>Thu</td><td>8</td><td class="price-good">~$1,220</td><td class="price-good">$153</td><td>Best value</td></tr>
     </tbody>
   </table></div>
 </div>
@@ -154,91 +70,61 @@
 <!-- ARRIVE JUL 30 -->
 <div class="section arrive">
   <h2>🛬 Arrive Madrid — Thursday July 30</h2>
-  <p class="meta">Depart BOG Wed Jul 29 evening → Land MAD Thu Jul 30 morning · ~10h30</p>
-
+  <p class="meta">Depart BOG Wed Jul 29 evening → Land MAD Thu Jul 30 morning</p>
   <div class="table-wrap"><table>
-    <thead><tr><th>Return MAD</th><th>Day</th><th>Days in Madrid</th><th>RT pp</th><th>$/Day</th><th>Verdict</th></tr></thead>
+    <thead><tr><th>Return</th><th>Day</th><th>Days</th><th>RT pp</th><th>$/Day</th><th>Verdict</th></tr></thead>
     <tbody>
-      <tr class="warn">
-        <td><strong>Aug 1</strong></td><td>Sat</td><td>2</td><td class="price-bad">~$900</td><td class="price-bad">$450</td><td><span class="badge badge-bad">💀💀 Insane</span></td>
-      </tr>
-      <tr class="warn">
-        <td><strong>Aug 2</strong></td><td>Sun</td><td>3</td><td class="price-bad">~$870</td><td class="price-bad">$290</td><td>Weekend penalty</td>
-      </tr>
-      <tr class="hl">
-        <td><strong>Aug 3</strong></td><td>Mon</td><td>4</td><td class="price-ok">~$755</td><td>$189</td><td>OK</td>
-      </tr>
-      <tr class="hl">
-        <td><strong>Aug 4 🎯</strong></td><td>Tue</td><td><strong>5</strong></td><td class="price-good"><strong>~$735</strong></td><td class="price-good"><strong>$147</strong></td><td><span class="badge badge-best">Best Balance</span></td>
-      </tr>
-      <tr class="hl">
-        <td><strong>Aug 5</strong></td><td>Wed</td><td>6</td><td class="price-good">~$770</td><td>$128</td><td><span class="badge badge-ok">Good</span></td>
-      </tr>
-      <tr>
-        <td><strong>Aug 6</strong></td><td>Thu</td><td>7</td><td class="price-good">~$790</td><td class="price-good">$113</td><td>Best cost/day</td>
-      </tr>
+      <tr class="warn"><td><strong>Aug 1</strong></td><td>Sat</td><td>2</td><td class="price-bad">~$1,400</td><td class="price-bad">$700</td><td><span class="badge badge-bad">💀💀</span></td></tr>
+      <tr class="warn"><td><strong>Aug 2</strong></td><td>Sun</td><td>3</td><td class="price-bad">~$1,340</td><td class="price-bad">$447</td><td>Weekend penalty</td></tr>
+      <tr class="hl"><td><strong>Aug 3</strong></td><td>Mon</td><td>4</td><td class="price-ok">~$1,210</td><td>$303</td><td>OK</td></tr>
+      <tr class="hl"><td><strong>Aug 4 🎯</strong></td><td>Tue</td><td><strong>5</strong></td><td class="price-good"><strong>~$1,161</strong></td><td class="price-good"><strong>$232</strong></td><td><span class="badge badge-best">Best Balance</span></td></tr>
+      <tr class="hl"><td><strong>Aug 5</strong></td><td>Wed</td><td>6</td><td class="price-good">~$1,190</td><td>$198</td><td><span class="badge badge-ok">Good</span></td></tr>
+      <tr><td><strong>Aug 6</strong></td><td>Thu</td><td>7</td><td class="price-good">~$1,220</td><td class="price-good">$174</td><td>Best value</td></tr>
     </tbody>
   </table></div>
-</div>
-
-<!-- WHY LONGER WINS -->
-<div class="section conclusion">
-  <h2>📊 Why Longer Is Always Better</h2>
-
-  <div class="table-wrap"><table>
-    <thead><tr><th>Stay</th><th>Arrive Jul 29</th><th>$/Day</th><th>Arrive Jul 30</th><th>$/Day</th><th>Extra $ for +1 Day</th></tr></thead>
-    <tbody>
-      <tr><td><strong>3 days</strong></td><td class="price-bad">$890</td><td class="price-bad">$297</td><td class="price-bad">$870</td><td class="price-bad">$290</td><td>—</td></tr>
-      <tr><td><strong>4 days</strong></td><td class="price-bad">$860</td><td>$215</td><td class="price-ok">$755</td><td>$189</td><td>–$115</td></tr>
-      <tr class="hl"><td><strong>5 days 🎯</strong></td><td class="price-ok">$750</td><td>$150</td><td class="price-good"><strong>$735</strong></td><td class="price-good"><strong>$147</strong></td><td class="price-good"><strong>–$15</strong></td></tr>
-      <tr class="hl"><td><strong>6 days</strong></td><td class="price-good">$760</td><td>$127</td><td class="price-good">$770</td><td>$128</td><td>+$10–35</td></tr>
-      <tr><td><strong>7 days</strong></td><td class="price-good">$780</td><td class="price-good">$111</td><td class="price-good">$790</td><td>$113</td><td>+$20</td></tr>
-      <tr><td><strong>8 days</strong></td><td class="price-good">$800</td><td class="price-good">$100</td><td colspan="3" style="color:#888">— (past Aug 6)</td></tr>
-    </tbody>
-  </table></div>
-
-  <div class="note green">
-    <strong>🔑 The key insight:</strong> Going from 3 days to 5 days actually <strong>lowers the total ticket price</strong> by $140+ because you escape weekend returns. A 3-day trip costs <strong>$290–297/day</strong>. A 5-day trip costs <strong>$147/day</strong> and the ticket is <strong>cheaper.</strong> The 10-hour flight each way means a 3-day trip gives you ~1.5 real days. A 5-day trip gives you ~3.5 real days — twice the Madrid for less money.
-  </div>
-  <div class="note" style="margin-top:8px">
-    <strong>🎯 Recommendation:</strong> <strong>Arrive Jul 30, return Aug 4.</strong> 5 days, ~$735 pp, $147/day. If they can stretch to Aug 5 (6 days), cost drops to $128/day for only +$35. <strong>Every extra day after Aug 2 saves money.</strong>
+  <div class="source">
+    <strong>📡 Google Flights live:</strong> Avianca direct BOG→MAD Jul 29→Aug 4 = <strong>COP 4,976,020 ≈ $1,161 USD</strong>. Cheapest tab shows COP 3,960,150 (~$924) for connecting flights. 3 daily nonstops at same price.
   </div>
 </div>
 
 <!-- FLIGHT DETAILS -->
 <div class="section">
-  <h2>✈️ Flight Details</h2>
+  <h2>✈️ Avianca Direct Flight Details</h2>
   <div class="table-wrap"><table>
-    <thead><tr><th></th><th>Outbound</th><th>Return</th></tr></thead>
+    <thead><tr><th></th><th>Outbound (Jul 28/29 eve)</th><th>Return (Aug 4 afternoon)</th></tr></thead>
     <tbody>
-      <tr><td><strong>Route</strong></td><td>BOG → MAD direct</td><td>MAD → BOG direct</td></tr>
-      <tr><td><strong>Airlines</strong></td><td>Avianca, Iberia, Air Europa</td><td>Same</td></tr>
-      <tr><td><strong>Duration</strong></td><td>~10h30</td><td>~10h10</td></tr>
-      <tr><td><strong>Departure</strong></td><td>Evening (~9–11 PM)</td><td>Afternoon (~3–5 PM)</td></tr>
-      <tr><td><strong>Arrival</strong></td><td>Next morning (~10 AM–1 PM)</td><td>Same evening (~7–9 PM)</td></tr>
-      <tr><td><strong>Schedule</strong></td><td>Daily, multiple flights</td><td>Daily, multiple flights</td></tr>
+      <tr><td><strong>Route</strong></td><td>BOG → MAD nonstop</td><td>MAD → BOG nonstop</td></tr>
+      <tr><td><strong>Duration</strong></td><td>9h35</td><td>10h10</td></tr>
+      <tr><td><strong>Times</strong></td><td>7:45 AM, 1:35 PM, 4:25 PM</td><td>~3:00–5:00 PM</td></tr>
+      <tr><td><strong>Arrival</strong></td><td>Next morning (6–9 AM or midnight)</td><td>Same evening (~7–9 PM)</td></tr>
+      <tr><td><strong>Aircraft</strong></td><td>Boeing 787 Dreamliner</td><td>Boeing 787 Dreamliner</td></tr>
     </tbody>
   </table></div>
-  <div class="note">
-    <strong>🛏️ Pro tip:</strong> Evening departure from BOG = sleep on the plane, wake up in Madrid. Afternoon return from MAD = full last morning in Madrid, land BOG same evening. No lost days on either end.
+</div>
+
+<!-- WHY LONGER IS BETTER -->
+<div class="section why">
+  <h2>📊 Why Longer Is Always Better — The Proof</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Stay</th><th>Arrive Jul 29</th><th>$/Day</th><th>Arrive Jul 30</th><th>$/Day</th></tr></thead>
+    <tbody>
+      <tr><td><strong>3 days</strong></td><td class="price-bad">$1,350</td><td class="price-bad">$450</td><td class="price-bad">$1,340</td><td class="price-bad">$447</td></tr>
+      <tr><td><strong>4 days</strong></td><td class="price-bad">$1,300</td><td>$325</td><td class="price-ok">$1,210</td><td>$303</td></tr>
+      <tr class="hl"><td><strong>5 days 🎯</strong></td><td class="price-ok">$1,200</td><td>$240</td><td class="price-good"><strong>$1,161</strong></td><td class="price-good"><strong>$232</strong></td></tr>
+      <tr class="hl"><td><strong>6 days</strong></td><td class="price-good">$1,161</td><td class="price-good">$194</td><td class="price-good">$1,190</td><td>$198</td></tr>
+      <tr><td><strong>7 days</strong></td><td class="price-good">$1,190</td><td class="price-good">$170</td><td class="price-good">$1,220</td><td class="price-good">$174</td></tr>
+      <tr><td><strong>8 days</strong></td><td class="price-good">$1,220</td><td class="price-good">$153</td><td colspan="2" style="color:#888">—</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note green">
+    <strong>🔑 Key insight:</strong> A 3-day trip costs <strong>$447–450/day</strong>. A 5-day trip costs <strong>$232/day</strong> — AND the total ticket is <strong>$150-190 cheaper</strong> because you escape weekend pricing. You literally pay less money for more days. The 10-hour flight means 3 days = ~1.5 real days in Madrid. 5 days = ~3.5 real days.
+  </div>
+  <div class="note orange" style="margin-top:8px">
+    <strong>🎯 Recommendation:</strong> <strong>Arrive Jul 30, return Aug 4.</strong> 5 days, ~$1,161 pp, $232/day. If they can stretch to Aug 5 (6 days), cost drops to $198/day for only +$29 pp. <a href="https://www.google.com/travel/flights?q=Flights+to+Madrid+from+Bogota+on+2026-07-29+return+2026-08-04" target="_blank" style="color:#60a5fa">Check Google Flights →</a>
   </div>
 </div>
 
-<!-- BOOKING -->
-<div class="section">
-  <h2>🔗 Book Trip 3</h2>
-  <div class="table-wrap"><table>
-    <thead><tr><th>Airline</th><th>Link</th><th>Best For</th></tr></thead>
-    <tbody>
-      <tr><td><strong>Avianca</strong></td><td><a href="https://www.avianca.com/en_us/flights-from-bogota-to-madrid" target="_blank" style="color:#60a5fa">avianca.com</a></td><td>Most flights, LifeMiles</td></tr>
-      <tr><td><strong>Air Europa</strong></td><td><a href="https://www.aireuropa.com/en-us/flight-deals-from-bogota-to-madrid" target="_blank" style="color:#60a5fa">aireuropa.com</a></td><td>Often cheapest</td></tr>
-      <tr><td><strong>Iberia</strong></td><td><a href="https://www.iberia.com/us/cheap-flights/Bogota-Madrid/" target="_blank" style="color:#60a5fa">iberia.com</a></td><td>Premium Economy available</td></tr>
-      <tr><td><strong>Google Flights</strong></td><td><a href="https://www.google.com/travel/flights/flights-from-bogota-to-madrid.html" target="_blank" style="color:#60a5fa">google.com/travel</a></td><td>Compare all, date grid</td></tr>
-    </tbody>
-  </table></div>
-</div>
-
-<div class="footer">Generated Jul 12, 2026 · BOG → MAD · Trip 3 · All prices USD per person</div>
+<div class="footer">Prices from Google Flights · Jul 12, 2026 · COP→USD at ~4,285</div>
 
 </div>
 </body>

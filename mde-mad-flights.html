@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Medellín ↔ Madrid Flights — July 15→20</title>
+<title>MDE → MAD — Kelly · Jul 15→20</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
@@ -17,33 +17,14 @@
   .container { max-width: 900px; margin: 0 auto; }
   h1 {
     text-align: center;
-    font-size: clamp(1.4rem, 5vw, 2rem);
-    margin-bottom: 6px;
-    padding: 0 4px;
+    font-size: clamp(1.3rem, 4.5vw, 1.7rem);
+    margin-bottom: 4px;
     background: linear-gradient(135deg, #f7971e, #ffd200);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    word-break: keep-all;
   }
-  .subtitle { text-align: center; color: #888; margin-bottom: 24px; font-size: 0.85rem; padding: 0 4px; }
-
-  .summary-bar {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
-    margin-bottom: 20px;
-  }
-  .summary-card {
-    background: #1a1a2e;
-    border: 1px solid #2a2a3e;
-    border-radius: 10px;
-    padding: 12px 8px;
-    text-align: center;
-  }
-  .summary-card .label { font-size: 0.7rem; text-transform: uppercase; color: #888; letter-spacing: 0.04em; }
-  .summary-card .value { font-size: 1rem; font-weight: 700; color: #fff; margin-top: 2px; }
-  .summary-card .value.price { color: #4ade80; }
+  .subtitle { text-align: center; color: #888; margin-bottom: 20px; font-size: 0.85rem; }
 
   .section {
     background: #1a1a2e;
@@ -53,379 +34,87 @@
     margin-bottom: 16px;
     overflow: hidden;
   }
-  .section h2 {
-    font-size: 0.95rem;
-    margin-bottom: 12px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    flex-wrap: wrap;
-  }
-  .table-wrap {
-    width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    margin: 0 -12px;
-    padding: 0 12px;
-  }
-  .badge {
-    display: inline-block;
-    padding: 2px 8px;
-    border-radius: 20px;
-    font-size: 0.65rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
-    white-space: nowrap;
-  }
-  .badge-best { background: #166534; color: #4ade80; }
-  .badge-direct { background: #1e3a5f; color: #60a5fa; }
-  .badge-connect { background: #3b1e08; color: #f59e0b; }
-  .badge-time { background: #3b0820; color: #f472b6; }
+  .section.flight { border-left: 3px solid #60a5fa; }
+  .section.summary { border-left: 3px solid #4ade80; }
+  .section h2 { font-size: 0.95rem; margin-bottom: 8px; }
+  .section.flight h2 { color: #60a5fa; }
+  .section.summary h2 { color: #4ade80; }
+  .meta { color: #888; font-size: 0.78rem; margin-bottom: 10px; }
 
-  table { width: 100%; border-collapse: collapse; margin-top: 8px; min-width: 500px; }
-  th { text-align: left; padding: 8px 8px; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.04em; color: #888; border-bottom: 1px solid #2a2a3e; white-space: nowrap; }
-  td { padding: 10px 8px; border-bottom: 1px solid #1e1e30; font-size: 0.82rem; white-space: nowrap; }
+  .table-wrap { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 0 -12px; padding: 0 12px; }
+  table { width: 100%; border-collapse: collapse; margin-top: 6px; min-width: 420px; }
+  th { text-align: left; padding: 7px 6px; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.04em; color: #888; border-bottom: 1px solid #2a2a3e; white-space: nowrap; }
+  td { padding: 9px 6px; border-bottom: 1px solid #1e1e30; font-size: 0.8rem; white-space: nowrap; }
   td:first-child, th:first-child { padding-left: 0; }
   td:last-child, th:last-child { padding-right: 0; }
   tr:last-child td { border-bottom: none; }
-  .price-cell { font-weight: 700; color: #4ade80; font-size: 0.9rem; }
-  .highlight-row td { background: rgba(74,222,128,0.06); }
-
-  .flight-path {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 0.8rem;
-    white-space: nowrap;
-  }
-  .flight-path .arrow { color: #666; }
-  .flight-path .stop { color: #f59e0b; font-size: 0.7rem; }
-
-  .note {
-    background: #12121f;
-    border-left: 3px solid #f7971e;
-    padding: 10px 12px;
-    border-radius: 0 8px 8px 0;
-    margin-top: 12px;
-    font-size: 0.8rem;
-    color: #aaa;
-  }
+  .price { font-weight: 700; color: #4ade80; font-size: 0.85rem; }
+  .hl td { background: rgba(74,222,128,0.07); }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 0.62rem; font-weight: 700; text-transform: uppercase; white-space: nowrap; }
+  .badge-best { background: #166534; color: #4ade80; }
+  .badge-direct { background: #1e3a5f; color: #60a5fa; }
+  .badge-ok { background: #3b1e08; color: #f59e0b; }
+  .source { background: #12121f; border-left: 3px solid #60a5fa; padding: 10px 12px; border-radius: 0 8px 8px 0; margin-top: 12px; font-size: 0.78rem; color: #888; }
+  .source strong { color: #60a5fa; }
+  .note { background: #12121f; border-left: 3px solid #f7971e; padding: 10px 12px; border-radius: 0 8px 8px 0; margin-top: 12px; font-size: 0.8rem; color: #aaa; }
   .note strong { color: #f7971e; }
-
-  .footer {
-    text-align: center;
-    margin-top: 32px;
-    padding: 16px;
-    color: #555;
-    font-size: 0.7rem;
-  }
-  .footer a { color: #60a5fa; text-decoration: none; }
+  .footer { text-align: center; margin-top: 28px; padding: 14px; color: #555; font-size: 0.7rem; }
 
   @media (min-width: 600px) {
     body { padding: 20px; }
-    .container { padding: 0; }
-    .summary-bar { grid-template-columns: repeat(4, 1fr); gap: 12px; }
-    .summary-card { padding: 16px; }
-    .summary-card .label { font-size: 0.75rem; }
-    .summary-card .value { font-size: 1.3rem; }
-    .section { padding: 24px; margin-bottom: 24px; }
-    .section h2 { font-size: 1.2rem; }
+    .section { padding: 24px; margin-bottom: 20px; }
+    .section h2 { font-size: 1.15rem; }
     .table-wrap { margin: 0 -24px; padding: 0 24px; }
     table { min-width: 0; }
-    td { font-size: 0.9rem; padding: 12px 8px; }
-    th { font-size: 0.7rem; padding: 10px 8px; }
-    .badge { font-size: 0.68rem; padding: 3px 10px; }
-    .note { font-size: 0.85rem; padding: 12px 16px; }
-    .subtitle { font-size: 0.95rem; }
+    td { font-size: 0.88rem; padding: 10px 8px; }
+    th { font-size: 0.68rem; padding: 8px 8px; }
     td, th { white-space: normal; }
-    td:first-child, th:first-child { padding-left: 0; }
-    td:last-child, th:last-child { padding-right: 0; }
+    .note, .source { font-size: 0.85rem; padding: 12px 16px; }
+    .subtitle { font-size: 0.95rem; }
   }
 </style>
 </head>
 <body>
 <div class="container">
 
-<h1>Medellín ↔ Madrid</h1>
-<p class="subtitle">Depart Wed July 15 → Return Sun July 20, 2026 · All prices USD one-way</p>
+<h1>Medellín → Madrid · Trip 1</h1>
+<p class="subtitle">👤 Kelly · Jul 15 (Wed) → Jul 20 (Mon) · 4.5 days in Madrid</p>
 
-<!-- Summary -->
-<div class="summary-bar">
-  <div class="summary-card">
-    <div class="label">Outbound</div>
-    <div class="value">Jul 15→16</div>
-  </div>
-  <div class="summary-card">
-    <div class="label">Return</div>
-    <div class="value">Jul 20</div>
-  </div>
-  <div class="summary-card">
-    <div class="label">Flight Time</div>
-    <div class="value">~9h30</div>
-  </div>
-  <div class="summary-card">
-    <div class="label">Cheapest RT</div>
-    <div class="value price">~$870</div>
-  </div>
-</div>
-
-<!-- OUTBOUND -->
-<div class="section">
-  <h2>🛫 Outbound — MDE → MAD <span class="badge badge-time">+1 Day Arrival</span></h2>
-  <p style="color:#888;font-size:0.85rem;margin-bottom:12px">Depart Medellín evening · Land Madrid next afternoon</p>
-
-  <div class="table-wrap">
-  <table>
-    <thead>
-      <tr><th>Option</th><th>Route</th><th>Depart</th><th>Arrive</th><th>Duration</th><th>Price</th></tr>
-    </thead>
+<div class="section flight">
+  <h2>✈️ Direct Flight <span class="badge badge-direct">Avianca</span></h2>
+  <p class="meta">Source: Google Flights — live prices as of Jul 12, 2026</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th></th><th>Detail</th></tr></thead>
     <tbody>
-      <tr class="highlight-row">
-        <td><span class="badge badge-best">Best</span></td>
-        <td><div class="flight-path">MDE <span class="arrow">→</span> MAD <span class="badge badge-direct">Direct</span></div></td>
-        <td>Wed 8:35 PM</td>
-        <td>Thu 1:05 PM</td>
-        <td>9h30</td>
-        <td class="price-cell">$400–500</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><div class="flight-path">MDE <span class="arrow">→</span> MAD <span class="badge badge-direct">Direct</span></div></td>
-        <td>Wed 10:35 PM</td>
-        <td>Thu 3:05 PM</td>
-        <td>9h30</td>
-        <td class="price-cell">$450–550</td>
-      </tr>
-      <tr>
-        <td><span class="badge badge-connect">1 Stop</span></td>
-        <td><div class="flight-path">MDE <span class="arrow">→</span> <span class="stop">BOG</span> <span class="arrow">→</span> MAD</div></td>
-        <td>Wed 6:00 PM</td>
-        <td>Thu 1:15 PM</td>
-        <td>11h15</td>
-        <td class="price-cell">$575–690</td>
-      </tr>
-      <tr>
-        <td><span class="badge badge-connect">1 Stop</span></td>
-        <td><div class="flight-path">MDE <span class="arrow">→</span> <span class="stop">PTY</span> <span class="arrow">→</span> MAD</div></td>
-        <td>Wed 4:30 PM</td>
-        <td>Thu 1:30 PM</td>
-        <td>13h00</td>
-        <td class="price-cell">$535–690</td>
-      </tr>
+      <tr><td><strong>Airline</strong></td><td>Avianca — nonstop</td></tr>
+      <tr><td><strong>Outbound</strong></td><td>Wed Jul 15, 10:35 PM MDE → Thu Jul 16, 3:20 PM MAD</td></tr>
+      <tr><td><strong>Return</strong></td><td>Mon Jul 20, ~4:00 PM MAD → Mon Jul 20, ~9:00 PM MDE</td></tr>
+      <tr><td><strong>Duration</strong></td><td>9h45 out / 10h10 back</td></tr>
+      <tr class="hl"><td><strong>Round Trip</strong></td><td class="price"><strong>COP 5,466,000 ≈ $1,275 USD</strong></td></tr>
     </tbody>
-  </table>
+  </table></div>
+  <div class="source">
+    <strong>📡 Google Flights:</strong> Cheapest direct result for Jul 15→20. Price includes taxes & fees. Baggage may be extra.
+  </div>
 </div>
 
+<div class="section summary">
+  <h2>📊 Trip Summary</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th></th><th>Detail</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Days in Madrid</strong></td><td>4.5 (Thu afternoon → Mon afternoon)</td></tr>
+      <tr><td><strong>Cost per day</strong></td><td>~$283/day</td></tr>
+      <tr><td><strong>Best airline</strong></td><td>Avianca direct (only nonstop option on these dates)</td></tr>
+      <tr><td><strong>Return note</strong></td><td>Jul 20 is a holiday in Colombia — no rush</td></tr>
+    </tbody>
+  </table></div>
   <div class="note">
-    <strong>⚠️ Surprise:</strong> Direct is actually cheaper than connecting via Bogotá or Panama. 
-    The layover flights add time, cost, and risk — skip them. Book Air Europa direct for the best deal.
+    <strong>💡 Tip:</strong> The Air Europa direct flights on Jul 15 appear sold out on Google Flights — only Avianca shows. Book asap. <a href="https://www.google.com/travel/flights?q=Flights+to+Madrid+from+Medellin+on+2026-07-15+return+2026-07-20" target="_blank" style="color:#60a5fa">Check Google Flights →</a>
   </div>
 </div>
 
-<!-- RETURN -->
-<div class="section">
-  <h2>🛬 Return — MAD → MDE <span class="badge badge-time">Same Day Arrival</span></h2>
-  <p style="color:#888;font-size:0.85rem;margin-bottom:12px">Depart Madrid afternoon · Land Medellín same evening</p>
-
-  <div class="table-wrap">
-  <table>
-    <thead>
-      <tr><th>Option</th><th>Route</th><th>Depart</th><th>Arrive</th><th>Duration</th><th>Price</th></tr>
-    </thead>
-    <tbody>
-      <tr class="highlight-row">
-        <td><span class="badge badge-best">Best</span></td>
-        <td><div class="flight-path">MAD <span class="arrow">→</span> MDE <span class="badge badge-direct">Direct</span></div></td>
-        <td>Sun 3:20 PM</td>
-        <td>Sun 7:45 PM</td>
-        <td>10h10</td>
-        <td class="price-cell">$430–500</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><div class="flight-path">MAD <span class="arrow">→</span> MDE <span class="badge badge-direct">Direct</span></div></td>
-        <td>Sun 4:40 PM</td>
-        <td>Sun 9:00 PM</td>
-        <td>10h10</td>
-        <td class="price-cell">$450–530</td>
-      </tr>
-      <tr>
-        <td><span class="badge badge-connect">1 Stop</span></td>
-        <td><div class="flight-path">MAD <span class="arrow">→</span> <span class="stop">BOG</span> <span class="arrow">→</span> MDE</div></td>
-        <td>Sun 12:00 PM</td>
-        <td>Sun 9:30 PM</td>
-        <td>13h30</td>
-        <td class="price-cell">$520–650</td>
-      </tr>
-      <tr>
-        <td><span class="badge badge-connect">1 Stop</span></td>
-        <td><div class="flight-path">MAD <span class="arrow">→</span> <span class="stop">PTY</span> <span class="arrow">→</span> MDE</div></td>
-        <td>Sun 11:00 AM</td>
-        <td>Sun 8:30 PM</td>
-        <td>15h30</td>
-        <td class="price-cell">$550–700</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-</div>
-
-<!-- ROUND TRIP SUMMARY -->
-<div class="section">
-  <h2>💰 Round Trip — Best Combo</h2>
-
-  <div class="table-wrap">
-  <table>
-    <thead>
-      <tr><th>Combo</th><th>Outbound</th><th>Return</th><th>Total</th><th>Verdict</th></tr>
-    </thead>
-    <tbody>
-      <tr class="highlight-row">
-        <td><strong>Air Europa Direct</strong></td>
-        <td>Jul 15 8:35PM → Jul 16 1:05PM</td>
-        <td>Jul 20 3:20PM → Jul 20 7:45PM</td>
-        <td class="price-cell">$870–950</td>
-        <td><span class="badge badge-best">Book This</span></td>
-      </tr>
-      <tr>
-        <td>Avianca Direct</td>
-        <td>Jul 15 10:35PM → Jul 16 3:05PM</td>
-        <td>Jul 20 4:40PM → Jul 20 9:00PM</td>
-        <td class="price-cell">$950–1,080</td>
-        <td>Solid, $80 more</td>
-      </tr>
-      <tr>
-        <td>Air Europa + Avianca Mix</td>
-        <td>Air Europa out</td>
-        <td>Avianca back</td>
-        <td class="price-cell">$920–1,030</td>
-        <td>If one sells out</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-</div>
-
-<!-- AIRLINE BREAKDOWN -->
-<div class="section">
-  <h2>✈️ Airlines Compared</h2>
-
-  <div class="table-wrap">
-  <table>
-    <thead>
-      <tr><th></th><th>Air Europa</th><th>Avianca</th></tr>
-    </thead>
-    <tbody>
-      <tr><td><strong>Price (RT)</strong></td><td class="price-cell">$870–950</td><td>$950–1,080</td></tr>
-      <tr><td><strong>Aircraft</strong></td><td>Boeing 787</td><td>Boeing 787</td></tr>
-      <tr><td><strong>Checked Bag</strong></td><td>⚠️ Extra (~$60–80)</td><td>⚠️ Extra on basic</td></tr>
-      <tr><td><strong>Meal</strong></td><td>✅ Included</td><td>✅ Included</td></tr>
-      <tr><td><strong>IFE Screen</strong></td><td>✅ Yes</td><td>✅ Yes</td></tr>
-      <tr><td><strong>USB Power</strong></td><td>✅ Yes</td><td>✅ Yes</td></tr>
-      <tr><td><strong>WiFi</strong></td><td>✅ Paid</td><td>✅ Paid</td></tr>
-      <tr><td><strong>Premium Economy</strong></td><td>✅ Yes (~+$300)</td><td>❌ No</td></tr>
-      <tr><td><strong>Alliance</strong></td><td>SkyTeam</td><td>Star Alliance</td></tr>
-    </tbody>
-  </table>
-</div>
-</div>
-
-<!-- CALENDAR VISUAL -->
-<div class="section">
-  <h2>📅 Your Trip at a Glance</h2>
-
-  <div class="table-wrap">
-  <table>
-    <thead>
-      <tr><th>Day</th><th>Date</th><th>What Happens</th></tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><strong>Wed</strong></td>
-        <td>Jul 15</td>
-        <td>🛫 Depart MDE 8:35 PM · Overnight flight</td>
-      </tr>
-      <tr style="background:rgba(74,222,128,0.04)">
-        <td><strong>Thu</strong></td>
-        <td>Jul 16</td>
-        <td>🛬 Land MAD 1:05 PM · Drop bags, tapas by 3 PM</td>
-      </tr>
-      <tr>
-        <td><strong>Fri</strong></td>
-        <td>Jul 17</td>
-        <td>📍 Madrid — full day</td>
-      </tr>
-      <tr>
-        <td><strong>Sat</strong></td>
-        <td>Jul 18</td>
-        <td>📍 Madrid — full day</td>
-      </tr>
-      <tr>
-        <td><strong>Sun</strong></td>
-        <td>Jul 19</td>
-        <td>📍 Madrid — last full day</td>
-      </tr>
-      <tr style="background:rgba(74,222,128,0.04)">
-        <td><strong>Mon</strong></td>
-        <td>Jul 20</td>
-        <td>🛫 Depart MAD 3:20 PM · 🛬 Land MDE 7:45 PM (same day!)</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-
-  <div class="note">
-    <strong>🕐 Time Zone Hack:</strong> You get <strong>4 full days in Madrid</strong> (Thu afternoon → Sun morning). 
-    The return flight on Sunday lands in Medellín the same evening — no lost day. 
-    Colombia is 7 hours behind Spain, so you literally fly back in time.
-  </div>
-</div>
-
-<!-- BOOKING LINKS -->
-<div class="section">
-  <h2>🔗 Booking Links</h2>
-
-  <div class="table-wrap">
-  <table>
-    <thead>
-      <tr><th>Site</th><th>Link</th><th>Best For</th></tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><strong>Air Europa</strong></td>
-        <td><a href="https://www.aireuropa.com/en-us/flight-deals-from-medellin-to-madrid" target="_blank" style="color:#60a5fa">aireuropa.com</a></td>
-        <td>Cheapest direct</td>
-      </tr>
-      <tr>
-        <td><strong>Avianca</strong></td>
-        <td><a href="https://www.avianca.com/en_us/flights-from-medellin-to-madrid" target="_blank" style="color:#60a5fa">avianca.com</a></td>
-        <td>Alternative direct</td>
-      </tr>
-      <tr>
-        <td><strong>Google Flights</strong></td>
-        <td><a href="https://www.google.com/travel/flights/flights-from-medellin-to-madrid.html" target="_blank" style="color:#60a5fa">google.com/travel</a></td>
-        <td>Compare all</td>
-      </tr>
-      <tr>
-        <td><strong>Skyscanner</strong></td>
-        <td><a href="https://www.skyscanner.com/routes/mdea/mad/medellin-to-madrid.html" target="_blank" style="color:#60a5fa">skyscanner.com</a></td>
-        <td>Price alerts</td>
-      </tr>
-      <tr>
-        <td><strong>Expedia</strong></td>
-        <td><a href="https://www.expedia.com/lp/flights/mde/mad/medellin-to-madrid" target="_blank" style="color:#60a5fa">expedia.com</a></td>
-        <td>Bundle deals</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-</div>
-
-<div class="footer">
-  Generated July 12, 2026 · Deploy to 
-  <a href="https://totalwindupflightsystems.github.io/reports/mde-mad-flights.html">GitHub Pages</a>
-</div>
+<div class="footer">Prices from Google Flights · Jul 12, 2026 · COP→USD at ~4,285</div>
 
 </div>
 </body>
