@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Coding Hermes — The Complete System</title>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'dark',securityLevel:'loose'});</script>
 <style>
   :root {
     --bg: #0d1117;
@@ -49,7 +50,13 @@
   .hero h1 { margin-bottom: 0.5rem; border: none; }
   .hero p { color: var(--muted); font-size: 1.1rem; max-width: 700px; }
 
-  .mermaid { background: var(--surface); border-radius: 8px; padding: 1.5rem; margin: 1.5rem 0; }
+  .mermaid {
+    background: var(--surface);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    overflow-x: auto;
+  }
 
   table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
   th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--border); }
@@ -63,6 +70,7 @@
     padding: 1rem 1.5rem;
     text-align: center;
     border: 1px solid var(--border);
+    min-width: 100px;
   }
   .stat .num { font-size: 2rem; font-weight: 700; color: var(--blue); }
   .stat .label { color: var(--muted); font-size: 0.85rem; }
@@ -121,10 +129,6 @@
   .callout-info { background: #1a2d44; border-color: var(--blue); }
   .callout-tip { background: #1a3322; border-color: var(--green); }
 
-  .flow-list { list-style: none; }
-  .flow-list li { padding: 0.3rem 0; }
-  .flow-list li::before { content: "→ "; color: var(--blue); }
-
   @media (max-width: 768px) {
     body { padding: 1rem; }
     .stats { gap: 0.75rem; }
@@ -144,7 +148,7 @@
   <div class="stat"><div class="num">1</div><div class="label">Supervisor</div></div>
   <div class="stat"><div class="num">33</div><div class="label">Foremen</div></div>
   <div class="stat"><div class="num">5</div><div class="label">Coding Models</div></div>
-  <div class="stat"><div class="num">4</div><div class="label">Skills</div></div>
+  <div class="stat"><div class="num">4</div><div class="label">Core Skills</div></div>
   <div class="stat"><div class="num">4</div><div class="label">Infra Tools</div></div>
 </div>
 
@@ -167,44 +171,41 @@
 
 <h2>The Architecture</h2>
 
-<div class="mermaid">
+<pre class="mermaid">
 flowchart TD
-    BANE["👤 Bane + Hermes"]
-    BANE --> SUP["🟢 Supervisor · every 4h"]
-    SUP --> FOREMEN["33 Foremen · per-project"]
-    FOREMEN --> HF["⚡ 8 High-Frequency<br/>Bunker · GitReins · H4F · Helios · Helix · Hilo · Kobayashi · DexDat Build"]
-    FOREMEN --> MF["🔄 16 Mid-Frequency<br/>ASCE · Chimera · Consensus · Crier · DexDat · EduOS · Escalation · muster · Hivemind · Imhotep · Speclang · off-by-one · MusterFlow · RethinkDB · DeepSeek Dashboard · totalstack"]
-    FOREMEN --> LF["💤 9 Low-Frequency<br/>DuckBrain · Mythos ×2 · Mafia · ai-plays-pokemon · DexDat Core · DeepSeek DB Foreman"]
-
-    FOREMEN --> LOOP["🔁 10-Step Foreman Loop"]
-    LOOP --> WORKER["🚀 Worker Spawn"]
-    WORKER --> TOOLS["🛠️ Infra Tools"]
-    TOOLS --> HILO["🗺️ Hilo · spatial"]
-    TOOLS --> DUCK["🧠 DuckBrain · semantic"]
-    TOOLS --> GITREINS["🛡️ GitReins · quality"]
-    TOOLS --> OFFBY["🔮 Off-by-One · predictive"]
-
-    style BANE fill:#4a9,stroke:#333,color:#fff
-    style SUP fill:#3a3,stroke:#333,color:#fff
-    style FOREMEN fill:#f0883e,stroke:#333,color:#fff
-    style LOOP fill:#58a6ff,stroke:#333,color:#fff
-    style WORKER fill:#79c0ff,stroke:#333,color:#fff
-    style TOOLS fill:#bc8cff,stroke:#333,color:#fff
-</div>
+    BANE["Bane + Hermes — strategy, architecture"]
+    BANE --> SUP["Supervisor — every 4h"]
+    SUP --> FOREMEN["33 Foremen — per-project"]
+    FOREMEN --> HF["8 High-Freq"]
+    FOREMEN --> MF["16 Mid-Freq"]
+    FOREMEN --> LF["9 Low-Freq"]
+    FOREMEN --> LOOP["10-Step Foreman Loop"]
+    LOOP --> WORKER["Worker Spawn — writes code"]
+    WORKER --> TOOLS["Infrastructure Tools"]
+    TOOLS --> HILO["Hilo — spatial memory"]
+    TOOLS --> DUCK["DuckBrain — semantic memory"]
+    TOOLS --> GITREINS["GitReins — quality gates"]
+    TOOLS --> OFFBY["Off-by-One — pre-solve lab"]
+</pre>
 
 <h2>The Escalation Hierarchy</h2>
-<div class="mermaid">
-flowchart TD
-    WORKER["🚀 Worker (spawn)<br/>90% — writes code, tests, commits, fixes own errors"]
-    WORKER -->|"stuck"| FOREMAN["🎯 Foreman (per-project)<br/>10% — preloads context, breaks down tasks, picks model"]
-    FOREMAN -->|"can't resolve"| SUP["🟢 Supervisor (fleet)<br/>1% — rebalances fleet, heals schema, detects orphans"]
-    SUP -->|"can't resolve"| BANE2["👤 Bane<br/>Strategy, new capabilities, architecture"]
 
-    style WORKER fill:#79c0ff,color:#fff
-    style FOREMAN fill:#f0883e,color:#fff
-    style SUP fill:#3a3,color:#fff
-    style BANE2 fill:#4a9,color:#fff
-</div>
+<pre class="mermaid">
+flowchart TD
+    WORKER["Worker (spawn) — 90% of work"]
+    WORKER -->|"stuck"| FOREMAN["Foreman (per-project) — 10%"]
+    FOREMAN -->|"can't resolve"| SUP["Supervisor (fleet) — 1%"]
+    SUP -->|"can't resolve"| BANE2["Bane — strategy, architecture"]
+</pre>
+
+<p>
+  <strong>Worker</strong> → writes code, runs tests, commits, fixes own compile/test errors.<br>
+  <strong>Foreman</strong> → preloads context, breaks down complex tasks, picks worker model, resolves conflicts.<br>
+  <strong>Supervisor</strong> → rebalances models/speeds, fixes schedule corruption, creates foremen, detects orphans.<br>
+  <strong>Bane</strong> → strategy, new capabilities, architecture decisions.
+</p>
+
+<p><strong>Each level must NOT escalate what it can handle itself.</strong> A worker that hits a compile error fixes it — doesn't ask the foreman. A foreman that sees a rate limit switches providers — doesn't wait for the supervisor.</p>
 
 <h2>Skill Architecture</h2>
 <table>
@@ -303,39 +304,45 @@ flowchart TD
   <p>Batch-fetch CI status for all projects. Classify: passing / failing / queued / billing-blocked.</p>
 </div>
 
-<h2>Model Architecture</h2>
+<h2>Model & Provider Architecture</h2>
+
+<p><strong>The golden rule:</strong> Foremen must ALWAYS be reachable. If a foreman can't load because its provider is locked, the entire project goes dark — no rebalancing, no worker spawning, nothing. Workers do the heavy coding and burn through prepaid quota. The foreman (always alive on PAYG) watches and rebalances workers across available plans.</p>
+
 <table>
-  <tr><th>Role</th><th>Model</th><th>Provider</th><th>Why</th></tr>
-  <tr><td>Supervisor</td><td>deepseek-v4-pro</td><td>deepseek / opencode-go</td><td>Fleet management is light — low token volume</td></tr>
-  <tr><td>Supervisor budget</td><td>deepseek-v4-flash</td><td>opencode-go</td><td>Downgrade when fleet is healthy</td></tr>
-  <tr><td>Foreman (active)</td><td>deepseek-v4-pro</td><td>deepseek-foreman</td><td>Task inspection is light work — PAYG key</td></tr>
-  <tr><td>Foreman (idle)</td><td>deepseek-v4-flash</td><td>opencode-go</td><td>No tasks — budget model</td></tr>
-  <tr><td>Worker (heavy)</td><td>glm-5.2 / MiniMax-M3 / gpt-5.6</td><td>flat-rate buckets</td><td>Complex tasks, new features — buckets can't lock</td></tr>
-  <tr><td>Worker (light)</td><td>grok-4.5 / kimi-k2.7</td><td>flat-rate buckets</td><td>Bug fixes, small changes</td></tr>
-  <tr><td>Worker (budget)</td><td>deepseek-v4-flash</td><td>opencode-go</td><td>Idle project, minor work</td></tr>
+  <tr><th>Role</th><th>Model</th><th>Provider Type</th><th>Why</th></tr>
+  <tr><td><strong>Foreman</strong></td><td>deepseek-v4-pro</td><td><strong>PAYG</strong> (deepseek-foreman)</td><td><strong>Must always load.</strong> If locked, entire project goes dark — no rebalancing, no spawning. PAYG is always unblockable: add credit, fix it instantly.</td></tr>
+  <tr><td>Foreman (idle budget)</td><td>deepseek-v4-flash</td><td><strong>PAYG</strong> (deepseek-foreman)</td><td>Same rule — foreman presence is non-negotiable.</td></tr>
+  <tr><td><strong>Supervisor</strong></td><td>deepseek-v4-flash</td><td>Flat-rate (opencode-go)</td><td>Fleet management is light work. If bucket locks, fleet healing pauses but foremen keep running.</td></tr>
+  <tr><td><strong>Worker (heavy)</strong></td><td>glm-5.2 / MiniMax-M3 / gpt-5.6</td><td><strong>Prepaid flat-rate</strong></td><td>Burn through quota getting coding done. If one bucket locks, foreman switches workers to another available plan.</td></tr>
+  <tr><td><strong>Worker (light)</strong></td><td>grok-4.5 / kimi-k2.7</td><td><strong>Prepaid flat-rate</strong></td><td>Bug fixes, small changes. Same bucket-switching logic.</td></tr>
+  <tr><td><strong>Worker (budget)</strong></td><td>deepseek-v4-flash</td><td>Flat-rate (opencode-go)</td><td>Idle project, minor work.</td></tr>
 </table>
 
+<div class="callout callout-tip">
+  <strong>💡 The strategy:</strong> Workers burn prepaid buckets — get as much coding done as possible on flat-rate plans. When a bucket locks (prepaid plans DO lock when exhausted), the foreman (still alive on PAYG) auto-switches workers to the next available prepaid plan. Foreman is on PAYG because you can always add credit to unblock it — can't do that with a locked prepaid bucket.
+</div>
+
 <div class="callout callout-warn">
-  <strong>⚠️ Workers NEVER use <code>deepseek-foreman</code>.</strong> That's the PAYG key — if workers burn it on coding, it locks for up to a week. Workers always use flat-rate buckets.
+  <strong>⚠️ Foremen on prepaid is a failure mode.</strong> If a foreman's prepaid bucket locks, the foreman can't load. Can't load = can't rebalance = can't spawn workers = project is dead until the billing cycle resets. PAYG is always rescuable: add credit, foreman comes back online, resumes work.
 </div>
 
 <h2>Provider Palette</h2>
 <table>
-  <tr><th>Provider</th><th>Models</th><th>Rate</th><th>Limit</th></tr>
-  <tr><td>deepseek-foreman</td><td>v4-pro, v4-flash</td><td>PAYG (tracked)</td><td>Locks if limit hit</td></tr>
-  <tr><td>opencode-go</td><td>v4-pro, v4-flash</td><td>Flat-rate bucket</td><td>Cannot lock</td></tr>
-  <tr><td>zai-glm</td><td>glm-5.2</td><td>Flat-rate bucket</td><td>Cannot lock</td></tr>
-  <tr><td>minimax</td><td>MiniMax-M3</td><td>Flat-rate bucket</td><td>Cannot lock</td></tr>
-  <tr><td>kimi-for-coding</td><td>kimi-k2.7</td><td>Flat-rate bucket</td><td>Cannot lock</td></tr>
-  <tr><td>xai-oauth</td><td>grok-4.5</td><td>Flat-rate bucket</td><td>Cannot lock</td></tr>
-  <tr><td>ollama-cloud</td><td>v4-pro, v4-flash</td><td>Backup flat-rate</td><td>Use when primary exhausted</td></tr>
+  <tr><th>Provider</th><th>Models</th><th>Rate</th><th>Used For</th><th>Can Lock?</th></tr>
+  <tr><td>deepseek-foreman</td><td>v4-pro, v4-flash</td><td>PAYG</td><td>Foremen (MUST load)</td><td>No — add credit to unblock</td></tr>
+  <tr><td>opencode-go</td><td>v4-pro, v4-flash</td><td>Prepaid flat-rate</td><td>Supervisor, budget workers</td><td>Yes — locks when exhausted</td></tr>
+  <tr><td>zai-glm</td><td>glm-5.2</td><td>Prepaid flat-rate</td><td>Heavy coding workers</td><td>Yes — locks when exhausted</td></tr>
+  <tr><td>minimax</td><td>MiniMax-M3</td><td>Prepaid flat-rate</td><td>Heavy coding workers</td><td>Yes — locks when exhausted</td></tr>
+  <tr><td>kimi-for-coding</td><td>kimi-k2.7</td><td>Prepaid flat-rate</td><td>Light coding workers</td><td>Yes — locks when exhausted</td></tr>
+  <tr><td>xai-oauth</td><td>grok-4.5</td><td>Prepaid flat-rate</td><td>Light coding workers</td><td>Yes — locks when exhausted</td></tr>
+  <tr><td>ollama-cloud</td><td>v4-pro, v4-flash</td><td>Backup flat-rate</td><td>Fallback when primary exhausted</td><td>Yes — locks when exhausted</td></tr>
 </table>
 
 <h2>Cron Categories</h2>
 
 <div class="tier tier-foreman">
   <h3>1. Foreman Crons (code-producing)</h3>
-  <p>Autonomous coding loops. Skills: <code>coding-hermes-foreman</code>, <code>coding-hermes-cron</code>, <code>hilo-usage</code>, <code>gitreins</code>. Model: <code>deepseek-v4-pro</code> on <code>deepseek-foreman</code>. Supervisor can rebalance.</p>
+  <p>Autonomous coding loops. <strong>ALWAYS on PAYG</strong> — deepseek-foreman provider. Skills: <code>coding-hermes-foreman</code>, <code>coding-hermes-cron</code>, <code>hilo-usage</code>, <code>gitreins</code>. Supervisor can rebalance speed and worker models, but NEVER changes the foreman provider away from PAYG.</p>
 </div>
 
 <div class="tier tier-infra">
@@ -351,12 +358,13 @@ flowchart TD
   <h4>Infrastructure Cron Shape</h4>
   <pre><code>{
   "name": "Sync DuckBrain — hourly",
-  "no_agent": true,        &lt;— script only, no LLM
+  "no_agent": true,
   "script": "duckbrain-sync.sh",
   "skills": [],
-  "model": null,            &lt;— NEVER set a model here
-  "provider": null          &lt;— NEVER set a provider here
+  "model": null,
+  "provider": null
 }</code></pre>
+  <p><strong>Never set model or provider on no_agent jobs.</strong> They run scripts, not LLMs.</p>
 </div>
 
 <div class="tier">
@@ -365,25 +373,19 @@ flowchart TD
 </div>
 
 <h2>DuckBrain Memory Architecture</h2>
-<div class="mermaid">
+
+<pre class="mermaid">
 flowchart LR
-    TICK["⏰ Foreman Tick"]
-    RECALL["Step 3: DuckBrain recall<br/>Load context before coding"]
+    TICK["Foreman Tick"]
+    RECALL["Step 3: DuckBrain recall"]
     CODE["Steps 4-8: Code + Verify"]
-    REMEMBER["Step 10: DuckBrain remember<br/>Write findings after commit"]
-    SYNC["🔄 Hourly Sync Cron<br/>Compact, optimize, cross-reference"]
-    NS["/project/name/<br/>Decisions · Pitfalls · Patterns · Status"]
+    REMEMBER["Step 10: DuckBrain remember"]
+    SYNC["Hourly Sync Cron"]
+    NS["Namespace — decisions, pitfalls, patterns"]
 
     TICK --> RECALL --> CODE --> REMEMBER --> SYNC --> NS
     NS -->|"next tick"| RECALL
-
-    style TICK fill:#3a3,color:#fff
-    style RECALL fill:#58a6ff,color:#fff
-    style CODE fill:#f0883e,color:#fff
-    style REMEMBER fill:#bc8cff,color:#fff
-    style SYNC fill:#f85149,color:#fff
-    style NS fill:#1a2d44,color:#fff
-</div>
+</pre>
 
 <table>
   <tr><th>What's Stored</th><th>Domain</th><th>How It's Used</th></tr>
@@ -421,66 +423,62 @@ flowchart LR
 
 <h2>Fleet: Active Foremen</h2>
 <table>
-  <tr><th>Foreman</th><th>Project</th><th>Role</th></tr>
-  <tr><td>ai-plays-pokemon-foreman</td><td>ai_plays_poke</td><td>Game dev — Pokemon AI agent</td></tr>
-  <tr><td>ASCE Coding Foreman</td><td>asce</td><td>Agentic Search Credit Economy platform</td></tr>
-  <tr><td>Bunker Coding Hermes</td><td>bunker</td><td>Remote deployment on Hetzner</td></tr>
-  <tr><td>chimera-coding-foreman</td><td>chimera-v2</td><td>Multi-model deliberation engine</td></tr>
-  <tr><td>consensus-coding-foreman</td><td>consensus</td><td>Consensus protocol implementation</td></tr>
-  <tr><td>Crier Coding Foreman</td><td>crier</td><td>Notification/signal system</td></tr>
-  <tr><td>deepseek-dashboard coding-hermes</td><td>deepseek-dashboard</td><td>DeepSeek usage + cost dashboard</td></tr>
-  <tr><td>deepseek-dashboard-foreman</td><td>deepseek-dashboard</td><td>Separate foreman for dashboard</td></tr>
-  <tr><td>dexdat-build-loop</td><td>dexdat-core</td><td>DexDat core platform</td></tr>
-  <tr><td>dexdat-coding-hermes-foreman</td><td>dexdat-memory</td><td>DexDat memory system</td></tr>
-  <tr><td>DuckBrain Coding Foreman</td><td>duckbrain</td><td>DuckBrain memory system</td></tr>
-  <tr><td>EduOS Alpha Dev Loop</td><td>eduos</td><td>Educational OS platform</td></tr>
-  <tr><td>EduOS Coding Foreman</td><td>eduos.dexdat.com.co</td><td>EduOS production variant</td></tr>
-  <tr><td>escalation-doctrine-foreman</td><td>escalation-doctrine</td><td>Escalation rules engine</td></tr>
-  <tr><td>GitReins Coding Foreman</td><td>gitreins-poc</td><td>GitReins quality harness</td></tr>
-  <tr><td>H4F Coding Foreman</td><td>hermes4friends</td><td>Hermes4Friends platform</td></tr>
-  <tr><td>helios-coding-hermes-foreman</td><td>helios-work</td><td>Helios system</td></tr>
-  <tr><td>helix-foreman</td><td>helix</td><td>Helix platform</td></tr>
-  <tr><td>hilo-foreman</td><td>warpfs</td><td>Hilo spatial memory (WarpFS)</td></tr>
-  <tr><td>Hivemind Coding Foreman</td><td>hivemind-work</td><td>Hivemind coordination system</td></tr>
-  <tr><td>Imhotep Coding Foreman</td><td>imhotep</td><td>Imhotep system (GitLab)</td></tr>
-  <tr><td>kobayashi-maru-foreman</td><td>Kobayashi-Maru</td><td>No-win scenario testing framework</td></tr>
-  <tr><td>mafia-benchmark-dev-loop</td><td>mafia-ai-benchmark</td><td>AI benchmarking</td></tr>
-  <tr><td>muster-coding-hermes-loop</td><td>muster</td><td>Muster orchestration</td></tr>
-  <tr><td>musterflow-foreman</td><td>musterflow</td><td>MusterFlow pipeline</td></tr>
-  <tr><td>mythos-coding-foreman</td><td>mythos</td><td>Mythos world engine</td></tr>
-  <tr><td>Mythos Coding Foreman</td><td>wojons-mythos</td><td>Mythos variant (wojons)</td></tr>
-  <tr><td>off-by-one-foreman</td><td>off-by-one</td><td>Off-by-One pre-solve lab</td></tr>
-  <tr><td>RethinkDB Steward</td><td>rethinkdb</td><td>RethinkDB maintenance</td></tr>
-  <tr><td>speclang-ci-foreman</td><td>SpecLang</td><td>SpecLang language (MiniMax M3)</td></tr>
-  <tr><td>Speclang Coding Foreman</td><td>speclang</td><td>SpecLang variant</td></tr>
-  <tr><td>totalstack-foreman</td><td>totalstack</td><td>TotalStack platform</td></tr>
-  <tr><td>totalstack-shape-validator</td><td>totalstack</td><td>TotalStack shape validation</td></tr>
+  <tr><th>Foreman</th><th>Project</th></tr>
+  <tr><td>ai-plays-pokemon-foreman</td><td>ai_plays_poke</td></tr>
+  <tr><td>ASCE Coding Foreman</td><td>asce</td></tr>
+  <tr><td>Bunker Coding Hermes</td><td>bunker</td></tr>
+  <tr><td>chimera-coding-foreman</td><td>chimera-v2</td></tr>
+  <tr><td>consensus-coding-foreman</td><td>consensus</td></tr>
+  <tr><td>Crier Coding Foreman</td><td>crier</td></tr>
+  <tr><td>deepseek-dashboard coding-hermes</td><td>deepseek-dashboard</td></tr>
+  <tr><td>dexdat-build-loop</td><td>dexdat-core</td></tr>
+  <tr><td>dexdat-coding-hermes-foreman</td><td>dexdat-memory</td></tr>
+  <tr><td>DuckBrain Coding Foreman</td><td>duckbrain</td></tr>
+  <tr><td>EduOS Alpha Dev Loop</td><td>eduos</td></tr>
+  <tr><td>escalation-doctrine-foreman</td><td>escalation-doctrine</td></tr>
+  <tr><td>GitReins Coding Foreman</td><td>gitreins-poc</td></tr>
+  <tr><td>H4F Coding Foreman</td><td>hermes4friends</td></tr>
+  <tr><td>helios-coding-hermes-foreman</td><td>helios-work</td></tr>
+  <tr><td>helix-foreman</td><td>helix</td></tr>
+  <tr><td>hilo-foreman</td><td>warpfs</td></tr>
+  <tr><td>Hivemind Coding Foreman</td><td>hivemind-work</td></tr>
+  <tr><td>Imhotep Coding Foreman</td><td>imhotep</td></tr>
+  <tr><td>kobayashi-maru-foreman</td><td>Kobayashi-Maru</td></tr>
+  <tr><td>mafia-benchmark-dev-loop</td><td>mafia-ai-benchmark</td></tr>
+  <tr><td>muster-coding-hermes-loop</td><td>muster</td></tr>
+  <tr><td>musterflow-foreman</td><td>musterflow</td></tr>
+  <tr><td>mythos-coding-foreman</td><td>mythos</td></tr>
+  <tr><td>off-by-one-foreman</td><td>off-by-one</td></tr>
+  <tr><td>RethinkDB Steward</td><td>rethinkdb</td></tr>
+  <tr><td>speclang-ci-foreman</td><td>SpecLang</td></tr>
+  <tr><td>totalstack-foreman</td><td>totalstack</td></tr>
+  <tr><td>totalstack-shape-validator</td><td>totalstack</td></tr>
+  <tr><td>DuckBrain Coding Foreman</td><td>duckbrain</td></tr>
+  <tr><td>DeepSeek Dashboard Foreman</td><td>deepseek-dashboard</td></tr>
+  <tr><td>EduOS Coding Foreman</td><td>eduos.dexdat.com.co</td></tr>
+  <tr><td>Mythos Coding Foreman</td><td>wojons-mythos</td></tr>
 </table>
 
 <h2>Key Pitfalls</h2>
 
 <div class="callout callout-warn">
-  <strong>🪤 Never change a foreman's model field to a coding model.</strong> The foreman inspects and delegates — it stays on v4-pro or v4-flash. The Speed-Model Alignment table references WORKER spawn models, not foreman models.
+  <strong>🪤 Foremen on prepaid = project goes dark.</strong> If a foreman's prepaid bucket locks, it can't load. Can't load = can't rebalance = can't spawn workers = dead until billing cycle resets. Foremen MUST be on PAYG (deepseek-foreman). You can always add PAYG credit to unblock — can't un-lock a prepaid bucket.
+</div>
+
+<div class="callout callout-warn">
+  <strong>🪤 Never change a foreman's model field to a coding model.</strong> The foreman inspects and delegates — it stays on v4-pro or v4-flash. Coding models (glm-5.2, MiniMax-M3, etc.) are for workers only.
 </div>
 
 <div class="callout callout-warn">
   <strong>🪤 Never set model/provider on no_agent jobs.</strong> $100+ burned when supervisor set deepseek-v4-pro on 54 DuckBrain sync/data loader/watchdog jobs. These run scripts, not LLMs. Identify by <code>skills</code> array, not name keywords.
 </div>
 
-<div class="callout callout-warn">
-  <strong>🪤 Don't run foremen one at a time to fix the fleet.</strong> When 18 foremen are stale, run the supervisor. Manual foreman runs bypass the self-heal pipeline.
-</div>
-
 <div class="callout callout-info">
-  <strong>💡 Use cronjob tool, not direct jobs.json edits.</strong> Direct edits bypass scheduler in-memory state. The cronjob tool handles state transitions, validation, and sync.
+  <strong>💡 Worker bucket switching is the foreman's job.</strong> When a worker's prepaid bucket locks (zai-glm exhausted), the foreman auto-switches workers to the next available plan (minimax, xai-oauth, kimi). Foreman stays alive on PAYG the whole time.
 </div>
 
 <div class="callout callout-info">
   <strong>💡 Missing <code>schedule.expr</code> crashes the ENTIRE scheduler.</strong> Not just that one job — ALL cron execution stops. This is a JSON schema bug, fix immediately.
-</div>
-
-<div class="callout callout-tip">
-  <strong>✅ Don't blame state.db for I/O problems.</strong> A 10GB SQLite database is well within SQLite's limits. Check swap thrashing and I/O contention from Docker containers first.
 </div>
 
 <h2>Fleet Commands</h2>
@@ -492,6 +490,5 @@ flowchart LR
   <tr><td><code>hermes sessions stats</code></td><td>Check state.db size and message count</td></tr>
 </table>
 
-<script>mermaid.initialize({startOnLoad:true,theme:'dark',securityLevel:'loose'});</script>
 </body>
 </html>
