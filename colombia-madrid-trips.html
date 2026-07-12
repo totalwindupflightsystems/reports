@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Colombia → Madrid — All Trips Compared</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: #0f0f1a;
+    color: #e0e0e0;
+    padding: 12px;
+    line-height: 1.5;
+    -webkit-text-size-adjust: 100%;
+  }
+  .container { max-width: 900px; margin: 0 auto; }
+  h1 {
+    text-align: center;
+    font-size: clamp(1.3rem, 4.5vw, 1.8rem);
+    margin-bottom: 4px;
+    padding: 0 4px;
+    background: linear-gradient(135deg, #f7971e, #ffd200);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .subtitle { text-align: center; color: #888; margin-bottom: 24px; font-size: 0.85rem; }
+
+  .section {
+    background: #1a1a2e;
+    border: 1px solid #2a2a3e;
+    border-radius: 12px;
+    padding: 16px 12px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .section h2 {
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .section.trip1 h2 { color: #60a5fa; }
+  .section.trip2 h2 { color: #4ade80; }
+  .section.trip3 h2 { color: #f59e0b; }
+  .section.trip1 { border-left: 3px solid #60a5fa; }
+  .section.trip2 { border-left: 3px solid #4ade80; }
+  .section.trip3 { border-left: 3px solid #f59e0b; }
+
+  .meta { color: #888; font-size: 0.78rem; margin-bottom: 10px; }
+
+  .table-wrap {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 0 -12px;
+    padding: 0 12px;
+  }
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+  .badge-best { background: #166534; color: #4ade80; }
+  .badge-ok { background: #1e3a5f; color: #60a5fa; }
+  .badge-bad { background: #3b0820; color: #f472b6; }
+
+  table { width: 100%; border-collapse: collapse; margin-top: 6px; min-width: 480px; }
+  th { text-align: left; padding: 7px 6px; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.04em; color: #888; border-bottom: 1px solid #2a2a3e; white-space: nowrap; }
+  td { padding: 9px 6px; border-bottom: 1px solid #1e1e30; font-size: 0.8rem; white-space: nowrap; }
+  td:first-child, th:first-child { padding-left: 0; }
+  td:last-child, th:last-child { padding-right: 0; }
+  tr:last-child td { border-bottom: none; }
+  .price-cell { font-weight: 700; color: #4ade80; font-size: 0.85rem; }
+  .price-warn { font-weight: 700; color: #f59e0b; }
+  .price-bad { font-weight: 700; color: #f472b6; }
+  .hl td { background: rgba(74,222,128,0.06); }
+
+  .note {
+    background: #12121f;
+    border-left: 3px solid #f7971e;
+    padding: 10px 12px;
+    border-radius: 0 8px 8px 0;
+    margin-top: 12px;
+    font-size: 0.8rem;
+    color: #aaa;
+  }
+  .note strong { color: #f7971e; }
+  .note.green { border-left-color: #4ade80; }
+  .note.green strong { color: #4ade80; }
+
+  .footer {
+    text-align: center;
+    margin-top: 32px;
+    padding: 16px;
+    color: #555;
+    font-size: 0.7rem;
+  }
+
+  @media (min-width: 600px) {
+    body { padding: 20px; }
+    .section { padding: 24px; margin-bottom: 24px; }
+    .section h2 { font-size: 1.2rem; }
+    .table-wrap { margin: 0 -24px; padding: 0 24px; }
+    table { min-width: 0; }
+    td { font-size: 0.88rem; padding: 10px 8px; }
+    th { font-size: 0.7rem; padding: 8px 8px; }
+    td, th { white-space: normal; }
+    .badge { font-size: 0.68rem; padding: 3px 10px; }
+    .note { font-size: 0.85rem; padding: 12px 16px; }
+    .subtitle { font-size: 0.95rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>Colombia → Madrid · Jul–Aug 2026</h1>
+<p class="subtitle">3 trips · All prices USD per person · Click links to book</p>
+
+<!-- TRIP 1 -->
+<div class="section trip1">
+  <h2>🟦 Trip 1 — MDE → MAD <span class="badge badge-ok">Kelly</span></h2>
+  <p class="meta">👤 1 person · Jul 15 (Wed) → Jul 20 (Mon) · Direct Air Europa</p>
+
+  <div class="table-wrap"><table>
+    <thead><tr><th></th><th>Outbound</th><th>Return</th><th>Duration</th><th>Round Trip</th></tr></thead>
+    <tbody>
+      <tr class="hl">
+        <td><strong>Direct</strong></td>
+        <td>Jul 15 8:35PM → Jul 16 1:05PM</td>
+        <td>Jul 20 3:20PM → Jul 20 7:45PM</td>
+        <td>9h30 / 10h10</td>
+        <td class="price-cell">$870–950</td>
+      </tr>
+    </tbody>
+  </table></div>
+  <div class="note">
+    <strong>✈️ Book:</strong> <a href="https://www.aireuropa.com/en-us/flight-deals-from-medellin-to-madrid" target="_blank" style="color:#60a5fa">Air Europa</a> · 4.5 days in Madrid · Land MDE same evening July 20
+  </div>
+</div>
+
+<!-- TRIP 2 -->
+<div class="section trip2">
+  <h2>🟩 Trip 2 — PEI → MAD <span class="badge badge-best">2 People</span></h2>
+  <p class="meta">👥 2 people · Jul 21 (Tue) → Jul 29 or 30 · Avianca PEI→BOG→MAD</p>
+
+  <div class="table-wrap"><table>
+    <thead><tr><th>Return</th><th>Day</th><th>Stay</th><th>BOG–MAD RT</th><th>PEI–BOG RT</th><th>pp Total</th><th>👥 ×2</th><th>$/Day</th></tr></thead>
+    <tbody>
+      <tr><td>Jul 28</td><td>Tue</td><td>7 days</td><td class="price-cell">~$725</td><td>$78</td><td class="price-cell">~$805</td><td class="price-cell">~$1,610</td><td>$115</td></tr>
+      <tr class="hl"><td><strong>Jul 29 🎯</strong></td><td>Wed</td><td><strong>8 days</strong></td><td class="price-cell">~$740</td><td>$78</td><td class="price-cell"><strong>~$818</strong></td><td class="price-cell"><strong>~$1,636</strong></td><td><strong>$102</strong></td></tr>
+      <tr class="hl"><td><strong>Jul 30 🎯</strong></td><td>Thu</td><td><strong>9 days</strong></td><td class="price-cell">~$760</td><td>$78</td><td class="price-cell"><strong>~$838</strong></td><td class="price-cell"><strong>~$1,676</strong></td><td><strong>$93</strong></td></tr>
+      <tr><td>Jul 31</td><td>Fri</td><td>10 days</td><td class="price-warn">~$840</td><td>$78</td><td class="price-warn">~$918</td><td class="price-warn">~$1,836</td><td>$92</td></tr>
+      <tr><td>Aug 1</td><td>Sat</td><td>11 days</td><td class="price-bad">~$960</td><td>$78</td><td class="price-bad">~$1,038</td><td class="price-bad">~$2,076</td><td>$94</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note green">
+    <strong>🎯 Jul 29 or 30:</strong> 8–9 days, $93–102/day, weekday return. Jul 30 gives 9 days for only $20 more. <a href="https://www.avianca.com/en_co/flights-from-pereira-to-madrid" target="_blank" style="color:#4ade80">Book Avianca PEI→MAD</a>.
+  </div>
+</div>
+
+<!-- TRIP 3 -->
+<div class="section trip3">
+  <h2>🟨 Trip 3 — BOG → MAD <span class="badge badge-ok">Bogotá Ladies</span></h2>
+  <p class="meta">👤👤 Arrive Madrid Jul 29 or 30 · Stay 3–7 days · BOG direct to MAD</p>
+
+  <div class="table-wrap"><table>
+    <thead><tr><th>Depart BOG</th><th>Return MAD</th><th>Day</th><th>Stay</th><th>RT pp</th><th>$/Day</th><th>Verdict</th></tr></thead>
+    <tbody>
+      <tr><td>Jul 29</td><td><strong>Aug 1</strong></td><td>Sat</td><td>3 days</td><td class="price-bad">~$890</td><td class="price-bad">$297</td><td>💀 Weekend return</td></tr>
+      <tr><td>Jul 29</td><td><strong>Aug 2</strong></td><td>Sun</td><td>4 days</td><td class="price-bad">~$860</td><td class="price-bad">$215</td><td>Weekend penalty</td></tr>
+      <tr class="hl"><td>Jul 29</td><td><strong>Aug 3</strong></td><td>Mon</td><td><strong>5 days</strong></td><td class="price-cell">~$750</td><td class="price-cell">$150</td><td>Good entry</td></tr>
+      <tr class="hl"><td><strong>Jul 30 🎯</strong></td><td><strong>Aug 4 🎯</strong></td><td>Tue</td><td><strong>5 days</strong></td><td class="price-cell"><strong>~$735</strong></td><td class="price-cell"><strong>$147</strong></td><td><span class="badge badge-best">Best</span></td></tr>
+      <tr><td>Jul 29</td><td><strong>Aug 4</strong></td><td>Tue</td><td>6 days</td><td class="price-cell">~$760</td><td class="price-cell">$127</td><td>Good</td></tr>
+      <tr><td>Jul 30</td><td><strong>Aug 5</strong></td><td>Wed</td><td>6 days</td><td class="price-cell">~$770</td><td class="price-cell">$128</td><td>Good</td></tr>
+      <tr><td>Jul 29</td><td><strong>Aug 5</strong></td><td>Wed</td><td>7 days</td><td class="price-cell">~$780</td><td class="price-cell">$111</td><td>Good value</td></tr>
+      <tr><td>Jul 30</td><td><strong>Aug 6</strong></td><td>Thu</td><td>7 days</td><td class="price-cell">~$790</td><td class="price-cell">$113</td><td>Good value</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note">
+    <strong>🚫 Avoid Aug 1–2 (Sat/Sun return):</strong> adds $120–155 pp. <strong>🎯 Jul 30 → Aug 4:</strong> best balance — 5 days, ~$735 pp, $147/day. Adding days to Aug 5 or 6 drops cost/day to ~$111–113. Book <a href="https://www.avianca.com/en_us/flights-from-bogota-to-madrid" target="_blank" style="color:#60a5fa">Avianca</a> or <a href="https://www.aireuropa.com/en-us/flight-deals-from-bogota-to-madrid" target="_blank" style="color:#60a5fa">Air Europa</a>.
+  </div>
+</div>
+
+<!-- ALL TRIPS SUMMARY -->
+<div class="section">
+  <h2>📊 All 3 Trips — At a Glance</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Trip</th><th>Who</th><th>From</th><th>Dates</th><th>Days</th><th>pp</th><th>$/Day</th></tr></thead>
+    <tbody>
+      <tr style="border-left:3px solid #60a5fa">
+        <td><strong>1</strong></td><td>Kelly</td><td>MDE</td><td>Jul 15→20</td><td>4.5</td><td class="price-cell">$870–950</td><td>$193–211</td>
+      </tr>
+      <tr style="border-left:3px solid #4ade80">
+        <td><strong>2</strong></td><td>2 ppl</td><td>PEI</td><td>Jul 21→30</td><td>9</td><td class="price-cell">~$838</td><td class="price-cell">$93</td>
+      </tr>
+      <tr style="border-left:3px solid #f59e0b">
+        <td><strong>3</strong></td><td>Ladies</td><td>BOG</td><td>Jul 30→Aug 4</td><td>5</td><td class="price-cell">~$735</td><td>$147</td>
+      </tr>
+    </tbody>
+  </table></div>
+  <div class="note green">
+    <strong>📈 The pattern:</strong> Trip 2 has the best cost/day ($93) because it spreads the fixed transatlantic cost over 9 days. Trip 1 and 3 are shorter — you pay more per day but the total is still reasonable. Every trip avoids weekend returns.
+  </div>
+</div>
+
+<!-- BOOKING LINKS -->
+<div class="section">
+  <h2>🔗 Book Each Trip</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Trip</th><th>Route</th><th>Best Airline</th><th>Link</th></tr></thead>
+    <tbody>
+      <tr><td><strong>1</strong></td><td>MDE → MAD</td><td>Air Europa</td><td><a href="https://www.aireuropa.com/en-us/flight-deals-from-medellin-to-madrid" target="_blank" style="color:#60a5fa">aireuropa.com</a></td></tr>
+      <tr><td><strong>2</strong></td><td>PEI → BOG → MAD</td><td>Avianca</td><td><a href="https://www.avianca.com/en_co/flights-from-pereira-to-madrid" target="_blank" style="color:#4ade80">avianca.com</a></td></tr>
+      <tr><td><strong>3</strong></td><td>BOG → MAD</td><td>Avianca / Air Europa</td><td><a href="https://www.avianca.com/en_us/flights-from-bogota-to-madrid" target="_blank" style="color:#60a5fa">avianca.com</a></td></tr>
+      <tr><td colspan="2"><strong>Compare All</strong></td><td>Google Flights</td><td><a href="https://www.google.com/travel/flights" target="_blank" style="color:#60a5fa">google.com/travel</a></td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<div class="footer">Generated Jul 12, 2026 · All prices USD per person · Weekday returns save $80–200 pp</div>
+
+</div>
+</body>
+</html>
