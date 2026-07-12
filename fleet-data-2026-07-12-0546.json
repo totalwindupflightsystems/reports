@@ -1,0 +1,536 @@
+{
+  "$schema": "fleet-data-schema-v1",
+  "generated": "2026-07-12T05:46:46Z",
+  "metrics": {
+    "healthy": 9,
+    "warn": 12,
+    "error": 5,
+    "stale": 5,
+    "total_pending_tasks": 192
+  },
+  "fleet": [
+    {
+      "project": "muster-coding-hermes-loop",
+      "workdir": "/home/kara/muster",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "schedule": "every 15m",
+      "last_run": "2026-07-11T23:23:54.704512-05:00",
+      "status": "error",
+      "pending_tasks": 5,
+      "in_progress": 0,
+      "worker_models_used": [
+        "none detected"
+      ],
+      "ci": "Cross-Platform Tests + Build + CI failing"
+    },
+    {
+      "project": "speclang-ci-foreman",
+      "workdir": "/home/kara/SpecLang",
+      "foreman_model": "MiniMax-M3",
+      "foreman_provider": "minimax",
+      "schedule": "every 120m",
+      "last_run": "2026-07-11T17:06:07.413635-05:00",
+      "status": "error",
+      "pending_tasks": 3,
+      "in_progress": 0,
+      "worker_models_used": [
+        "none detected"
+      ],
+      "ci": "all 3 CI workflows failing"
+    },
+    {
+      "project": "ASCE Coding Foreman",
+      "workdir": "/home/kara/asce",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "schedule": "every 30m",
+      "last_run": "2026-07-11T20:46:59.867818-05:00",
+      "status": "error",
+      "pending_tasks": 2,
+      "in_progress": 0,
+      "worker_models_used": [
+        "none detected"
+      ],
+      "ci": "GitLab pipeline failing"
+    },
+    {
+      "project": "helios-coding-hermes-foreman",
+      "workdir": "/home/kara/helios-work",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "schedule": "*/15 * * * *",
+      "last_run": "2026-07-12T00:40:42.815328-05:00",
+      "status": "error",
+      "pending_tasks": 2,
+      "in_progress": 0,
+      "worker_models_used": [
+        "none detected"
+      ],
+      "ci": "billing-blocked (Jun 22)"
+    },
+    {
+      "project": "Hivemind Coding Foreman",
+      "workdir": "/home/kara/hivemind-work",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "schedule": "every 120m",
+      "last_run": "2026-07-11T17:56:43.701111-05:00",
+      "status": "error",
+      "pending_tasks": 0,
+      "in_progress": 0,
+      "worker_models_used": [
+        "none detected"
+      ],
+      "ci": "Test + Lint failures"
+    },
+    {
+      "project": "GitReins Coding Foreman",
+      "workdir": "/home/kara/gitreins-poc",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "schedule": "every 15m",
+      "last_run": null,
+      "status": "stale",
+      "pending_tasks": 32,
+      "in_progress": 0,
+      "worker_models_used": [
+        "none detected"
+      ],
+      "ci": "GitLab - needs check"
+    },
+    {
+      "project": "deepseek-dashboard coding-hermes",
+      "workdir": "/home/kara/Kobayashi-Maru/deepseek-dashboard",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "schedule": "every 30m",
+      "last_run": "2026-07-09T19:07:49.931808-05:00",
+      "status": "stale",
+      "pending_tasks": 2,
+      "in_progress": 0,
+      "worker_models_used": [
+        "none detected"
+      ],
+      "ci": "not checked"
+    },
+    {
+      "project": "off-by-one-foreman",
+      "workdir": "/home/kara/off-by-one",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "schedule": "every 120m",
+      "last_run": "2026-07-09T22:38:10.261005-05:00",
+      "status": "stale",
+      "pending_tasks": 0,
+      "in_progress": 0,
+      "worker_models_used": [
+        "none detected"
+      ],
+      "ci": "no CI"
+    },
+    {
+      "project": "EduOS Coding Foreman",
+      "workdir": "/home/kara/eduos",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "schedule": "every 120m",
+      "last_run": null,
+      "status": "stale",
+      "pending_tasks": 0,
+      "in_progress": 0,
+      "worker_models_used": [
+        "none detected"
+      ],
+      "ci": "not checked"
+    },
+    {
+      "project": "Speclang Coding Foreman",
+      "workdir": "/home/kara/speclang",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "schedule": "every 120m",
+      "last_run": null,
+      "status": "stale",
+      "pending_tasks": 0,
+      "in_progress": 0,
+      "worker_models_used": [
+        "none detected"
+      ],
+      "ci": "not checked"
+    },
+    {
+      "project": "consensus-coding-foreman",
+      "workdir": "/home/kara/consensus",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "schedule": "*/15 * * * *",
+      "last_run": "2026-07-11T11:25:26.413820-05:00",
+      "status": "warn",
+      "pending_tasks": 35,
+      "in_progress": 0,
+      "worker_models_used": [
+        "none detected"
+      ],
+      "ci": "no CI"
+    },
+    {
+      "project": "escalation-doctrine-foreman",
+      "workdir": "/home/kara/escalation-doctrine",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "schedule": "*/15 * * * *",
+      "last_run": "2026-07-11T18:33:39.044178-05:00",
+      "status": "warn",
+      "pending_tasks": 34,
+      "in_progress": 0,
+      "worker_models_used": [
+        "none detected"
+      ],
+      "ci": "not checked"
+    },
+    {
+      "project": "RethinkDB Steward",
+      "workdir": "/home/kara/rethinkdb",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "schedule": "*/15 * * * *",
+      "last_run": "2026-07-11T20:42:07.143079-05:00",
+      "status": "warn",
+      "pending_tasks": 20,
+      "in_progress": 0,
+      "worker_models_used": [
+        "none detected"
+      ],
+      "ci": "not checked"
+    },
+    {
+      "project": "helix-foreman",
+      "workdir": "/home/kara/helix",
+      "foreman_model": "grok-4.5",
+      "foreman_provider": "xai-oauth",
+      "schedule": "*/15 * * * *",
+      "last_run": "2026-07-12T00:05:59.546569-05:00",
+      "status": "warn",
+      "pending_tasks": 15,
+      "in_progress": 0,
+      "worker_models_used": [
+        "none detected"
+      ],
+      "ci": "no CI runs"
+    },
+    {
+      "project": "dexdat-build-loop",
+      "workdir": "/home/kara/dexdat-core",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "schedule": "every 30m",
+      "last_run": "2026-07-11T22:59:30.911887-05:00",
+      "status": "warn",
+      "pending_tasks": 8,
+      "in_progress": 0,
+      "worker_models_used": [
+        "none detected"
+      ],
+      "ci": "not checked"
+    },
+    {
+      "project": "musterflow-foreman",
+      "workdir": "/home/kara/musterflow",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "schedule": "every 15m",
+      "last_run": "2026-07-11T19:27:49.564786-05:00",
+      "status": "warn",
+      "pending_tasks": 7,
+      "in_progress": 0,
+      "worker_models_used": [
+        "none detected"
+      ],
+      "ci": "not checked"
+    },
+    {
+      "project": "chimera-coding-foreman",
+      "workdir": "/home/kara/chimera-v2",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "schedule": "*/15 * * * *",
+      "last_run": "2026-07-12T00:25:51.795908-05:00",
+      "status": "warn",
+      "pending_tasks": 6,
+      "in_progress": 0,
+      "worker_models_used": [
+        "none detected"
+      ],
+      "ci": "no CI"
+    },
+    {
+      "project": "EduOS Alpha Dev Loop",
+      "workdir": "/home/kara/eduos.dexdat.com.co",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "schedule": "*/15 * * * *",
+      "last_run": "2026-07-12T00:17:20.065061-05:00",
+      "status": "warn",
+      "pending_tasks": 4,
+      "in_progress": 0,
+      "worker_models_used": [
+        "none detected"
+      ],
+      "ci": "not checked"
+    },
+    {
+      "project": "dexdat-coding-hermes-foreman",
+      "workdir": "/home/kara/dexdat-memory",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "schedule": "every 15m",
+      "last_run": "2026-07-11T22:39:41.955410-05:00",
+      "status": "warn",
+      "pending_tasks": 3,
+      "in_progress": 0,
+      "worker_models_used": [
+        "none detected"
+      ],
+      "ci": "not checked"
+    },
+    {
+      "project": "Bunker Coding Hermes",
+      "workdir": "/home/kara/bunker",
+      "foreman_model": "kimi-for-coding",
+      "foreman_provider": "kimi-for-coding",
+      "schedule": "*/15 * * * *",
+      "last_run": "2026-07-11T18:08:59.645247-05:00",
+      "status": "warn",
+      "pending_tasks": 3,
+      "in_progress": 0,
+      "worker_models_used": [
+        "none detected"
+      ],
+      "ci": "not checked"
+    },
+    {
+      "project": "DeepSeek Dashboard Foreman",
+      "workdir": "/home/kara/deepseek-dashboard",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "schedule": "every 30m",
+      "last_run": "2026-07-11T09:54:54.771087-05:00",
+      "status": "warn",
+      "pending_tasks": 2,
+      "in_progress": 0,
+      "worker_models_used": [
+        "none detected"
+      ],
+      "ci": "not checked"
+    },
+    {
+      "project": "ai-plays-pokemon-foreman",
+      "workdir": "/home/kara/ai_plays_poke",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "schedule": "every 30m",
+      "last_run": "2026-07-11T10:30:33.129846-05:00",
+      "status": "warn",
+      "pending_tasks": 1,
+      "in_progress": 0,
+      "worker_models_used": [
+        "none detected"
+      ],
+      "ci": "not checked"
+    },
+    {
+      "project": "kobayashi-maru-foreman",
+      "workdir": "/home/kara/Kobayashi-Maru",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "schedule": "every 15m",
+      "last_run": "2026-07-11T21:19:30.507472-05:00",
+      "status": "healthy",
+      "pending_tasks": 4,
+      "in_progress": 0,
+      "worker_models_used": [
+        "none detected"
+      ],
+      "ci": "Security Tests pass; ci-cd-pipeline known infra fail"
+    },
+    {
+      "project": "H4F Coding Foreman",
+      "workdir": "/home/kara/hermes4friends-infra",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "schedule": "every 15m",
+      "last_run": "2026-07-11T22:23:19.161752-05:00",
+      "status": "healthy",
+      "pending_tasks": 4,
+      "in_progress": 0,
+      "worker_models_used": [
+        "none detected"
+      ],
+      "ci": "all passing"
+    },
+    {
+      "project": "mafia-benchmark-dev-loop",
+      "workdir": "/home/kara/mafia-ai-benchmark",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "schedule": "every 120m",
+      "last_run": "2026-07-11T16:21:31.320129-05:00",
+      "status": "healthy",
+      "pending_tasks": 0,
+      "in_progress": 0,
+      "worker_models_used": [
+        "none detected"
+      ],
+      "ci": "not checked"
+    },
+    {
+      "project": "mythos-coding-foreman",
+      "workdir": "/home/kara/helios-work/mythos",
+      "foreman_model": "grok-4.5",
+      "foreman_provider": "xai-oauth",
+      "schedule": "every 360m",
+      "last_run": "2026-07-11T23:50:23.424885-05:00",
+      "status": "healthy",
+      "pending_tasks": 0,
+      "in_progress": 0,
+      "worker_models_used": [
+        "none detected"
+      ],
+      "ci": "not checked"
+    },
+    {
+      "project": "hilo-foreman",
+      "workdir": "/home/kara/warpfs",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "schedule": "every 120m",
+      "last_run": "2026-07-11T09:54:54.801101-05:00",
+      "status": "healthy",
+      "pending_tasks": 0,
+      "in_progress": 0,
+      "worker_models_used": [
+        "none detected"
+      ],
+      "ci": "no CI"
+    },
+    {
+      "project": "Mythos Coding Foreman",
+      "workdir": "/home/kara/wojons-mythos",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "schedule": "every 120m",
+      "last_run": "2026-07-11T09:54:54.742170-05:00",
+      "status": "healthy",
+      "pending_tasks": 0,
+      "in_progress": 0,
+      "worker_models_used": [
+        "none detected"
+      ],
+      "ci": "not checked"
+    },
+    {
+      "project": "DuckBrain Coding Foreman",
+      "workdir": "/home/kara/duckbrain",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "schedule": "every 120m",
+      "last_run": "2026-07-11T13:00:25.032433-05:00",
+      "status": "healthy",
+      "pending_tasks": 0,
+      "in_progress": 0,
+      "worker_models_used": [
+        "none detected"
+      ],
+      "ci": "not checked"
+    },
+    {
+      "project": "Imhotep Coding Foreman",
+      "workdir": "/home/kara/imhotep",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "schedule": "every 120m",
+      "last_run": "2026-07-11T19:43:42.075495-05:00",
+      "status": "healthy",
+      "pending_tasks": 0,
+      "in_progress": 0,
+      "worker_models_used": [
+        "none detected"
+      ],
+      "ci": "not checked"
+    },
+    {
+      "project": "crier-coding-foreman",
+      "workdir": "/home/kara/crier",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "schedule": "every 120m",
+      "last_run": "2026-07-11T21:10:43.189152-05:00",
+      "status": "healthy",
+      "pending_tasks": 0,
+      "in_progress": 0,
+      "worker_models_used": [
+        "none detected"
+      ],
+      "ci": "not checked"
+    }
+  ],
+  "what_got_done": {
+    "tasks_resolved": [],
+    "commits_landed": [],
+    "bugs_queued": [],
+    "ci_regressions": [
+      {
+        "project": "muster",
+        "run": "Cross-Platform Tests + Build + CI",
+        "transient": false
+      },
+      {
+        "project": "SpecLang",
+        "run": "all 3 CI workflows",
+        "transient": false
+      },
+      {
+        "project": "hivemind",
+        "run": "Test + Lint",
+        "transient": true
+      },
+      {
+        "project": "Helios",
+        "run": "billing-blocked since Jun 22",
+        "transient": false
+      },
+      {
+        "project": "ASCE (GitLab)",
+        "run": "pipeline failed",
+        "transient": true
+      }
+    ],
+    "spec_doc_fixes": [],
+    "tool_health": {
+      "off_by_one_calls": 0,
+      "hilo_calls": 0,
+      "gitreins_calls": 53,
+      "duckbrain_calls": 103,
+      "broken_refs": 3,
+      "skill_patch_fails": 40,
+      "zombie_locks_24h": 120,
+      "cleared_locks_24h": 77
+    }
+  },
+  "issues_detected": [
+    "Hilo: 0 calls \u2014 CRITICAL. No blast radius analysis happening.",
+    "Skill patch fails: 40 \u2014 foremen trying to edit skills and failing.",
+    "120 zombie locks in 24h (77 cleared by timeout, 43 persistent).",
+    "EduOS has 2 foremen: Alpha Dev Loop (eduos.dexdat.com.co, P=4) + Coding Foreman (eduos/, P=0). Coding Foreman may be duplicate.",
+    "Speclang has 2 foremen: CI Foreman (SpecLang/, P=3, pinned) + Coding Foreman (speclang/, P=0). Coding Foreman may be duplicate."
+  ],
+  "changes_made": [
+    "Force-fired 23 overdue jobs (Phase 0A-POST)",
+    "Rebalanced 11 foreman schedules based on pending counts",
+    "Speed-ups: consensus 120m\u219215m (P=35), escalation-doctrine 120m\u219215m (P=34), rethinkdb 120m\u219215m (P=20), chimera 120m\u219215m (P=6)",
+    "Speed-ups: EduOS 30m\u219215m (P=4), ASCE 120m\u219230m (P=2), ai_plays_poke 120m\u219230m (P=1)",
+    "Speed-ups: deepseek-dashboard 360m\u219230m (P=2), DeepSeek Dashboard 120m\u219230m (P=2)",
+    "Speed-normalized idle projects: hilo 360m\u2192120m, mafia-benchmark 360m\u2192120m"
+  ]
+}
