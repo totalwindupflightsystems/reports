@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fleet Report — 2026-07-12T04:08</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0d1117; color:#c9d1d9; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; padding:20px; max-width:1200px; margin:0 auto; }
+h1 { color:#58a6ff; margin-bottom:4px; }
+h2 { color:#8b949e; font-size:1.2em; margin:24px 0 8px; border-bottom:1px solid #30363d; padding-bottom:4px; }
+.metrics { display:flex; gap:16px; margin:16px 0; flex-wrap:wrap; }
+.metric { background:#161b22; border:1px solid #30363d; border-radius:8px; padding:12px 20px; text-align:center; min-width:80px; }
+.metric .num { font-size:2em; font-weight:bold; }
+.metric .label { font-size:0.8em; color:#8b949e; }
+.healthy { color:#3fb950; }
+.warn { color:#d29922; }
+.error { color:#f85149; }
+.stale { color:#8b949e; }
+table { width:100%; border-collapse:collapse; margin:12px 0; font-size:0.9em; }
+th { background:#161b22; color:#8b949e; text-align:left; padding:8px 10px; border-bottom:1px solid #30363d; }
+td { padding:6px 10px; border-bottom:1px solid #21262d; }
+tr:hover td { background:#1c2128; }
+ul { margin-left:20px; }
+li { margin:4px 0; line-height:1.4; }
+.card { background:#161b22; border:1px solid #30363d; border-radius:8px; padding:16px; margin:12px 0; }
+.card h3 { color:#58a6ff; margin-bottom:8px; }
+.summary { color:#8b949e; font-size:0.95em; margin:8px 0 16px; }
+.footer { color:#484f58; font-size:0.75em; margin-top:32px; text-align:center; }
+</style>
+</head>
+<body>
+<h1>📊 Coding-Hermes Fleet Report</h1>
+<p class="summary">2026-07-12T04:08 | Supervisor run — DeepSeek V4 Pro on deepseek-foreman</p>
+
+<div class="metrics">
+<div class="metric"><div class="num healthy">18</div><div class="label">Healthy</div></div>
+<div class="metric"><div class="num warn">6</div><div class="label">Warn</div></div>
+<div class="metric"><div class="num error">3</div><div class="label">Error</div></div>
+<div class="metric"><div class="num stale">4</div><div class="label">Stale</div></div>
+<div class="metric"><div class="num">12</div><div class="label">Paused</div></div>
+<div class="metric"><div class="num">66</div><div class="label">Pending Tasks</div></div>
+</div>
+
+<h2>📋 What Got Done (Last 4h)</h2>
+<div class="card">
+<h3>✅ Tasks Resolved</h3>
+<ul><li><b>dexdat-memory</b>: SQLite search — handle empty agent_id in permissions provider</li><li><b>dexdat-memory</b>: SQLite namespaces — EnsureSQLiteSchema for tenants+users</li><li><b>musterflow</b>: Prevent completion prompt from blocking non-TTY stdin</li><li><b>musterflow</b>: Route list/catalog/refresh/push/pull through dashboard API</li><li><b>Kobayashi-Maru</b>: Add CHANGELOG entries for v0.2-v0.4</li><li><b>Kobayashi-Maru</b>: Add testing.Short() guards to chaos tests</li><li><b>dexdat-core</b>: Tenant isolation — RLS on all 31 Consensus tables</li></ul>
+</div>
+<div class="card">
+<h3>📝 Commits Landed (24 across 7 projects)</h3>
+<ul><li><b>musterflow</b>: queue 7 discovery sweep tasks (FIX-031..CI-037)</li><li><b>dexdat-memory</b>: fix: SQLite search — handle empty agent_id in permissions provider</li><li><b>dexdat-core</b>: feat(CONSENSUS-4): Tenant isolation — RLS on all 31 Consensus tables</li><li><b>Kobayashi-Maru</b>: queue 3 discovery sweep tasks</li><li><b>consensus</b>: feat(foreman): add models.dev auto-sync task to Phase 2</li><li><b>imhotep</b>: complete specification governance task</li><li><b>crier</b>: feat: initial scaffold — Crier agent message bus</li></ul>
+</div>
+<div class="card">
+<h3>🐛 Bugs Queued</h3>
+<ul><li><b>musterflow</b>: 7 new discovery sweep tasks queued (API connections, catalog CI, smoke test, e2e demo)</li><li><b>Kobayashi-Maru</b>: 3 new tasks: dist-list-crash, cross-compile-test, scenario-doctrine</li></ul>
+</div>
+<div class="card">
+<h3>🔧 CI Regressions</h3>
+<ul><li>🔴 <b>Helios</b>: CI</li><li>🔴 <b>Hivemind</b>: Lint+Test</li><li>🔴 <b>Muster</b>: Build, Docker Build, Cross-Platform Tests</li><li>🔄 <b>Chimera</b>: CI</li><li>🔴 <b>SpecLang</b>: CI (dual-view)</li><li>🔄 <b>Bunker</b>: CI</li><li>🔄 <b>Kobayashi-Maru</b>: ci-cd-pipeline.yml</li></ul>
+</div>
+
+<h2>🛠 Tool Health</h2>
+<table style="max-width:400px">
+<tr><th>Tool</th><th>Activity</th><th>Status</th></tr>
+<tr><td>GitReins</td><td>23 (MCP registered in 5 sessions)</td><td>🟢</td></tr>
+<tr><td>DuckBrain</td><td>10+ (active in dexdat-core session)</td><td>🟢</td></tr>
+<tr><td>Off-by-One</td><td>0</td><td>🔴</td></tr>
+<tr><td>Hilo</td><td>0</td><td>🔴</td></tr>
+<tr><td>Broken Refs</td><td>8</td><td>🟡</td></tr>
+<tr><td>Zombie Locks</td><td>52</td><td>🔴</td></tr>
+</table>
+
+<h2>🔧 Changes Made This Run</h2>
+<div class="card">
+<ul><li>Phase 0A-POST: Force-fired 25 overdue/stale foremen</li><li>Phase 0G: GitReins model drift deepseek-v4-flash → deepseek-v4-pro</li><li>Phase 0B-SKILL: Paused EduOS Browser E2E Tester (enabled=True legacy zombie)</li><li>Phase 0G: All 24 unpinned foremen on deepseek-v4-pro @ deepseek-foreman</li><li>Phase 0G: Pinned projects verified (helix/grok-4.5, Bunker/kimi, speclang/MiniMax, mythos/grok-4.5, dexdat-build-loop/v4-pro)</li></ul>
+</div>
+
+<h2>⚠️ Issues Detected</h2>
+<div class="card">
+<ul><li>🔴 GitReins Coding Foreman: NEVER fired (last_run=None), model was deepseek-v4-flash — FIXED to v4-pro</li><li>🔴 EduOS Coding Foreman (new): NEVER fired (last_run=None) — force-fired</li><li>🔴 Speclang Coding Foreman (new): NEVER fired (last_run=None) — force-fired</li><li>🟡 Helios foreman: 62h stale — billing-blocked CI since Jun 22, no commits in 24h</li><li>🟡 chimera-coding-foreman: 49h stale — CI failing</li><li>🟡 off-by-one-foreman: 48h stale — no activity in 13 days</li><li>🟡 deepseek-dashboard coding-hermes: 51h stale — nested workdir issue?</li><li>🟡 hilo-foreman: 13h stale, 0 pending, last run was error</li><li>🟡 2 coding-hermes sub-foremen on deepseek provider (not deepseek-foreman) — minor drift, leaving as-is</li><li>✅ EduOS Browser E2E Tester paused (legacy zombie, replaced by EduOS Alpha Dev Loop)</li><li>✅ 25 overdue foremen force-fired (next_run_at set to 5min ago)</li><li>✅ All pinned project configs verified correct</li><li>✅ Timeout patch deployed (52 zombie locks, all auto-clearing within 30min)</li></ul>
+</div>
+
+<h2>🚢 Fleet Status</h2>
+<table>
+<tr><th>Project</th><th>Pending</th><th>Model</th><th>Provider</th><th>Last Run</th><th>CI</th></tr>
+<tr>
+        <td>⚫ 🔒 Helios</td>
+        <td>5</td>
+        <td style="font-size:0.85em">DS v4-pro</td>
+        <td style="font-size:0.85em">DS-F</td>
+        <td style="font-size:0.8em">2026-07-09T08:41</td>
+        <td>🔴 billing-blocked</td>
+    </tr><tr>
+        <td>🟢  DexDat Memory</td>
+        <td>3</td>
+        <td style="font-size:0.85em">DS v4-pro</td>
+        <td style="font-size:0.85em">DS-F</td>
+        <td style="font-size:0.8em">2026-07-11T22:39</td>
+        <td>✅</td>
+    </tr><tr>
+        <td>🟢 🔒 DexDat Core</td>
+        <td>8</td>
+        <td style="font-size:0.85em">DS v4-pro</td>
+        <td style="font-size:0.85em">DS-F</td>
+        <td style="font-size:0.8em">2026-07-11T22:59</td>
+        <td>—</td>
+    </tr><tr>
+        <td>🟢  Muster</td>
+        <td>3</td>
+        <td style="font-size:0.85em">DS v4-pro</td>
+        <td style="font-size:0.85em">DS-F</td>
+        <td style="font-size:0.8em">2026-07-11T22:17</td>
+        <td>🔴 all workflows</td>
+    </tr><tr>
+        <td>🟢  Musterflow</td>
+        <td>7</td>
+        <td style="font-size:0.85em">DS v4-pro</td>
+        <td style="font-size:0.85em">DS-F</td>
+        <td style="font-size:0.8em">2026-07-11T19:27</td>
+        <td>—</td>
+    </tr><tr>
+        <td>🟢 🔒 Helix</td>
+        <td>17</td>
+        <td style="font-size:0.85em">grok-4.5</td>
+        <td style="font-size:0.85em">X.AI</td>
+        <td style="font-size:0.8em">2026-07-11T19:09</td>
+        <td>✅</td>
+    </tr><tr>
+        <td>🟡  Hilo (warpfs)</td>
+        <td>0</td>
+        <td style="font-size:0.85em">DS v4-pro</td>
+        <td style="font-size:0.85em">DS-F</td>
+        <td style="font-size:0.8em">2026-07-11T09:54</td>
+        <td>✅</td>
+    </tr><tr>
+        <td>🟢  ASCE</td>
+        <td>0</td>
+        <td style="font-size:0.85em">DS v4-pro</td>
+        <td style="font-size:0.85em">DS-F</td>
+        <td style="font-size:0.8em">2026-07-11T20:46</td>
+        <td>⚪ GitLab</td>
+    </tr><tr>
+        <td>🟢  Kobayashi-Maru</td>
+        <td>4</td>
+        <td style="font-size:0.85em">DS v4-pro</td>
+        <td style="font-size:0.85em">DS-F</td>
+        <td style="font-size:0.8em">2026-07-11T21:19</td>
+        <td>🟡 ci-cd-pipeline</td>
+    </tr><tr>
+        <td>🟡  Pokémon</td>
+        <td>0</td>
+        <td style="font-size:0.85em">DS v4-pro</td>
+        <td style="font-size:0.85em">DS-F</td>
+        <td style="font-size:0.8em">2026-07-11T10:30</td>
+        <td>⚪</td>
+    </tr><tr>
+        <td>🟢 🔒 Bunker</td>
+        <td>0</td>
+        <td style="font-size:0.85em">kimi-for-coding</td>
+        <td style="font-size:0.85em">Kimi</td>
+        <td style="font-size:0.8em">2026-07-11T18:08</td>
+        <td>🟡 queued</td>
+    </tr><tr>
+        <td>🟢  H4F Infra</td>
+        <td>4</td>
+        <td style="font-size:0.85em">DS v4-pro</td>
+        <td style="font-size:0.85em">DS-F</td>
+        <td style="font-size:0.8em">2026-07-11T22:23</td>
+        <td>✅</td>
+    </tr><tr>
+        <td>🔴  GitReins</td>
+        <td>4</td>
+        <td style="font-size:0.85em">DS v4-pro</td>
+        <td style="font-size:0.85em">DS-F</td>
+        <td style="font-size:0.8em">never</td>
+        <td>⚪ GitLab</td>
+    </tr><tr>
+        <td>🟢  Hivemind</td>
+        <td>0</td>
+        <td style="font-size:0.85em">DS v4-pro</td>
+        <td style="font-size:0.85em">DS-F</td>
+        <td style="font-size:0.8em">2026-07-11T17:56</td>
+        <td>🔴 lint+test</td>
+    </tr><tr>
+        <td>⚫  Off-by-One</td>
+        <td>0</td>
+        <td style="font-size:0.85em">DS v4-pro</td>
+        <td style="font-size:0.85em">DS-F</td>
+        <td style="font-size:0.8em">2026-07-09T22:38</td>
+        <td>✅</td>
+    </tr><tr>
+        <td>🟢 🔒 SpecLang</td>
+        <td>0</td>
+        <td style="font-size:0.85em">MiniMax-M3</td>
+        <td style="font-size:0.85em">MM</td>
+        <td style="font-size:0.8em">2026-07-11T17:06</td>
+        <td>🔴 dual-view</td>
+    </tr><tr>
+        <td>🔴  SpecLang (new)</td>
+        <td>4</td>
+        <td style="font-size:0.85em">DS v4-pro</td>
+        <td style="font-size:0.85em">DS-F</td>
+        <td style="font-size:0.8em">never</td>
+        <td>—</td>
+    </tr><tr>
+        <td>⚫  Chimera</td>
+        <td>0</td>
+        <td style="font-size:0.85em">DS v4-pro</td>
+        <td style="font-size:0.85em">DS-F</td>
+        <td style="font-size:0.8em">2026-07-09T21:33</td>
+        <td>🔴 CI</td>
+    </tr><tr>
+        <td>🟢  Consensus</td>
+        <td>0</td>
+        <td style="font-size:0.85em">DS v4-pro</td>
+        <td style="font-size:0.85em">DS-F</td>
+        <td style="font-size:0.8em">2026-07-11T11:25</td>
+        <td>✅</td>
+    </tr><tr>
+        <td>🟡 🔒 Mythos (helix)</td>
+        <td>0</td>
+        <td style="font-size:0.85em">grok-4.5</td>
+        <td style="font-size:0.85em">X.AI</td>
+        <td style="font-size:0.8em">2026-07-11T09:54</td>
+        <td>—</td>
+    </tr><tr>
+        <td>🟡  Mythos (wojons)</td>
+        <td>0</td>
+        <td style="font-size:0.85em">DS v4-pro</td>
+        <td style="font-size:0.85em">DS-F</td>
+        <td style="font-size:0.8em">2026-07-11T09:54</td>
+        <td>—</td>
+    </tr><tr>
+        <td>🟢  EduOS (dexdat)</td>
+        <td>3</td>
+        <td style="font-size:0.85em">DS v4-pro</td>
+        <td style="font-size:0.85em">deepseek</td>
+        <td style="font-size:0.8em">2026-07-11T21:33</td>
+        <td>—</td>
+    </tr><tr>
+        <td>🔴  EduOS (new)</td>
+        <td>4</td>
+        <td style="font-size:0.85em">DS v4-pro</td>
+        <td style="font-size:0.85em">DS-F</td>
+        <td style="font-size:0.8em">never</td>
+        <td>—</td>
+    </tr><tr>
+        <td>🟡  Mafia Benchmark</td>
+        <td>0</td>
+        <td style="font-size:0.85em">DS v4-pro</td>
+        <td style="font-size:0.85em">DS-F</td>
+        <td style="font-size:0.8em">2026-07-11T16:21</td>
+        <td>—</td>
+    </tr><tr>
+        <td>⚫  DeepSeek Dash</td>
+        <td>0</td>
+        <td style="font-size:0.85em">DS v4-pro</td>
+        <td style="font-size:0.85em">DS-F</td>
+        <td style="font-size:0.8em">2026-07-09T19:07</td>
+        <td>—</td>
+    </tr><tr>
+        <td>🟡  DeepSeek Dash (root)</td>
+        <td>0</td>
+        <td style="font-size:0.85em">DS v4-pro</td>
+        <td style="font-size:0.85em">DS-F</td>
+        <td style="font-size:0.8em">2026-07-11T09:54</td>
+        <td>—</td>
+    </tr><tr>
+        <td>🟢  Escalation Doctrine</td>
+        <td>0</td>
+        <td style="font-size:0.85em">DS v4-pro</td>
+        <td style="font-size:0.85em">DS-F</td>
+        <td style="font-size:0.8em">2026-07-11T18:33</td>
+        <td>—</td>
+    </tr><tr>
+        <td>🟢  RethinkDB</td>
+        <td>0</td>
+        <td style="font-size:0.85em">DS v4-pro</td>
+        <td style="font-size:0.85em">DS-F</td>
+        <td style="font-size:0.8em">2026-07-11T20:42</td>
+        <td>—</td>
+    </tr><tr>
+        <td>🟢  DuckBrain</td>
+        <td>0</td>
+        <td style="font-size:0.85em">DS v4-pro</td>
+        <td style="font-size:0.85em">DS-F</td>
+        <td style="font-size:0.8em">2026-07-11T13:00</td>
+        <td>—</td>
+    </tr><tr>
+        <td>🟢  Imhotep</td>
+        <td>0</td>
+        <td style="font-size:0.85em">DS v4-pro</td>
+        <td style="font-size:0.85em">DS-F</td>
+        <td style="font-size:0.8em">2026-07-11T19:43</td>
+        <td>—</td>
+    </tr><tr>
+        <td>🟢  Crier</td>
+        <td>0</td>
+        <td style="font-size:0.85em">DS v4-pro</td>
+        <td style="font-size:0.85em">DS-F</td>
+        <td style="font-size:0.8em">2026-07-11T21:10</td>
+        <td>—</td>
+    </tr>
+</table>
+
+<div class="footer">Generated by Coding Hermes Supervisor v1.34.0 — 2026-07-12T04:08:08Z</div>
+</body>
+</html>

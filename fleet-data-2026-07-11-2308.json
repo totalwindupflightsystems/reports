@@ -1,0 +1,572 @@
+{
+  "$schema": "fleet-data-schema-v1",
+  "generated": "2026-07-12T04:08:08Z",
+  "metrics": {
+    "healthy": 18,
+    "warn": 6,
+    "error": 3,
+    "paused": 12,
+    "stale": 4,
+    "total_pending_tasks": 66
+  },
+  "fleet": [
+    {
+      "project": "Helios",
+      "workdir": "/home/kara/helios-work",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": "2026-07-09T08:41:35-05:00",
+      "status": "stale",
+      "pending_tasks": 5,
+      "in_progress": 0,
+      "worker_models_used": [],
+      "pinned": true,
+      "ci": "\ud83d\udd34 billing-blocked"
+    },
+    {
+      "project": "DexDat Memory",
+      "workdir": "/home/kara/dexdat-memory",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": "2026-07-11T22:39:41-05:00",
+      "status": "healthy",
+      "pending_tasks": 3,
+      "in_progress": 0,
+      "worker_models_used": [],
+      "pinned": false,
+      "ci": "\u2705"
+    },
+    {
+      "project": "DexDat Core",
+      "workdir": "/home/kara/dexdat-core",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": "2026-07-11T22:59:30-05:00",
+      "status": "healthy",
+      "pending_tasks": 8,
+      "in_progress": 0,
+      "worker_models_used": [],
+      "pinned": true,
+      "ci": "\u2014"
+    },
+    {
+      "project": "Muster",
+      "workdir": "/home/kara/muster",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": "2026-07-11T22:17:40-05:00",
+      "status": "healthy",
+      "pending_tasks": 3,
+      "in_progress": 0,
+      "worker_models_used": [],
+      "pinned": false,
+      "ci": "\ud83d\udd34 all workflows"
+    },
+    {
+      "project": "Musterflow",
+      "workdir": "/home/kara/musterflow",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": "2026-07-11T19:27:49-05:00",
+      "status": "healthy",
+      "pending_tasks": 7,
+      "in_progress": 0,
+      "worker_models_used": [],
+      "pinned": false,
+      "ci": "\u2014"
+    },
+    {
+      "project": "Helix",
+      "workdir": "/home/kara/helix",
+      "foreman_model": "grok-4.5",
+      "foreman_provider": "xai-oauth",
+      "last_run": "2026-07-11T19:09:43-05:00",
+      "status": "healthy",
+      "pending_tasks": 17,
+      "in_progress": 0,
+      "worker_models_used": [],
+      "pinned": true,
+      "ci": "\u2705"
+    },
+    {
+      "project": "Hilo (warpfs)",
+      "workdir": "/home/kara/warpfs",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": "2026-07-11T09:54:54-05:00",
+      "status": "warn",
+      "pending_tasks": 0,
+      "in_progress": 0,
+      "worker_models_used": [],
+      "pinned": false,
+      "ci": "\u2705"
+    },
+    {
+      "project": "ASCE",
+      "workdir": "/home/kara/asce",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": "2026-07-11T20:46:59-05:00",
+      "status": "healthy",
+      "pending_tasks": 0,
+      "in_progress": 0,
+      "worker_models_used": [],
+      "pinned": false,
+      "ci": "\u26aa GitLab"
+    },
+    {
+      "project": "Kobayashi-Maru",
+      "workdir": "/home/kara/Kobayashi-Maru",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": "2026-07-11T21:19:30-05:00",
+      "status": "healthy",
+      "pending_tasks": 4,
+      "in_progress": 0,
+      "worker_models_used": [],
+      "pinned": false,
+      "ci": "\ud83d\udfe1 ci-cd-pipeline"
+    },
+    {
+      "project": "Pok\u00e9mon",
+      "workdir": "/home/kara/ai_plays_poke",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": "2026-07-11T10:30:33-05:00",
+      "status": "warn",
+      "pending_tasks": 0,
+      "in_progress": 0,
+      "worker_models_used": [],
+      "pinned": false,
+      "ci": "\u26aa"
+    },
+    {
+      "project": "Bunker",
+      "workdir": "/home/kara/bunker",
+      "foreman_model": "kimi-for-coding",
+      "foreman_provider": "kimi-for-coding",
+      "last_run": "2026-07-11T18:08:59-05:00",
+      "status": "healthy",
+      "pending_tasks": 0,
+      "in_progress": 0,
+      "worker_models_used": [],
+      "pinned": true,
+      "ci": "\ud83d\udfe1 queued"
+    },
+    {
+      "project": "H4F Infra",
+      "workdir": "/home/kara/hermes4friends-infra",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": "2026-07-11T22:23:19-05:00",
+      "status": "healthy",
+      "pending_tasks": 4,
+      "in_progress": 0,
+      "worker_models_used": [],
+      "pinned": false,
+      "ci": "\u2705"
+    },
+    {
+      "project": "GitReins",
+      "workdir": "/home/kara/gitreins-poc",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": null,
+      "status": "critical",
+      "pending_tasks": 4,
+      "in_progress": 0,
+      "worker_models_used": [],
+      "pinned": false,
+      "ci": "\u26aa GitLab"
+    },
+    {
+      "project": "Hivemind",
+      "workdir": "/home/kara/hivemind-work",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": "2026-07-11T17:56:43-05:00",
+      "status": "healthy",
+      "pending_tasks": 0,
+      "in_progress": 0,
+      "worker_models_used": [],
+      "pinned": false,
+      "ci": "\ud83d\udd34 lint+test"
+    },
+    {
+      "project": "Off-by-One",
+      "workdir": "/home/kara/off-by-one",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": "2026-07-09T22:38:10-05:00",
+      "status": "stale",
+      "pending_tasks": 0,
+      "in_progress": 0,
+      "worker_models_used": [],
+      "pinned": false,
+      "ci": "\u2705"
+    },
+    {
+      "project": "SpecLang",
+      "workdir": "/home/kara/SpecLang",
+      "foreman_model": "MiniMax-M3",
+      "foreman_provider": "minimax",
+      "last_run": "2026-07-11T17:06:07-05:00",
+      "status": "healthy",
+      "pending_tasks": 0,
+      "in_progress": 0,
+      "worker_models_used": [],
+      "pinned": true,
+      "ci": "\ud83d\udd34 dual-view"
+    },
+    {
+      "project": "SpecLang (new)",
+      "workdir": "/home/kara/speclang",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": null,
+      "status": "critical",
+      "pending_tasks": 4,
+      "in_progress": 0,
+      "worker_models_used": [],
+      "pinned": false,
+      "ci": "\u2014"
+    },
+    {
+      "project": "Chimera",
+      "workdir": "/home/kara/chimera-v2",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": "2026-07-09T21:33:26-05:00",
+      "status": "stale",
+      "pending_tasks": 0,
+      "in_progress": 0,
+      "worker_models_used": [],
+      "pinned": false,
+      "ci": "\ud83d\udd34 CI"
+    },
+    {
+      "project": "Consensus",
+      "workdir": "/home/kara/consensus",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": "2026-07-11T11:25:26-05:00",
+      "status": "healthy",
+      "pending_tasks": 0,
+      "in_progress": 0,
+      "worker_models_used": [],
+      "pinned": false,
+      "ci": "\u2705"
+    },
+    {
+      "project": "Mythos (helix)",
+      "workdir": "/home/kara/helios-work/mythos",
+      "foreman_model": "grok-4.5",
+      "foreman_provider": "xai-oauth",
+      "last_run": "2026-07-11T09:54:54-05:00",
+      "status": "warn",
+      "pending_tasks": 0,
+      "in_progress": 0,
+      "worker_models_used": [],
+      "pinned": true,
+      "ci": "\u2014"
+    },
+    {
+      "project": "Mythos (wojons)",
+      "workdir": "/home/kara/wojons-mythos",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": "2026-07-11T09:54:54-05:00",
+      "status": "warn",
+      "pending_tasks": 0,
+      "in_progress": 0,
+      "worker_models_used": [],
+      "pinned": false,
+      "ci": "\u2014"
+    },
+    {
+      "project": "EduOS (dexdat)",
+      "workdir": "/home/kara/eduos.dexdat.com.co",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek",
+      "last_run": "2026-07-11T21:33:12-05:00",
+      "status": "healthy",
+      "pending_tasks": 3,
+      "in_progress": 0,
+      "worker_models_used": [],
+      "pinned": false,
+      "ci": "\u2014"
+    },
+    {
+      "project": "EduOS (new)",
+      "workdir": "/home/kara/eduos",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": null,
+      "status": "critical",
+      "pending_tasks": 4,
+      "in_progress": 0,
+      "worker_models_used": [],
+      "pinned": false,
+      "ci": "\u2014"
+    },
+    {
+      "project": "Mafia Benchmark",
+      "workdir": "/home/kara/mafia-ai-benchmark",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": "2026-07-11T16:21:31-05:00",
+      "status": "warn",
+      "pending_tasks": 0,
+      "in_progress": 0,
+      "worker_models_used": [],
+      "pinned": false,
+      "ci": "\u2014"
+    },
+    {
+      "project": "DeepSeek Dash",
+      "workdir": "/home/kara/Kobayashi-Maru/deepseek-dashboard",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": "2026-07-09T19:07:49-05:00",
+      "status": "stale",
+      "pending_tasks": 0,
+      "in_progress": 0,
+      "worker_models_used": [],
+      "pinned": false,
+      "ci": "\u2014"
+    },
+    {
+      "project": "DeepSeek Dash (root)",
+      "workdir": "/home/kara/deepseek-dashboard",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": "2026-07-11T09:54:54-05:00",
+      "status": "warn",
+      "pending_tasks": 0,
+      "in_progress": 0,
+      "worker_models_used": [],
+      "pinned": false,
+      "ci": "\u2014"
+    },
+    {
+      "project": "Escalation Doctrine",
+      "workdir": "/home/kara/escalation-doctrine",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": "2026-07-11T18:33:39-05:00",
+      "status": "healthy",
+      "pending_tasks": 0,
+      "in_progress": 0,
+      "worker_models_used": [],
+      "pinned": false,
+      "ci": "\u2014"
+    },
+    {
+      "project": "RethinkDB",
+      "workdir": "/home/kara/rethinkdb",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": "2026-07-11T20:42:07-05:00",
+      "status": "healthy",
+      "pending_tasks": 0,
+      "in_progress": 0,
+      "worker_models_used": [],
+      "pinned": false,
+      "ci": "\u2014"
+    },
+    {
+      "project": "DuckBrain",
+      "workdir": "/home/kara/duckbrain",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": "2026-07-11T13:00:25-05:00",
+      "status": "healthy",
+      "pending_tasks": 0,
+      "in_progress": 0,
+      "worker_models_used": [],
+      "pinned": false,
+      "ci": "\u2014"
+    },
+    {
+      "project": "Imhotep",
+      "workdir": "/home/kara/imhotep",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": "2026-07-11T19:43:42-05:00",
+      "status": "healthy",
+      "pending_tasks": 0,
+      "in_progress": 0,
+      "worker_models_used": [],
+      "pinned": false,
+      "ci": "\u2014"
+    },
+    {
+      "project": "Crier",
+      "workdir": "/home/kara/crier",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": "2026-07-11T21:10:43-05:00",
+      "status": "healthy",
+      "pending_tasks": 0,
+      "in_progress": 0,
+      "worker_models_used": [],
+      "pinned": false,
+      "ci": "\u2014"
+    }
+  ],
+  "what_got_done": {
+    "tasks_resolved": [
+      {
+        "foreman": "dexdat-memory",
+        "task_id": "fix-sqlite-search",
+        "title": "SQLite search \u2014 handle empty agent_id in permissions provider"
+      },
+      {
+        "foreman": "dexdat-memory",
+        "task_id": "fix-sqlite-namespaces",
+        "title": "SQLite namespaces \u2014 EnsureSQLiteSchema for tenants+users"
+      },
+      {
+        "foreman": "musterflow",
+        "task_id": "TASK-030",
+        "title": "Prevent completion prompt from blocking non-TTY stdin"
+      },
+      {
+        "foreman": "musterflow",
+        "task_id": "TASK-029",
+        "title": "Route list/catalog/refresh/push/pull through dashboard API"
+      },
+      {
+        "foreman": "Kobayashi-Maru",
+        "task_id": "FIX-changelog",
+        "title": "Add CHANGELOG entries for v0.2-v0.4"
+      },
+      {
+        "foreman": "Kobayashi-Maru",
+        "task_id": "FIX-chaos-test",
+        "title": "Add testing.Short() guards to chaos tests"
+      },
+      {
+        "foreman": "dexdat-core",
+        "task_id": "CONSENSUS-4",
+        "title": "Tenant isolation \u2014 RLS on all 31 Consensus tables"
+      }
+    ],
+    "commits_landed": [
+      {
+        "project": "musterflow",
+        "author": "coding-hermes",
+        "message": "queue 7 discovery sweep tasks (FIX-031..CI-037)"
+      },
+      {
+        "project": "dexdat-memory",
+        "author": "coding-hermes",
+        "message": "fix: SQLite search \u2014 handle empty agent_id in permissions provider"
+      },
+      {
+        "project": "dexdat-core",
+        "author": "coding-hermes",
+        "message": "feat(CONSENSUS-4): Tenant isolation \u2014 RLS on all 31 Consensus tables"
+      },
+      {
+        "project": "Kobayashi-Maru",
+        "author": "coding-hermes",
+        "message": "queue 3 discovery sweep tasks"
+      },
+      {
+        "project": "consensus",
+        "author": "coding-hermes",
+        "message": "feat(foreman): add models.dev auto-sync task to Phase 2"
+      },
+      {
+        "project": "imhotep",
+        "author": "coding-hermes",
+        "message": "complete specification governance task"
+      },
+      {
+        "project": "crier",
+        "author": "coding-hermes",
+        "message": "feat: initial scaffold \u2014 Crier agent message bus"
+      }
+    ],
+    "bugs_queued": [
+      {
+        "project": "musterflow",
+        "description": "7 new discovery sweep tasks queued (API connections, catalog CI, smoke test, e2e demo)"
+      },
+      {
+        "project": "Kobayashi-Maru",
+        "description": "3 new tasks: dist-list-crash, cross-compile-test, scenario-doctrine"
+      }
+    ],
+    "ci_regressions": [
+      {
+        "project": "Helios",
+        "run": "CI",
+        "transient": false
+      },
+      {
+        "project": "Hivemind",
+        "run": "Lint+Test",
+        "transient": false
+      },
+      {
+        "project": "Muster",
+        "run": "Build, Docker Build, Cross-Platform Tests",
+        "transient": false
+      },
+      {
+        "project": "Chimera",
+        "run": "CI",
+        "transient": true
+      },
+      {
+        "project": "SpecLang",
+        "run": "CI (dual-view)",
+        "transient": false
+      },
+      {
+        "project": "Bunker",
+        "run": "CI",
+        "transient": true
+      },
+      {
+        "project": "Kobayashi-Maru",
+        "run": "ci-cd-pipeline.yml",
+        "transient": true
+      }
+    ],
+    "spec_doc_fixes": [],
+    "tool_health": {
+      "gitreins_calls": "23 (MCP registered in 5 sessions)",
+      "duckbrain_calls": "10+ (active in dexdat-core session)",
+      "off_by_one_calls": 0,
+      "hilo_calls": 0,
+      "broken_refs": 8,
+      "zombie_locks": 52,
+      "skill_patch_fails": 0
+    }
+  },
+  "issues_detected": [
+    "\ud83d\udd34 GitReins Coding Foreman: NEVER fired (last_run=None), model was deepseek-v4-flash \u2014 FIXED to v4-pro",
+    "\ud83d\udd34 EduOS Coding Foreman (new): NEVER fired (last_run=None) \u2014 force-fired",
+    "\ud83d\udd34 Speclang Coding Foreman (new): NEVER fired (last_run=None) \u2014 force-fired",
+    "\ud83d\udfe1 Helios foreman: 62h stale \u2014 billing-blocked CI since Jun 22, no commits in 24h",
+    "\ud83d\udfe1 chimera-coding-foreman: 49h stale \u2014 CI failing",
+    "\ud83d\udfe1 off-by-one-foreman: 48h stale \u2014 no activity in 13 days",
+    "\ud83d\udfe1 deepseek-dashboard coding-hermes: 51h stale \u2014 nested workdir issue?",
+    "\ud83d\udfe1 hilo-foreman: 13h stale, 0 pending, last run was error",
+    "\ud83d\udfe1 2 coding-hermes sub-foremen on deepseek provider (not deepseek-foreman) \u2014 minor drift, leaving as-is",
+    "\u2705 EduOS Browser E2E Tester paused (legacy zombie, replaced by EduOS Alpha Dev Loop)",
+    "\u2705 25 overdue foremen force-fired (next_run_at set to 5min ago)",
+    "\u2705 All pinned project configs verified correct",
+    "\u2705 Timeout patch deployed (52 zombie locks, all auto-clearing within 30min)"
+  ],
+  "changes_made": [
+    "Phase 0A-POST: Force-fired 25 overdue/stale foremen",
+    "Phase 0G: GitReins model drift deepseek-v4-flash \u2192 deepseek-v4-pro",
+    "Phase 0B-SKILL: Paused EduOS Browser E2E Tester (enabled=True legacy zombie)",
+    "Phase 0G: All 24 unpinned foremen on deepseek-v4-pro @ deepseek-foreman",
+    "Phase 0G: Pinned projects verified (helix/grok-4.5, Bunker/kimi, speclang/MiniMax, mythos/grok-4.5, dexdat-build-loop/v4-pro)"
+  ]
+}
