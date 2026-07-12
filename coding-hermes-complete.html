@@ -18,6 +18,7 @@
     --green: #3fb950;
     --red: #f85149;
     --purple: #bc8cff;
+    --yellow: #d2991d;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -59,7 +60,7 @@
   }
 
   table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
-  th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--border); }
+  th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
   th { color: var(--blue); font-weight: 600; position: sticky; top: 0; background: var(--bg); }
   tr:nth-child(even) { background: var(--surface); }
 
@@ -75,11 +76,12 @@
   .stat .num { font-size: 2rem; font-weight: 700; color: var(--blue); }
   .stat .label { color: var(--muted); font-size: 0.85rem; }
 
-  .tier { margin: 2rem 0; padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border); }
+  .tier { margin: 1.5rem 0; padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border); }
   .tier-supervisor { border-left: 4px solid var(--green); }
   .tier-foreman { border-left: 4px solid var(--orange); }
   .tier-worker { border-left: 4px solid var(--blue); }
   .tier-infra { border-left: 4px solid var(--purple); }
+  .tier-warn { border-left: 4px solid var(--red); }
 
   .badge {
     display: inline-block;
@@ -87,33 +89,51 @@
     border-radius: 10px;
     font-size: 0.75rem;
     font-weight: 600;
+    margin-right: 0.25rem;
   }
   .badge-ok { background: #1a3322; color: var(--green); }
   .badge-warn { background: #44361a; color: var(--orange); }
   .badge-err { background: #441a1a; color: var(--red); }
+  .badge-info { background: #1a2d44; color: var(--blue); }
 
-  .loop-step {
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-    padding: 0.75rem 1rem;
-    border-radius: 6px;
-    margin: 0.5rem 0;
+  .loop-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+    font-size: 0.85rem;
+    white-space: pre;
+    overflow-x: auto;
+    line-height: 1.8;
   }
-  .loop-step:nth-child(odd) { background: var(--surface); }
+
+  .step-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem;
+    margin: 0.75rem 0;
+  }
+  .step-card h4 {
+    margin-top: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
   .step-num {
     background: var(--blue);
     color: #fff;
-    border-radius: 50%;
-    width: 28px;
-    height: 28px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
+    border-radius: 6px;
+    padding: 2px 10px;
     font-size: 0.8rem;
-    flex-shrink: 0;
+    font-weight: 700;
   }
+  .step-num-green { background: var(--green); }
+  .step-num-orange { background: var(--orange); }
+  .step-num-purple { background: var(--purple); }
+  .step-num-red { background: var(--red); }
 
   pre { background: var(--surface); border-radius: 6px; padding: 1rem; overflow-x: auto; font-size: 0.85rem; margin: 0.75rem 0; }
   code { background: #1c2128; padding: 2px 6px; border-radius: 3px; font-size: 0.85em; color: #79c0ff; }
@@ -129,6 +149,10 @@
   .callout-info { background: #1a2d44; border-color: var(--blue); }
   .callout-tip { background: #1a3322; border-color: var(--green); }
 
+  .result-table th { width: 25%; }
+
+  ol li, ul li { margin: 0.25rem 0; }
+
   @media (max-width: 768px) {
     body { padding: 1rem; }
     .stats { gap: 0.75rem; }
@@ -141,235 +165,306 @@
 
 <div class="hero">
   <h1>🔄 Coding Hermes</h1>
-  <p>A 3-tier autonomous coding fleet. Supervisor manages. Foremen orchestrate projects. Workers write code. Self-healing, self-rebalancing, self-reporting — Bane provides strategy, architecture, and new capabilities.</p>
+  <p>A 3-tier autonomous coding fleet delivering complete projects end-to-end. Supervisor manages the fleet. Foremen run full SDLC loops per project. Workers write code on prepaid buckets. Self-healing, self-rebalancing, self-learning.</p>
 </div>
 
 <div class="stats">
   <div class="stat"><div class="num">1</div><div class="label">Supervisor</div></div>
   <div class="stat"><div class="num">33</div><div class="label">Foremen</div></div>
-  <div class="stat"><div class="num">5</div><div class="label">Coding Models</div></div>
+  <div class="stat"><div class="num">6</div><div class="label">Coding Models</div></div>
   <div class="stat"><div class="num">4</div><div class="label">Core Skills</div></div>
-  <div class="stat"><div class="num">4</div><div class="label">Infra Tools</div></div>
+  <div class="stat"><div class="num">6</div><div class="label">Infra Tools</div></div>
 </div>
 
 <h2>What Coding Hermes IS</h2>
 <ul>
-  <li><strong>Autonomous:</strong> Foremen wake on schedule, scan task boards, spawn workers, verify results, commit code — zero human intervention per tick.</li>
-  <li><strong>Self-healing:</strong> Supervisor detects broken cron schemas, zombie states, orphaned projects, and duplicate foremen — fixes them without asking.</li>
-  <li><strong>Self-rebalancing:</strong> Supervisor adjusts foreman speed and worker models based on pending task count and commit activity.</li>
-  <li><strong>Memory-driven:</strong> Every project has a DuckBrain namespace storing decisions, pitfalls, and patterns across ticks. Foremen recall before coding and write after committing.</li>
-  <li><strong>Quality-gated:</strong> GitReins guards run on every commit. Ad-hoc verification scripts are mandatory after every code edit. No verbal "it works" claims accepted.</li>
+  <li><strong>End-to-end SDLC:</strong> Each foreman tick runs a complete software development lifecycle — self-heal → discover → analyze → plan → implement → verify → commit → learn → scan → repeat.</li>
+  <li><strong>Memory-driven:</strong> DuckBrain stores decisions, pitfalls, and patterns per project. Off-by-One provides cross-project solution caching. No tick starts from scratch.</li>
+  <li><strong>Provider-aware:</strong> Foremen stay on PAYG (always reachable, always rescuable). Workers burn prepaid flat-rate buckets. When one bucket exhausts, the foreman auto-switches.</li>
+  <li><strong>Quality-gated:</strong> GitReins guard (secrets, build, lint, tests) runs before every commit. GitReins judge (LLM evaluation) verifies acceptance criteria. No "it works" claims without evidence.</li>
+  <li><strong>Self-healing:</strong> Supervisor detects broken crons, zombie states, orphans, duplicates — fixes without asking. Foremen fix transient CI failures, environment issues, identity problems before touching tasks.</li>
 </ul>
 
 <h2>What Coding Hermes IS NOT</h2>
 <ul>
-  <li><strong>Not a CI system:</strong> It doesn't run on push. It runs on schedule — inspecting, planning, and coding autonomously.</li>
-  <li><strong>Not a chatbot:</strong> Foremen don't chat. They scan, spawn, verify, commit. Workers write code. Neither waits for human input during a tick.</li>
-  <li><strong>Not a replacement for Bane:</strong> The escalation path is Worker → Foreman → Supervisor → Bane. Each level exhausts its own capabilities first. Bane provides strategy and architecture — the fleet executes.</li>
-  <li><strong>Not container-dependent:</strong> Foremen work directly on the host. No Docker sandboxes, no container orchestration. The host IS the runtime.</li>
+  <li><strong>Not a CI system:</strong> Runs on schedule, not on push. Inspects, plans, codes — not just builds and tests.</li>
+  <li><strong>Not a chatbot:</strong> Foremen don't chat. Workers don't wait. Autonomous from tick to commit.</li>
+  <li><strong>Not a replacement for Bane:</strong> Worker → Foreman → Supervisor → Bane. Each level exhausts its own capabilities. Bane provides strategy and architecture.</li>
 </ul>
 
-<h2>The Architecture</h2>
+<h2>The 3-Tier Architecture</h2>
 
 <pre class="mermaid">
 flowchart TD
     BANE["Bane + Hermes — strategy, architecture"]
-    BANE --> SUP["Supervisor — every 4h"]
-    SUP --> FOREMEN["33 Foremen — per-project"]
-    FOREMEN --> HF["8 High-Freq"]
-    FOREMEN --> MF["16 Mid-Freq"]
-    FOREMEN --> LF["9 Low-Freq"]
-    FOREMEN --> LOOP["10-Step Foreman Loop"]
-    LOOP --> WORKER["Worker Spawn — writes code"]
-    WORKER --> TOOLS["Infrastructure Tools"]
-    TOOLS --> HILO["Hilo — spatial memory"]
-    TOOLS --> DUCK["DuckBrain — semantic memory"]
-    TOOLS --> GITREINS["GitReins — quality gates"]
-    TOOLS --> OFFBY["Off-by-One — pre-solve lab"]
+    BANE --> SUP["Supervisor · every 4h · DS V4 Pro"]
+    SUP --> FOREMEN["33 Foremen · per-project"]
+    FOREMEN --> HF["8 High-Freq · GitReins · Helios · Hilo · Bunker · H4F · Helix"]
+    FOREMEN --> MF["16 Mid-Freq · Kobayashi · SpecLang · EduOS · DexDat · ASCE · muster"]
+    FOREMEN --> LF["9 Low-Freq · Mythos · Chimera · Consensus · MusterFlow · Hivemind"]
+    FOREMEN --> LOOP["Full SDLC Foreman Loop"]
+    LOOP --> WORKER["Worker · hermes chat -q · prepaid bucket"]
+    WORKER --> TOOLS["6 Infrastructure Tools"]
 </pre>
 
-<h2>The Escalation Hierarchy</h2>
+<h2>Escalation Hierarchy</h2>
 
 <pre class="mermaid">
 flowchart TD
-    WORKER["Worker (spawn) — 90% of work"]
-    WORKER -->|"stuck"| FOREMAN["Foreman (per-project) — 10%"]
-    FOREMAN -->|"can't resolve"| SUP["Supervisor (fleet) — 1%"]
-    SUP -->|"can't resolve"| BANE2["Bane — strategy, architecture"]
+    WORKER["Worker — 90% · writes code, tests, commits, fixes own errors"]
+    WORKER -->|"stuck"| FOREMAN["Foreman — 10% · preloads context, breaks down tasks, picks model, auto-heals"]
+    FOREMAN -->|"can't resolve"| SUP["Supervisor — 1% · rebalances fleet, heals schema, detects orphans"]
+    SUP -->|"can't resolve"| BANE2["Bane · strategy, new capabilities, architecture"]
 </pre>
 
-<p>
-  <strong>Worker</strong> → writes code, runs tests, commits, fixes own compile/test errors.<br>
-  <strong>Foreman</strong> → preloads context, breaks down complex tasks, picks worker model, resolves conflicts.<br>
-  <strong>Supervisor</strong> → rebalances models/speeds, fixes schedule corruption, creates foremen, detects orphans.<br>
-  <strong>Bane</strong> → strategy, new capabilities, architecture decisions.
-</p>
-
-<p><strong>Each level must NOT escalate what it can handle itself.</strong> A worker that hits a compile error fixes it — doesn't ask the foreman. A foreman that sees a rate limit switches providers — doesn't wait for the supervisor.</p>
-
-<h2>Skill Architecture</h2>
+<h2>Skill Map</h2>
 <table>
   <tr><th>Skill</th><th>Loaded By</th><th>Purpose</th></tr>
-  <tr>
-    <td><strong>coding-hermes-north-star</strong></td>
-    <td>Bane's Hermes sessions only</td>
-    <td>Management plane — architecture, role setup, fleet commands. This is where Bane talks to Hermes about owning coding-hermes.</td>
-  </tr>
-  <tr>
-    <td><strong>coding-hermes-cron</strong></td>
-    <td>Supervisor + Foreman</td>
-    <td>Canonical cron shape — schema, models, providers, infrastructure crons (DuckBrain sync, health checks). Single source of truth. One source, zero drift.</td>
-  </tr>
-  <tr>
-    <td><strong>coding-hermes-supervisor</strong></td>
-    <td>Supervisor only</td>
-    <td>Fleet heal, audit, rebalance, report. Does NOT define rules — enforces coding-hermes-cron.</td>
-  </tr>
-  <tr>
-    <td><strong>coding-hermes-foreman</strong></td>
-    <td>Foreman only</td>
-    <td>10-step project loop — self-heal → scan → Hilo → DuckBrain → pre-load → spawn → guard → judge → commit → learn.</td>
-  </tr>
-  <tr>
-    <td><strong>hilo-usage</strong></td>
-    <td>Foreman</td>
-    <td>Code graph spatial memory — impact analysis before every change.</td>
-  </tr>
-  <tr>
-    <td><strong>gitreins</strong></td>
-    <td>Foreman</td>
-    <td>Quality gates — static guards + LLM evaluation on every commit.</td>
-  </tr>
-  <tr>
-    <td><strong>duckbrain</strong></td>
-    <td>Infrastructure crons</td>
-    <td>Semantic memory — stores decisions, pitfalls, patterns per project.</td>
-  </tr>
-  <tr>
-    <td><strong>prompt-foundry</strong></td>
-    <td>Foreman</td>
-    <td>Compiles worker prompts from task specs, Hilo context, and DuckBrain memory.</td>
-  </tr>
-  <tr>
-    <td><strong>Workers</strong></td>
-    <td>Nothing</td>
-    <td>Pure executors — one task prompt, no skills, no architecture context.</td>
-  </tr>
+  <tr><td><strong>coding-hermes-north-star</strong></td><td>Bane's Hermes sessions</td><td>Management plane — architecture, role setup, fleet commands</td></tr>
+  <tr><td><strong>coding-hermes-cron</strong></td><td>Supervisor + Foreman</td><td>Canonical cron shape — schema, models, providers, infrastructure crons. Single source of truth.</td></tr>
+  <tr><td><strong>coding-hermes-supervisor</strong></td><td>Supervisor only</td><td>Fleet heal, audit, rebalance, report</td></tr>
+  <tr><td><strong>coding-hermes-foreman</strong></td><td>Foreman only</td><td>Full SDLC project delivery loop — 12 steps from self-heal to signal scan</td></tr>
+  <tr><td><strong>hilo-usage</strong></td><td>Foreman</td><td>Code graph spatial memory — impact analysis</td></tr>
+  <tr><td><strong>gitreins</strong></td><td>Foreman</td><td>Quality gates — guard + judge evaluation</td></tr>
+  <tr><td><strong>duckbrain</strong></td><td>Infrastructure crons</td><td>Semantic memory — decisions, pitfalls, patterns</td></tr>
+  <tr><td><strong>prompt-foundry</strong></td><td>Foreman</td><td>Compile worker prompts from specs and context</td></tr>
+  <tr><td><strong>Workers</strong></td><td>Nothing</td><td>Pure executors — one prompt, no skills</td></tr>
 </table>
 
-<h2>The 10-Step Foreman Loop</h2>
-<p>Every foreman tick runs this exact flow. The foreman inspects and delegates — it NEVER writes code itself.</p>
+<h2>The Foreman Loop — Full SDLC Delivery</h2>
 
-<div class="loop-step"><div class="step-num">0</div><div><strong>Self-Heal</strong> — Verify git identity, pull dependencies, check CI health. Fix transient failures before touching any tasks.</div></div>
-<div class="loop-step"><div class="step-num">1</div><div><strong>Read Board</strong> — Read <code>.coding-hermes/tasks.md</code>. Count pending tasks. If empty, jump to 1.5 Discovery Sweep.</div></div>
-<div class="loop-step"><div class="step-num">1.5</div><div><strong>Discovery Sweep</strong> — Find work: spec alignment (what's spec'd but not built?), doc audit, CI audit, endpoint usability testing. Queue up to 5 new tasks.</div></div>
-<div class="loop-step"><div class="step-num">2</div><div><strong>Hilo Impact</strong> — <code>hilo graph</code>, <code>hilo impact</code>, <code>hilo classify</code>. Understand blast radius before touching code.</div></div>
-<div class="loop-step"><div class="step-num">3</div><div><strong>DuckBrain Recall</strong> — Load project memory: past decisions, pitfalls, patterns. Context the worker wouldn't otherwise have.</div></div>
-<div class="loop-step"><div class="step-num">4</div><div><strong>Pre-Load</strong> — Assemble context package: task + Hilo impact + DuckBrain memory + relevant files + acceptance criteria. Compile through prompt-foundry.</div></div>
-<div class="loop-step"><div class="step-num">5</div><div><strong>Spawn Worker</strong> — <code>hermes chat -q "&lt;prompt&gt;" -m "&lt;coding-model&gt;" --provider "&lt;prepaid-provider&gt;"</code>. The foreman spawns a completely independent agent session — NOT <code>delegate_task</code> (which would inherit the foreman's PAYG provider). Worker gets its own model and provider on a prepaid flat-rate bucket. One prompt, no skills, background execution.</div></div>
-<div class="loop-step"><div class="step-num">6</div><div><strong>GitReins Guard</strong> — Tier 1 static checks: secrets, build, lint, tests. Must pass before commit.</div></div>
-<div class="loop-step"><div class="step-num">7</div><div><strong>GitReins Judge</strong> — Tier 2 LLM evaluation. Does the code actually meet the acceptance criteria?</div></div>
-<div class="loop-step"><div class="step-num">8</div><div><strong>Commit</strong> — Targeted add only (never <code>git add -A</code>). Correct authorship. Descriptive message.</div></div>
-<div class="loop-step"><div class="step-num">9</div><div><strong>Off-by-One</strong> — Submit the problem to the pre-solve lab. Discover cached solutions for the next tick.</div></div>
-<div class="loop-step"><div class="step-num">10</div><div><strong>DuckBrain Write</strong> — Store findings: what worked, what didn't, what pitfalls to avoid next time.</div></div>
+<pre class="mermaid">
+flowchart TD
+    TICK["TICK FIRES"]
+    TICK --> S0["0. Self-Heal · identity, deps, CI, env"]
+    S0 --> S1["1. Read Board · count tasks"]
+    S1 --> DECIDE{"Board empty?"}
+    DECIDE -->|"Yes"| S15A["1.5a Build integrity"]
+    S15A --> S15B["1.5b Usability testing"]
+    S15B --> S15C["1.5c Spec alignment"]
+    S15C --> S15D["1.5d Doc audit"]
+    S15D --> S15E["1.5e CI audit"]
+    S15E --> S16A["Queue tasks · max 5"]
+    S16A --> S16["1.6 Scan signals"]
+    DECIDE -->|"No"| PICK["Pick task · FIFO"]
+    PICK --> S2["2. Hilo Impact · graph, classify"]
+    S2 --> S3["3. DuckBrain Recall · decisions, pitfalls, patterns"]
+    S3 --> S4["4. Pre-Load · assemble context · compile through prompt-foundry"]
+    S4 --> S5["5. Spawn Worker · hermes chat -q · coding model · prepaid bucket"]
+    S5 --> S6["6. GitReins Guard · tier 1: secrets, build, lint, tests"]
+    S6 --> S7["7. GitReins Judge · tier 2: LLM eval vs acceptance criteria"]
+    S7 --> S8["8. Commit · targeted add · correct authorship"]
+    S8 --> S9["9. Off-by-One · submit solution · discover cached"]
+    S9 --> S10["10. DuckBrain Write · decisions, pitfalls, patterns"]
+    S10 --> S16B["1.6 Scan Signals · CI, commits, issues, deps, cross-project"]
+    S16B --> NEXT["NEXT TASK · return to Step 1"]
+    S16 --> NEXT
 
-<h2>Supervisor Phases</h2>
-<p>Runs every 4 hours. Heals the fleet, audits health, rebalances resources, and reports.</p>
+    style TICK fill:#3a3,color:#fff
+    style DECIDE fill:#f0883e,color:#fff
+    style S5 fill:#f90,color:#fff
+    style S8 fill:#49f,color:#fff
+    style S9 fill:#95f,color:#fff
+    style NEXT fill:#3a3,color:#fff
+</pre>
+
+<div class="tier tier-foreman">
+  <h3>The 12-Step Loop in Detail</h3>
+
+  <div class="step-card">
+    <h4><span class="step-num step-num-green">0</span> Self-Heal</h4>
+    <p><strong>Fix before touching tasks.</strong> Verify git identity (<code>totalwindupflightsystems</code>). Pull dependencies. Check CI health. Fix transient failures immediately. Validate language-specific environment. If fundamentally broken, create INFRA task and skip to 1.6 — don't burn ticks fighting the environment.</p>
+  </div>
+
+  <div class="step-card">
+    <h4><span class="step-num">1</span> Read Board</h4>
+    <p>Read <code>.coding-hermes/tasks.md</code>. Count pending <code>## [ ]</code> headers and <code>- [ ]</code> subtasks. <strong>FIFO task selection</strong> — pick the oldest pending task. Never cherry-pick. If HIGH_PRIORITY label exists, pick that first. Board empty? → 1.5 Discovery Sweep.</p>
+  </div>
+
+  <div class="step-card">
+    <h4><span class="step-num step-num-orange">1.5</span> Discovery Sweep <span class="badge badge-warn">Board Empty</span></h4>
+    <p><strong>Ordered priority stack:</strong></p>
+    <ol>
+      <li><strong>Build integrity:</strong> <code>make build</code> / <code>go build ./...</code> — does it compile?</li>
+      <li><strong>Usability testing:</strong> Hit live endpoints — do they respond correctly?</li>
+      <li><strong>Spec alignment:</strong> <code>grep TODO/FIXME/HACK/XXX</code> — what's spec'd but not built?</li>
+      <li><strong>Doc audit:</strong> Run README commands — do they work?</li>
+      <li><strong>CI audit:</strong> <code>gh run list</code> — any non-transient failures?</li>
+    </ol>
+    <p><strong>Max 5 tasks per sweep.</strong> If genuinely empty after sweep (valid outcome), commit findings, write DuckBrain, scan signals, end tick.</p>
+  </div>
+
+  <div class="step-card">
+    <h4><span class="step-num">2</span> Hilo Impact Analysis</h4>
+    <p><code>hilo graph</code> → spatial map. <code>hilo impact</code> → what depends on this? <code>hilo classify</code> → refactor, feature, bug, or infra? Pass transitive impact to the worker: "Modify parser.go — depends_on: lexer.go, ast.go, formatter.go. Risk: high."</p>
+  </div>
+
+  <div class="step-card">
+    <h4><span class="step-num">3</span> DuckBrain Context Load</h4>
+    <p>Query 4 domains: <strong>decisions</strong> (what was chosen and why), <strong>pitfalls</strong> (what went wrong last time), <strong>patterns</strong> (reusable solutions), <strong>status</strong> (current project state). Summarize for the worker — don't dump raw output.</p>
+  </div>
+
+  <div class="step-card">
+    <h4><span class="step-num">4</span> Pre-Load</h4>
+    <p>Assemble 8-element context package: task description, Hilo impact, DuckBrain context, relevant file contents, acceptance criteria, verification requirements, commit instructions, GitReins instructions. <strong>Compile through prompt-foundry.</strong> Worker gets ONE prompt — no skills, no architecture, no fleet context.</p>
+  </div>
+
+  <div class="step-card">
+    <h4><span class="step-num step-num-orange">5</span> Spawn Worker <span class="badge badge-err">NOT delegate_task</span></h4>
+    <p><code>hermes chat -q '&lt;prompt&gt;' -m '&lt;model&gt;' --provider '&lt;bucket&gt;' --background</code>. Independent session — worker gets its own model and provider on prepaid flat-rate. Foreman monitors every ~60s. Stuck after 15 min → kill and retry with different model/provider.</p>
+
+    <h4>Worker Model Selection</h4>
+    <table class="result-table">
+      <tr><th>Task Type</th><th>Primary</th><th>Fallback</th><th>Fallback 2</th></tr>
+      <tr><td>Go — feature/refactor</td><td>glm-5.2 @ zai-glm</td><td>MiniMax-M3 @ minimax</td><td>grok-4.5 @ xai-oauth</td></tr>
+      <tr><td>Go — bug fix/test</td><td>MiniMax-M3 @ minimax</td><td>kimi-k2.7 @ kimi-for-coding</td><td>glm-5.2 @ zai-glm</td></tr>
+      <tr><td>Python — feature</td><td>MiniMax-M3 @ minimax</td><td>gpt-5.6 @ codex</td><td>glm-5.2 @ zai-glm</td></tr>
+      <tr><td>Python — test/coverage</td><td>glm-5.2 @ zai-glm</td><td>MiniMax-M3 @ minimax</td><td>DS v4 Flash @ opencode-go</td></tr>
+      <tr><td>TypeScript — feature</td><td>glm-5.2 @ zai-glm</td><td>MiniMax-M3 @ minimax</td><td>grok-4.5 @ xai-oauth</td></tr>
+      <tr><td>TypeScript — fix/refactor</td><td>MiniMax-M3 @ minimax</td><td>kimi-k2.7 @ kimi-for-coding</td><td>glm-5.2 @ zai-glm</td></tr>
+      <tr><td>Rust — any</td><td>DS v4 Flash @ opencode-go</td><td>glm-5.2 @ zai-glm</td><td>—</td></tr>
+      <tr><td>Infra / CI / Spec / Docs</td><td>DS v4 Flash @ opencode-go</td><td>—</td><td>—</td></tr>
+    </table>
+    <p><strong>Bucket exhaustion:</strong> 429/resource_exhausted → switch to fallback. All buckets exhausted → create INFRA task, skip.</p>
+  </div>
+
+  <div class="step-card">
+    <h4><span class="step-num">6</span> GitReins Guard <span class="badge badge-info">Tier 1</span></h4>
+    <p>Secrets, build, lint, tests.</p>
+    <table class="result-table">
+      <tr><th>Result</th><th>Action</th></tr>
+      <tr><td><span class="badge badge-ok">PASS</span></td><td>Proceed to Step 7 (judge)</td></tr>
+      <tr><td><span class="badge badge-warn">FAIL — transient</span></td><td>Retry once. Still failing? Worker should have caught it.</td></tr>
+      <tr><td><span class="badge badge-err">FAIL — real issue</span></td><td>Worker's responsibility. This task needs another worker pass.</td></tr>
+      <tr><td><span class="badge badge-warn">FAIL — pre-existing</span></td><td>Flag as CI task, don't block. Forward progress over old problems.</td></tr>
+    </table>
+  </div>
+
+  <div class="step-card">
+    <h4><span class="step-num">7</span> GitReins Judge <span class="badge badge-info">Tier 2</span></h4>
+    <p>LLM evaluation: does the code meet acceptance criteria?</p>
+    <table class="result-table">
+      <tr><th>Result</th><th>Action</th></tr>
+      <tr><td><span class="badge badge-ok">PASS</span></td><td>Proceed to Step 8 (commit)</td></tr>
+      <tr><td><span class="badge badge-warn">FAIL — minor gaps</span></td><td>Worker fixes specific gaps. One more pass.</td></tr>
+      <tr><td><span class="badge badge-err">FAIL — fundamental</span></td><td>Task too big or underspecified. Break into subtasks. Next tick picks up.</td></tr>
+      <tr><td><span class="badge badge-warn">FAIL — judge error</span></td><td>Retry with different model. Persistent? Skip judge, commit with note.</td></tr>
+    </table>
+  </div>
+
+  <div class="step-card">
+    <h4><span class="step-num">8</span> Commit</h4>
+    <p><code>git add &lt;specific files&gt;</code> — never <code>git add -A</code>. <code>git diff --cached</code> before committing. Message format: <code>type: description — why. Addresses TASK-ID.</code> Types: feat, fix, refactor, test, docs, ci, infra, chore. <code>--no-verify</code> (guard already ran). Verify post-commit: <code>git log -1</code>, <code>git status --short</code>.</p>
+  </div>
+
+  <div class="step-card">
+    <h4><span class="step-num step-num-purple">9</span> Off-by-One</h4>
+    <p><strong>Submit:</strong> the problem this tick solved → cross-project solution cache.<br>
+    <strong>Discover:</strong> cached solutions for the NEXT tick's tasks.<br>
+    A parser fix for ASCE might solve the same problem for Helios. Cross-project learning.</p>
+  </div>
+
+  <div class="step-card">
+    <h4><span class="step-num step-num-purple">10</span> DuckBrain Write</h4>
+    <table>
+      <tr><th>Store</th><th>Domain</th><th>Example</th></tr>
+      <tr><td>Decision made</td><td>event</td><td>"Decided JWT over sessions — stateless deployment"</td></tr>
+      <tr><td>Pitfall</td><td>concept</td><td>"MiniMax-M3 adds phantom Go imports. Run goimports after."</td></tr>
+      <tr><td>Pattern</td><td>concept</td><td>"Use httputil.WriteJSON from internal/httputil"</td></tr>
+      <tr><td>Status</td><td>config</td><td>"12 done, 3 pending, CI passing, go 1.22"</td></tr>
+    </table>
+  </div>
+
+  <div class="step-card">
+    <h4><span class="step-num step-num-red">1.6</span> Scan External Signals <span class="badge badge-err">Bridge between ticks</span></h4>
+    <p><strong>Before the next tick, scan what changed:</strong></p>
+    <ol>
+      <li><strong>CI:</strong> <code>gh run list</code> — new failures? Previously-failing now green?</li>
+      <li><strong>Remote commits:</strong> <code>git fetch && git log HEAD..origin/main</code> — external pushes?</li>
+      <li><strong>New issues:</strong> <code>gh issue list</code> — bug/critical labeled → create task immediately.</li>
+      <li><strong>Dependency updates:</strong> <code>go list -u</code> / <code>pip list --outdated</code> / <code>npm outdated</code> — security updates?</li>
+      <li><strong>Cross-project DuckBrain:</strong> did another foreman discover a pattern relevant here?</li>
+    </ol>
+    <p><strong>Max 3 tasks from signals.</strong> "No external changes" is valid — log in DuckBrain.</p>
+  </div>
+</div>
+
+<h2>Infrastructure Tools</h2>
+<table>
+  <tr><th>Tool</th><th>Memory Type</th><th>Step(s)</th><th>What It Provides</th></tr>
+  <tr><td>🗺️ <strong>Hilo</strong></td><td>Spatial</td><td>2</td><td>Code graph, impact analysis, blast radius, task classification</td></tr>
+  <tr><td>🧠 <strong>DuckBrain</strong></td><td>Semantic</td><td>3, 10</td><td>Project memory — decisions, pitfalls, patterns, status across ticks</td></tr>
+  <tr><td>🛡️ <strong>GitReins</strong></td><td>Procedural</td><td>6, 7</td><td>Quality gates — static guard (secrets/build/lint/tests) + LLM judge</td></tr>
+  <tr><td>🔮 <strong>Off-by-One</strong></td><td>Predictive</td><td>9</td><td>Pre-solve lab — submit solved problems, discover cached solutions</td></tr>
+  <tr><td>🏗️ <strong>Bunker</strong></td><td>—</td><td>On-demand</td><td>Remote deployment to Hetzner for E2E testing. <code>bunker deploy &lt;project&gt;</code></td></tr>
+  <tr><td>⏰ <strong>Cron Self-Management</strong></td><td>—</td><td>On-demand</td><td>Foremen adjust own schedule/model based on workload</td></tr>
+</table>
+
+<h2>Provider Architecture</h2>
+
+<div class="callout callout-tip">
+  <strong>💡 The golden rule:</strong> Foremen MUST be on PAYG (deepseek-foreman). Always reachable, always rescuable — add credit, unblock instantly. Workers burn prepaid flat-rate buckets. When one bucket locks, the foreman (still alive on PAYG) auto-switches workers to the next available plan.
+</div>
+
+<table>
+  <tr><th>Role</th><th>Model</th><th>Provider Type</th><th>Why</th></tr>
+  <tr><td><strong>Foreman</strong></td><td>deepseek-v4-pro</td><td><span class="badge badge-ok">PAYG</span></td><td>Must always load. PAYG always unblockable via credit.</td></tr>
+  <tr><td>Foreman (idle)</td><td>deepseek-v4-flash</td><td><span class="badge badge-ok">PAYG</span></td><td>Same rule — presence non-negotiable.</td></tr>
+  <tr><td>Supervisor</td><td>deepseek-v4-flash</td><td>Flat-rate (opencode-go)</td><td>Light work. Bucket locks → fleet healing pauses, foremen keep running.</td></tr>
+  <tr><td>Worker (coding)</td><td>glm-5.2 / MiniMax-M3 / gpt-5.6 / grok-4.5 / kimi-k2.7</td><td><span class="badge badge-warn">Prepaid flat-rate</span></td><td>Burn quota coding. Locks when exhausted — foreman auto-switches.</td></tr>
+</table>
+
+<div class="callout callout-warn">
+  <strong>⚠️ Foremen on prepaid = project dark.</strong> Locked prepaid bucket → foreman can't load → can't rebalance → can't spawn workers → dead until billing cycle resets. PAYG is always rescuable.
+</div>
+
+<div class="callout callout-warn">
+  <strong>⚠️ Workers spawn via hermes chat CLI, NOT delegate_task.</strong> <code>delegate_task</code> inherits the foreman's PAYG provider — workers burn the tracked key. <code>hermes chat -q -m &lt;model&gt; --provider &lt;bucket&gt;</code> gives the worker its own prepaid bucket.
+</div>
+
+<h2>Supervisor — Fleet Manager</h2>
 
 <div class="tier tier-supervisor">
-  <h3>Phase 0 — Auto-Heal (runs first, before any audit)</h3>
+  <h3>Phase 0 — Auto-Heal</h3>
   <table>
-    <tr><th>Sub-Phase</th><th>What It Fixes</th></tr>
-    <tr><td>0A. Schema</td><td>Missing <code>expr</code>, <code>kind: "every"</code> → <code>interval</code>, mismatched <code>schedule_display</code></td></tr>
-    <tr><td>0B. State</td><td><code>state: completed</code> → <code>scheduled</code>, accidentally paused → re-enabled</td></tr>
-    <tr><td>0C. Overdue</td><td>Jobs that missed their schedule → force-fire immediately</td></tr>
-    <tr><td>0D. Orphans</td><td>Projects with task boards but no foreman → auto-create foreman</td></tr>
-    <tr><td>0E. Duplicates</td><td>Two foremen on same workdir → pause legacy one</td></tr>
-    <tr><td>0F. Missing Boards</td><td>Foreman exists but no tasks.md → create bootstrap board</td></tr>
+    <tr><th>Sub-Phase</th><th>Fixes</th></tr>
+    <tr><td>0A. Schema</td><td>Missing expr, kind:every→interval, mismatched schedule_display</td></tr>
+    <tr><td>0B. State</td><td>completed→scheduled, accidentally paused→re-enabled</td></tr>
+    <tr><td>0C. Overdue</td><td>Missed schedule → force-fire immediately</td></tr>
+    <tr><td>0D. Orphans</td><td>Project with tasks.md but no foreman → auto-create</td></tr>
+    <tr><td>0E. Duplicates</td><td>Two foremen, one workdir → pause legacy</td></tr>
+    <tr><td>0F. Missing Boards</td><td>Foreman exists, no tasks.md → bootstrap board</td></tr>
   </table>
 
   <h3>Phase 2 — Fleet Audit</h3>
   <table>
-    <tr><th>Sub-Phase</th><th>What It Checks</th></tr>
-    <tr><td>2A. Firing</td><td>Did every foreman fire on time? ✅ 🟡 🔴</td></tr>
-    <tr><td>2B. Errors</td><td>Why didn't it fire? State machine bug, scheduler crash, disabled?</td></tr>
-    <tr><td>2C. Results</td><td>What did it produce? Git commits, task progress, CI status?</td></tr>
-    <tr><td>2D. Rebalance</td><td>Speed up active projects, slow down idle ones. Never touch pinned projects.</td></tr>
+    <tr><th>Sub-Phase</th><th>Checks</th></tr>
+    <tr><td>2A. Firing</td><td>Every foreman on time? ✅ 🟡 🔴</td></tr>
+    <tr><td>2B. Errors</td><td>Why not? State bug, scheduler crash, disabled?</td></tr>
+    <tr><td>2C. Results</td><td>Git commits, task progress, CI status</td></tr>
+    <tr><td>2D. Rebalance</td><td>Speed up active, slow down idle. Never touch pinned.</td></tr>
   </table>
 
-  <h3>Phase 5 — Fleet Report</h3>
-  <p>Self-contained Python script → HTML report with fleet table, metrics, what-got-done section → pushed to GitHub Pages.</p>
-
-  <h3>Phase 6 — CI Check</h3>
-  <p>Batch-fetch CI status for all projects. Classify: passing / failing / queued / billing-blocked.</p>
+  <h3>Phase 5 — HTML Fleet Report</h3>
+  <h3>Phase 6 — CI Batch Check</h3>
 </div>
-
-<h2>Model & Provider Architecture</h2>
-
-<p><strong>The golden rule:</strong> Foremen must ALWAYS be reachable. If a foreman can't load because its provider is locked, the entire project goes dark — no rebalancing, no worker spawning, nothing. Workers do the heavy coding and burn through prepaid quota. The foreman (always alive on PAYG) watches and rebalances workers across available plans.</p>
-
-<table>
-  <tr><th>Role</th><th>Model</th><th>Provider Type</th><th>Why</th></tr>
-  <tr><td><strong>Foreman</strong></td><td>deepseek-v4-pro</td><td><strong>PAYG</strong> (deepseek-foreman)</td><td><strong>Must always load.</strong> If locked, entire project goes dark — no rebalancing, no spawning. PAYG is always unblockable: add credit, fix it instantly.</td></tr>
-  <tr><td>Foreman (idle budget)</td><td>deepseek-v4-flash</td><td><strong>PAYG</strong> (deepseek-foreman)</td><td>Same rule — foreman presence is non-negotiable.</td></tr>
-  <tr><td><strong>Supervisor</strong></td><td>deepseek-v4-flash</td><td>Flat-rate (opencode-go)</td><td>Fleet management is light work. If bucket locks, fleet healing pauses but foremen keep running.</td></tr>
-  <tr><td><strong>Worker (heavy)</strong></td><td>glm-5.2 / MiniMax-M3 / gpt-5.6</td><td><strong>Prepaid flat-rate</strong></td><td>Burn through quota getting coding done. If one bucket locks, foreman switches workers to another available plan.</td></tr>
-  <tr><td><strong>Worker (light)</strong></td><td>grok-4.5 / kimi-k2.7</td><td><strong>Prepaid flat-rate</strong></td><td>Bug fixes, small changes. Same bucket-switching logic.</td></tr>
-  <tr><td><strong>Worker (budget)</strong></td><td>deepseek-v4-flash</td><td>Flat-rate (opencode-go)</td><td>Idle project, minor work.</td></tr>
-</table>
-
-<div class="callout callout-tip">
-  <strong>💡 The strategy:</strong> Workers burn prepaid buckets — get as much coding done as possible on flat-rate plans. When a bucket locks (prepaid plans DO lock when exhausted), the foreman (still alive on PAYG) auto-switches workers to the next available prepaid plan. Foreman is on PAYG because you can always add credit to unblock it — can't do that with a locked prepaid bucket.
-</div>
-
-<div class="callout callout-warn">
-  <strong>⚠️ Foremen on prepaid is a failure mode.</strong> If a foreman's prepaid bucket locks, the foreman can't load. Can't load = can't rebalance = can't spawn workers = project is dead until the billing cycle resets. PAYG is always rescuable: add credit, foreman comes back online, resumes work.
-</div>
-
-<h2>Provider Palette</h2>
-<table>
-  <tr><th>Provider</th><th>Models</th><th>Rate</th><th>Used For</th><th>Can Lock?</th></tr>
-  <tr><td>deepseek-foreman</td><td>v4-pro, v4-flash</td><td>PAYG</td><td>Foremen (MUST load)</td><td>No — add credit to unblock</td></tr>
-  <tr><td>opencode-go</td><td>v4-pro, v4-flash</td><td>Prepaid flat-rate</td><td>Supervisor, budget workers</td><td>Yes — locks when exhausted</td></tr>
-  <tr><td>zai-glm</td><td>glm-5.2</td><td>Prepaid flat-rate</td><td>Heavy coding workers</td><td>Yes — locks when exhausted</td></tr>
-  <tr><td>minimax</td><td>MiniMax-M3</td><td>Prepaid flat-rate</td><td>Heavy coding workers</td><td>Yes — locks when exhausted</td></tr>
-  <tr><td>kimi-for-coding</td><td>kimi-k2.7</td><td>Prepaid flat-rate</td><td>Light coding workers</td><td>Yes — locks when exhausted</td></tr>
-  <tr><td>xai-oauth</td><td>grok-4.5</td><td>Prepaid flat-rate</td><td>Light coding workers</td><td>Yes — locks when exhausted</td></tr>
-  <tr><td>ollama-cloud</td><td>v4-pro, v4-flash</td><td>Backup flat-rate</td><td>Fallback when primary exhausted</td><td>Yes — locks when exhausted</td></tr>
-</table>
 
 <h2>Cron Categories</h2>
 
 <div class="tier tier-foreman">
-  <h3>1. Foreman Crons (code-producing)</h3>
-  <p>Autonomous coding loops. <strong>ALWAYS on PAYG</strong> — deepseek-foreman provider. Skills: <code>coding-hermes-foreman</code>, <code>coding-hermes-cron</code>, <code>hilo-usage</code>, <code>gitreins</code>. Supervisor can rebalance speed and worker models, but NEVER changes the foreman provider away from PAYG.</p>
+  <h4>1. Foreman Crons</h4>
+  <p>Skills: <code>coding-hermes-foreman, coding-hermes-cron, hilo-usage, gitreins</code>. Provider: <strong>PAYG deepseek-foreman</strong>. Supervisor can rebalance speed. Provider is NEVER changed.</p>
 </div>
 
 <div class="tier tier-infra">
-  <h3>2. Infrastructure Crons (memory & health)</h3>
-  <p>Load-bearing. If they fail, foremen lose context across ticks.</p>
+  <h4>2. Infrastructure Crons <span class="badge badge-err">LOAD-BEARING</span></h4>
   <table>
-    <tr><th>Type</th><th>Skills</th><th>Model</th><th>Treatment</th></tr>
-    <tr><td>DuckBrain sync</td><td>duckbrain or no_agent</td><td>None</td><td><span class="badge badge-err">Never touch</span></td></tr>
-    <tr><td>Data loaders</td><td>Project-specific</td><td>v4-flash</td><td><span class="badge badge-err">Never rebalance</span></td></tr>
-    <tr><td>Health/watchdog</td><td>None</td><td>None</td><td><span class="badge badge-err">Never touch</span></td></tr>
+    <tr><th>Type</th><th>Example</th><th>Treatment</th></tr>
+    <tr><td>DuckBrain sync</td><td>Sync DuckBrain — hourly</td><td><span class="badge badge-err">Never touch</span></td></tr>
+    <tr><td>Data loaders</td><td>dexdat-memory-data-loader</td><td><span class="badge badge-err">Never rebalance</span></td></tr>
+    <tr><td>Health/watchdog</td><td>Health Check Watchdog</td><td><span class="badge badge-err">Never touch</span></td></tr>
   </table>
-
-  <h4>Infrastructure Cron Shape</h4>
-  <pre><code>{
-  "name": "Sync DuckBrain — hourly",
-  "no_agent": true,
-  "script": "duckbrain-sync.sh",
-  "skills": [],
-  "model": null,
-  "provider": null
-}</code></pre>
-  <p><strong>Never set model or provider on no_agent jobs.</strong> They run scripts, not LLMs.</p>
-</div>
-
-<div class="tier">
-  <h3>3. Other LLM Crons</h3>
-  <p>Single-purpose jobs not following the foreman loop (Dreaming, Daily Exploration). Audit but don't modify unless broken.</p>
+  <p><strong>Why they matter:</strong> If DuckBrain sync fails, namespaces fragment. Foremen load stale or empty memory. Every Step 3 (recall) and Step 10 (write) degrades. Infrastructure crons are the foundation.</p>
 </div>
 
 <h2>DuckBrain Memory Architecture</h2>
@@ -377,39 +472,32 @@ flowchart TD
 <pre class="mermaid">
 flowchart LR
     TICK["Foreman Tick"]
-    RECALL["Step 3: DuckBrain recall"]
-    CODE["Steps 4-8: Code + Verify"]
-    REMEMBER["Step 10: DuckBrain remember"]
-    SYNC["Hourly Sync Cron"]
-    NS["Namespace — decisions, pitfalls, patterns"]
+    RECALL["Step 3: Recall · decisions, pitfalls, patterns"]
+    CODE["Steps 4-8: Plan → Spawn → Guard → Judge → Commit"]
+    REMEMBER["Step 10: Write · what worked, what didn't, why"]
+    SYNC["Hourly Sync Cron · compact, optimize, cross-reference"]
+    NS["Namespace: /project/name/ · events, concepts, config"]
 
     TICK --> RECALL --> CODE --> REMEMBER --> SYNC --> NS
     NS -->|"next tick"| RECALL
 </pre>
 
-<table>
-  <tr><th>What's Stored</th><th>Domain</th><th>How It's Used</th></tr>
-  <tr><td>Architecture decisions</td><td>event</td><td>Foreman recalls before making structural changes</td></tr>
-  <tr><td>Pitfalls encountered</td><td>concept</td><td>Foreman avoids repeating past mistakes</td></tr>
-  <tr><td>Reusable patterns</td><td>concept</td><td>Foreman applies proven solutions to new tasks</td></tr>
-  <tr><td>Project status</td><td>config</td><td>Supervisor tracks fleet health across projects</td></tr>
-</table>
+<h2>Key Pitfalls</h2>
 
-<h2>Infrastructure Tools</h2>
-<table>
-  <tr><th>Tool</th><th>Memory Type</th><th>Used In</th><th>What It Does</th></tr>
-  <tr><td>🗺️ <strong>Hilo</strong></td><td>Spatial</td><td>Foreman Step 2</td><td>Code graph — impact analysis, blast radius, task classification</td></tr>
-  <tr><td>🧠 <strong>DuckBrain</strong></td><td>Semantic</td><td>Foreman Steps 3 + 10</td><td>Project memory — decisions, pitfalls, patterns across ticks</td></tr>
-  <tr><td>🛡️ <strong>GitReins</strong></td><td>Procedural</td><td>Foreman Steps 6 + 7</td><td>Quality gates — static guards (secrets, build, lint, tests) + LLM evaluation</td></tr>
-  <tr><td>🔮 <strong>Off-by-One</strong></td><td>Predictive</td><td>Foreman Step 9</td><td>Pre-solve lab — submit problems, discover cached solutions for next tick</td></tr>
-</table>
+<div class="callout callout-warn"><strong>🪤 Foremen on prepaid = project dark.</strong> Locked bucket → can't load → can't spawn → dead. PAYG is rescuable.</div>
+<div class="callout callout-warn"><strong>🪤 Workers via delegate_task burns PAYG key.</strong> Use <code>hermes chat -q -m &lt;model&gt; --provider &lt;bucket&gt;</code> for independent sessions.</div>
+<div class="callout callout-warn"><strong>🪤 Never set model/provider on no_agent jobs.</strong> $100+ burned on DuckBrain sync crons. Identify by skills array, not name.</div>
+<div class="callout callout-info"><strong>💡 Worker bucket exhaustion is normal.</strong> Foreman's job is provider switching. zai-glm locked → switch to minimax → locked → switch to xai-oauth.</div>
+<div class="callout callout-info"><strong>💡 Pre-existing guard failures don't block progress.</strong> Flag them, move forward. Don't let old problems hold new work hostage.</div>
+<div class="callout callout-info"><strong>💡 FIFO task selection. Always.</strong> Pick the oldest pending task. 3+ ticks stuck on same task? Escalate to supervisor — task may be too big.</div>
+<div class="callout callout-tip"><strong>✅ Off-by-One is cross-project memory.</strong> A solution for ASCE might solve the same problem for Helios. Submit completed tasks, discover before next tick.</div>
 
-<h2>Cron Schema — The Rules</h2>
+<h2>Cron Schema</h2>
 <table>
   <tr><th>Kind</th><th>Required</th><th>Example</th></tr>
   <tr><td>cron</td><td>kind, display, expr</td><td><code>"*/15 * * * *"</code>, <code>"0 */2 * * *"</code></td></tr>
   <tr><td>interval</td><td>kind, display, minutes</td><td><code>minutes: 120</code>, <code>minutes: 360</code></td></tr>
-  <tr><td style="color:var(--red)">every ❌</td><td>INVALID — convert to interval</td><td>Never use <code>kind: "every"</code></td></tr>
+  <tr><td style="color:var(--red)">every ❌</td><td>INVALID</td><td>Convert to interval + parse minutes from display</td></tr>
 </table>
 
 <h3>State Machine</h3>
@@ -421,71 +509,12 @@ flowchart LR
   <tr><td><code>paused</code> + no reason</td><td>❌ Skipped</td><td>Accidental — re-enable</td></tr>
 </table>
 
-<h2>Fleet: Active Foremen</h2>
-<table>
-  <tr><th>Foreman</th><th>Project</th></tr>
-  <tr><td>ai-plays-pokemon-foreman</td><td>ai_plays_poke</td></tr>
-  <tr><td>ASCE Coding Foreman</td><td>asce</td></tr>
-  <tr><td>Bunker Coding Hermes</td><td>bunker</td></tr>
-  <tr><td>chimera-coding-foreman</td><td>chimera-v2</td></tr>
-  <tr><td>consensus-coding-foreman</td><td>consensus</td></tr>
-  <tr><td>Crier Coding Foreman</td><td>crier</td></tr>
-  <tr><td>deepseek-dashboard coding-hermes</td><td>deepseek-dashboard</td></tr>
-  <tr><td>dexdat-build-loop</td><td>dexdat-core</td></tr>
-  <tr><td>dexdat-coding-hermes-foreman</td><td>dexdat-memory</td></tr>
-  <tr><td>DuckBrain Coding Foreman</td><td>duckbrain</td></tr>
-  <tr><td>EduOS Alpha Dev Loop</td><td>eduos</td></tr>
-  <tr><td>escalation-doctrine-foreman</td><td>escalation-doctrine</td></tr>
-  <tr><td>GitReins Coding Foreman</td><td>gitreins-poc</td></tr>
-  <tr><td>H4F Coding Foreman</td><td>hermes4friends</td></tr>
-  <tr><td>helios-coding-hermes-foreman</td><td>helios-work</td></tr>
-  <tr><td>helix-foreman</td><td>helix</td></tr>
-  <tr><td>hilo-foreman</td><td>warpfs</td></tr>
-  <tr><td>Hivemind Coding Foreman</td><td>hivemind-work</td></tr>
-  <tr><td>Imhotep Coding Foreman</td><td>imhotep</td></tr>
-  <tr><td>kobayashi-maru-foreman</td><td>Kobayashi-Maru</td></tr>
-  <tr><td>mafia-benchmark-dev-loop</td><td>mafia-ai-benchmark</td></tr>
-  <tr><td>muster-coding-hermes-loop</td><td>muster</td></tr>
-  <tr><td>musterflow-foreman</td><td>musterflow</td></tr>
-  <tr><td>mythos-coding-foreman</td><td>mythos</td></tr>
-  <tr><td>off-by-one-foreman</td><td>off-by-one</td></tr>
-  <tr><td>RethinkDB Steward</td><td>rethinkdb</td></tr>
-  <tr><td>speclang-ci-foreman</td><td>SpecLang</td></tr>
-  <tr><td>totalstack-foreman</td><td>totalstack</td></tr>
-  <tr><td>totalstack-shape-validator</td><td>totalstack</td></tr>
-  <tr><td>DuckBrain Coding Foreman</td><td>duckbrain</td></tr>
-  <tr><td>DeepSeek Dashboard Foreman</td><td>deepseek-dashboard</td></tr>
-  <tr><td>EduOS Coding Foreman</td><td>eduos.dexdat.com.co</td></tr>
-  <tr><td>Mythos Coding Foreman</td><td>wojons-mythos</td></tr>
-</table>
-
-<h2>Key Pitfalls</h2>
-
-<div class="callout callout-warn">
-  <strong>🪤 Foremen on prepaid = project goes dark.</strong> If a foreman's prepaid bucket locks, it can't load. Can't load = can't rebalance = can't spawn workers = dead until billing cycle resets. Foremen MUST be on PAYG (deepseek-foreman). You can always add PAYG credit to unblock — can't un-lock a prepaid bucket.
-</div>
-
-<div class="callout callout-warn">
-  <strong>🪤 Never change a foreman's model field to a coding model.</strong> The foreman inspects and delegates — it stays on v4-pro or v4-flash. Coding models (glm-5.2, MiniMax-M3, etc.) are for workers only.
-</div>
-
-<div class="callout callout-warn">
-  <strong>🪤 Never set model/provider on no_agent jobs.</strong> $100+ burned when supervisor set deepseek-v4-pro on 54 DuckBrain sync/data loader/watchdog jobs. These run scripts, not LLMs. Identify by <code>skills</code> array, not name keywords.
-</div>
-
-<div class="callout callout-info">
-  <strong>💡 Worker bucket switching is the foreman's job.</strong> When a worker's prepaid bucket locks (zai-glm exhausted), the foreman auto-switches workers to the next available plan (minimax, xai-oauth, kimi). Foreman stays alive on PAYG the whole time.
-</div>
-
-<div class="callout callout-info">
-  <strong>💡 Missing <code>schedule.expr</code> crashes the ENTIRE scheduler.</strong> Not just that one job — ALL cron execution stops. This is a JSON schema bug, fix immediately.
-</div>
-
 <h2>Fleet Commands</h2>
 <table>
   <tr><th>Command</th><th>What It Does</th></tr>
   <tr><td><code>hermes cron list</code></td><td>Show all cron jobs with health status</td></tr>
   <tr><td><code>cronjob(action="run", job_id="...")</code></td><td>Force a foreman to execute one tick immediately</td></tr>
+  <tr><td><code>cronjob(action="create", ...)</code></td><td>Add a new foreman to the fleet</td></tr>
   <tr><td><code>hermes config set gateway.restart_drain_timeout 600</code></td><td>Give cron jobs 10 min to finish before gateway kill</td></tr>
   <tr><td><code>hermes sessions stats</code></td><td>Check state.db size and message count</td></tr>
 </table>
