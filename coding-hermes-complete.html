@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coding Hermes — The Complete System</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --border: #30363d;
+    --text: #c9d1d9;
+    --muted: #8b949e;
+    --blue: #58a6ff;
+    --orange: #f0883e;
+    --green: #3fb950;
+    --red: #f85149;
+    --purple: #bc8cff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: system-ui, -apple-system, sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  h1 { color: var(--blue); font-size: 2rem; margin-bottom: 0.5rem; }
+  h2 {
+    color: var(--orange);
+    margin-top: 2.5rem;
+    margin-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.5rem;
+  }
+  h3 { color: var(--blue); margin-top: 1.5rem; margin-bottom: 0.5rem; }
+  h4 { color: var(--purple); margin-top: 1rem; }
+
+  .hero {
+    background: linear-gradient(135deg, #1a2d44 0%, #0d1117 100%);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+  }
+  .hero h1 { margin-bottom: 0.5rem; border: none; }
+  .hero p { color: var(--muted); font-size: 1.1rem; max-width: 700px; }
+
+  .mermaid { background: var(--surface); border-radius: 8px; padding: 1.5rem; margin: 1.5rem 0; }
+
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+  th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--border); }
+  th { color: var(--blue); font-weight: 600; position: sticky; top: 0; background: var(--bg); }
+  tr:nth-child(even) { background: var(--surface); }
+
+  .stats { display: flex; gap: 1.5rem; margin: 1.5rem 0; flex-wrap: wrap; }
+  .stat {
+    background: var(--surface);
+    border-radius: 8px;
+    padding: 1rem 1.5rem;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .stat .num { font-size: 2rem; font-weight: 700; color: var(--blue); }
+  .stat .label { color: var(--muted); font-size: 0.85rem; }
+
+  .tier { margin: 2rem 0; padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border); }
+  .tier-supervisor { border-left: 4px solid var(--green); }
+  .tier-foreman { border-left: 4px solid var(--orange); }
+  .tier-worker { border-left: 4px solid var(--blue); }
+  .tier-infra { border-left: 4px solid var(--purple); }
+
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+  .badge-ok { background: #1a3322; color: var(--green); }
+  .badge-warn { background: #44361a; color: var(--orange); }
+  .badge-err { background: #441a1a; color: var(--red); }
+
+  .loop-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    margin: 0.5rem 0;
+  }
+  .loop-step:nth-child(odd) { background: var(--surface); }
+  .step-num {
+    background: var(--blue);
+    color: #fff;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.8rem;
+    flex-shrink: 0;
+  }
+
+  pre { background: var(--surface); border-radius: 6px; padding: 1rem; overflow-x: auto; font-size: 0.85rem; margin: 0.75rem 0; }
+  code { background: #1c2128; padding: 2px 6px; border-radius: 3px; font-size: 0.85em; color: #79c0ff; }
+  pre code { background: none; padding: 0; color: var(--text); }
+
+  .callout {
+    border-radius: 6px;
+    padding: 1rem;
+    margin: 1rem 0;
+    border-left: 4px solid;
+  }
+  .callout-warn { background: #2d1a1a; border-color: var(--red); }
+  .callout-info { background: #1a2d44; border-color: var(--blue); }
+  .callout-tip { background: #1a3322; border-color: var(--green); }
+
+  .flow-list { list-style: none; }
+  .flow-list li { padding: 0.3rem 0; }
+  .flow-list li::before { content: "→ "; color: var(--blue); }
+
+  @media (max-width: 768px) {
+    body { padding: 1rem; }
+    .stats { gap: 0.75rem; }
+    .stat { padding: 0.75rem 1rem; }
+    .stat .num { font-size: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>🔄 Coding Hermes</h1>
+  <p>A 3-tier autonomous coding fleet. Supervisor manages. Foremen orchestrate projects. Workers write code. Self-healing, self-rebalancing, self-reporting — Bane provides strategy, architecture, and new capabilities.</p>
+</div>
+
+<div class="stats">
+  <div class="stat"><div class="num">1</div><div class="label">Supervisor</div></div>
+  <div class="stat"><div class="num">33</div><div class="label">Foremen</div></div>
+  <div class="stat"><div class="num">5</div><div class="label">Coding Models</div></div>
+  <div class="stat"><div class="num">4</div><div class="label">Skills</div></div>
+  <div class="stat"><div class="num">4</div><div class="label">Infra Tools</div></div>
+</div>
+
+<h2>What Coding Hermes IS</h2>
+<ul>
+  <li><strong>Autonomous:</strong> Foremen wake on schedule, scan task boards, spawn workers, verify results, commit code — zero human intervention per tick.</li>
+  <li><strong>Self-healing:</strong> Supervisor detects broken cron schemas, zombie states, orphaned projects, and duplicate foremen — fixes them without asking.</li>
+  <li><strong>Self-rebalancing:</strong> Supervisor adjusts foreman speed and worker models based on pending task count and commit activity.</li>
+  <li><strong>Memory-driven:</strong> Every project has a DuckBrain namespace storing decisions, pitfalls, and patterns across ticks. Foremen recall before coding and write after committing.</li>
+  <li><strong>Quality-gated:</strong> GitReins guards run on every commit. Ad-hoc verification scripts are mandatory after every code edit. No verbal "it works" claims accepted.</li>
+</ul>
+
+<h2>What Coding Hermes IS NOT</h2>
+<ul>
+  <li><strong>Not a CI system:</strong> It doesn't run on push. It runs on schedule — inspecting, planning, and coding autonomously.</li>
+  <li><strong>Not a chatbot:</strong> Foremen don't chat. They scan, spawn, verify, commit. Workers write code. Neither waits for human input during a tick.</li>
+  <li><strong>Not a replacement for Bane:</strong> The escalation path is Worker → Foreman → Supervisor → Bane. Each level exhausts its own capabilities first. Bane provides strategy and architecture — the fleet executes.</li>
+  <li><strong>Not container-dependent:</strong> Foremen work directly on the host. No Docker sandboxes, no container orchestration. The host IS the runtime.</li>
+</ul>
+
+<h2>The Architecture</h2>
+
+<div class="mermaid">
+flowchart TD
+    BANE["👤 Bane + Hermes"]
+    BANE --> SUP["🟢 Supervisor · every 4h"]
+    SUP --> FOREMEN["33 Foremen · per-project"]
+    FOREMEN --> HF["⚡ 8 High-Frequency<br/>Bunker · GitReins · H4F · Helios · Helix · Hilo · Kobayashi · DexDat Build"]
+    FOREMEN --> MF["🔄 16 Mid-Frequency<br/>ASCE · Chimera · Consensus · Crier · DexDat · EduOS · Escalation · muster · Hivemind · Imhotep · Speclang · off-by-one · MusterFlow · RethinkDB · DeepSeek Dashboard · totalstack"]
+    FOREMEN --> LF["💤 9 Low-Frequency<br/>DuckBrain · Mythos ×2 · Mafia · ai-plays-pokemon · DexDat Core · DeepSeek DB Foreman"]
+
+    FOREMEN --> LOOP["🔁 10-Step Foreman Loop"]
+    LOOP --> WORKER["🚀 Worker Spawn"]
+    WORKER --> TOOLS["🛠️ Infra Tools"]
+    TOOLS --> HILO["🗺️ Hilo · spatial"]
+    TOOLS --> DUCK["🧠 DuckBrain · semantic"]
+    TOOLS --> GITREINS["🛡️ GitReins · quality"]
+    TOOLS --> OFFBY["🔮 Off-by-One · predictive"]
+
+    style BANE fill:#4a9,stroke:#333,color:#fff
+    style SUP fill:#3a3,stroke:#333,color:#fff
+    style FOREMEN fill:#f0883e,stroke:#333,color:#fff
+    style LOOP fill:#58a6ff,stroke:#333,color:#fff
+    style WORKER fill:#79c0ff,stroke:#333,color:#fff
+    style TOOLS fill:#bc8cff,stroke:#333,color:#fff
+</div>
+
+<h2>The Escalation Hierarchy</h2>
+<div class="mermaid">
+flowchart TD
+    WORKER["🚀 Worker (spawn)<br/>90% — writes code, tests, commits, fixes own errors"]
+    WORKER -->|"stuck"| FOREMAN["🎯 Foreman (per-project)<br/>10% — preloads context, breaks down tasks, picks model"]
+    FOREMAN -->|"can't resolve"| SUP["🟢 Supervisor (fleet)<br/>1% — rebalances fleet, heals schema, detects orphans"]
+    SUP -->|"can't resolve"| BANE2["👤 Bane<br/>Strategy, new capabilities, architecture"]
+
+    style WORKER fill:#79c0ff,color:#fff
+    style FOREMAN fill:#f0883e,color:#fff
+    style SUP fill:#3a3,color:#fff
+    style BANE2 fill:#4a9,color:#fff
+</div>
+
+<h2>Skill Architecture</h2>
+<table>
+  <tr><th>Skill</th><th>Loaded By</th><th>Purpose</th></tr>
+  <tr>
+    <td><strong>coding-hermes-north-star</strong></td>
+    <td>Bane's Hermes sessions only</td>
+    <td>Management plane — architecture, role setup, fleet commands. This is where Bane talks to Hermes about owning coding-hermes.</td>
+  </tr>
+  <tr>
+    <td><strong>coding-hermes-cron</strong></td>
+    <td>Supervisor + Foreman</td>
+    <td>Canonical cron shape — schema, models, providers, infrastructure crons (DuckBrain sync, health checks). Single source of truth. One source, zero drift.</td>
+  </tr>
+  <tr>
+    <td><strong>coding-hermes-supervisor</strong></td>
+    <td>Supervisor only</td>
+    <td>Fleet heal, audit, rebalance, report. Does NOT define rules — enforces coding-hermes-cron.</td>
+  </tr>
+  <tr>
+    <td><strong>coding-hermes-foreman</strong></td>
+    <td>Foreman only</td>
+    <td>10-step project loop — self-heal → scan → Hilo → DuckBrain → pre-load → spawn → guard → judge → commit → learn.</td>
+  </tr>
+  <tr>
+    <td><strong>hilo-usage</strong></td>
+    <td>Foreman</td>
+    <td>Code graph spatial memory — impact analysis before every change.</td>
+  </tr>
+  <tr>
+    <td><strong>gitreins</strong></td>
+    <td>Foreman</td>
+    <td>Quality gates — static guards + LLM evaluation on every commit.</td>
+  </tr>
+  <tr>
+    <td><strong>duckbrain</strong></td>
+    <td>Infrastructure crons</td>
+    <td>Semantic memory — stores decisions, pitfalls, patterns per project.</td>
+  </tr>
+  <tr>
+    <td><strong>prompt-foundry</strong></td>
+    <td>Foreman</td>
+    <td>Compiles worker prompts from task specs, Hilo context, and DuckBrain memory.</td>
+  </tr>
+  <tr>
+    <td><strong>Workers</strong></td>
+    <td>Nothing</td>
+    <td>Pure executors — one task prompt, no skills, no architecture context.</td>
+  </tr>
+</table>
+
+<h2>The 10-Step Foreman Loop</h2>
+<p>Every foreman tick runs this exact flow. The foreman inspects and delegates — it NEVER writes code itself.</p>
+
+<div class="loop-step"><div class="step-num">0</div><div><strong>Self-Heal</strong> — Verify git identity, pull dependencies, check CI health. Fix transient failures before touching any tasks.</div></div>
+<div class="loop-step"><div class="step-num">1</div><div><strong>Read Board</strong> — Read <code>.coding-hermes/tasks.md</code>. Count pending tasks. If empty, jump to 1.5 Discovery Sweep.</div></div>
+<div class="loop-step"><div class="step-num">1.5</div><div><strong>Discovery Sweep</strong> — Find work: spec alignment (what's spec'd but not built?), doc audit, CI audit, endpoint usability testing. Queue up to 5 new tasks.</div></div>
+<div class="loop-step"><div class="step-num">2</div><div><strong>Hilo Impact</strong> — <code>hilo graph</code>, <code>hilo impact</code>, <code>hilo classify</code>. Understand blast radius before touching code.</div></div>
+<div class="loop-step"><div class="step-num">3</div><div><strong>DuckBrain Recall</strong> — Load project memory: past decisions, pitfalls, patterns. Context the worker wouldn't otherwise have.</div></div>
+<div class="loop-step"><div class="step-num">4</div><div><strong>Pre-Load</strong> — Assemble context package: task + Hilo impact + DuckBrain memory + relevant files + acceptance criteria. Compile through prompt-foundry.</div></div>
+<div class="loop-step"><div class="step-num">5</div><div><strong>Spawn Worker</strong> — <code>delegate_task(goal=..., context=..., role="leaf")</code>. Worker model selected by task complexity. Worker gets ONE prompt — no skills.</div></div>
+<div class="loop-step"><div class="step-num">6</div><div><strong>GitReins Guard</strong> — Tier 1 static checks: secrets, build, lint, tests. Must pass before commit.</div></div>
+<div class="loop-step"><div class="step-num">7</div><div><strong>GitReins Judge</strong> — Tier 2 LLM evaluation. Does the code actually meet the acceptance criteria?</div></div>
+<div class="loop-step"><div class="step-num">8</div><div><strong>Commit</strong> — Targeted add only (never <code>git add -A</code>). Correct authorship. Descriptive message.</div></div>
+<div class="loop-step"><div class="step-num">9</div><div><strong>Off-by-One</strong> — Submit the problem to the pre-solve lab. Discover cached solutions for the next tick.</div></div>
+<div class="loop-step"><div class="step-num">10</div><div><strong>DuckBrain Write</strong> — Store findings: what worked, what didn't, what pitfalls to avoid next time.</div></div>
+
+<h2>Supervisor Phases</h2>
+<p>Runs every 4 hours. Heals the fleet, audits health, rebalances resources, and reports.</p>
+
+<div class="tier tier-supervisor">
+  <h3>Phase 0 — Auto-Heal (runs first, before any audit)</h3>
+  <table>
+    <tr><th>Sub-Phase</th><th>What It Fixes</th></tr>
+    <tr><td>0A. Schema</td><td>Missing <code>expr</code>, <code>kind: "every"</code> → <code>interval</code>, mismatched <code>schedule_display</code></td></tr>
+    <tr><td>0B. State</td><td><code>state: completed</code> → <code>scheduled</code>, accidentally paused → re-enabled</td></tr>
+    <tr><td>0C. Overdue</td><td>Jobs that missed their schedule → force-fire immediately</td></tr>
+    <tr><td>0D. Orphans</td><td>Projects with task boards but no foreman → auto-create foreman</td></tr>
+    <tr><td>0E. Duplicates</td><td>Two foremen on same workdir → pause legacy one</td></tr>
+    <tr><td>0F. Missing Boards</td><td>Foreman exists but no tasks.md → create bootstrap board</td></tr>
+  </table>
+
+  <h3>Phase 2 — Fleet Audit</h3>
+  <table>
+    <tr><th>Sub-Phase</th><th>What It Checks</th></tr>
+    <tr><td>2A. Firing</td><td>Did every foreman fire on time? ✅ 🟡 🔴</td></tr>
+    <tr><td>2B. Errors</td><td>Why didn't it fire? State machine bug, scheduler crash, disabled?</td></tr>
+    <tr><td>2C. Results</td><td>What did it produce? Git commits, task progress, CI status?</td></tr>
+    <tr><td>2D. Rebalance</td><td>Speed up active projects, slow down idle ones. Never touch pinned projects.</td></tr>
+  </table>
+
+  <h3>Phase 5 — Fleet Report</h3>
+  <p>Self-contained Python script → HTML report with fleet table, metrics, what-got-done section → pushed to GitHub Pages.</p>
+
+  <h3>Phase 6 — CI Check</h3>
+  <p>Batch-fetch CI status for all projects. Classify: passing / failing / queued / billing-blocked.</p>
+</div>
+
+<h2>Model Architecture</h2>
+<table>
+  <tr><th>Role</th><th>Model</th><th>Provider</th><th>Why</th></tr>
+  <tr><td>Supervisor</td><td>deepseek-v4-pro</td><td>deepseek / opencode-go</td><td>Fleet management is light — low token volume</td></tr>
+  <tr><td>Supervisor budget</td><td>deepseek-v4-flash</td><td>opencode-go</td><td>Downgrade when fleet is healthy</td></tr>
+  <tr><td>Foreman (active)</td><td>deepseek-v4-pro</td><td>deepseek-foreman</td><td>Task inspection is light work — PAYG key</td></tr>
+  <tr><td>Foreman (idle)</td><td>deepseek-v4-flash</td><td>opencode-go</td><td>No tasks — budget model</td></tr>
+  <tr><td>Worker (heavy)</td><td>glm-5.2 / MiniMax-M3 / gpt-5.6</td><td>flat-rate buckets</td><td>Complex tasks, new features — buckets can't lock</td></tr>
+  <tr><td>Worker (light)</td><td>grok-4.5 / kimi-k2.7</td><td>flat-rate buckets</td><td>Bug fixes, small changes</td></tr>
+  <tr><td>Worker (budget)</td><td>deepseek-v4-flash</td><td>opencode-go</td><td>Idle project, minor work</td></tr>
+</table>
+
+<div class="callout callout-warn">
+  <strong>⚠️ Workers NEVER use <code>deepseek-foreman</code>.</strong> That's the PAYG key — if workers burn it on coding, it locks for up to a week. Workers always use flat-rate buckets.
+</div>
+
+<h2>Provider Palette</h2>
+<table>
+  <tr><th>Provider</th><th>Models</th><th>Rate</th><th>Limit</th></tr>
+  <tr><td>deepseek-foreman</td><td>v4-pro, v4-flash</td><td>PAYG (tracked)</td><td>Locks if limit hit</td></tr>
+  <tr><td>opencode-go</td><td>v4-pro, v4-flash</td><td>Flat-rate bucket</td><td>Cannot lock</td></tr>
+  <tr><td>zai-glm</td><td>glm-5.2</td><td>Flat-rate bucket</td><td>Cannot lock</td></tr>
+  <tr><td>minimax</td><td>MiniMax-M3</td><td>Flat-rate bucket</td><td>Cannot lock</td></tr>
+  <tr><td>kimi-for-coding</td><td>kimi-k2.7</td><td>Flat-rate bucket</td><td>Cannot lock</td></tr>
+  <tr><td>xai-oauth</td><td>grok-4.5</td><td>Flat-rate bucket</td><td>Cannot lock</td></tr>
+  <tr><td>ollama-cloud</td><td>v4-pro, v4-flash</td><td>Backup flat-rate</td><td>Use when primary exhausted</td></tr>
+</table>
+
+<h2>Cron Categories</h2>
+
+<div class="tier tier-foreman">
+  <h3>1. Foreman Crons (code-producing)</h3>
+  <p>Autonomous coding loops. Skills: <code>coding-hermes-foreman</code>, <code>coding-hermes-cron</code>, <code>hilo-usage</code>, <code>gitreins</code>. Model: <code>deepseek-v4-pro</code> on <code>deepseek-foreman</code>. Supervisor can rebalance.</p>
+</div>
+
+<div class="tier tier-infra">
+  <h3>2. Infrastructure Crons (memory & health)</h3>
+  <p>Load-bearing. If they fail, foremen lose context across ticks.</p>
+  <table>
+    <tr><th>Type</th><th>Skills</th><th>Model</th><th>Treatment</th></tr>
+    <tr><td>DuckBrain sync</td><td>duckbrain or no_agent</td><td>None</td><td><span class="badge badge-err">Never touch</span></td></tr>
+    <tr><td>Data loaders</td><td>Project-specific</td><td>v4-flash</td><td><span class="badge badge-err">Never rebalance</span></td></tr>
+    <tr><td>Health/watchdog</td><td>None</td><td>None</td><td><span class="badge badge-err">Never touch</span></td></tr>
+  </table>
+
+  <h4>Infrastructure Cron Shape</h4>
+  <pre><code>{
+  "name": "Sync DuckBrain — hourly",
+  "no_agent": true,        &lt;— script only, no LLM
+  "script": "duckbrain-sync.sh",
+  "skills": [],
+  "model": null,            &lt;— NEVER set a model here
+  "provider": null          &lt;— NEVER set a provider here
+}</code></pre>
+</div>
+
+<div class="tier">
+  <h3>3. Other LLM Crons</h3>
+  <p>Single-purpose jobs not following the foreman loop (Dreaming, Daily Exploration). Audit but don't modify unless broken.</p>
+</div>
+
+<h2>DuckBrain Memory Architecture</h2>
+<div class="mermaid">
+flowchart LR
+    TICK["⏰ Foreman Tick"]
+    RECALL["Step 3: DuckBrain recall<br/>Load context before coding"]
+    CODE["Steps 4-8: Code + Verify"]
+    REMEMBER["Step 10: DuckBrain remember<br/>Write findings after commit"]
+    SYNC["🔄 Hourly Sync Cron<br/>Compact, optimize, cross-reference"]
+    NS["/project/name/<br/>Decisions · Pitfalls · Patterns · Status"]
+
+    TICK --> RECALL --> CODE --> REMEMBER --> SYNC --> NS
+    NS -->|"next tick"| RECALL
+
+    style TICK fill:#3a3,color:#fff
+    style RECALL fill:#58a6ff,color:#fff
+    style CODE fill:#f0883e,color:#fff
+    style REMEMBER fill:#bc8cff,color:#fff
+    style SYNC fill:#f85149,color:#fff
+    style NS fill:#1a2d44,color:#fff
+</div>
+
+<table>
+  <tr><th>What's Stored</th><th>Domain</th><th>How It's Used</th></tr>
+  <tr><td>Architecture decisions</td><td>event</td><td>Foreman recalls before making structural changes</td></tr>
+  <tr><td>Pitfalls encountered</td><td>concept</td><td>Foreman avoids repeating past mistakes</td></tr>
+  <tr><td>Reusable patterns</td><td>concept</td><td>Foreman applies proven solutions to new tasks</td></tr>
+  <tr><td>Project status</td><td>config</td><td>Supervisor tracks fleet health across projects</td></tr>
+</table>
+
+<h2>Infrastructure Tools</h2>
+<table>
+  <tr><th>Tool</th><th>Memory Type</th><th>Used In</th><th>What It Does</th></tr>
+  <tr><td>🗺️ <strong>Hilo</strong></td><td>Spatial</td><td>Foreman Step 2</td><td>Code graph — impact analysis, blast radius, task classification</td></tr>
+  <tr><td>🧠 <strong>DuckBrain</strong></td><td>Semantic</td><td>Foreman Steps 3 + 10</td><td>Project memory — decisions, pitfalls, patterns across ticks</td></tr>
+  <tr><td>🛡️ <strong>GitReins</strong></td><td>Procedural</td><td>Foreman Steps 6 + 7</td><td>Quality gates — static guards (secrets, build, lint, tests) + LLM evaluation</td></tr>
+  <tr><td>🔮 <strong>Off-by-One</strong></td><td>Predictive</td><td>Foreman Step 9</td><td>Pre-solve lab — submit problems, discover cached solutions for next tick</td></tr>
+</table>
+
+<h2>Cron Schema — The Rules</h2>
+<table>
+  <tr><th>Kind</th><th>Required</th><th>Example</th></tr>
+  <tr><td>cron</td><td>kind, display, expr</td><td><code>"*/15 * * * *"</code>, <code>"0 */2 * * *"</code></td></tr>
+  <tr><td>interval</td><td>kind, display, minutes</td><td><code>minutes: 120</code>, <code>minutes: 360</code></td></tr>
+  <tr><td style="color:var(--red)">every ❌</td><td>INVALID — convert to interval</td><td>Never use <code>kind: "every"</code></td></tr>
+</table>
+
+<h3>State Machine</h3>
+<table>
+  <tr><th>State</th><th>Scheduler</th><th>Action</th></tr>
+  <tr><td><code>scheduled</code> + <code>enabled: true</code></td><td>✅ Fires</td><td>Good</td></tr>
+  <tr><td><code>completed</code> + <code>enabled: true</code></td><td>❌ Never fires</td><td>BUG — set to <code>scheduled</code></td></tr>
+  <tr><td><code>paused</code> + reason</td><td>❌ Skipped</td><td>Respect it</td></tr>
+  <tr><td><code>paused</code> + no reason</td><td>❌ Skipped</td><td>Accidental — re-enable</td></tr>
+</table>
+
+<h2>Fleet: Active Foremen</h2>
+<table>
+  <tr><th>Foreman</th><th>Project</th><th>Role</th></tr>
+  <tr><td>ai-plays-pokemon-foreman</td><td>ai_plays_poke</td><td>Game dev — Pokemon AI agent</td></tr>
+  <tr><td>ASCE Coding Foreman</td><td>asce</td><td>Agentic Search Credit Economy platform</td></tr>
+  <tr><td>Bunker Coding Hermes</td><td>bunker</td><td>Remote deployment on Hetzner</td></tr>
+  <tr><td>chimera-coding-foreman</td><td>chimera-v2</td><td>Multi-model deliberation engine</td></tr>
+  <tr><td>consensus-coding-foreman</td><td>consensus</td><td>Consensus protocol implementation</td></tr>
+  <tr><td>Crier Coding Foreman</td><td>crier</td><td>Notification/signal system</td></tr>
+  <tr><td>deepseek-dashboard coding-hermes</td><td>deepseek-dashboard</td><td>DeepSeek usage + cost dashboard</td></tr>
+  <tr><td>deepseek-dashboard-foreman</td><td>deepseek-dashboard</td><td>Separate foreman for dashboard</td></tr>
+  <tr><td>dexdat-build-loop</td><td>dexdat-core</td><td>DexDat core platform</td></tr>
+  <tr><td>dexdat-coding-hermes-foreman</td><td>dexdat-memory</td><td>DexDat memory system</td></tr>
+  <tr><td>DuckBrain Coding Foreman</td><td>duckbrain</td><td>DuckBrain memory system</td></tr>
+  <tr><td>EduOS Alpha Dev Loop</td><td>eduos</td><td>Educational OS platform</td></tr>
+  <tr><td>EduOS Coding Foreman</td><td>eduos.dexdat.com.co</td><td>EduOS production variant</td></tr>
+  <tr><td>escalation-doctrine-foreman</td><td>escalation-doctrine</td><td>Escalation rules engine</td></tr>
+  <tr><td>GitReins Coding Foreman</td><td>gitreins-poc</td><td>GitReins quality harness</td></tr>
+  <tr><td>H4F Coding Foreman</td><td>hermes4friends</td><td>Hermes4Friends platform</td></tr>
+  <tr><td>helios-coding-hermes-foreman</td><td>helios-work</td><td>Helios system</td></tr>
+  <tr><td>helix-foreman</td><td>helix</td><td>Helix platform</td></tr>
+  <tr><td>hilo-foreman</td><td>warpfs</td><td>Hilo spatial memory (WarpFS)</td></tr>
+  <tr><td>Hivemind Coding Foreman</td><td>hivemind-work</td><td>Hivemind coordination system</td></tr>
+  <tr><td>Imhotep Coding Foreman</td><td>imhotep</td><td>Imhotep system (GitLab)</td></tr>
+  <tr><td>kobayashi-maru-foreman</td><td>Kobayashi-Maru</td><td>No-win scenario testing framework</td></tr>
+  <tr><td>mafia-benchmark-dev-loop</td><td>mafia-ai-benchmark</td><td>AI benchmarking</td></tr>
+  <tr><td>muster-coding-hermes-loop</td><td>muster</td><td>Muster orchestration</td></tr>
+  <tr><td>musterflow-foreman</td><td>musterflow</td><td>MusterFlow pipeline</td></tr>
+  <tr><td>mythos-coding-foreman</td><td>mythos</td><td>Mythos world engine</td></tr>
+  <tr><td>Mythos Coding Foreman</td><td>wojons-mythos</td><td>Mythos variant (wojons)</td></tr>
+  <tr><td>off-by-one-foreman</td><td>off-by-one</td><td>Off-by-One pre-solve lab</td></tr>
+  <tr><td>RethinkDB Steward</td><td>rethinkdb</td><td>RethinkDB maintenance</td></tr>
+  <tr><td>speclang-ci-foreman</td><td>SpecLang</td><td>SpecLang language (MiniMax M3)</td></tr>
+  <tr><td>Speclang Coding Foreman</td><td>speclang</td><td>SpecLang variant</td></tr>
+  <tr><td>totalstack-foreman</td><td>totalstack</td><td>TotalStack platform</td></tr>
+  <tr><td>totalstack-shape-validator</td><td>totalstack</td><td>TotalStack shape validation</td></tr>
+</table>
+
+<h2>Key Pitfalls</h2>
+
+<div class="callout callout-warn">
+  <strong>🪤 Never change a foreman's model field to a coding model.</strong> The foreman inspects and delegates — it stays on v4-pro or v4-flash. The Speed-Model Alignment table references WORKER spawn models, not foreman models.
+</div>
+
+<div class="callout callout-warn">
+  <strong>🪤 Never set model/provider on no_agent jobs.</strong> $100+ burned when supervisor set deepseek-v4-pro on 54 DuckBrain sync/data loader/watchdog jobs. These run scripts, not LLMs. Identify by <code>skills</code> array, not name keywords.
+</div>
+
+<div class="callout callout-warn">
+  <strong>🪤 Don't run foremen one at a time to fix the fleet.</strong> When 18 foremen are stale, run the supervisor. Manual foreman runs bypass the self-heal pipeline.
+</div>
+
+<div class="callout callout-info">
+  <strong>💡 Use cronjob tool, not direct jobs.json edits.</strong> Direct edits bypass scheduler in-memory state. The cronjob tool handles state transitions, validation, and sync.
+</div>
+
+<div class="callout callout-info">
+  <strong>💡 Missing <code>schedule.expr</code> crashes the ENTIRE scheduler.</strong> Not just that one job — ALL cron execution stops. This is a JSON schema bug, fix immediately.
+</div>
+
+<div class="callout callout-tip">
+  <strong>✅ Don't blame state.db for I/O problems.</strong> A 10GB SQLite database is well within SQLite's limits. Check swap thrashing and I/O contention from Docker containers first.
+</div>
+
+<h2>Fleet Commands</h2>
+<table>
+  <tr><th>Command</th><th>What It Does</th></tr>
+  <tr><td><code>hermes cron list</code></td><td>Show all cron jobs with health status</td></tr>
+  <tr><td><code>cronjob(action="run", job_id="...")</code></td><td>Force a foreman to execute one tick immediately</td></tr>
+  <tr><td><code>hermes config set gateway.restart_drain_timeout 600</code></td><td>Give cron jobs 10 min to finish before gateway kill</td></tr>
+  <tr><td><code>hermes sessions stats</code></td><td>Check state.db size and message count</td></tr>
+</table>
+
+<script>mermaid.initialize({startOnLoad:true,theme:'dark',securityLevel:'loose'});</script>
+</body>
+</html>
