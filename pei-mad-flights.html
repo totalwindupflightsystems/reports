@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pereira / Armenia → Madrid — 2 Seats, Jul 20-21</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: #0f0f1a;
+    color: #e0e0e0;
+    padding: 12px;
+    line-height: 1.5;
+    -webkit-text-size-adjust: 100%;
+  }
+  .container { max-width: 900px; margin: 0 auto; }
+  h1 {
+    text-align: center;
+    font-size: clamp(1.3rem, 4.5vw, 1.8rem);
+    margin-bottom: 6px;
+    padding: 0 4px;
+    background: linear-gradient(135deg, #f7971e, #ffd200);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .subtitle { text-align: center; color: #888; margin-bottom: 24px; font-size: 0.85rem; padding: 0 4px; }
+
+  .summary-bar {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  .summary-card {
+    background: #1a1a2e;
+    border: 1px solid #2a2a3e;
+    border-radius: 10px;
+    padding: 12px 8px;
+    text-align: center;
+  }
+  .summary-card .label { font-size: 0.7rem; text-transform: uppercase; color: #888; letter-spacing: 0.04em; }
+  .summary-card .value { font-size: 1rem; font-weight: 700; color: #fff; margin-top: 2px; }
+  .summary-card .value.price { color: #4ade80; }
+  .summary-card .value.warn { color: #f59e0b; }
+
+  .section {
+    background: #1a1a2e;
+    border: 1px solid #2a2a3e;
+    border-radius: 12px;
+    padding: 16px 12px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .section h2 {
+    font-size: 0.95rem;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .table-wrap {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 0 -12px;
+    padding: 0 12px;
+  }
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+  .badge-best { background: #166534; color: #4ade80; }
+  .badge-direct { background: #1e3a5f; color: #60a5fa; }
+  .badge-connect { background: #3b1e08; color: #f59e0b; }
+  .badge-warn { background: #3b1e08; color: #f59e0b; }
+
+  table { width: 100%; border-collapse: collapse; margin-top: 8px; min-width: 520px; }
+  th { text-align: left; padding: 8px 8px; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.04em; color: #888; border-bottom: 1px solid #2a2a3e; white-space: nowrap; }
+  td { padding: 10px 8px; border-bottom: 1px solid #1e1e30; font-size: 0.82rem; white-space: nowrap; }
+  td:first-child, th:first-child { padding-left: 0; }
+  td:last-child, th:last-child { padding-right: 0; }
+  tr:last-child td { border-bottom: none; }
+  .price-cell { font-weight: 700; color: #4ade80; font-size: 0.9rem; }
+  .highlight-row td { background: rgba(74,222,128,0.06); }
+  .alt-row td { background: rgba(96,165,250,0.05); }
+
+  .flight-path {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+  }
+  .flight-path .arrow { color: #666; }
+  .flight-path .stop { color: #f59e0b; font-size: 0.7rem; }
+
+  .note {
+    background: #12121f;
+    border-left: 3px solid #f7971e;
+    padding: 10px 12px;
+    border-radius: 0 8px 8px 0;
+    margin-top: 12px;
+    font-size: 0.8rem;
+    color: #aaa;
+  }
+  .note strong { color: #f7971e; }
+  .note.green { border-left-color: #4ade80; }
+  .note.green strong { color: #4ade80; }
+
+  .footer {
+    text-align: center;
+    margin-top: 32px;
+    padding: 16px;
+    color: #555;
+    font-size: 0.7rem;
+  }
+  .footer a { color: #60a5fa; text-decoration: none; }
+
+  @media (min-width: 600px) {
+    body { padding: 20px; }
+    .summary-bar { grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .summary-card { padding: 16px; }
+    .summary-card .label { font-size: 0.75rem; }
+    .summary-card .value { font-size: 1.3rem; }
+    .section { padding: 24px; margin-bottom: 24px; }
+    .section h2 { font-size: 1.2rem; }
+    .table-wrap { margin: 0 -24px; padding: 0 24px; }
+    table { min-width: 0; }
+    td { font-size: 0.9rem; padding: 12px 8px; }
+    th { font-size: 0.7rem; padding: 10px 8px; }
+    .badge { font-size: 0.68rem; padding: 3px 10px; }
+    .note { font-size: 0.85rem; padding: 12px 16px; }
+    .subtitle { font-size: 0.95rem; }
+    td, th { white-space: normal; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>Pereira / Armenia → Madrid</h1>
+<p class="subtitle">👥 2 seats · Depart Jul 20–21 · Stay 7 or 12 days · All prices per person USD</p>
+
+<div class="summary-bar">
+  <div class="summary-card"><div class="label">From</div><div class="value">PEI / AXM</div></div>
+  <div class="summary-card"><div class="label">To</div><div class="value">Madrid</div></div>
+  <div class="summary-card"><div class="label">7-Day RT</div><div class="value price">~$570 pp</div></div>
+  <div class="summary-card"><div class="label">12-Day RT</div><div class="value warn">~$720 pp</div></div>
+</div>
+
+<!-- ROUTE 1 -->
+<div class="section">
+  <h2>🥇 Route 1 — PEI → BOG → MAD <span class="badge badge-best">Cheapest</span></h2>
+  <p style="color:#888;font-size:0.85rem;margin-bottom:12px">Avianca one-ticket · Domestic hop + transatlantic on same booking</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Leg</th><th>Route</th><th>Duration</th><th>7-Day Return</th><th>12-Day Return</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><div class="flight-path">PEI <span class="arrow">→</span> BOG</div></td><td>~1h</td><td colspan="2" style="color:#888;font-size:0.75rem">Domestic hop included on ticket</td></tr>
+      <tr><td>2</td><td><div class="flight-path">BOG <span class="arrow">→</span> MAD <span class="badge badge-direct">Direct</span></div></td><td>~10h30</td><td colspan="2">Avianca / Iberia / Air Europa</td></tr>
+      <tr class="highlight-row">
+        <td colspan="3"><strong>Total pp RT</strong></td>
+        <td class="price-cell">$570–720</td>
+        <td class="price-cell" style="color:#f59e0b">$720–880</td>
+      </tr>
+      <tr class="highlight-row">
+        <td colspan="3"><strong>👥 2 people total</strong></td>
+        <td class="price-cell">$1,140–1,440</td>
+        <td class="price-cell" style="color:#f59e0b">$1,440–1,760</td>
+      </tr>
+    </tbody>
+  </table></div>
+  <div class="note green">
+    <strong>💰 Best Value:</strong> Avianca tickets PEI→BOG→MAD on one booking. Baggage transfers automatically. 7-day (return Mon Jul 27 or Tue Jul 28) is ~$150 pp cheaper than 12-day (return Sat Aug 1 — weekend pricing). Both people fly together, same flights.
+  </div>
+</div>
+
+<!-- ROUTE 2 -->
+<div class="section">
+  <h2>🥈 Route 2 — PEI → MDE → MAD <span class="badge badge-direct">Direct from MDE</span></h2>
+  <p style="color:#888;font-size:0.85rem;margin-bottom:12px">Air Europa direct MDE→MAD · Cheapest transatlantic but domestic leg adds cost</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Leg</th><th>Route</th><th>Duration</th><th>7-Day Return</th><th>12-Day Return</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><div class="flight-path">PEI <span class="arrow">→</span> MDE</div></td><td>~45m</td><td colspan="2" style="color:#888;font-size:0.75rem">~$50–100 RT · Avianca / LATAM</td></tr>
+      <tr><td>2</td><td><div class="flight-path">MDE <span class="arrow">→</span> MAD <span class="badge badge-direct">Direct</span></div></td><td>~9h30</td><td colspan="2">Air Europa / Avianca</td></tr>
+      <tr class="alt-row">
+        <td colspan="3"><strong>Total pp RT</strong></td>
+        <td class="price-cell">$920–1,050</td>
+        <td class="price-cell" style="color:#f59e0b">$1,050–1,200</td>
+      </tr>
+      <tr class="alt-row">
+        <td colspan="3"><strong>👥 2 people total</strong></td>
+        <td class="price-cell">$1,840–2,100</td>
+        <td class="price-cell" style="color:#f59e0b">$2,100–2,400</td>
+      </tr>
+    </tbody>
+  </table></div>
+  <div class="note">
+    <strong>⚠️ Why costlier:</strong> MDE→MAD direct is cheap (~$870 RT), but PEI→MDE domestic tickets are separate bookings — baggage not transferred, self-transfer risk. Add ~$100 pp for the domestic hop.
+  </div>
+</div>
+
+<!-- ROUTE 3 -->
+<div class="section">
+  <h2>🥉 Route 3 — PEI → PTY → MAD <span class="badge badge-connect">Via Panama</span></h2>
+  <p style="color:#888;font-size:0.85rem;margin-bottom:12px">Copa Airlines via Panama City · One ticket, Copa hub connection</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Leg</th><th>Route</th><th>Duration</th><th>7-Day Return</th><th>12-Day Return</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><div class="flight-path">PEI <span class="arrow">→</span> PTY</div></td><td>~1h30</td><td colspan="2" style="color:#888;font-size:0.75rem">Copa direct from Pereira</td></tr>
+      <tr><td>2</td><td><div class="flight-path">PTY <span class="arrow">→</span> MAD <span class="badge badge-direct">Direct</span></div></td><td>~10h</td><td colspan="2">Copa / Iberia</td></tr>
+      <tr>
+        <td colspan="3"><strong>Total pp RT</strong></td>
+        <td class="price-cell">$700–850</td>
+        <td class="price-cell" style="color:#f59e0b">$850–990</td>
+      </tr>
+      <tr>
+        <td colspan="3"><strong>👥 2 people total</strong></td>
+        <td class="price-cell">$1,400–1,700</td>
+        <td class="price-cell" style="color:#f59e0b">$1,700–1,980</td>
+      </tr>
+    </tbody>
+  </table></div>
+  <div class="note">
+    <strong>✈️ Copa Perk:</strong> Copa flies direct PEI→PTY (rare international route from Pereira). One ticket, one airline alliance. Panama City layover is usually 2-3h. Pricier than BOG connection but simpler — no domestic Colombia transfer.
+  </div>
+</div>
+
+<!-- DURATION COMPARISON -->
+<div class="section">
+  <h2>📅 7 Days vs 12 Days — Price Impact</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th></th><th>7 Days (Jul 20/21 → Jul 27/28)</th><th>12 Days (Jul 20/21 → Aug 1/2)</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Return day</strong></td><td>Mon Jul 27 or Tue Jul 28</td><td>Sat Aug 1 or Sun Aug 2</td></tr>
+      <tr><td><strong>Pricing</strong></td><td class="price-cell">Weekday — cheaper</td><td style="color:#f59e0b">Weekend — +$150–200 pp</td></tr>
+      <tr><td><strong>Route 1 (BOG)</strong></td><td class="price-cell">$570–720 pp</td><td style="color:#f59e0b">$720–880 pp</td></tr>
+      <tr><td><strong>Route 2 (MDE)</strong></td><td class="price-cell">$920–1,050 pp</td><td style="color:#f59e0b">$1,050–1,200 pp</td></tr>
+      <tr><td><strong>Route 3 (PTY)</strong></td><td class="price-cell">$700–850 pp</td><td style="color:#f59e0b">$850–990 pp</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note green">
+    <strong>📊 Verdict:</strong> <strong>Route 1, 7-day return (Tue Jul 28)</strong> is the price king — <strong>~$570 pp, ~$1,140 total for 2.</strong> Depart Mon Jul 20 or Tue Jul 21 from Pereira, fly PEI→BOG→MAD on Avianca. Come back Tue Jul 28. Clean, one ticket, cheapest.
+  </div>
+</div>
+
+<!-- ARMENIA NOTE -->
+<div class="section">
+  <h2>📍 Starting from Armenia (AXM)?</h2>
+  <p style="color:#888;font-size:0.85rem;margin-bottom:12px">Same routes, slightly different first-leg pricing</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Option</th><th>Route</th><th>Domestic Leg</th><th>Total Impact</th></tr></thead>
+    <tbody>
+      <tr><td><strong>A</strong></td><td>AXM → BOG → MAD</td><td>~$55–80 RT</td><td>+$30–60 vs PEI</td></tr>
+      <tr><td><strong>B</strong></td><td>Bus AXM → PEI (1h, ~$5)</td><td>Then PEI flights</td><td>Cheapest if you can bus</td></tr>
+      <tr><td><strong>C</strong></td><td>AXM → MDE → MAD</td><td>~$60–100 RT</td><td>Similar to PEI→MDE</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note">
+    <strong>🚌 Armenia hack:</strong> Armenia to Pereira is a <strong>1-hour bus (~$5)</strong>. If you're in Armenia, bus to Pereira and fly PEI→BOG→MAD. Saves ~$30-60 pp vs flying AXM→BOG. The bus station is right in Armenia center.
+  </div>
+</div>
+
+<!-- BOOKING LINKS -->
+<div class="section">
+  <h2>🔗 Booking Links</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Site</th><th>Link</th><th>Best For</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Avianca</strong></td><td><a href="https://www.avianca.com/en_co/flights-from-pereira-to-madrid" target="_blank" style="color:#60a5fa">avianca.com</a></td><td>Route 1 — PEI→BOG→MAD one ticket</td></tr>
+      <tr><td><strong>Copa Airlines</strong></td><td><a href="https://www.copaair.com/en/flights-from-pereira-to-madrid" target="_blank" style="color:#60a5fa">copaair.com</a></td><td>Route 3 — PEI→PTY→MAD</td></tr>
+      <tr><td><strong>Google Flights</strong></td><td><a href="https://www.google.com/travel/flights" target="_blank" style="color:#60a5fa">google.com/travel</a></td><td>Multi-city search PEI→MAD→PEI</td></tr>
+      <tr><td><strong>Skyscanner</strong></td><td><a href="https://www.skyscanner.com" target="_blank" style="color:#60a5fa">skyscanner.com</a></td><td>Flexible date alerts</td></tr>
+      <tr><td><strong>Expedia</strong></td><td><a href="https://www.expedia.com" target="_blank" style="color:#60a5fa">expedia.com</a></td><td>Bundle PEI→MAD deals</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<div class="footer">
+  Generated July 12, 2026 · 2 seats · PEI/AXM → MAD · <a href="https://totalwindupflightsystems.github.io/reports/">Reports</a>
+</div>
+
+</div>
+</body>
+</html>
