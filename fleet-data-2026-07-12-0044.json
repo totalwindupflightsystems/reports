@@ -1,0 +1,416 @@
+{
+  "$schema": "fleet-data-schema-v1",
+  "generated": "2026-07-12T05:44:26.161089+00:00",
+  "metrics": {
+    "healthy": 24,
+    "warn": 0,
+    "error": 4,
+    "paused": 3,
+    "total_pending_tasks": 218
+  },
+  "fleet": [
+    {
+      "project": "muster-coding-hermes-loop",
+      "workdir": "/home/kara/muster",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": "2026-07-11T23:23:54.704512-05:00",
+      "status": "healthy",
+      "pending_tasks": 5,
+      "in_progress": 0,
+      "worker_models_used": []
+    },
+    {
+      "project": "mafia-benchmark-dev-loop",
+      "workdir": "/home/kara/mafia-ai-benchmark",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": "2026-07-11T16:21:31.320129-05:00",
+      "status": "healthy",
+      "pending_tasks": 0,
+      "in_progress": 0,
+      "worker_models_used": []
+    },
+    {
+      "project": "mythos-coding-foreman",
+      "workdir": "/home/kara/helios-work/mythos",
+      "foreman_model": "grok-4.5",
+      "foreman_provider": "xai-oauth",
+      "last_run": "2026-07-11T23:50:23.424885-05:00",
+      "status": "healthy",
+      "pending_tasks": 5,
+      "in_progress": 0,
+      "worker_models_used": []
+    },
+    {
+      "project": "EduOS Alpha Dev Loop",
+      "workdir": "/home/kara/eduos.dexdat.com.co",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": "2026-07-12T00:17:20.065061-05:00",
+      "status": "error",
+      "pending_tasks": 3,
+      "in_progress": 0,
+      "worker_models_used": []
+    },
+    {
+      "project": "dexdat-coding-hermes-foreman",
+      "workdir": "/home/kara/dexdat-memory",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": "2026-07-11T22:39:41.955410-05:00",
+      "status": "healthy",
+      "pending_tasks": 3,
+      "in_progress": 0,
+      "worker_models_used": []
+    },
+    {
+      "project": "ASCE Coding Foreman",
+      "workdir": "/home/kara/asce",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": "2026-07-11T20:46:59.867818-05:00",
+      "status": "healthy",
+      "pending_tasks": 0,
+      "in_progress": 0,
+      "worker_models_used": []
+    },
+    {
+      "project": "helios-coding-hermes-foreman",
+      "workdir": "/home/kara/helios-work",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": "2026-07-12T00:40:42.815328-05:00",
+      "status": "healthy",
+      "pending_tasks": 2,
+      "in_progress": 0,
+      "worker_models_used": []
+    },
+    {
+      "project": "helix-foreman",
+      "workdir": "/home/kara/helix",
+      "foreman_model": "grok-4.5",
+      "foreman_provider": "xai-oauth",
+      "last_run": "2026-07-12T00:05:59.546569-05:00",
+      "status": "healthy",
+      "pending_tasks": 15,
+      "in_progress": 0,
+      "worker_models_used": []
+    },
+    {
+      "project": "hilo-foreman",
+      "workdir": "/home/kara/warpfs",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": "2026-07-11T09:54:54.801101-05:00",
+      "status": "error",
+      "pending_tasks": 0,
+      "in_progress": 0,
+      "worker_models_used": []
+    },
+    {
+      "project": "dexdat-build-loop",
+      "workdir": "/home/kara/dexdat-core",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": "2026-07-11T22:59:30.911887-05:00",
+      "status": "healthy",
+      "pending_tasks": 8,
+      "in_progress": 0,
+      "worker_models_used": []
+    },
+    {
+      "project": "musterflow-foreman",
+      "workdir": "/home/kara/musterflow",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": "2026-07-11T19:27:49.564786-05:00",
+      "status": "healthy",
+      "pending_tasks": 7,
+      "in_progress": 0,
+      "worker_models_used": []
+    },
+    {
+      "project": "ai-plays-pokemon-foreman",
+      "workdir": "/home/kara/ai_plays_poke",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": "2026-07-11T10:30:33.129846-05:00",
+      "status": "healthy",
+      "pending_tasks": 0,
+      "in_progress": 0,
+      "worker_models_used": []
+    },
+    {
+      "project": "kobayashi-maru-foreman",
+      "workdir": "/home/kara/Kobayashi-Maru",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": "2026-07-11T21:19:30.507472-05:00",
+      "status": "healthy",
+      "pending_tasks": 4,
+      "in_progress": 0,
+      "worker_models_used": []
+    },
+    {
+      "project": "deepseek-dashboard coding-hermes",
+      "workdir": "/home/kara/Kobayashi-Maru/deepseek-dashboard",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": "2026-07-09T19:07:49.931808-05:00",
+      "status": "healthy",
+      "pending_tasks": 4,
+      "in_progress": 0,
+      "worker_models_used": []
+    },
+    {
+      "project": "H4F Coding Foreman",
+      "workdir": "/home/kara/hermes4friends-infra",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": "2026-07-11T22:23:19.161752-05:00",
+      "status": "healthy",
+      "pending_tasks": 4,
+      "in_progress": 0,
+      "worker_models_used": []
+    },
+    {
+      "project": "off-by-one-foreman",
+      "workdir": "/home/kara/off-by-one",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": "2026-07-09T22:38:10.261005-05:00",
+      "status": "healthy",
+      "pending_tasks": 0,
+      "in_progress": 2,
+      "worker_models_used": []
+    },
+    {
+      "project": "Bunker Coding Hermes",
+      "workdir": "/home/kara/bunker",
+      "foreman_model": "kimi-for-coding",
+      "foreman_provider": "kimi-for-coding",
+      "last_run": "2026-07-11T18:08:59.645247-05:00",
+      "status": "healthy",
+      "pending_tasks": 2,
+      "in_progress": 0,
+      "worker_models_used": []
+    },
+    {
+      "project": "speclang-ci-foreman",
+      "workdir": "/home/kara/SpecLang",
+      "foreman_model": "MiniMax-M3",
+      "foreman_provider": "minimax",
+      "last_run": "2026-07-11T17:06:07.413635-05:00",
+      "status": "healthy",
+      "pending_tasks": 3,
+      "in_progress": 0,
+      "worker_models_used": []
+    },
+    {
+      "project": "consensus-coding-foreman",
+      "workdir": "/home/kara/consensus",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": "2026-07-11T11:25:26.413820-05:00",
+      "status": "healthy",
+      "pending_tasks": 35,
+      "in_progress": 0,
+      "worker_models_used": []
+    },
+    {
+      "project": "chimera-coding-foreman",
+      "workdir": "/home/kara/chimera-v2",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": "2026-07-12T00:25:51.795908-05:00",
+      "status": "healthy",
+      "pending_tasks": 6,
+      "in_progress": 0,
+      "worker_models_used": []
+    },
+    {
+      "project": "Mythos Coding Foreman",
+      "workdir": "/home/kara/wojons-mythos",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": "2026-07-11T09:54:54.742170-05:00",
+      "status": "error",
+      "pending_tasks": 0,
+      "in_progress": 0,
+      "worker_models_used": []
+    },
+    {
+      "project": "DeepSeek Dashboard Foreman",
+      "workdir": "/home/kara/deepseek-dashboard",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": "2026-07-11T09:54:54.771087-05:00",
+      "status": "error",
+      "pending_tasks": 2,
+      "in_progress": 0,
+      "worker_models_used": []
+    },
+    {
+      "project": "Hivemind Coding Foreman",
+      "workdir": "/home/kara/hivemind-work",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": "2026-07-11T17:56:43.701111-05:00",
+      "status": "healthy",
+      "pending_tasks": 0,
+      "in_progress": 0,
+      "worker_models_used": []
+    },
+    {
+      "project": "RethinkDB Steward",
+      "workdir": "/home/kara/rethinkdb",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": "2026-07-11T20:42:07.143079-05:00",
+      "status": "healthy",
+      "pending_tasks": 20,
+      "in_progress": 0,
+      "worker_models_used": []
+    },
+    {
+      "project": "escalation-doctrine-foreman",
+      "workdir": "/home/kara/escalation-doctrine",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": "2026-07-11T18:33:39.044178-05:00",
+      "status": "healthy",
+      "pending_tasks": 34,
+      "in_progress": 0,
+      "worker_models_used": []
+    },
+    {
+      "project": "DuckBrain Coding Foreman",
+      "workdir": "/home/kara/duckbrain",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": "2026-07-11T13:00:25.032433-05:00",
+      "status": "healthy",
+      "pending_tasks": 0,
+      "in_progress": 0,
+      "worker_models_used": []
+    },
+    {
+      "project": "Imhotep Coding Foreman",
+      "workdir": "/home/kara/imhotep",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": "2026-07-11T19:43:42.075495-05:00",
+      "status": "healthy",
+      "pending_tasks": 21,
+      "in_progress": 0,
+      "worker_models_used": []
+    },
+    {
+      "project": "crier-coding-foreman",
+      "workdir": "/home/kara/crier",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": "2026-07-11T21:10:43.189152-05:00",
+      "status": "healthy",
+      "pending_tasks": 3,
+      "in_progress": 0,
+      "worker_models_used": []
+    },
+    {
+      "project": "GitReins Coding Foreman",
+      "workdir": "/home/kara/gitreins-poc",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": null,
+      "status": "stale",
+      "pending_tasks": 32,
+      "in_progress": 0,
+      "worker_models_used": []
+    },
+    {
+      "project": "EduOS Coding Foreman",
+      "workdir": "/home/kara/eduos",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": null,
+      "status": "stale",
+      "pending_tasks": 0,
+      "in_progress": 0,
+      "worker_models_used": []
+    },
+    {
+      "project": "Speclang Coding Foreman",
+      "workdir": "/home/kara/speclang",
+      "foreman_model": "deepseek-v4-pro",
+      "foreman_provider": "deepseek-foreman",
+      "last_run": null,
+      "status": "stale",
+      "pending_tasks": 0,
+      "in_progress": 0,
+      "worker_models_used": []
+    }
+  ],
+  "what_got_done": {
+    "tasks_resolved": [],
+    "commits_landed": [],
+    "bugs_queued": [],
+    "ci_regressions": [
+      {
+        "project": "muster",
+        "run": "all workflows",
+        "transient": false
+      },
+      {
+        "project": "chimera-v2",
+        "run": "all workflows",
+        "transient": false
+      },
+      {
+        "project": "hivemind-work",
+        "run": "all workflows",
+        "transient": false
+      },
+      {
+        "project": "dexdat-memory",
+        "run": "all workflows",
+        "transient": false
+      },
+      {
+        "project": "Kobayashi-Maru",
+        "run": "partial",
+        "transient": false
+      }
+    ],
+    "spec_doc_fixes": [],
+    "tool_health": {
+      "off_by_one_calls": 0,
+      "hilo_calls": 0,
+      "gitreins_calls": 51,
+      "duckbrain_calls": 101,
+      "broken_refs": 0,
+      "zombie_locks_cleared": 10,
+      "skill_patch_fails": 40
+    }
+  },
+  "issues_detected": [
+    "Off-by-One: 0 calls in 4h \u2014 pre-solve lab may be down",
+    "Hilo: 0 calls in 4h \u2014 no blast radius analysis occurring",
+    "Skill patch fails: 40 \u2014 foremen trying to patch skills and failing",
+    "muster CI: all workflows failing (libseccomp)",
+    "chimera-v2 CI: all workflows failing",
+    "EduOS: database auth failure",
+    "dedat-org CI: billing-blocked (stale >14 days)",
+    "4 foremen hit Gateway shutdown cascade (2026-07-11 09:54)"
+  ],
+  "changes_made": [
+    "Phase 0A: 29 auto-heal fixes applied (schemas, force-fire, pinned drift)",
+    "Phase 0B-SKILL: Fixed 2 broken skill references (vision_analyze\u2192removed, research\u2192deep-research)",
+    "Phase 0C: 0 new orphans (2 test dirs skipped), 12 duplicate pairs all already paused",
+    "Phase 0C-POST: Created missing tasks.md for totalstack",
+    "Phase 0G: Pinned mythos, helix \u2192 grok-4.5; Bunker \u2192 kimi; speclang \u2192 MiniMax-M3",
+    "Phase 0F: 7 errored/stale foremen recovered (state reset + force-fire)",
+    "Phase 0F: 10 zombie locks auto-cleared by timeout (already deployed)",
+    "Phase 2D: ASCE slowed to 360m (all tasks [x], 0 commits in 7d)"
+  ]
+}
