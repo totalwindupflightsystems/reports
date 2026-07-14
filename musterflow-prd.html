@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MusterFlow — Product Requirements Document</title>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface-2: #161622;
+    --border: #252535;
+    --text: #e0e0ea;
+    --text-muted: #8888a0;
+    --text-dim: #555568;
+    --accent: #00d4aa;
+    --accent-glow: #00ffcc;
+    --warn: #ff9944;
+    --code-bg: #0d0d16;
+    --radius: 8px;
+    --radius-lg: 16px;
+    --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'SF Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+    background: var(--bg);
+    color: var(--text);
+  }
+
+  body {
+    font-family: var(--font);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    padding-bottom: 120px;
+  }
+
+  .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+  /* ── Hero ── */
+  .hero {
+    padding: 80px 0 48px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hero-badge {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+
+  .hero h1 {
+    font-size: 2.6rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    color: #fff;
+    margin-bottom: 12px;
+  }
+
+  .hero h1 span { color: var(--accent); }
+
+  .hero .subtitle {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto 20px;
+  }
+
+  .hero-meta {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .hero-meta span { color: var(--accent); }
+
+  /* ── Section ── */
+  section {
+    padding: 48px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  section:last-of-type { border-bottom: none; }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  section h2 {
+    font-size: 1.6rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: #fff;
+    margin-bottom: 16px;
+  }
+
+  section h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+    margin: 24px 0 8px;
+  }
+
+  section p, section li {
+    color: var(--text-muted);
+    font-size: 0.92rem;
+    line-height: 1.7;
+    margin-bottom: 10px;
+  }
+
+  section ul, section ol {
+    padding-left: 20px;
+    margin-bottom: 16px;
+  }
+
+  section strong { color: #fff; }
+  section em { color: var(--accent); font-style: normal; }
+  section code {
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    background: var(--code-bg);
+    padding: 1px 6px;
+    border-radius: 4px;
+    color: var(--accent-glow);
+  }
+
+  /* ── Tables ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 0.88rem;
+  }
+
+  th {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-dim);
+    text-align: left;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    vertical-align: top;
+  }
+
+  td:first-child {
+    color: var(--text-muted);
+    font-size: 0.82rem;
+    white-space: nowrap;
+  }
+
+  tr:last-child td { border-bottom: none; }
+
+  /* ── Callout boxes ── */
+  .callout {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 20px 24px;
+    margin: 20px 0;
+  }
+
+  .callout.accent { border-color: var(--accent); }
+  .callout.warn { border-color: var(--warn); }
+
+  .callout h4 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+
+  .callout p { font-size: 0.85rem; margin-bottom: 0; }
+
+  /* ── Priority badges ── */
+  .p0 { color: var(--fail); }
+  .p1 { color: var(--warn); }
+  .p2 { color: var(--accent); }
+
+  /* ── Nav ── */
+  .toc {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 20px 28px;
+    margin: 32px 0;
+  }
+
+  .toc h4 {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .toc ol {
+    columns: 2;
+    column-gap: 32px;
+    padding-left: 20px;
+    margin-bottom: 0;
+  }
+
+  .toc li {
+    font-size: 0.85rem;
+    margin-bottom: 4px;
+  }
+
+  .toc a {
+    color: var(--text-muted);
+    text-decoration: none;
+  }
+
+  .toc a:hover { color: var(--accent); }
+
+  .back-link {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    text-decoration: none;
+    margin: 32px 0 8px;
+  }
+
+  .back-link:hover { color: var(--accent); }
+
+  /* ── Phase cards ── */
+  .phase-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    margin: 20px 0;
+  }
+
+  @media (max-width: 700px) { .phase-grid { grid-template-columns: 1fr; } }
+
+  .phase-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+  }
+
+  .phase-card h4 {
+    font-size: 0.9rem;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+
+  .phase-card .timeline {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+
+  .phase-card ul {
+    padding-left: 16px;
+    margin-bottom: 0;
+  }
+
+  .phase-card li {
+    font-size: 0.8rem;
+    margin-bottom: 4px;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <a href="index.html" class="back-link">← reports</a>
+
+  <!-- ── Hero ── -->
+  <div class="hero">
+    <div class="hero-badge">Product Requirements Document &nbsp;·&nbsp; v1.0</div>
+    <h1>Muster<span>Flow</span></h1>
+    <p class="subtitle">
+      A self-hosted developer platform that turns any API into a CLI, an MCP tool, and a workflow — with a community-contributed catalog that grows with every user.
+    </p>
+    <div class="hero-meta">
+      <div>Status: <span>In Development</span></div>
+      <div>Engine: <span>Muster (Go)</span></div>
+      <div>License: <span>MIT</span></div>
+      <div>Domain: <span>musterflow.com</span></div>
+    </div>
+  </div>
+
+  <!-- ── TOC ── -->
+  <div class="toc">
+    <h4>Contents</h4>
+    <ol>
+      <li><a href="#problem">Problem Statement</a></li>
+      <li><a href="#solution">Solution Overview</a></li>
+      <li><a href="#users">Target Users</a></li>
+      <li><a href="#competition">Competitive Landscape</a></li>
+      <li><a href="#architecture">Architecture</a></li>
+      <li><a href="#surfaces">Product Surfaces</a></li>
+      <li><a href="#community">Community Model</a></li>
+      <li><a href="#features">Feature Specification</a></li>
+      <li><a href="#mvp">MVP Scope &amp; Phases</a></li>
+      <li><a href="#success">Success Metrics</a></li>
+      <li><a href="#risks">Risks &amp; Mitigations</a></li>
+      <li><a href="#open">Open Questions</a></li>
+    </ol>
+  </div>
+
+  <!-- 1. Problem -->
+  <section id="problem">
+    <div class="section-label">1</div>
+    <h2>Problem Statement</h2>
+
+    <p><strong>Every API requires its own SDK, CLI, and integration code.</strong> Developers spend hours reading docs, installing client libraries, and writing boilerplate just to call a REST endpoint. This is the <em>API integration tax</em> — paid by every developer, for every API, every time.</p>
+
+    <p>Meanwhile, AI agents are proliferating — Claude, GPT, Hermes, and others need to call real APIs to be useful. But connecting an AI agent to an API requires writing custom tool definitions, middleware, and auth plumbing. Every API integration is a bespoke project.</p>
+
+    <p><strong>The community has no shared catalog.</strong> When someone writes a Stripe CLI wrapper or a GitHub MCP tool, it lives in their private repo. Nobody else benefits. There's no central place where API connectors, transforms, and workflows are published, scored, and reusable — like Context7 does for library documentation, but for APIs.</p>
+
+    <div class="callout warn">
+      <h4>The Integration Tax</h4>
+      <p>Today: find the SDK → install it → read the docs → write boilerplate → test → maintain. Even for a simple "list my Stripe charges" command, it's 30+ minutes of setup. MusterFlow makes it 30 seconds.</p>
+    </div>
+  </section>
+
+  <!-- 2. Solution -->
+  <section id="solution">
+    <div class="section-label">2</div>
+    <h2>Solution Overview</h2>
+
+    <p><strong>MusterFlow</strong> is a single binary you deploy locally. You paste an OpenAPI URL. Seconds later, that API has:</p>
+
+    <ol>
+      <li><strong>A typed CLI</strong> — every API operation becomes a native command with autocomplete, colored output, and pipes</li>
+      <li><strong>MCP tools</strong> — every API operation is an AI-agent-callable tool. Claude/GPT/Hermes can call it immediately</li>
+      <li><strong>Workflows</strong> — chain APIs with Starlark DSL. "When Stripe charge succeeds → create GitHub issue"</li>
+    </ol>
+
+    <p>The <em>community catalog</em> is a public repo where anyone publishes their connected APIs, WASM transforms, and workflow recipes. <strong>Every user makes the platform better for every other user.</strong></p>
+
+    <div class="callout accent">
+      <h4>The 30-Second Demo</h4>
+      <p><code>brew install musterflow</code> → <code>musterflow connect https://api.github.com</code> → <code>musterflow gh issues list --repo cli/cli --limit 5</code> → it works. Then paste Stripe. Write a 4-line workflow. Push both to the catalog. Done.</p>
+    </div>
+  </section>
+
+  <!-- 3. Users -->
+  <section id="users">
+    <div class="section-label">3</div>
+    <h2>Target Users</h2>
+
+    <table>
+      <thead>
+        <tr><th>Persona</th><th>Need</th><th>Why MusterFlow</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>API-heavy developer</strong></td>
+          <td>"I use 6 SaaS APIs daily. I'm tired of context-switching between their CLIs and SDKs."</td>
+          <td>One CLI for all APIs. One mental model. Autocomplete across services.</td>
+        </tr>
+        <tr>
+          <td><strong>AI agent builder</strong></td>
+          <td>"I want my agent to call real APIs without writing integration code for each one."</td>
+          <td>Every connected API is an MCP tool. Paste a URL → agent can call it.</td>
+        </tr>
+        <tr>
+          <td><strong>Integration engineer</strong></td>
+          <td>"I build workflows that span 3-4 APIs. The boilerplate kills me."</td>
+          <td>Starlark DSL chains APIs. Webhook triggers. WASM transforms. In 4 lines.</td>
+        </tr>
+        <tr>
+          <td><strong>Platform / DevOps team</strong></td>
+          <td>"Our company has 50+ internal microservices. Nobody knows how to call half of them."</td>
+          <td>Point at the internal API registry. Every service gets a CLI. Every engineer can use it.</td>
+        </tr>
+        <tr>
+          <td><strong>Community contributor</strong></td>
+          <td>"I figured out the Notion API. I want to share my connector so others don't suffer."</td>
+          <td>Push to catalog. One click. Anyone can install it. Quality scores surface good ones.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 4. Competition -->
+  <section id="competition">
+    <div class="section-label">4</div>
+    <h2>Competitive Landscape</h2>
+
+    <table>
+      <thead>
+        <tr><th>Product</th><th>What it does</th><th>MusterFlow advantage</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Postman / Insomnia</td>
+          <td>GUI API client. Manual. Per-request.</td>
+          <td>Programmatic. CLI + MCP. Typed commands auto-generated from spec.</td>
+        </tr>
+        <tr>
+          <td>OpenAPI Generator</td>
+          <td>Generates SDK code from specs.</td>
+          <td>Runtime, not build-time. No generated artifacts. No code to maintain.</td>
+        </tr>
+        <tr>
+          <td>Kong / API gateways</td>
+          <td>Proxy, route, secure APIs.</td>
+          <td>MusterFlow complements gateways — it's the client side. Self-hosted, local.</td>
+        </tr>
+        <tr>
+          <td>Zapier / n8n / IFTTT</td>
+          <td>Low-code workflow automation.</td>
+          <td>Developer-native. CLI-driven. Starlark (not drag-and-drop). Local, not SaaS.</td>
+        </tr>
+        <tr>
+          <td>Context7</td>
+          <td>MCP server for library docs. Community catalog.</td>
+          <td>Same model, but for APIs instead of docs. Same community flywheel.</td>
+        </tr>
+        <tr>
+          <td>GitHub CLI (gh)</td>
+          <td>Single-API CLI. One service.</td>
+          <td>One CLI for <em>every</em> API. Not just GitHub.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><strong>No existing product</strong> combines runtime API client generation + MCP server + workflow engine + community catalog in a single self-hosted binary.</p>
+  </section>
+
+  <!-- 5. Architecture -->
+  <section id="architecture">
+    <div class="section-label">5</div>
+    <h2>Architecture</h2>
+
+    <h3>System Diagram</h3>
+    <table>
+      <thead><tr><th>Component</th><th>Runs on</th><th>Role</th></tr></thead>
+      <tbody>
+        <tr><td><strong>MusterFlow binary</strong></td><td>User's machine</td><td>Single Go binary. Embeds everything.</td></tr>
+        <tr><td><strong>Muster engine</strong></td><td>Inside the binary</td><td>OpenAPI parsing, CLI generation, MCP server, daemon, WASM runtime, Starlark interpreter</td></tr>
+        <tr><td><strong>Web dashboard</strong></td><td>localhost:9876</td><td>Connect APIs, browse catalog, manage workflows, view audit logs</td></tr>
+        <tr><td><strong>CLI surface</strong></td><td>User's terminal</td><td>Typed subcommands auto-generated per connected API</td></tr>
+        <tr><td><strong>MCP endpoint</strong></td><td>localhost:9876/mcp</td><td>JSON-RPC endpoint for AI agents. Every connected API is a tool.</td></tr>
+        <tr><td><strong>Workflow engine</strong></td><td>Inside the binary</td><td>Starlark DSL, webhook triggers, WASM transform pipeline</td></tr>
+        <tr><td><strong>Community catalog</strong></td><td>GitHub repo</td><td>Public registry of connectors, transforms, workflows. Anyone can PR.</td></tr>
+        <tr><td><strong>API keys / secrets</strong></td><td>User's machine</td><td>Never leave the user's machine. Local storage only.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Tech Stack</h3>
+    <table>
+      <thead><tr><th>Layer</th><th>Technology</th><th>Rationale</th></tr></thead>
+      <tbody>
+        <tr><td>Language</td><td>Go 1.26+</td><td>Single static binary. Cross-platform. No runtime dependencies.</td></tr>
+        <tr><td>Engine</td><td>Muster (Go library)</td><td>Existing 56-package codebase. OpenAPI → CLI + MCP generation.</td></tr>
+        <tr><td>CLI</td><td>Cobra + Muster generator</td><td>Auto-generated typed subcommands with bash/zsh/fish completion.</td></tr>
+        <tr><td>Dashboard</td><td>Go HTTP server + embedded HTML</td><td>No external web server. Single binary deployment.</td></tr>
+        <tr><td>MCP transport</td><td>stdio JSON-RPC + SSE</td><td>Compatible with Claude Desktop, GPT, Hermes, and all MCP clients.</td></tr>
+        <tr><td>DSL</td><td>Starlark (subset of Python)</td><td>Sandboxed, deterministic. Familiar syntax for developers.</td></tr>
+        <tr><td>WASM</td><td>wazero (pure Go)</td><td>No CGO dependency. Cross-platform WASM runtime.</td></tr>
+        <tr><td>Auth</td><td>OAuth2, mTLS, API keys</td><td>Standard protocols. Stored locally in OS keychain.</td></tr>
+        <tr><td>Storage</td><td>SQLite (local)</td><td>Zero-config. Embedded in binary. No database server needed.</td></tr>
+        <tr><td>Distribution</td><td>Homebrew, Docker, direct binary</td><td>Cover macOS, Linux, and Docker-based deployments.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 6. Surfaces -->
+  <section id="surfaces">
+    <div class="section-label">6</div>
+    <h2>Product Surfaces</h2>
+
+    <h3>⌨ CLI Surface</h3>
+    <p>Every connected API generates typed subcommands. <code>musterflow gh issues list</code>, <code>musterflow stripe charges list</code>. Full bash/zsh/fish completion. Pipe-able JSON/table/YAML output. Flags match the API spec — no guessing parameter names.</p>
+
+    <h3>🖥 Web Dashboard</h3>
+    <p>Local dashboard at <code>localhost:9876</code>. Browse connected APIs. Search the community catalog. Manage workflows. View request/response audit logs. Launch the MCP endpoint info. All data stays local.</p>
+
+    <h3>🤖 MCP Endpoint</h3>
+    <p>Every connected API is an MCP tool. AI agents call <code>tools/list</code> → get every API operation as a tool. <code>tools/call</code> → execute it. Compatible with Claude Desktop, GPT custom actions, Hermes, and any MCP-compliant agent framework.</p>
+
+    <h3>⚡ Workflow Engine</h3>
+    <p>Chain APIs with Starlark DSL. Webhook triggers ("when Stripe charge succeeds → create GitHub issue"). WASM transforms for request/response middleware. Built-in rate limiting, retry, caching, and audit logging per workflow step.</p>
+  </section>
+
+  <!-- 7. Community Model -->
+  <section id="community">
+    <div class="section-label">7</div>
+    <h2>Community Model (Context7 Pattern)</h2>
+
+    <p><strong>The flywheel:</strong> user connects an API → pushes to community catalog → platform becomes more useful → more people install it → more APIs connected → workflows get shared. <em>Every user makes the platform better for every other user.</em></p>
+
+    <h3>Contribution Types</h3>
+    <table>
+      <thead><tr><th>What</th><th>How</th><th>Quality Gate</th></tr></thead>
+      <tbody>
+        <tr><td>API connector</td><td>Paste an OpenAPI URL. Validate. Push to catalog.</td><td>Score: official spec (7/7) vs. community-inferred (3-6) vs. untested (<3)</td></tr>
+        <tr><td>WASM transform</td><td>Write a Go→WASM module. Push to catalog.</td><td>Sandbox-tested. Runtime limits enforced.</td></tr>
+        <tr><td>Workflow recipe</td><td>Write a Starlark script. Push to catalog.</td><td>Declares required APIs. Fails gracefully if dependencies missing.</td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>No gatekeeping.</strong> The catalog is a public GitHub repo. Anyone can PR. Quality scoring surfaces the good ones through usage metrics, not manual review. Missing an API? <em>You paste the URL. It's live. Push it. Now everyone has it.</em></p>
+
+    <h3>Why This Works</h3>
+    <ol>
+      <li><strong>Zero friction to contribute.</strong> Paste URL → validate → push. No SDK to write. No code to maintain.</li>
+      <li><strong>Immediate personal value.</strong> You connect an API because <em>you</em> need it. Publishing is a one-click bonus.</li>
+      <li><strong>Network effects.</strong> More connectors → more useful → more users → more connectors. Context7 proved this model with library docs.</li>
+      <li><strong>Self-hosted trust.</strong> Your API keys. Your data. Your machine. The catalog is a repo — not a SaaS you're locked into.</li>
+    </ol>
+  </section>
+
+  <!-- 8. Features -->
+  <section id="features">
+    <div class="section-label">8</div>
+    <h2>Feature Specification</h2>
+
+    <h3>Core Features (Phase 1)</h3>
+    <table>
+      <thead><tr><th>ID</th><th>Feature</th><th>Priority</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>F-001</td><td>Single binary install</td><td class="p0">P0</td><td><code>brew install musterflow</code> or <code>docker run</code>. One command.</td></tr>
+        <tr><td>F-002</td><td>API connection</td><td class="p0">P0</td><td>Paste any OpenAPI URL. Validate spec. Generate CLI + MCP tools immediately.</td></tr>
+        <tr><td>F-003</td><td>CLI surface</td><td class="p0">P0</td><td>Every connected API becomes typed subcommands. <code>musterflow &lt;api&gt; &lt;operation&gt;</code>.</td></tr>
+        <tr><td>F-004</td><td>MCP endpoint</td><td class="p0">P0</td><td>Local MCP server. <code>tools/list</code> returns all API operations. <code>tools/call</code> executes them.</td></tr>
+        <tr><td>F-005</td><td>Community catalog</td><td class="p0">P0</td><td>Push/pull connectors. Search. Quality scores. Public GitHub repo backing.</td></tr>
+        <tr><td>F-006</td><td>Web dashboard</td><td class="p1">P1</td><td>Connect APIs, browse catalog, view connected APIs, see MCP endpoint info.</td></tr>
+        <tr><td>F-007</td><td>Auth per API</td><td class="p1">P1</td><td>API key, OAuth2, Bearer token, mTLS per connected API. Stored in OS keychain.</td></tr>
+        <tr><td>F-008</td><td>Output formats</td><td class="p1">P1</td><td>JSON, table, YAML, raw output. Configurable per command.</td></tr>
+        <tr><td>F-009</td><td>Shell completion</td><td class="p1">P1</td><td>Auto-generated bash/zsh/fish completion for all commands.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Workflow Features (Phase 2)</h3>
+    <table>
+      <thead><tr><th>ID</th><th>Feature</th><th>Priority</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>F-010</td><td>Starlark DSL</td><td class="p0">P0</td><td>Chain API calls with Starlark. <code>on X → do Y</code>. Variables, conditions, loops.</td></tr>
+        <tr><td>F-011</td><td>Webhook triggers</td><td class="p1">P1</td><td>Webhook endpoints that trigger workflows.</td></tr>
+        <tr><td>F-012</td><td>WASM transforms</td><td class="p1">P1</td><td>Publish request/response middleware as WASM modules to the catalog.</td></tr>
+        <tr><td>F-013</td><td>Workflow catalog</td><td class="p1">P1</td><td>Share workflow recipes. Declare required APIs. Install with dependencies.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Platform Features (Phase 3)</h3>
+    <table>
+      <thead><tr><th>ID</th><th>Feature</th><th>Priority</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>F-014</td><td>Multi-tenancy</td><td class="p2">P2</td><td>Team shared vaults. Per-tenant API keys and rate limits.</td></tr>
+        <tr><td>F-015</td><td>Audit logging</td><td class="p2">P2</td><td>Request/response audit trail. Who called what, when, with what result.</td></tr>
+        <tr><td>F-016</td><td>Docker deployment</td><td class="p2">P2</td><td>Single-container deployment with all 3 binaries + dashboard.</td></tr>
+        <tr><td>F-017</td><td>API catalog scoring</td><td class="p2">P2</td><td>Automated quality scores. Official specs, community-inferred, untested badges.</td></tr>
+        <tr><td>F-018</td><td>Refresh / resync</td><td class="p2">P2</td><td>Re-fetch OpenAPI spec. Update generated commands. Version tracking.</td></tr>
+        <tr><td>F-019</td><td>Landing page</td><td class="p2">P2</td><td>musterflow.com — product site, docs, catalog browser, install instructions.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 9. MVP -->
+  <section id="mvp">
+    <div class="section-label">9</div>
+    <h2>MVP Scope &amp; Phases</h2>
+
+    <div class="phase-grid">
+      <div class="phase-card">
+        <h4>Phase 1 — Core</h4>
+        <div class="timeline">Month 1 | 3-4 weeks</div>
+        <ul>
+          <li>Single binary (brew + docker)</li>
+          <li>API connection (paste URL)</li>
+          <li>CLI surface (typed subcommands)</li>
+          <li>MCP endpoint (tools/list + call)</li>
+          <li>Community catalog (push/pull)</li>
+          <li>Web dashboard (basic)</li>
+          <li>Auth per API</li>
+          <li>Shell completion</li>
+        </ul>
+      </div>
+      <div class="phase-card">
+        <h4>Phase 2 — Workflows</h4>
+        <div class="timeline">Month 2 | 3-4 weeks</div>
+        <ul>
+          <li>Starlark DSL engine</li>
+          <li>Webhook triggers</li>
+          <li>WASM transform publishing</li>
+          <li>Workflow catalog</li>
+          <li>Dashboard v2 (workflow builder)</li>
+          <li>Output formats (table, YAML)</li>
+        </ul>
+      </div>
+      <div class="phase-card">
+        <h4>Phase 3 — Platform</h4>
+        <div class="timeline">Month 3+ | Ongoing</div>
+        <ul>
+          <li>Multi-tenancy</li>
+          <li>Audit logging dashboard</li>
+          <li>API catalog scoring</li>
+          <li>Docker deployment docs</li>
+          <li>Landing page (musterflow.com)</li>
+          <li>Enterprise features</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout accent" style="margin-top: 24px;">
+      <h4>Phase 1 exit criteria (ship when)</h4>
+      <p><code>brew install musterflow</code> works on macOS and Linux. User can paste Stripe + GitHub OpenAPI URLs, get typed CLI commands, MCP tools, and push both to the catalog — all from a single binary, in under 60 seconds from install.</p>
+    </div>
+  </section>
+
+  <!-- 10. Success Metrics -->
+  <section id="success">
+    <div class="section-label">10</div>
+    <h2>Success Metrics</h2>
+
+    <table>
+      <thead><tr><th>Metric</th><th>Phase 1 Target</th><th>Phase 2 Target</th></tr></thead>
+      <tbody>
+        <tr><td>GitHub stars</td><td>1,000</td><td>5,000</td></tr>
+        <tr><td>Catalog connectors</td><td>50</td><td>500</td></tr>
+        <tr><td>Catalog workflows</td><td>—</td><td>100</td></tr>
+        <tr><td>Brew installs / Docker pulls</td><td>500</td><td>5,000</td></tr>
+        <tr><td>Time from install to first API call</td><td>&lt; 60 seconds</td><td>&lt; 30 seconds</td></tr>
+        <tr><td>Community contributors</td><td>10</td><td>50</td></tr>
+        <tr><td>"I can't believe this exists" tweets</td><td>≥ 3</td><td>≥ 20</td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>North star metric:</strong> number of APIs connected across all users. This captures both adoption and catalog growth in a single number.</p>
+  </section>
+
+  <!-- 11. Risks -->
+  <section id="risks">
+    <div class="section-label">11</div>
+    <h2>Risks &amp; Mitigations</h2>
+
+    <table>
+      <thead><tr><th>Risk</th><th>Impact</th><th>Mitigation</th></tr></thead>
+      <tbody>
+        <tr><td>Cold start catalog problem</td><td>High — empty catalog has no value</td><td>Pre-seed with 20 popular APIs (GitHub, Stripe, Slack, Notion, Linear, etc.). Include them in the default install.</td></tr>
+        <tr><td>MCP protocol fragmentation</td><td>Medium — competing agent protocols</td><td>MusterFlow generates MCP tools. If another protocol wins, Muster engine can generate for that too. Decoupled.</td></tr>
+        <tr><td>OpenAPI spec quality variance</td><td>Medium — bad specs = bad CLI</td><td>Quality scoring. Spec validation on connect. Community-inferred badge for unofficial specs.</td></tr>
+        <tr><td>Single developer bottleneck</td><td>High — Bane is the only developer</td><td>Muster engine already built and tested. MusterFlow adds the dashboard + catalog layer. Coding-hermes foreman handles ongoing dev. Community contributions via catalog.</td></tr>
+        <tr><td>Self-hosted friction</td><td>Medium — users must install locally</td><td>Brew + Docker = zero-friction install. No signup. No account. No SaaS. This is a feature, not a bug.</td></tr>
+        <tr><td>Competing products</td><td>Low — no direct competitor</td><td>Postman, OpenAPI Generator, Kong, Context7 all solve adjacent problems. MusterFlow is the only runtime CLI+MCP+workflow+catalog platform.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 12. Open Questions -->
+  <section id="open">
+    <div class="section-label">12</div>
+    <h2>Open Questions</h2>
+
+    <ol>
+      <li><strong>Catalog repo structure:</strong> one monorepo (totalwindupflightsystems/musterflow-catalog) or per-connector repos? Monorepo is simpler for discovery and search.</li>
+      <li><strong>Pre-seeded APIs:</strong> which 20 APIs to include in the default install? Prioritize developer tools (GitHub, GitLab, Linear, Jira), communication (Slack, Discord), payments (Stripe), and productivity (Notion, Google APIs).</li>
+      <li><strong>Landing page:</strong> musterflow.com redirects to what? Standalone site, GitHub Pages, or Docs? GitHub Pages is fastest to ship.</li>
+      <li><strong>Monetization:</strong> open source (MIT). Future: enterprise features (SSO, audit, team management) as paid add-ons or hosted version. Not in MVP scope.</li>
+      <li><strong>Name collision:</strong> PyPI has an unrelated "musterflow" package from 2022. Irrelevant — we distribute via Brew/Docker/Go binary. Confirm no trademark issues.</li>
+    </ol>
+  </section>
+
+</div>
+
+</body>
+</html>
