@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Why the Colombian Peso Is Surging — Por Qué el Peso Colombiano Se Está Disparando</title>
+<style>
+  :root {
+    --bg: #fafaf8;
+    --text: #1a1a1a;
+    --muted: #666;
+    --accent: #c41e3a;
+    --card: #fff;
+    --border: #e5e5e0;
+    --green: #1a7a3a;
+    --red: #c41e3a;
+    --blue: #1a56db;
+    --radius: 10px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 17px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container { max-width: 680px; margin: 0 auto; padding: 16px 20px 60px; }
+
+  /* Lang toggle */
+  .lang-bar {
+    display: flex; justify-content: center; gap: 8px;
+    padding: 12px 0 20px; position: sticky; top: 0;
+    background: var(--bg); z-index: 10;
+  }
+  .lang-btn {
+    padding: 8px 24px; border-radius: 20px; border: 1.5px solid var(--border);
+    background: var(--card); font-size: 15px; font-weight: 600;
+    cursor: pointer; color: var(--muted); transition: all .15s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .lang-btn.active { background: var(--text); color: #fff; border-color: var(--text); }
+
+  /* Content blocks */
+  h1 { font-size: 26px; line-height: 1.3; margin: 8px 0 6px; letter-spacing: -.01em; }
+  .subtitle { color: var(--muted); font-size: 15px; margin-bottom: 28px; }
+  h2 { font-size: 20px; margin: 32px 0 12px; letter-spacing: -.01em; }
+  h3 { font-size: 17px; margin: 20px 0 8px; color: var(--text); }
+  p { margin-bottom: 14px; }
+  .big-num {
+    font-size: 42px; font-weight: 800; letter-spacing: -.02em;
+    display: block; line-height: 1.1; margin-bottom: 4px;
+  }
+  .big-label { font-size: 14px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+
+  .stat-row {
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;
+    margin: 24px 0;
+  }
+  .stat-card {
+    background: var(--card); border-radius: var(--radius);
+    padding: 16px; border: 1px solid var(--border); text-align: center;
+  }
+  .stat-val { font-size: 24px; font-weight: 700; display: block; }
+  .stat-lbl { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+  .timeline {
+    margin: 24px 0; list-style: none;
+  }
+  .timeline li {
+    padding: 10px 0 10px 24px; border-left: 2px solid var(--border);
+    position: relative; margin-left: 8px;
+  }
+  .timeline li::before {
+    content: ''; position: absolute; left: -6px; top: 16px;
+    width: 10px; height: 10px; border-radius: 50%; background: var(--accent);
+  }
+  .timeline .date { font-weight: 700; font-size: 14px; color: var(--accent); display: block; }
+
+  .driver {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 18px; margin-bottom: 12px;
+  }
+  .driver h3 { margin-top: 0; font-size: 18px; }
+  .driver .num {
+    display: inline-block; background: var(--text); color: #fff;
+    width: 26px; height: 26px; border-radius: 50%; text-align: center;
+    line-height: 26px; font-size: 13px; font-weight: 700; margin-right: 8px;
+  }
+
+  table {
+    width: 100%; border-collapse: collapse; margin: 20px 0;
+    font-size: 14px;
+  }
+  th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+  th { font-weight: 700; font-size: 12px; text-transform: uppercase; color: var(--muted); letter-spacing: .04em; }
+  .win { color: var(--green); }
+  .lose { color: var(--red); }
+
+  .lang-content { display: none; }
+  .lang-content.active { display: block; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
+
+  @media (max-width: 480px) {
+    body { font-size: 16px; }
+    h1 { font-size: 22px; }
+    .stat-row { grid-template-columns: 1fr; }
+    .big-num { font-size: 34px; }
+    table { font-size: 12px; }
+    th, td { padding: 8px 6px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="lang-bar">
+  <button class="lang-btn active" onclick="switchLang('en')">EN</button>
+  <button class="lang-btn" onclick="switchLang('es')">ES</button>
+</div>
+
+<!-- ENGLISH -->
+<div class="lang-content active" id="content-en">
+
+<h1>Why the Colombian Peso Is Surging</h1>
+<p class="subtitle">The currency gained 23% in a year. It's not a weak dollar — it's a strong peso story.</p>
+
+<div class="stat-row">
+  <div class="stat-card">
+    <span class="stat-val" style="color:var(--red)">3,225</span>
+    <span class="stat-lbl">COP per USD — July 2026</span>
+  </div>
+  <div class="stat-card">
+    <span class="stat-val" style="color:var(--green)">+22.9%</span>
+    <span class="stat-lbl">Peso strength — 12 months</span>
+  </div>
+  <div class="stat-card">
+    <span class="stat-val" style="color:var(--green)">+6.2%</span>
+    <span class="stat-lbl">Last 30 days alone</span>
+  </div>
+</div>
+
+<h2>The Timeline</h2>
+<ul class="timeline">
+  <li><span class="date">2022–2024</span>Peso hits 5,000+ — historically weak. Petro's election, global rate hikes, post-COVID inflation.</li>
+  <li><span class="date">Early 2025</span>Rally begins. BanRep holds rates higher than expected. Remittances surge. Oil stays above $75.</li>
+  <li><span class="date">Mid-2025</span>Peso breaks through 4,000 for the first time since 2022. Foreign capital flows in.</li>
+  <li><span class="date">Early 2026</span>Breaks 3,500. Exporters panic. Dollar earners in Colombia feel the squeeze.</li>
+  <li><span class="date">June 21, 2026</span>Abelardo de la Espriella (right-wing) defeats Iván Cepeda by less than 1% in the presidential runoff. Markets celebrate. Peso accelerates.</li>
+  <li><span class="date">July 23, 2026</span>Peso hits <strong>3,193</strong> — strongest level in years.</li>
+</ul>
+
+<h2>What's Driving It</h2>
+
+<div class="driver">
+  <h3><span class="num">1</span>Interest Rate Differential</h3>
+  <p>Colombia's central bank kept rates in double digits — projected to reach 12.25% — while the US Federal Reserve cut to 3.50–3.75%. Global investors borrow cheap dollars, convert to pesos, and buy Colombian bonds yielding far more. This carry trade creates massive, sustained demand for pesos.</p>
+</div>
+
+<div class="driver">
+  <h3><span class="num">2</span>Oil Exports</h3>
+  <p>Colombia is a net petroleum exporter. With oil prices above $75–80 per barrel, every barrel sold abroad brings dollars home that get converted to pesos to pay local workers, suppliers, and taxes. More oil revenue = more peso demand.</p>
+</div>
+
+<div class="driver">
+  <h3><span class="num">3</span>Record Remittances</h3>
+  <p>Colombians living in the United States and Spain sent home record amounts in 2025. Every dollar received gets exchanged for pesos by families. These flows are structural and growing, providing a permanent upward push.</p>
+</div>
+
+<div class="driver">
+  <h3><span class="num">4</span>Regional Stability</h3>
+  <p>Venezuela has collapsed. Ecuador cycles through crises. Peru faces political paralysis. Colombia, for all its problems, is the safest destination for foreign capital in the northern Andes — and money fleeing regional chaos keeps arriving.</p>
+</div>
+
+<div class="driver">
+  <h3><span class="num">5</span>Mean Reversion</h3>
+  <p>The peso was absurdly cheap in 2022–2024, overshooting to 5,000+. Much of this "rally" is simply returning to fair value after the panic subsided. It's not that the peso is expensive — it's that it was ridiculously cheap before.</p>
+</div>
+
+<h2>Who Wins, Who Loses</h2>
+<table>
+  <tr><th class="win">Winners</th><th class="lose">Losers</th></tr>
+  <tr><td>Colombian consumers buying imported goods</td><td>Exporters — flowers, coffee, textiles</td></tr>
+  <tr><td>Colombians traveling abroad</td><td>Expats and retirees earning dollars or euros</td></tr>
+  <tr><td>Companies paying dollar-denominated debt</td><td>Tourism — Colombia got expensive for foreigners</td></tr>
+  <tr><td>Foreign investors who bought assets early</td><td>Dollar earners living in Colombia</td></tr>
+  <tr><td>Government — dollar debt cheaper to repay</td><td>Remittance recipients — same dollars buy fewer pesos</td></tr>
+</table>
+
+<h2>The Interest Rate Problem</h2>
+<p>BanRep — Colombia's independent central bank — raised rates <em>again</em> after the election. They're heading toward <strong>12.25%</strong>. That's one of the highest rates in the Americas.</p>
+<p>When borrowing costs 12%+, a small business loan becomes suffocating. Mortgages are out of reach for anyone but the wealthy. Credit is a luxury. The mechanism is brutal: the central bank targets inflation by making ordinary people too broke to spend. It works in a spreadsheet. It destroys lives on the ground.</p>
+
+<h2>The New President's Contradiction</h2>
+<p>Abelardo de la Espriella needs two things that conflict. Markets love him because they expect fiscal discipline, which strengthens the peso further. But if he delivers austerity at 12% interest rates, working Colombians suffer more — and "better" could be years away. He can't directly force BanRep to cut rates. He can only appoint new board members as terms expire, which takes years.</p>
+
+<hr>
+<p style="font-size:13px;color:var(--muted)">Data: July 2026. Exchange rates from TradingEconomics. Policy analysis from Atlantic Council, CEPR, Cato Institute, BBVA Research.</p>
+
+</div>
+
+<!-- SPANISH -->
+<div class="lang-content" id="content-es">
+
+<h1>Por Qué el Peso Colombiano Se Está Disparando</h1>
+<p class="subtitle">La moneda ganó 23% en un año. No es un dólar débil — es un peso fuerte.</p>
+
+<div class="stat-row">
+  <div class="stat-card">
+    <span class="stat-val" style="color:var(--red)">3.225</span>
+    <span class="stat-lbl">COP por USD — Julio 2026</span>
+  </div>
+  <div class="stat-card">
+    <span class="stat-val" style="color:var(--green)">+22,9%</span>
+    <span class="stat-lbl">Fortaleza del peso — 12 meses</span>
+  </div>
+  <div class="stat-card">
+    <span class="stat-val" style="color:var(--green)">+6,2%</span>
+    <span class="stat-lbl">Solo en los últimos 30 días</span>
+  </div>
+</div>
+
+<h2>La Cronología</h2>
+<ul class="timeline">
+  <li><span class="date">2022–2024</span>El peso alcanza 5.000+ — históricamente débil. Elección de Petro, alzas globales de tasas, inflación post-COVID.</li>
+  <li><span class="date">Inicios de 2025</span>Comienza el repunte. BanRep mantiene tasas más altas de lo esperado. Crecen las remesas. El petróleo se mantiene por encima de $75.</li>
+  <li><span class="date">Mediados de 2025</span>El peso rompe la barrera de 4.000 por primera vez desde 2022. Entran flujos de capital extranjero.</li>
+  <li><span class="date">Inicios de 2026</span>Rompe 3.500. Los exportadores entran en pánico. Quienes ganan en dólares sienten la presión.</li>
+  <li><span class="date">21 de junio de 2026</span>Abelardo de la Espriella (derecha) derrota a Iván Cepeda por menos del 1% en la segunda vuelta presidencial. Los mercados celebran. El peso se acelera.</li>
+  <li><span class="date">23 de julio de 2026</span>El peso toca <strong>3.193</strong> — su nivel más fuerte en años.</li>
+</ul>
+
+<h2>Qué lo Está Impulsando</h2>
+
+<div class="driver">
+  <h3><span class="num">1</span>Diferencial de Tasas de Interés</h3>
+  <p>El BanRep mantuvo las tasas en dos dígitos — se proyectan hacia 12,25% — mientras la Reserva Federal de EE.UU. recortó a 3,50–3,75%. Los inversionistas globales toman dólares baratos prestados, los convierten a pesos y compran bonos colombianos que rinden mucho más. Este <em>carry trade</em> crea una demanda masiva y sostenida de pesos.</p>
+</div>
+
+<div class="driver">
+  <h3><span class="num">2</span>Exportaciones de Petróleo</h3>
+  <p>Colombia es exportador neto de petróleo. Con precios por encima de $75–80 por barril, cada barril vendido trae dólares que se convierten a pesos para pagar trabajadores, proveedores e impuestos locales. Más ingresos petroleros = más demanda de pesos.</p>
+</div>
+
+<div class="driver">
+  <h3><span class="num">3</span>Remesas Récord</h3>
+  <p>Los colombianos que viven en Estados Unidos y España enviaron montos récord en 2025. Cada dólar recibido se cambia por pesos. Estos flujos son estructurales y crecientes — un empuje permanente al alza.</p>
+</div>
+
+<div class="driver">
+  <h3><span class="num">4</span>Estabilidad Regional</h3>
+  <p>Venezuela colapsó. Ecuador atraviesa crisis tras crisis. Perú está en parálisis política. Colombia, con todos sus problemas, es el destino más seguro para el capital extranjero en el norte de los Andes — y el dinero que huye del caos regional sigue llegando.</p>
+</div>
+
+<div class="driver">
+  <h3><span class="num">5</span>Reversión a la Media</h3>
+  <p>El peso estaba absurdamente barato en 2022–2024, disparándose hasta más de 5.000. Gran parte de este "repunte" es simplemente el regreso a un valor justo después de que el pánico se disipó. El peso no está caro — estaba ridículamente barato antes.</p>
+</div>
+
+<h2>Quién Gana, Quién Pierde</h2>
+<table>
+  <tr><th class="win">Ganadores</th><th class="lose">Perdedores</th></tr>
+  <tr><td>Consumidores colombianos comprando bienes importados</td><td>Exportadores — flores, café, textiles</td></tr>
+  <tr><td>Colombianos viajando al extranjero</td><td>Extranjeros y pensionados que ganan en dólares o euros</td></tr>
+  <tr><td>Empresas pagando deuda en dólares</td><td>Turismo — Colombia se volvió cara para extranjeros</td></tr>
+  <tr><td>Inversionistas que compraron activos temprano</td><td>Quienes ganan en dólares y viven en Colombia</td></tr>
+  <tr><td>Gobierno — la deuda en dólares es más barata de pagar</td><td>Receptores de remesas — los mismos dólares compran menos pesos</td></tr>
+</table>
+
+<h2>El Problema de las Tasas de Interés</h2>
+<p>El BanRep — el banco central independiente de Colombia — <em>volvió a subir</em> las tasas después de las elecciones. Se dirigen hacia <strong>12,25%</strong>. Eso es una de las tasas más altas de las Américas.</p>
+<p>Cuando el crédito cuesta más del 12%, un préstamo para un pequeño negocio se vuelve asfixiante. Las hipotecas son inalcanzables para cualquiera que no sea rico. El crédito es un lujo. El mecanismo es brutal: el banco central controla la inflación haciendo que la gente común esté demasiado quebrada para gastar. Funciona en una hoja de cálculo. Destruye vidas en el terreno.</p>
+
+<h2>La Contradicción del Nuevo Presidente</h2>
+<p>Abelardo de la Espriella necesita dos cosas que están en conflicto. Los mercados lo adoran porque esperan disciplina fiscal, lo cual fortalece aún más el peso. Pero si realmente aplica austeridad con tasas al 12%, los colombianos trabajadores sufrirán más — y "mejorar" podría tardar años. No puede obligar directamente al BanRep a recortar tasas. Solo puede nombrar nuevos miembros de la junta cuando se vencen los mandatos, lo cual toma años.</p>
+
+<hr>
+<p style="font-size:13px;color:var(--muted)">Datos: Julio 2026. Tipos de cambio de TradingEconomics. Análisis de política de Atlantic Council, CEPR, Cato Institute, BBVA Research.</p>
+
+</div>
+
+</div>
+
+<script>
+function switchLang(lang) {
+  document.querySelectorAll('.lang-content').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('content-' + lang).classList.add('active');
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    if (b.textContent.trim().toLowerCase() === lang) b.classList.add('active');
+  });
+  window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>
