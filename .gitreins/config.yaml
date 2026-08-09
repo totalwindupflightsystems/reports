@@ -1,0 +1,21 @@
+guards:
+  secrets: true
+  lint: true
+  tests: true
+  test_mode: diff
+  test_command: pytest -x --tb=short
+evaluator:
+  max_iterations: 50
+  max_time: 10m
+  max_input_tokens: 0.2M
+  max_output_tokens: 0.4M
+  tool_call_weight: 0.1
+  fast_track: auto
+defaults:
+  model: deepseek-v4-flash
+  provider: deepseek-foreman
+  api_key_env: GITREINS_LLM_API_KEY
+history:
+  enabled: true
+  storage: git
+  max_verdicts: 1000
