@@ -1,0 +1,2873 @@
+{
+ "generated": "2026-08-09 13:17 UTC",
+ "metrics": {
+  "healthy": 34,
+  "warn": 0,
+  "error": 10,
+  "stale": 0,
+  "paused": 25,
+  "total_pending_tasks": 190,
+  "enabled": 44,
+  "ci_failing": 10
+ },
+ "fleet": [
+  {
+   "project": "9router",
+   "workdir": "9router",
+   "foreman_model": "deepseek-v4-flash",
+   "foreman_provider": "deepseek-foreman",
+   "last_run": "2026-08-09 07:49",
+   "status": "healthy",
+   "pending_tasks": "?",
+   "worker_models_used": [],
+   "ci": "PASS",
+   "cooldown_s": 900,
+   "priority": 10
+  },
+  {
+   "project": "ai-plays-poke",
+   "workdir": "ai_plays_poke",
+   "foreman_model": "deepseek-v4-flash",
+   "foreman_provider": "deepseek-foreman",
+   "last_run": "2026-08-09 07:03",
+   "status": "healthy",
+   "pending_tasks": "4",
+   "worker_models_used": [],
+   "ci": "PASS",
+   "cooldown_s": 7200,
+   "priority": 10
+  },
+  {
+   "project": "asce",
+   "workdir": "asce",
+   "foreman_model": "deepseek-v4-flash",
+   "foreman_provider": "deepseek-foreman",
+   "last_run": "2026-08-09 07:48",
+   "status": "healthy",
+   "pending_tasks": "2",
+   "worker_models_used": [],
+   "ci": "GITLAB",
+   "cooldown_s": 7200,
+   "priority": 10
+  },
+  {
+   "project": "bunker",
+   "workdir": "bunker",
+   "foreman_model": "deepseek-v4-flash",
+   "foreman_provider": "deepseek-foreman",
+   "last_run": "2026-08-09 06:52",
+   "status": "healthy",
+   "pending_tasks": "0",
+   "worker_models_used": [],
+   "ci": "PASS",
+   "cooldown_s": 7200,
+   "priority": 10
+  },
+  {
+   "project": "ch-alpha",
+   "workdir": "tmp",
+   "foreman_model": "\u2014",
+   "foreman_provider": "\u2014",
+   "last_run": "paused",
+   "status": "paused",
+   "pending_tasks": "\u2014",
+   "worker_models_used": [],
+   "ci": "PAUSED",
+   "cooldown_s": 43200,
+   "priority": 9
+  },
+  {
+   "project": "ch-beta",
+   "workdir": "tmp",
+   "foreman_model": "\u2014",
+   "foreman_provider": "\u2014",
+   "last_run": "paused",
+   "status": "paused",
+   "pending_tasks": "\u2014",
+   "worker_models_used": [],
+   "ci": "PAUSED",
+   "cooldown_s": 43200,
+   "priority": 8
+  },
+  {
+   "project": "ch-delta",
+   "workdir": "tmp",
+   "foreman_model": "\u2014",
+   "foreman_provider": "\u2014",
+   "last_run": "paused",
+   "status": "paused",
+   "pending_tasks": "\u2014",
+   "worker_models_used": [],
+   "ci": "PAUSED",
+   "cooldown_s": 43200,
+   "priority": 6
+  },
+  {
+   "project": "ch-epsilon",
+   "workdir": "tmp",
+   "foreman_model": "\u2014",
+   "foreman_provider": "\u2014",
+   "last_run": "paused",
+   "status": "paused",
+   "pending_tasks": "\u2014",
+   "worker_models_used": [],
+   "ci": "PAUSED",
+   "cooldown_s": 43200,
+   "priority": 5
+  },
+  {
+   "project": "ch-eta",
+   "workdir": "tmp",
+   "foreman_model": "\u2014",
+   "foreman_provider": "\u2014",
+   "last_run": "paused",
+   "status": "paused",
+   "pending_tasks": "\u2014",
+   "worker_models_used": [],
+   "ci": "PAUSED",
+   "cooldown_s": 43200,
+   "priority": 2
+  },
+  {
+   "project": "ch-gamma",
+   "workdir": "tmp",
+   "foreman_model": "\u2014",
+   "foreman_provider": "\u2014",
+   "last_run": "paused",
+   "status": "paused",
+   "pending_tasks": "\u2014",
+   "worker_models_used": [],
+   "ci": "PAUSED",
+   "cooldown_s": 43200,
+   "priority": 7
+  },
+  {
+   "project": "ch-zeta",
+   "workdir": "tmp",
+   "foreman_model": "\u2014",
+   "foreman_provider": "\u2014",
+   "last_run": "paused",
+   "status": "paused",
+   "pending_tasks": "\u2014",
+   "worker_models_used": [],
+   "ci": "PAUSED",
+   "cooldown_s": 43200,
+   "priority": 4
+  },
+  {
+   "project": "chimera-v2",
+   "workdir": "chimera-v2",
+   "foreman_model": "deepseek-v4-flash",
+   "foreman_provider": "deepseek-foreman",
+   "last_run": "2026-08-09 07:13",
+   "status": "healthy",
+   "pending_tasks": "0",
+   "worker_models_used": [],
+   "ci": "GITLAB",
+   "cooldown_s": 7200,
+   "priority": 10
+  },
+  {
+   "project": "coding-hermes-scheduler",
+   "workdir": "coding-herms-scheduler",
+   "foreman_model": "deepseek-v4-flash",
+   "foreman_provider": "deepseek-foreman",
+   "last_run": "2026-08-09 06:21",
+   "status": "healthy",
+   "pending_tasks": "5",
+   "worker_models_used": [],
+   "ci": "PASS",
+   "cooldown_s": 7200,
+   "priority": 10
+  },
+  {
+   "project": "consensus",
+   "workdir": "consensus",
+   "foreman_model": "deepseek-v4-flash",
+   "foreman_provider": "deepseek-foreman",
+   "last_run": "2026-08-09 06:55",
+   "status": "healthy",
+   "pending_tasks": "0",
+   "worker_models_used": [],
+   "ci": "PASS",
+   "cooldown_s": 7200,
+   "priority": 10
+  },
+  {
+   "project": "crier",
+   "workdir": "crier",
+   "foreman_model": "deepseek-v4-flash",
+   "foreman_provider": "deepseek-foreman",
+   "last_run": "2026-08-09 07:22",
+   "status": "healthy",
+   "pending_tasks": "2",
+   "worker_models_used": [],
+   "ci": "PASS",
+   "cooldown_s": 7200,
+   "priority": 10
+  },
+  {
+   "project": "dc-prune",
+   "workdir": "tmp",
+   "foreman_model": "\u2014",
+   "foreman_provider": "\u2014",
+   "last_run": "paused",
+   "status": "paused",
+   "pending_tasks": "\u2014",
+   "worker_models_used": [],
+   "ci": "PAUSED",
+   "cooldown_s": 43200,
+   "priority": 7
+  },
+  {
+   "project": "dc-rotate",
+   "workdir": "tmp",
+   "foreman_model": "\u2014",
+   "foreman_provider": "\u2014",
+   "last_run": "paused",
+   "status": "paused",
+   "pending_tasks": "\u2014",
+   "worker_models_used": [],
+   "ci": "PAUSED",
+   "cooldown_s": 43200,
+   "priority": 3
+  },
+  {
+   "project": "dc-vacuum",
+   "workdir": "tmp",
+   "foreman_model": "\u2014",
+   "foreman_provider": "\u2014",
+   "last_run": "paused",
+   "status": "paused",
+   "pending_tasks": "\u2014",
+   "worker_models_used": [],
+   "ci": "PAUSED",
+   "cooldown_s": 43200,
+   "priority": 5
+  },
+  {
+   "project": "deepseek-dashboard",
+   "workdir": "deepseek-dashboard",
+   "foreman_model": "deepseek-v4-flash",
+   "foreman_provider": "deepseek-foreman",
+   "last_run": "2026-08-09 06:40",
+   "status": "healthy",
+   "pending_tasks": "3",
+   "worker_models_used": [],
+   "ci": "PASS",
+   "cooldown_s": 7200,
+   "priority": 10
+  },
+  {
+   "project": "dexdat-core",
+   "workdir": "dexdat-core",
+   "foreman_model": "deepseek-v4-flash",
+   "foreman_provider": "deepseek-foreman",
+   "last_run": "2026-08-09 07:41",
+   "status": "healthy",
+   "pending_tasks": "1",
+   "worker_models_used": [],
+   "ci": "NO-CI",
+   "cooldown_s": 7200,
+   "priority": 5
+  },
+  {
+   "project": "dexdat-memory",
+   "workdir": "dexdat-memory",
+   "foreman_model": "deepseek-v4-flash",
+   "foreman_provider": "deepseek-foreman",
+   "last_run": "2026-08-09 06:48",
+   "status": "error",
+   "pending_tasks": "0",
+   "worker_models_used": [],
+   "ci": "FAIL",
+   "cooldown_s": 7200,
+   "priority": 10
+  },
+  {
+   "project": "duckbrain",
+   "workdir": "duckbrain",
+   "foreman_model": "deepseek-v4-flash",
+   "foreman_provider": "deepseek-foreman",
+   "last_run": "2026-08-09 07:01",
+   "status": "healthy",
+   "pending_tasks": "1",
+   "worker_models_used": [],
+   "ci": "PASS",
+   "cooldown_s": 7200,
+   "priority": 10
+  },
+  {
+   "project": "eduos.dexdat.com.co",
+   "workdir": "eduos.dexdat.com.co",
+   "foreman_model": "deepseek-v4-flash",
+   "foreman_provider": "deepseek-foreman",
+   "last_run": "2026-08-09 06:23",
+   "status": "error",
+   "pending_tasks": "6",
+   "worker_models_used": [],
+   "ci": "FAIL",
+   "cooldown_s": 7200,
+   "priority": 5
+  },
+  {
+   "project": "escalation-doctrine",
+   "workdir": "escalation-doctrine",
+   "foreman_model": "deepseek-v4-flash",
+   "foreman_provider": "deepseek-foreman",
+   "last_run": "2026-08-09 06:01",
+   "status": "error",
+   "pending_tasks": "0",
+   "worker_models_used": [],
+   "ci": "FAIL",
+   "cooldown_s": 7200,
+   "priority": 5
+  },
+  {
+   "project": "gitreins-poc",
+   "workdir": "gitreins-poc",
+   "foreman_model": "deepseek-v4-flash",
+   "foreman_provider": "deepseek-foreman",
+   "last_run": "2026-08-09 06:19",
+   "status": "healthy",
+   "pending_tasks": "4",
+   "worker_models_used": [],
+   "ci": "GITLAB",
+   "cooldown_s": 7200,
+   "priority": 8
+  },
+  {
+   "project": "global-fast",
+   "workdir": "tmp",
+   "foreman_model": "\u2014",
+   "foreman_provider": "\u2014",
+   "last_run": "paused",
+   "status": "paused",
+   "pending_tasks": "\u2014",
+   "worker_models_used": [],
+   "ci": "PAUSED",
+   "cooldown_s": 43200,
+   "priority": 10
+  },
+  {
+   "project": "global-slow",
+   "workdir": "tmp",
+   "foreman_model": "\u2014",
+   "foreman_provider": "\u2014",
+   "last_run": "paused",
+   "status": "paused",
+   "pending_tasks": "\u2014",
+   "worker_models_used": [],
+   "ci": "PAUSED",
+   "cooldown_s": 43200,
+   "priority": 1
+  },
+  {
+   "project": "h3",
+   "workdir": "h3",
+   "foreman_model": "deepseek-v4-flash",
+   "foreman_provider": "deepseek-foreman",
+   "last_run": "2026-08-09 06:48",
+   "status": "healthy",
+   "pending_tasks": "55",
+   "worker_models_used": [],
+   "ci": "PASS",
+   "cooldown_s": 21600,
+   "priority": 10
+  },
+  {
+   "project": "h3-sdk-go-foreman",
+   "workdir": "sdk-go",
+   "foreman_model": "deepseek-v4-flash",
+   "foreman_provider": "deepseek-foreman",
+   "last_run": "2026-08-09 08:05",
+   "status": "healthy",
+   "pending_tasks": "1",
+   "worker_models_used": [],
+   "ci": "PASS",
+   "cooldown_s": 7200,
+   "priority": 8
+  },
+  {
+   "project": "h3-sdk-python-foreman",
+   "workdir": "sdk-python",
+   "foreman_model": "deepseek-v4-flash",
+   "foreman_provider": "deepseek-foreman",
+   "last_run": "2026-08-09 06:50",
+   "status": "healthy",
+   "pending_tasks": "0",
+   "worker_models_used": [],
+   "ci": "PASS",
+   "cooldown_s": 7200,
+   "priority": 10
+  },
+  {
+   "project": "h3-sdk-typescript-foreman",
+   "workdir": "sdk-typescript",
+   "foreman_model": "deepseek-v4-flash",
+   "foreman_provider": "deepseek-foreman",
+   "last_run": "2026-08-09 05:53",
+   "status": "healthy",
+   "pending_tasks": "0",
+   "worker_models_used": [],
+   "ci": "PASS",
+   "cooldown_s": 7200,
+   "priority": 5
+  },
+  {
+   "project": "h3-shim-foreman",
+   "workdir": "shim",
+   "foreman_model": "deepseek-v4-flash",
+   "foreman_provider": "deepseek-foreman",
+   "last_run": "2026-08-09 07:15",
+   "status": "healthy",
+   "pending_tasks": "4",
+   "worker_models_used": [],
+   "ci": "PASS",
+   "cooldown_s": 7200,
+   "priority": 10
+  },
+  {
+   "project": "HEADING",
+   "workdir": "heading",
+   "foreman_model": "deepseek-v4-flash",
+   "foreman_provider": "deepseek-foreman",
+   "last_run": "paused",
+   "status": "paused",
+   "pending_tasks": "\u2014",
+   "worker_models_used": [],
+   "ci": "PAUSED",
+   "cooldown_s": 43200,
+   "priority": 10
+  },
+  {
+   "project": "heading",
+   "workdir": "heading",
+   "foreman_model": "deepseek-v4-flash",
+   "foreman_provider": "deepseek-foreman",
+   "last_run": "2026-08-09 06:27",
+   "status": "healthy",
+   "pending_tasks": "5",
+   "worker_models_used": [],
+   "ci": "GITLAB",
+   "cooldown_s": 7200,
+   "priority": 5
+  },
+  {
+   "project": "helios",
+   "workdir": "helios-work",
+   "foreman_model": "deepseek-v4-flash",
+   "foreman_provider": "deepseek-foreman",
+   "last_run": "2026-08-09 07:33",
+   "status": "error",
+   "pending_tasks": "5",
+   "worker_models_used": [],
+   "ci": "FAIL",
+   "cooldown_s": 7200,
+   "priority": 8
+  },
+  {
+   "project": "helix",
+   "workdir": "helix",
+   "foreman_model": "deepseek-v4-flash",
+   "foreman_provider": "deepseek-foreman",
+   "last_run": "2026-08-09 07:00",
+   "status": "healthy",
+   "pending_tasks": "4",
+   "worker_models_used": [],
+   "ci": "PASS",
+   "cooldown_s": 7200,
+   "priority": 10
+  },
+  {
+   "project": "hermes-canopy",
+   "workdir": "hermes-canopy",
+   "foreman_model": "deepseek-v4-flash",
+   "foreman_provider": "deepseek-foreman",
+   "last_run": "2026-08-09 07:49",
+   "status": "healthy",
+   "pending_tasks": "23",
+   "worker_models_used": [],
+   "ci": "PASS",
+   "cooldown_s": 900,
+   "priority": 10
+  },
+  {
+   "project": "hermes-dagger",
+   "workdir": "hermes-dagger",
+   "foreman_model": "deepseek-v4-flash",
+   "foreman_provider": "deepseek-foreman",
+   "last_run": "2026-08-09 07:53",
+   "status": "healthy",
+   "pending_tasks": "0",
+   "worker_models_used": [],
+   "ci": "PASS",
+   "cooldown_s": 900,
+   "priority": 8
+  },
+  {
+   "project": "hermes4friends-infra",
+   "workdir": "hermes4friends-infra",
+   "foreman_model": "deepseek-v4-flash",
+   "foreman_provider": "deepseek-foreman",
+   "last_run": "2026-08-09 07:43",
+   "status": "healthy",
+   "pending_tasks": "4",
+   "worker_models_used": [],
+   "ci": "PASS",
+   "cooldown_s": 7200,
+   "priority": 5
+  },
+  {
+   "project": "hivemind-pulse",
+   "workdir": "hivemind-work",
+   "foreman_model": "deepseek-v4-flash",
+   "foreman_provider": "deepseek-foreman",
+   "last_run": "paused",
+   "status": "paused",
+   "pending_tasks": "\u2014",
+   "worker_models_used": [],
+   "ci": "PAUSED",
+   "cooldown_s": 43200,
+   "priority": 10
+  },
+  {
+   "project": "hivemind-work",
+   "workdir": "hivemind-work",
+   "foreman_model": "deepseek-v4-flash",
+   "foreman_provider": "deepseek-foreman",
+   "last_run": "2026-08-09 07:07",
+   "status": "error",
+   "pending_tasks": "2",
+   "worker_models_used": [],
+   "ci": "FAIL",
+   "cooldown_s": 7200,
+   "priority": 10
+  },
+  {
+   "project": "imhotep",
+   "workdir": "imhotep",
+   "foreman_model": "deepseek-v4-flash",
+   "foreman_provider": "deepseek-foreman",
+   "last_run": "2026-08-09 05:57",
+   "status": "healthy",
+   "pending_tasks": "3",
+   "worker_models_used": [],
+   "ci": "GITLAB",
+   "cooldown_s": 7200,
+   "priority": 5
+  },
+  {
+   "project": "inference-estimator",
+   "workdir": "inference-estimator",
+   "foreman_model": "deepseek-v4-flash",
+   "foreman_provider": "deepseek-foreman",
+   "last_run": "2026-08-09 08:05",
+   "status": "healthy",
+   "pending_tasks": "0",
+   "worker_models_used": [],
+   "ci": "PASS",
+   "cooldown_s": 900,
+   "priority": 8
+  },
+  {
+   "project": "Kobayashi-Maru",
+   "workdir": "Kobayashi-Maru",
+   "foreman_model": "deepseek-v4-flash",
+   "foreman_provider": "deepseek-foreman",
+   "last_run": "2026-08-09 08:05",
+   "status": "error",
+   "pending_tasks": "0",
+   "worker_models_used": [],
+   "ci": "FAIL",
+   "cooldown_s": 7200,
+   "priority": 10
+  },
+  {
+   "project": "mafia-ai-benchmark",
+   "workdir": "mafia-ai-benchmark",
+   "foreman_model": "deepseek-v4-flash",
+   "foreman_provider": "deepseek-foreman",
+   "last_run": "2026-08-09 08:05",
+   "status": "healthy",
+   "pending_tasks": "4",
+   "worker_models_used": [],
+   "ci": "PASS",
+   "cooldown_s": 7200,
+   "priority": 8
+  },
+  {
+   "project": "mon-alert",
+   "workdir": "tmp",
+   "foreman_model": "\u2014",
+   "foreman_provider": "\u2014",
+   "last_run": "paused",
+   "status": "paused",
+   "pending_tasks": "\u2014",
+   "worker_models_used": [],
+   "ci": "PAUSED",
+   "cooldown_s": 43200,
+   "priority": 4
+  },
+  {
+   "project": "mon-check",
+   "workdir": "tmp",
+   "foreman_model": "\u2014",
+   "foreman_provider": "\u2014",
+   "last_run": "paused",
+   "status": "paused",
+   "pending_tasks": "\u2014",
+   "worker_models_used": [],
+   "ci": "PAUSED",
+   "cooldown_s": 43200,
+   "priority": 6
+  },
+  {
+   "project": "mon-ping",
+   "workdir": "tmp",
+   "foreman_model": "\u2014",
+   "foreman_provider": "\u2014",
+   "last_run": "paused",
+   "status": "paused",
+   "pending_tasks": "\u2014",
+   "worker_models_used": [],
+   "ci": "PAUSED",
+   "cooldown_s": 43200,
+   "priority": 8
+  },
+  {
+   "project": "muster",
+   "workdir": "muster",
+   "foreman_model": "deepseek-v4-flash",
+   "foreman_provider": "deepseek-foreman",
+   "last_run": "2026-08-09 07:27",
+   "status": "error",
+   "pending_tasks": "3",
+   "worker_models_used": [],
+   "ci": "FAIL",
+   "cooldown_s": 7200,
+   "priority": 10
+  },
+  {
+   "project": "musterflow",
+   "workdir": "musterflow",
+   "foreman_model": "deepseek-v4-flash",
+   "foreman_provider": "deepseek-foreman",
+   "last_run": "2026-08-09 07:21",
+   "status": "error",
+   "pending_tasks": "4",
+   "worker_models_used": [],
+   "ci": "FAIL",
+   "cooldown_s": 7200,
+   "priority": 10
+  },
+  {
+   "project": "my-project",
+   "workdir": "my-project",
+   "foreman_model": "deepseek-v4-flash",
+   "foreman_provider": "deepseek-foreman",
+   "last_run": "2026-08-09 07:39",
+   "status": "healthy",
+   "pending_tasks": "2",
+   "worker_models_used": [],
+   "ci": "NO-CI",
+   "cooldown_s": 7200,
+   "priority": 5
+  },
+  {
+   "project": "mythos",
+   "workdir": "mythos",
+   "foreman_model": "deepseek-v4-flash",
+   "foreman_provider": "deepseek-foreman",
+   "last_run": "paused",
+   "status": "paused",
+   "pending_tasks": "\u2014",
+   "worker_models_used": [],
+   "ci": "PAUSED",
+   "cooldown_s": 900,
+   "priority": 5
+  },
+  {
+   "project": "off-by-one",
+   "workdir": "off-by-one",
+   "foreman_model": "deepseek-v4-flash",
+   "foreman_provider": "deepseek-foreman",
+   "last_run": "2026-08-09 05:52",
+   "status": "healthy",
+   "pending_tasks": "10",
+   "worker_models_used": [],
+   "ci": "PASS",
+   "cooldown_s": 7200,
+   "priority": 5
+  },
+  {
+   "project": "rabbit-hole",
+   "workdir": "rabbit-hole",
+   "foreman_model": "deepseek-v4-flash",
+   "foreman_provider": "deepseek-foreman",
+   "last_run": "2026-08-09 06:13",
+   "status": "healthy",
+   "pending_tasks": "3",
+   "worker_models_used": [],
+   "ci": "GITLAB",
+   "cooldown_s": 7200,
+   "priority": 10
+  },
+  {
+   "project": "rethinkdb",
+   "workdir": "rethinkdb",
+   "foreman_model": "deepseek-v4-flash",
+   "foreman_provider": "deepseek-foreman",
+   "last_run": "2026-08-09 06:24",
+   "status": "error",
+   "pending_tasks": "19",
+   "worker_models_used": [],
+   "ci": "FAIL",
+   "cooldown_s": 7200,
+   "priority": 5
+  },
+  {
+   "project": "ring-runner",
+   "workdir": "ring-runner",
+   "foreman_model": "deepseek-v4-flash",
+   "foreman_provider": "deepseek-foreman",
+   "last_run": "2026-08-09 07:37",
+   "status": "healthy",
+   "pending_tasks": "0",
+   "worker_models_used": [],
+   "ci": "NO-CI",
+   "cooldown_s": 7200,
+   "priority": 10
+  },
+  {
+   "project": "sim-alpha",
+   "workdir": "test",
+   "foreman_model": "\u2014",
+   "foreman_provider": "\u2014",
+   "last_run": "paused",
+   "status": "paused",
+   "pending_tasks": "\u2014",
+   "worker_models_used": [],
+   "ci": "PAUSED",
+   "cooldown_s": 43200,
+   "priority": 5
+  },
+  {
+   "project": "sim-beta",
+   "workdir": "test",
+   "foreman_model": "\u2014",
+   "foreman_provider": "\u2014",
+   "last_run": "paused",
+   "status": "paused",
+   "pending_tasks": "\u2014",
+   "worker_models_used": [],
+   "ci": "PAUSED",
+   "cooldown_s": 43200,
+   "priority": 8
+  },
+  {
+   "project": "sim-delta",
+   "workdir": "test",
+   "foreman_model": "\u2014",
+   "foreman_provider": "\u2014",
+   "last_run": "paused",
+   "status": "paused",
+   "pending_tasks": "\u2014",
+   "worker_models_used": [],
+   "ci": "PAUSED",
+   "cooldown_s": 43200,
+   "priority": 9
+  },
+  {
+   "project": "sim-gamma",
+   "workdir": "test",
+   "foreman_model": "\u2014",
+   "foreman_provider": "\u2014",
+   "last_run": "paused",
+   "status": "paused",
+   "pending_tasks": "\u2014",
+   "worker_models_used": [],
+   "ci": "PAUSED",
+   "cooldown_s": 43200,
+   "priority": 3
+  },
+  {
+   "project": "SpecLang",
+   "workdir": "SpecLang",
+   "foreman_model": "deepseek-v4-flash",
+   "foreman_provider": "deepseek-foreman",
+   "last_run": "paused",
+   "status": "paused",
+   "pending_tasks": "\u2014",
+   "worker_models_used": [],
+   "ci": "PAUSED",
+   "cooldown_s": 43200,
+   "priority": 10
+  },
+  {
+   "project": "speclang",
+   "workdir": "speclang",
+   "foreman_model": "deepseek-v4-flash",
+   "foreman_provider": "deepseek-foreman",
+   "last_run": "2026-08-09 07:24",
+   "status": "healthy",
+   "pending_tasks": "0",
+   "worker_models_used": [],
+   "ci": "PASS",
+   "cooldown_s": 7200,
+   "priority": 10
+  },
+  {
+   "project": "terminal-jail",
+   "workdir": "terminal-jail",
+   "foreman_model": "deepseek-v4-flash",
+   "foreman_provider": "deepseek-foreman",
+   "last_run": "2026-08-09 06:13",
+   "status": "healthy",
+   "pending_tasks": "5",
+   "worker_models_used": [],
+   "ci": "PASS",
+   "cooldown_s": 7200,
+   "priority": 10
+  },
+  {
+   "project": "totalstack",
+   "workdir": "totalstack",
+   "foreman_model": "deepseek-v4-flash",
+   "foreman_provider": "deepseek-foreman",
+   "last_run": "2026-08-09 07:16",
+   "status": "healthy",
+   "pending_tasks": "3",
+   "worker_models_used": [],
+   "ci": "PASS",
+   "cooldown_s": 7200,
+   "priority": 10
+  },
+  {
+   "project": "uhlp",
+   "workdir": "uhlp",
+   "foreman_model": "deepseek-v4-flash",
+   "foreman_provider": "deepseek-foreman",
+   "last_run": "2026-08-09 07:46",
+   "status": "healthy",
+   "pending_tasks": "1",
+   "worker_models_used": [],
+   "ci": "PASS",
+   "cooldown_s": 7200,
+   "priority": 9
+  },
+  {
+   "project": "warpfs",
+   "workdir": "warpfs",
+   "foreman_model": "deepseek-v4-flash",
+   "foreman_provider": "deepseek-foreman",
+   "last_run": "2026-08-09 06:57",
+   "status": "healthy",
+   "pending_tasks": "0",
+   "worker_models_used": [],
+   "ci": "PASS",
+   "cooldown_s": 7200,
+   "priority": 10
+  },
+  {
+   "project": "wojons-mythos",
+   "workdir": "wojons-mythos",
+   "foreman_model": "deepseek-v4-flash",
+   "foreman_provider": "deepseek-foreman",
+   "last_run": "2026-08-09 05:58",
+   "status": "error",
+   "pending_tasks": "2",
+   "worker_models_used": [],
+   "ci": "FAIL",
+   "cooldown_s": 7200,
+   "priority": 10
+  },
+  {
+   "project": "zz-gap12-probe",
+   "workdir": "schedgap-probe2",
+   "foreman_model": "\u2014",
+   "foreman_provider": "\u2014",
+   "last_run": "paused",
+   "status": "paused",
+   "pending_tasks": "\u2014",
+   "worker_models_used": [],
+   "ci": "PAUSED",
+   "cooldown_s": 900,
+   "priority": 5
+  },
+  {
+   "project": "zz-schedgap-011-probe",
+   "workdir": "schedgap-probe",
+   "foreman_model": "\u2014",
+   "foreman_provider": "\u2014",
+   "last_run": "paused",
+   "status": "paused",
+   "pending_tasks": "\u2014",
+   "worker_models_used": [],
+   "ci": "PAUSED",
+   "cooldown_s": 900,
+   "priority": 5
+  }
+ ],
+ "what_got_done": {
+  "commits_landed": [
+   {
+    "project": "9router",
+    "message": "bbc458ca board: tick 76 \u2014 IDLE light audit, 6th consecutive idle. Board complete 28/28 (PR #3173 OP",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "9router",
+    "message": "3fe4bc1f board: tick 75 \u2014 IDLE light audit, 5th consecutive idle. Board complete 28/28 (PR #3173 OP",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "9router",
+    "message": "eeaaa674 board: tick 74 \u2014 IDLE light audit, 4th consecutive idle. Board complete 28/28 (PR #3173 OP",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "9router",
+    "message": "b9ceb5f4 board: tick 73 \u2014 IDLE light audit, 3rd consecutive idle. Board complete 28/28 (PR #3173 OP",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "9router",
+    "message": "f76be5f8 board: tick 72 \u2014 IDLE light audit, 2nd consecutive idle. Board complete 28/28 (PR #3173 OP",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "9router",
+    "message": "15bcdf9d board: tick 71 \u2014 IDLE light audit, 1st consecutive idle. Board complete 28/28 (PR #3173 OP",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "9router",
+    "message": "03ae1191 board: tick 70 \u2014 WORK tick, FED-019 complete (root npm test script + vitest cwd note; npm ",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "9router",
+    "message": "4fc31fb9 chore: add root npm test script + AGENTS.md vitest cwd note \u2014 npm test now runs the suite ",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "9router",
+    "message": "27712d05 board: tick 69 \u2014 WORK tick, FED-018 complete (edge dev-mode FATAL; next dev cannot load cu",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "9router",
+    "message": "c533d91d fix(federation): FATAL-exit edge boots under next dev \u2014 the proxy/DEGRADED intercept live ",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "9router",
+    "message": "8e3b3a70 board: stand-in PM cycle 2026-08-09 \u2014 FED-018/019 (edge dev-mode proxy gap, root test scri",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "9router",
+    "message": "3a473edd board: tick 68 \u2014 idle light audit, 14th consecutive idle. Board complete 26/26 (PR #3173 O",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "9router",
+    "message": "2380a98d board: tick 67 \u2014 idle light audit, 13th consecutive idle. Board complete 26/26 (PR #3173 O",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "9router",
+    "message": "ececb763 board: tick 66 \u2014 idle light audit, 12th consecutive idle. Board complete 26/26 (PR #3173 O",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "9router",
+    "message": "34a719da board: tick 65 \u2014 idle light audit, 11th consecutive idle. Board complete 26/26 (PR #3173 O",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "Kobayashi-Maru",
+    "message": "3626b79 chore(board): Tick 216 \u2014 Idle tick #13, cheap audit, all gates PASS (build, vet), E2E-001 ",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "Kobayashi-Maru",
+    "message": "d40c90f chore(board): Tick 215 \u2014 Idle tick #12, cheap audit, all gates PASS (build, vet), E2E-001 ",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "Kobayashi-Maru",
+    "message": "d05eae6 chore(board): Tick 214 \u2014 Idle tick #11, cheap audit, all gates PASS (build, vet), E2E-001 ",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "Kobayashi-Maru",
+    "message": "ff875e6 chore(board): Tick 213 \u2014 Idle tick #10, cheap audit, all gates PASS (build, vet), E2E-001 ",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "Kobayashi-Maru",
+    "message": "848ba97 chore(board): Tick 212 \u2014 Idle tick #9, cheap audit + E2E-001 FULL battery 9/9 ZERO 501 (wi",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "Kobayashi-Maru",
+    "message": "13efe3e chore(board): Tick 211 \u2014 ACTIVE tick: KM-GAP-010 RESOLVED (41b1f26 TestMigrateUp order-ind",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "Kobayashi-Maru",
+    "message": "41b1f26 fix(test): make TestMigrateUp_WithTestContainer order-independent \u2014 run 'migrate up' throu",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "ai-plays-poke",
+    "message": "61b3388 board: T118 \u2014 NEVER-DONE light audit all-clean; AP-GAP-006 standing human-blocked (key pro",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "ai-plays-poke",
+    "message": "050c586 board: T117 \u2014 NEVER-DONE light audit all-clean; AP-GAP-006 standing human-blocked (key pro",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "ai-plays-poke",
+    "message": "6075130 board: T116 \u2014 NEVER-DONE light audit all-clean; AP-GAP-006 standing human-blocked (key pro",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "ai-plays-poke",
+    "message": "e63fe89 board: T115 \u2014 NEVER-DONE light audit all-clean; AP-GAP-006 standing human-blocked (key pro",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "ai-plays-poke",
+    "message": "461338d board: T114 \u2014 NEVER-DONE light audit all-clean; AP-GAP-006 standing human-blocked (key pro",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "ai-plays-poke",
+    "message": "609fa76 board: T113 \u2014 NEVER-DONE light audit all-clean; AP-GAP-006 standing human-blocked (key pro",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "asce",
+    "message": "f4a8b2d chore(board): tick #289 \u2014 E2E288-002 FIXED (krakend gin panic closed: GET fallback 405 blo",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "asce",
+    "message": "1762c50 fix(gateway): add GET 405 fallback blocks for method-mismatched param routes \u2014 stops krake",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "asce",
+    "message": "c91e671 chore(board): tick #288 \u2014 E2E-001 fixture pass (37 PASS/0 FAIL/15 SKIP, MCP 16/16, E2E278-",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "asce",
+    "message": "4798ca4 test(e2e): E2E-001 fixture pass tick #288 \u2014 37 PASS/0 FAIL/15 SKIP (all documented), MCP 1",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "asce",
+    "message": "5f8ede4 chore(board): tick #287 \u2014 GAP-009 P0 CLOSED (live gateway reload: docker compose up -d kra",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "asce",
+    "message": "dd0f1eb chore(board): tick #286 \u2014 GAP-007 REOPENED->CLOSED (deploy fix 1a7969e: Dockerfile ships a",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "asce",
+    "message": "1a7969e fix(docker): ship api/openapi.yaml in runtime image + WORKDIR /app \u2014 closes GAP-007 deploy",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "asce",
+    "message": "29fa0c7 board: stand-in PM cycle 2026-08-09 \u2014 GAP-007 reopen (verification failed: Scalar not depl",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "asce",
+    "message": "22db99b chore(board): tick #285 \u2014 GAP-007 FIXED (/docs Scalar OpenAPI viewer \u2014 worker 7691d02, jud",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "asce",
+    "message": "18f26a9 chore(gitreins): commit asce-gap-007 judge verdicts (PASS 8/8 on re-judge \u2014 first run 7/8 ",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "asce",
+    "message": "7691d02 feat(docs): serve OpenAPI spec at /docs with Scalar viewer \u2014 makes api/openapi.yaml intera",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "asce",
+    "message": "5420bc0 chore(board): tick #284 \u2014 GAP-006 FIXED (host-mode port default 8080\u21928081 avoids krakend :",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "asce",
+    "message": "9835d1e chore(gitreins): commit asce-gap-006 judge verdicts (PASS 8/8 first run \u2014 default PORT 808",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "asce",
+    "message": "51df936 fix(config): default PORT 8080\u21928081 for host-mode dev \u2014 avoids krakend :8080 collision. Ad",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "asce",
+    "message": "48cf4bc chore(board): tick #283 \u2014 GAP-010 REOPENED-FIXED (host-first .env DSNs + compose network o",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "bunker",
+    "message": "3e26ecc chore(foreman): tick #253 \u2014 idle audit #114: cheap audit all-clear (parity MATCH 140/140 m",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "bunker",
+    "message": "67ab782 chore(foreman): tick #252 \u2014 idle audit #113: cheap audit all-clear (parity MATCH 138/138 m",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "bunker",
+    "message": "30de229 chore(foreman): tick #251 \u2014 idle audit #112: cheap audit all-clear (parity MATCH 137/137 m",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "bunker",
+    "message": "5b83ab1 chore(foreman): tick #250 \u2014 idle audit #111: cheap audit all-clear (parity MATCH 136/136 m",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "bunker",
+    "message": "d623a12 chore(foreman): tick #249 \u2014 idle audit #110: cheap audit all-clear (parity MATCH 135/135 m",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "chimera-v2",
+    "message": "d36dfb2 chore(board): record tick #110 idle #2 light audit \u2014 JSONL board 24/24 complete 0 pending;",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "chimera-v2",
+    "message": "c000778 chore(board): record tick #109 idle #1 light audit \u2014 JSONL board 24/24 complete 0 pending;",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "chimera-v2",
+    "message": "3ee4c1f chore(board): record tick #108 commit hash c3ef5b8 in event detail",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "chimera-v2",
+    "message": "c3ef5b8 docs+board: close CH-GAP-013/014 foreman-direct (stale parquet caches removed per JSONL ca",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "chimera-v2",
+    "message": "c62e6cc board: stand-in PM cycle 2026-08-09 \u2014 CH-GAP-013/014 (stale parquet caches, README doc lin",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "chimera-v2",
+    "message": "690f9cb board: tick #107 \u2014 PRODUCTIVE \u2014 closed 4 stand-in PM gaps foreman-direct (README Quickstar",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "chimera-v2",
+    "message": "4c22814 docs: consolidate README Quickstart (CH-GAP-009), document model_sync refresh strategy (CH",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "chimera-v2",
+    "message": "2b72699 board: stand-in PM cycle 2026-08-09 \u2014 CH-GAP-009/010/011/012 docs+hygiene+ops gaps",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "chimera-v2",
+    "message": "25181e9 board: tick #106 \u2014 IDLE #6 post-productive light audit (JSONL board). 0 real tasks (17 com",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "coding-hermes-scheduler",
+    "message": "7b6e53d board: tick #315 \u2014 header last_commit sync (a78246f)",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "coding-hermes-scheduler",
+    "message": "a78246f board: tick #315 \u2014 never-done-FULL 12-point audit IDLE (all 12 points green, no findings);",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "coding-hermes-scheduler",
+    "message": "068a5be board: tick #314 \u2014 header last_commit sync (233ccb9)",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "coding-hermes-scheduler",
+    "message": "233ccb9 board: tick #314 \u2014 light audit IDLE (both fixture windows closed, all gates green, no find",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "coding-hermes-scheduler",
+    "message": "ad1f7b1 board: tick #313 \u2014 header last_commit sync (1599e35)",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "coding-hermes-scheduler",
+    "message": "1599e35 board: tick #313 \u2014 light audit IDLE (fixture windows closed, all gates green, no findings)",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "coding-hermes-scheduler",
+    "message": "cf56f63 board: tick #312 \u2014 header last_commit sync (b719a9e)",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "coding-hermes-scheduler",
+    "message": "b719a9e board: tick #312 \u2014 E2E-001 FULL battery audit (all gates green, no findings); E2E-001 next",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "coding-hermes-scheduler",
+    "message": "313e0fd board: tick #311 \u2014 header last_commit sync (109bad3)",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "coding-hermes-scheduler",
+    "message": "109bad3 board: tick #311 \u2014 NEVER-DONE FULL 12-point audit IDLE (all gates green, no findings); SCH",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "consensus",
+    "message": "86159bc board: tick #120 audit \u2014 IDLE #4, cheap-audit mode (idle-cost ladder)",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "consensus",
+    "message": "49c636c board: tick #119 audit \u2014 IDLE #3, cheap-audit mode (idle-cost ladder)",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "consensus",
+    "message": "d89f570 board: tick #118 audit \u2014 IDLE #2, cheap-audit mode (idle-cost ladder)",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "consensus",
+    "message": "86a8b81 board: tick #117 audit \u2014 IDLE #1, cheap-audit mode (idle-cost ladder)",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "consensus",
+    "message": "afbb9a3 board: tick #116 \u2014 PRODUCTIVE (C-GAP-007 specs/README.md inventory regenerated)",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "consensus",
+    "message": "80c2840 docs: regenerate specs/README.md spec inventory \u2014 stub claimed 'No specs have been created",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "consensus",
+    "message": "7b09763 stand-in PM: gate C-GAP-007 (stale specs/README.md stub)",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "crier",
+    "message": "b852788 chore(foreman): tick 169 \u2014 lean verification, 8/8 tests + guard PASS + govulncheck clean, ",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "crier",
+    "message": "8d2f1b5 chore(foreman): tick 168 \u2014 PRODUCTIVE: CR-GAP-013 closed foreman-direct (CONTRIBUTING.md G",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "crier",
+    "message": "2ac3be6 docs: CONTRIBUTING.md Go 1.22+ -> Go 1.26+ \u2014 go.mod requires go 1.26.5, the 1.22 prerequis",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "crier",
+    "message": "ea00d04 board: stand-in PM cycle 2026-08-09 \u2014 CR-GAP-013 (CONTRIBUTING Go 1.22 vs go.mod 1.26.5)",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "crier",
+    "message": "31e325b chore(foreman): tick 167 \u2014 PRODUCTIVE: full E2E live battery at first tick of due window ~",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "crier",
+    "message": "4f5f820 chore(foreman): tick 166 \u2014 lean verification, 8/8 tests + guard PASS + govulncheck clean, ",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "crier",
+    "message": "8d762aa chore(foreman): tick 165 \u2014 lean verification, 8/8 tests + guard PASS + govulncheck clean, ",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "crier",
+    "message": "452b25a chore(foreman): tick 164 \u2014 lean verification, 8/8 tests + guard PASS + govulncheck clean, ",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "deepseek-dashboard",
+    "message": "c12fcde chore: board: tick #100 \u2014 productive tick: DSD-GAP-016 complete (Last 7/30 Days period fil",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "deepseek-dashboard",
+    "message": "2ff6c4f fix: anchor Last 7/30 Days period filters to dataset max date \u2014 queryPeriod 7d/30d now end",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "deepseek-dashboard",
+    "message": "d539808 chore: board: tick #99 \u2014 parallel-fire stewardship: sibling 04:11:57 tick #98 completed DS",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "deepseek-dashboard",
+    "message": "1c3a730 chore: board: tick #98 \u2014 productive tick: DSD-GAP-014 complete (Export All Raw amount/pric",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "deepseek-dashboard",
+    "message": "a896551 fix: unswap amount/price columns in Export All Raw \u2014 explicit SELECT (utc_date, model, api",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "deepseek-dashboard",
+    "message": "0480034 chore: board: tick #97 \u2014 productive tick: DSD-GAP-013 complete (key filter inert -> thread",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "deepseek-dashboard",
+    "message": "f65cfa8 fix: thread key filter through refreshAll/getDailyData/renderKeyChart/renderTable \u2014 keySel",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "deepseek-dashboard",
+    "message": "6c9f401 dogfood: deepseek-dashboard PROMISING-BUT-ROUGH \u2014 key filter inert, raw export amount/pric",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "deepseek-dashboard",
+    "message": "e41e5dd chore: board: tick #96 \u2014 productive tick: DSD-GAP-011 + DSD-GAP-012 complete (README Testi",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "deepseek-dashboard",
+    "message": "d9011d2 fix: correct README test-count stat (6 files/680 -> 7 files/800) and allowlist test fixtur",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "deepseek-dashboard",
+    "message": "e214eee stand-in PM: gate DSD-GAP-011/012 (README stats drift + secrets-guard false-positive block",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "deepseek-dashboard",
+    "message": "c95278d chore: board: tick #95 \u2014 idle audit 12/12 gates pass (65/65 vitest 1.18s 7 files, 0 vulns,",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "dexdat-core",
+    "message": "ea41a09 chore: board tick #164 \u2014 light audit (no fixture window open; NEVER-DONE full ran #163, ne",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "dexdat-core",
+    "message": "1439b04 chore: board tick #163 \u2014 NEVER-DONE full 12-point audit (fixture due per #159 worker_summa",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "dexdat-core",
+    "message": "2f60e50 board: tick #162 \u2014 GAP-013/014/015/016 closed foreman-direct (docs batch). Guard PASS 5/5;",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "dexdat-core",
+    "message": "a3fe524 docs: GAP-013/014/015/016 \u2014 stack size, model count, test-path docs aligned with live stac",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "dexdat-core",
+    "message": "5ef9f6e board: stand-in PM cycle 2026-08-09 \u2014 GAP-015/016 (model-count drift, make test hang)",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "dexdat-core",
+    "message": "c647abe board: tick #161 \u2014 DEPS-001 closed foreman-direct (cryptography 49.0.0\u219250.0.0, PYSEC-2026-",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "dexdat-core",
+    "message": "7b17ea8 board: stand-in PM cycle 2026-08-09 \u2014 GAP-013 AGENTS.md container count, GAP-014 integrati",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "dexdat-core",
+    "message": "f32878f chore(deps): cryptography 49.0.0 \u2192 50.0.0 \u2014 closes PYSEC-2026-3552 (pkcs7_decrypt* outcome",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "dexdat-core",
+    "message": "807f926 board: tick #160 \u2014 GAP-011 + GAP-012 closed foreman-direct (docs, PM-gated). README ingest",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "dexdat-core",
+    "message": "4a1cc2b docs: fix README ingest endpoint + integration guide monitoring rows \u2014 GAP-011: README L15",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "dexdat-core",
+    "message": "e1af404 fix: align bunker bundle layout with redeploy extraction path \u2014 make_bundle.py now tars do",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "dexdat-core",
+    "message": "781c509 board: stand-in PM cycle 2026-08-09 \u2014 gap-hunt tasks GAP-003/004 (imhotep), GAP-012/013/01",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "dexdat-memory",
+    "message": "48504a70 docs: tasks.md \u2014 tick #115 entry (IDLE #34). Addresses tick 115.",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "dexdat-memory",
+    "message": "b8a6b7ae chore: board update \u2014 tick #115 (IDLE #34, JSONL append event id 92)",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "dexdat-memory",
+    "message": "67a04d43 docs: tasks.md \u2014 tick #114 entry (IDLE #33). Addresses tick 114.",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "dexdat-memory",
+    "message": "da98adfe chore: board update \u2014 tick #114 (IDLE #33, JSONL append event id 91)",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "dexdat-memory",
+    "message": "1669893a docs: tasks.md \u2014 tick #113 entry (IDLE #32). Addresses tick 113.",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "dexdat-memory",
+    "message": "9970c123 chore: board update \u2014 tick #113 (IDLE #32, JSONL append event id 90)",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "dexdat-memory",
+    "message": "32eb7928 docs: tasks.md \u2014 tick #112 entry (PRODUCTIVE, DM-GAP-016). Addresses tick 112.",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "dexdat-memory",
+    "message": "014a92fb chore: board update \u2014 tick #112 (PRODUCTIVE, DM-GAP-016 complete, JSONL append event id 89",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "dexdat-memory",
+    "message": "afabcb3a fix: accept standard MCP tools/call {name, arguments} shape alongside {tool, input} \u2014 stan",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "dexdat-memory",
+    "message": "3ea602c7 docs: tasks.md \u2014 tick #111 entry (PRODUCTIVE, DM-GAP-015). Addresses tick 111.",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "dexdat-memory",
+    "message": "97c0bd88 chore: board update \u2014 tick #111 (PRODUCTIVE, DM-GAP-015 complete, JSONL append event id 88",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "dexdat-memory",
+    "message": "546bb2a5 fix: add build step to README Quick Start \u2014 fresh-clone users hit 'command not found' for ",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "duckbrain",
+    "message": "a58f560 board: tick #353 \u2014 WORK: DOGFOOD-008 complete (0cacc9f, judge PASS 5/5 d9aac0ac) \u2014 per-ins",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "duckbrain",
+    "message": "0cacc9f fix: per-instance pidfile + scratch temp cleanup \u2014 DOGFOOD-008: second duckbrain http inst",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "duckbrain",
+    "message": "f6bf3bc board: tick #352 \u2014 IDLE audit (idle #1 post-WORK), FIXTURE: E2E-001 window #350-355 \u2014 19th",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "duckbrain",
+    "message": "30046f2 board: tick #351 \u2014 WORK: GAP-012 + GAP-013 complete (4a95093, 5ca84fb, manual criteria PAS",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "duckbrain",
+    "message": "5ca84fb docs: add server_status + server_http_start to MCP tools reference \u2014 GAP-013: README L137-",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "duckbrain",
+    "message": "4a95093 docs: fix AGENTS.md test counts to live 45/338 + add CI count-drift lint rule \u2014 GAP-012: L",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "duckbrain",
+    "message": "e34d642 board: tick #350 \u2014 WORK: GAP-016 + GAP-017 complete (78a0b0f, manual criteria PASS) \u2014 docs",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "duckbrain",
+    "message": "78a0b0f docs: fix getting-started domain example + pnpm/npm consistency \u2014 GAP-016 invalid domain '",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "duckbrain",
+    "message": "7ef40f9 board: stand-in PM cycle 2026-08-09 \u2014 GAP-016 invalid domain example, GAP-017 pnpm/npm mix",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "duckbrain",
+    "message": "3b94de8 board: tick #349 \u2014 WORK: GAP-015 complete (527b3b4, judge PASS 5/5 verdict 82283594) \u2014 HTT",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "duckbrain",
+    "message": "527b3b4 feat: add HTTP compaction/squash API surface \u2014 REST parity with MCP squash tools. Addresse",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "duckbrain",
+    "message": "8e2625f board: stand-in PM cycle 2026-08-09 \u2014 gap-hunt tasks GAP-003/004 (imhotep), GAP-012/013/01",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "eduos.dexdat.com.co",
+    "message": "e47fea3 chore(board): tick 151 \u2014 EDU-GAP-015 complete: README PRD table trimmed to 8 real ALPHA-PR",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "eduos.dexdat.com.co",
+    "message": "a486630 docs: trim README PRD table to 8 existing ALPHA-PRD specs \u2014 README claimed 'All 15 Alpha P",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "eduos.dexdat.com.co",
+    "message": "f5a9a2c board: stand-in PM cycle 2026-08-09 \u2014 EDU-GAP-015 (README 15-PRD claim vs 8 spec files)",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "eduos.dexdat.com.co",
+    "message": "ccb83ac chore(board): tick 150 \u2014 closed BUG-LUNA-009 (by-design) + BUG-LUNA-010 (stale premise, fi",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "eduos.dexdat.com.co",
+    "message": "a537dd1 chore(board): tick 149 \u2014 WEB-UI-HYDRATION-001-REGRESSION fixed (ops: .next wipe + web resp",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "eduos.dexdat.com.co",
+    "message": "66ee982 feat(devx): wire pnpm run e2e + fix teacher-workflow coordinator RBAC \u2014 EDU-GAP-012. Root ",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "eduos.dexdat.com.co",
+    "message": "9410d2f chore(board): tick 148 \u2014 EDU-GAP-013 complete (efe8321, foreman-direct docs fix). Header: ",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "eduos.dexdat.com.co",
+    "message": "efe8321 docs: fix README OpenAPI paths \u2014 /openapi.json shorthand 404s; Swagger UI at /api/v1/docs/",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "escalation-doctrine",
+    "message": "d0a2a91 board: CI-BILLING-001 monitor row \u2014 org billing wall diagnosis (supervisor 2026-08-09)",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "escalation-doctrine",
+    "message": "c8b0f6d fix: ED-GAP-019 batch 6 \u2014 12 more GUT-ignored test files execute (23->11): audio_manager, ",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "escalation-doctrine",
+    "message": "e478b82 fix: ED-GAP-019 batch 5 \u2014 7 more GUT-ignored test files execute (30->23): cyber_turret, dr",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "escalation-doctrine",
+    "message": "541a13a board: add ED-GAP-022/023/024 (stand-in PM cycle 2026-08-09)",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "escalation-doctrine",
+    "message": "71630fd chore: tick #109 phase-2 \u2014 record last_commit 397715c in board mirror",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "escalation-doctrine",
+    "message": "397715c board: tick #109 \u2014 WORK-PARTIAL (ED-GAP-019 batch 4 committed 048e277 from orphaned 01:19-",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "escalation-doctrine",
+    "message": "048e277 fix: ED-GAP-019 batch 4 \u2014 GUT-ignored 38->30 (8 more test files execute), orphaned-session",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "escalation-doctrine",
+    "message": "26d907d chore: tick #108 phase-2 \u2014 record last_commit 2f4f1a4 in board mirror",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "escalation-doctrine",
+    "message": "2f4f1a4 board: tick #108 \u2014 WORK-PARTIAL (ED-GAP-019 batches 2+3 committed 70548b6: GUT-ignored 85-",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "escalation-doctrine",
+    "message": "70548b6 fix: ED-GAP-019 batch 2+3 \u2014 GUT-ignored 85->38, 108 test files execute, gates green. Addre",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "gitreins-poc",
+    "message": "eeacee9 chore: Tick 153 idle audit #2 \u2014 guard PASS 4/4, CI 6/6 green, GR-099 still blocked (live r",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "gitreins-poc",
+    "message": "fe21a72 board: escalate GR-GAP-009 (stale note, >49h blocked on totalstack AUDIT-GAP-002)",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "gitreins-poc",
+    "message": "54b471d board: stand-in PM cycle 2026-08-09 \u2014 GR-GAP-009 escalated P1->P0 (48h blocked on totalsta",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "gitreins-poc",
+    "message": "94b85ec chore: Tick 152 idle audit #1 \u2014 guard PASS, CI 6/6 green, GR-099 still blocked (live re-ve",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "gitreins-poc",
+    "message": "c89f461 chore: Tick 151 productive \u2014 GR-GAP-017/018 closed (docs fix c668b76), board 137 complete/",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "gitreins-poc",
+    "message": "c668b76 docs: sync MCP tool count to 12 across README/architecture/spec, add docs/mcp-api.md \u2014 GR-",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "gitreins-poc",
+    "message": "b7fcc1d board: stand-in PM cycle 2026-08-09 \u2014 GR-GAP-017 MCP tool-count drift, GR-GAP-018 MCP API ",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "gitreins-poc",
+    "message": "3ab7ae9 chore: Tick 150 idle audit #1 \u2014 guard PASS, CI 6/6 green, GR-099 still blocked (live re-ve",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "gitreins-poc",
+    "message": "35f12e6 chore: Tick 149 productive \u2014 GR-GAP-014/016 closed (fix 509f1e4), board 135 complete/2 blo",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "gitreins-poc",
+    "message": "509f1e4 fix: sync README test_command to uv run pytest; delenv remaining LLM fallback keys in key-",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "gitreins-poc",
+    "message": "8ce5e95 board: stand-in PM cycle 2026-08-09 \u2014 gap-hunt tasks GAP-003/004 (imhotep), GAP-012/013/01",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "h3",
+    "message": "49e16da docs(foreman): Tick #277 \u2014 umbrella NEVER-DONE due-cycle 27th strict-3 audit 8 PASS/3 know",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "h3",
+    "message": "4caeaf8 docs: close H3-GAP-017..020 \u2014 quickstart sdk-go clone, dead h3.sh domain \u2192 GitHub Pages, C",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "h3",
+    "message": "7bb6ff1 board: stand-in PM cycle 2026-08-09 \u2014 H3-GAP-017/018/019/020 (README quickstart ENOENT, de",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "h3",
+    "message": "53afa49 docs(foreman): Tick #275 \u2014 umbrella E2E-001 due-cycle 44/44 PASS vs Go echo :9191, cooldow",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "h3",
+    "message": "13a6a2d docs(foreman): Tick #274 \u2014 umbrella NEVER-DONE due-cycle (26th strict-3), cooldown clobber",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "h3-sdk-go-foreman",
+    "message": "bc9d412 chore: board update \u2014 Tick #120 idle-light audit: all gates PASS (build/vet/gofmt/tests 3/",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "h3-sdk-go-foreman",
+    "message": "e8282e7 chore: board update \u2014 Tick #119 idle-light audit: all gates PASS (build/vet/gofmt/tests 3/",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "h3-sdk-go-foreman",
+    "message": "08365b1 chore: board update \u2014 Tick #118 never-done FULL audit #91: all gates PASS (build/vet/gofmt",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "h3-sdk-go-foreman",
+    "message": "55c9524 chore: board update \u2014 Tick #117 productive: GAP-011/012/013 closed (doc-count 43/43->44/44",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "h3-sdk-go-foreman",
+    "message": "dd72242 docs: align compliance count 43/43->44/44, quickstart EchoHarness naming, drop stale CRON_",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "h3-sdk-go-foreman",
+    "message": "eec0088 chore: board update \u2014 Tick #116 productive: GAP-010 closed (v0.1.1 release tagged from HEA",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "h3-sdk-go-foreman",
+    "message": "b6ef678 docs: CHANGELOG v0.1.1 entry + rename initial entry to v0.1.0 \u2014 release prep for GAP-010",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "h3-sdk-go-foreman",
+    "message": "1a5f50e stand-in PM: gate GAP-010..013 (stale release tag v0.1.0, 43/44 drift, stale pause file, q",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "h3-sdk-go-foreman",
+    "message": "05acdfb chore: board update \u2014 Tick #115 never-done FULL audit #90: all gates pass (13/13 docs, gov",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "h3-sdk-python-foreman",
+    "message": "eaac027 chore(board): tick #102 \u2014 productive: GAP-016/017/018 complete (foreman-direct docs: batte",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "h3-sdk-python-foreman",
+    "message": "78fed27 docs: sync battery count 43->44 and version 0.1.0->0.1.2 across SKILL/api docs; add quicks",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "h3-sdk-python-foreman",
+    "message": "a514f52 board: add GAP-016/017/018 (stand-in PM cycle 2026-08-09)",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "h3-sdk-python-foreman",
+    "message": "b5141fc chore(board): tick #101 \u2014 idle audit #3 (cheap tier green: 126/126 pytest, ruff 0, format ",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "h3-sdk-python-foreman",
+    "message": "b29e60d chore(board): tick #100 \u2014 idle audit #2 (full gate green: 126/126 pytest, ruff 0, format 4",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "h3-sdk-python-foreman",
+    "message": "15b9716 chore(board): tick #99 \u2014 idle audit #1 (full gate green: 126/126 pytest, ruff 0, format 41",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "h3-sdk-python-foreman",
+    "message": "80aa984 chore(board): tick #98 \u2014 E2E-001 due-cycle (window #93-98 CLOSED: 44/44 PASS, 0.30s, p50 1",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "h3-sdk-typescript-foreman",
+    "message": "1a3ac5a chore(board): tick #93 \u2014 idle #3 cheap ladder audit all PASS (board empty, 0 pending)",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "h3-sdk-typescript-foreman",
+    "message": "61c0984 chore(board): tick #92 \u2014 idle #2 full 12-point gate audit + NEVER-DONE 11-point desk audit",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "h3-sdk-typescript-foreman",
+    "message": "8df9de7 chore(board): tick #91 \u2014 idle #1 full 12-point gate audit all PASS",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "h3-sdk-typescript-foreman",
+    "message": "048c362 chore(board): tick #90 \u2014 GAP-021/GAP-022 complete (foreman-direct docs)",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "h3-sdk-typescript-foreman",
+    "message": "0951378 docs: quickstart tsc-clean + AGENTS.md runtime caveat \u2014 GAP-021/GAP-022",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "h3-sdk-typescript-foreman",
+    "message": "b267c0c stand-in PM: gate GAP-021/022 (quickstart tsc fails, AGENTS.md runtime caveat)",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "h3-shim-foreman",
+    "message": "6a0f41f chore(foreman): tick #283 \u2014 plain idle #1, full 14-point gate all PASS (event 158)",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "h3-shim-foreman",
+    "message": "ad1b969 chore(foreman): tick #282 \u2014 E2E due-cycle: 44/44 x3 battery (Go :9191 / Py :9192 / TS :919",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "h3-shim-foreman",
+    "message": "b6e3e8f chore(foreman): tick #281 \u2014 plain idle #2, full 14-point gate all PASS (event 156)",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "h3-shim-foreman",
+    "message": "ff00809 chore(foreman): tick #280 \u2014 plain idle #1, full 14-point gate all PASS (event 155)",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "h3-shim-foreman",
+    "message": "8b86af1 chore(hilo): edges.jsonl +2 (test_cli.py GAP-012 edges \u2014 warm caught up post-push)",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "h3-shim-foreman",
+    "message": "377a3c2 chore(foreman): tick #279 \u2014 NEVER-DONE desk audit 14/14 PASS (event 154), no new gaps; ste",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "h3-shim-foreman",
+    "message": "d4f00af chore(foreman): tick #278 board record \u2014 GAP-011/GAP-012 complete (event 153), board commi",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "h3-shim-foreman",
+    "message": "fc36f2b fix: bundle protocol/versions.yaml as package data + docs 43\u219244 sweep",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "heading",
+    "message": "7adfa4e chore: board tick #184 \u2014 HD-GAP-007/008/009/010 complete, all gates green \u2014 final board st",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "heading",
+    "message": "3abb9fa chore: board tick #184 \u2014 HD-GAP-007/008/009/010 progress (dedup + 3 complete) \u2014 tasks.json",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "heading",
+    "message": "9caf7a7 feat: add .env startup guard, workspace test summary, drop dead UI code \u2014 HD-GAP-008/009/0",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "heading",
+    "message": "e13537c board: add HD-GAP-007/008/009/010 (stand-in PM cycle 2026-08-09)",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "heading",
+    "message": "f2bcbfe chore: board tick #183 \u2014 IDLE light audit, all gates green (build/tests/lint/guard PASS, C",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "heading",
+    "message": "7a704b4 chore: board tick #182 \u2014 NEVER-DONE full 11-point audit, all gates green (build/tests/lint",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "heading",
+    "message": "4b150e9 chore: board tick #181 \u2014 IDLE light audit, all gates green (build/tests/lint/guard PASS, C",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "heading",
+    "message": "6ffd556 chore: board tick #180 \u2014 IDLE light audit, all gates green (build/tests/lint/guard PASS, C",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "helios",
+    "message": "03d382f chore(board): tick #202 \u2014 IDLE #1 full audit (post-productive 201; gates all PASS)",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "helios",
+    "message": "19a365a chore(board): correct tick #201 audit parity field \u2014 actual counts (events 120/120, tasks ",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "helios",
+    "message": "9ec6af2 chore(board): tick #201 \u2014 PRODUCTIVE: GAP-011 + GAP-012 CLOSED live after BUG-PG-DUP-VERSI",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "helios",
+    "message": "d327fb6 fix(migrations): sqlite v_pending_mfa_operations view fails at query time \u2014 second UNION A",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "helios",
+    "message": "f45a851 fix(migrations): v_pending_mfa_operations references requested_at not created_at in sqlite",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "helios",
+    "message": "8208850 fix(migrations): reconcile duplicate/same-version postgres migrations \u2014 one canonical file",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "helios",
+    "message": "1182620 chore(board): tick #198 \u2014 PRODUCTIVE: GAP-010 closed, GAP-011/012 fix landed (blocked by B",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "helios",
+    "message": "4b73477 feat: GAP-010/011/012 quickstart + postgres migration parsing fixes",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "helix",
+    "message": "a526d9d board: tick #117 \u2014 GAP-010 (sibling fix 5799c3b verified+judged 49d09f39) + GAP-011 (forem",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "helix",
+    "message": "fa7e6d3 chore: commit gap-010 + gap-011 gitreins task records (judge PASS verdict 49d09f39 for gap",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "helix",
+    "message": "7a3ad5f fix: replace dead /opt/hermes-demo known-friends path with user-local ~/.helix \u2014 spec docs",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "helix",
+    "message": "5799c3b fix: GETTING-STARTED prompt example v2\u2192v1 + runner flat-layout support \u2014 onboarding step 7",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "helix",
+    "message": "5d8bbcf board: tick #116 \u2014 IDLE 12-point NEVER-DONE FULL audit (cadence #113\u2192#116), all gates gree",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "helix",
+    "message": "ebd33e2 board: stand-in PM cycle 2026-08-09 \u2014 GAP-010/011 (dead v2 prompt cmd, hermes-demo paths)",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "helix",
+    "message": "9dbddba board: tick #115 \u2014 IDLE light audit (idle-3), all gates green. Guard PASS 4/4 (full-suite ",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "helix",
+    "message": "7fe66fc board: tick #114 \u2014 IDLE light audit (idle-2), all gates green. Guard PASS 4/4 (57s, full-s",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "hermes-canopy",
+    "message": "b391b3d chore: hilo graph edges for Tick 278 (UI-004 review + VREG-002) \u2014 post-commit warm delta",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "hermes-canopy",
+    "message": "1d05665 board: Tick 278 \u2014 SPEC-023-UI-004 DELIVERED (7cb24f2, +2495/-0): PR review panel \u2014 GET /ap",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "hermes-canopy",
+    "message": "7cb24f2 feat: add PR review panel (SPEC-023 UI-004) \u2014 review surface fed by workspace channel even",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "hermes-canopy",
+    "message": "9e80c69 fix: TopicsRail prefers seeded demo tree by label (VREG-001 parity) + refresh visual-regre",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "hermes-canopy",
+    "message": "98fef60 board: Tick 277 \u2014 SPEC-023-UI-003 DELIVERED (dc8687e, +1400/-0): agent roster surface \u2014 GE",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "hermes-canopy",
+    "message": "dc8687e feat: add agent roster surface (SPEC-023 UI-003) \u2014 GET /api/v1/agents list+detail, AgentRo",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "hermes-canopy",
+    "message": "6377b65 board: Tick 276 \u2014 CI RED FIXED (c30df9c) + SPEC-023-UI-002 DELIVERED (8bad604, +1296/-0): ",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "hermes-canopy",
+    "message": "8bad604 feat: add React workspace view over SSE channels (SPEC-023 UI-002) \u2014 channel list, real-ti",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "hermes-canopy",
+    "message": "c30df9c fix: resolve golangci-lint ineffassign in workspace_handler.go \u2014 restore green CI",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "hermes-canopy",
+    "message": "4a37bf1 board: Tick 275 \u2014 SPEC-023-UI-001 DELIVERED (5149df1, +958/-0): /api/v1/workspace/channels",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "hermes-canopy",
+    "message": "5149df1 feat: add /api/v1/workspace/channels SSE surface \u2014 channel list, message POST, per-channel",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "hermes-canopy",
+    "message": "9cb16ad board: Tick 274 \u2014 WIRE-004 DELIVERED (05df3de, +948/-37): real share + presence endpoints;",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "hermes-canopy",
+    "message": "05df3de feat: implement real share + presence endpoints \u2014 de-stub ShareDialog + yjsProvider presen",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "hermes-canopy",
+    "message": "8bfc695 board: Tick 273 \u2014 stand-in PM GAP sweep GAP-014/015/016/017 CLOSED (docs commit 5266014; S",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "hermes-canopy",
+    "message": "5266014 docs: sync Go 1.25+ / PostgreSQL 16+ version floors + fix stale compose comment \u2014 GAP-014/",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "hermes-dagger",
+    "message": "41d1f92 board: Tick #148 audit (idle #19) \u2014 all gates green: build PASS, git clean in-sync origin ",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "hermes-dagger",
+    "message": "3b2bacf board: Tick #147 audit (idle #18) \u2014 E2E-001 window opener: full battery ran (test_serve.sh",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "hermes-dagger",
+    "message": "9cda820 board: Tick #146 audit (idle #17) \u2014 all gates green: build/vet/short tests PASS (21/21 pkg",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "hermes-dagger",
+    "message": "3a77dab board: Tick #145 audit (idle #16) \u2014 all gates green: build/vet/short tests PASS (21/21 pkg",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "hermes-dagger",
+    "message": "06eedea board: Tick #144 audit (idle #15) \u2014 all gates green: build/vet/short tests PASS (21/21 pkg",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "hermes-dagger",
+    "message": "4634a4e board: Tick #143 audit (idle #14) \u2014 all gates green: build/vet/short tests PASS (21/21 pkg",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "hermes-dagger",
+    "message": "18d064f board: Tick #142 audit (idle #13) \u2014 E2E-001 window opener: full battery ran (test_serve.sh",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "hermes-dagger",
+    "message": "5286f75 board: Tick #141 audit (idle #12) \u2014 all gates green: build/vet/short tests PASS (21 pkgs),",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "hermes-dagger",
+    "message": "ecf0e72 board: Tick #140 audit (idle #11) \u2014 all gates green: build/vet/short tests PASS (21 pkgs),",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "hermes-dagger",
+    "message": "834ff6d board: Tick #139 audit (idle #10) \u2014 all gates green: build/vet/short tests PASS, guard 4/4",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "hermes-dagger",
+    "message": "ec54b44 board: Tick #138 audit (idle #9) \u2014 all gates green: build/vet/short tests PASS, guard 4/4,",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "hermes-dagger",
+    "message": "c539dda board: Tick #137 audit (idle #8, E2E-001 window opener) \u2014 full battery ran: test_serve.sh ",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "hermes-dagger",
+    "message": "3ec2a42 board: Tick #136 audit (idle #7) \u2014 all gates green: build/vet/short tests PASS, guard 4/4,",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "hermes-dagger",
+    "message": "5deb0be board: Tick #135 audit (idle #6) \u2014 all gates green: build/vet/short tests PASS, guard 4/4,",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "hermes-dagger",
+    "message": "e405c4e board: Tick #134 audit (idle #5) \u2014 all gates green: build/vet/short tests PASS, guard 4/4,",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "hermes4friends-infra",
+    "message": "35ac508 board: tick #124 \u2014 idle light audit (#20) \u2014 0 dispatchable tasks, gates green (pytest 1048",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "hermes4friends-infra",
+    "message": "e5935b4 board: tick #123 \u2014 idle light audit (#19) \u2014 0 dispatchable tasks, gates green (pytest 1048",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "hermes4friends-infra",
+    "message": "459bb4e board: tick #122 \u2014 idle light audit (#18) \u2014 0 dispatchable tasks, gates green (pytest 1048",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "hermes4friends-infra",
+    "message": "90913cf chore(board): NEVER-DONE fixture note tick #121 \u2014 idle light audit #17",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "hermes4friends-infra",
+    "message": "808fca3 board: tick #121 \u2014 idle light audit (#17) \u2014 0 dispatchable tasks, gates green (pytest 1048",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "hermes4friends-infra",
+    "message": "8ec3925 board: tick #120 \u2014 idle light audit (#16) \u2014 0 dispatchable tasks, gates green (pytest 1048",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "hivemind-work",
+    "message": "ba5722a5 board: tick 268 \u2014 NEVER-DONE audit CLEAN (14-point sweep: build/vet/fmt/tidy PASS, full su",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "hivemind-work",
+    "message": "fa3b69fd board: tick 267 \u2014 NEVER-DONE audit CLEAN (14-point sweep: build/vet/fmt/mod/test/goconst-0",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "hivemind-work",
+    "message": "5eeb931e chore: go mod tidy \u2014 promote x/mod + x/sys from indirect to direct (used in cmd/template_t",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "hivemind-work",
+    "message": "1ce30e9c board: tick 265 \u2014 E2E-001 SATISFIED (battery v3 fresh-build live run: 52 PASS / 0 FAIL / 1",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "hivemind-work",
+    "message": "bb716e3e board: tick 264 \u2014 NEVER-DONE audit CLEAN (14-point sweep: build/vet/fmt/mod/test/goconst-0",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "imhotep",
+    "message": "1c7d3b5 Merge branch 'chore-board-t102' into 'main'",
+    "author": "Alexis Agent"
+   },
+   {
+    "project": "imhotep",
+    "message": "cffdd3d chore(board): tick #102 \u2014 IDLE light tick; gates green build/vet/gofmt, go test 22/22 PASS",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "imhotep",
+    "message": "ba954a2 Merge branch 'chore-board-t101' into 'main'",
+    "author": "Alexis Agent"
+   },
+   {
+    "project": "imhotep",
+    "message": "d683d63 chore(board): tick #101 \u2014 IDLE light tick; gates green build/vet/gofmt, go test 22/22 PASS",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "imhotep",
+    "message": "7755420 Merge branch 'chore-board-t100' into 'main'",
+    "author": "Alexis Agent"
+   },
+   {
+    "project": "imhotep",
+    "message": "79b08ba chore(board): tick #100 \u2014 FULL NEVER-DONE 12-point audit (due window) + light demo smoke; ",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "imhotep",
+    "message": "aede7a0 Merge branch 'chore-board-t99' into 'main'",
+    "author": "Alexis Agent"
+   },
+   {
+    "project": "imhotep",
+    "message": "6da4545 chore(board): tick #99 \u2014 IM-GAP-003 + IM-GAP-004 COMPLETE (foreman-direct docs); gates gre",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "imhotep",
+    "message": "833f335 Merge branch 'docs-im-gap-003-004' into 'main'",
+    "author": "Alexis Agent"
+   },
+   {
+    "project": "imhotep",
+    "message": "08b9b19 docs: align README spec statuses with canonical registry + add Consensus setup guide",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "imhotep",
+    "message": "ed20cb6 board: stand-in PM cycle 2026-08-09 \u2014 gap-hunt tasks GAP-003/004 (imhotep), GAP-012/013/01",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "inference-estimator",
+    "message": "8460b6c chore: Tick #65 \u2014 idle tick #41, board 41/41 complete, site live, guard clean",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "inference-estimator",
+    "message": "6f2c731 chore: Tick #64 \u2014 idle tick #40, board 41/41 complete, site live, guard clean",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "inference-estimator",
+    "message": "2caa59e chore: Tick #63 \u2014 idle tick #39, board 41/41 complete, site live, guard clean",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "inference-estimator",
+    "message": "3767021 chore: Tick #62 \u2014 E2E-001 fixture (window #62-67 battery 8/9 + check-5 battery-spec stalen",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "inference-estimator",
+    "message": "c01432f chore: Tick #61 \u2014 idle tick #38, board 41/41 complete, site live, guard clean",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "inference-estimator",
+    "message": "9a82765 chore: Tick #60 \u2014 idle tick #37, board 41/41 complete, site live, guard clean",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "inference-estimator",
+    "message": "b74b30a chore: Tick #59 \u2014 productive: IE-GAP-011..014 closed foreman-direct (94b3335), board 41/41",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "inference-estimator",
+    "message": "94b3335 fix: TP\u00d7PP GPU floor, cloud-price fallback warning, NaN input guards, PWA icons \u2014 IE-GAP-0",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "inference-estimator",
+    "message": "3322b8d board: stand-in PM cycle 2026-08-09 \u2014 IE-GAP-011/012/013/014 (TP\u00d7PP floor bug, silent clou",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "mafia-ai-benchmark",
+    "message": "e810d22 board: Tick 80 audit \u2014 IDLE + E2E-001 light verify (full battery tick 78, next window 83-8",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "mafia-ai-benchmark",
+    "message": "cd3be40 board: Tick 79 audit \u2014 IDLE + E2E-001 light verify (full battery tick 78, next window 83-8",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "mafia-ai-benchmark",
+    "message": "4a564c4 board: Tick 78 audit \u2014 IDLE + E2E-001 FULL battery (window [78,83] first tick): 710/710 te",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "mafia-ai-benchmark",
+    "message": "2002e0c board: Tick 77 audit \u2014 PRODUCTIVE: MAF-GAP-018 CLOSED (fc3e036 + judge 5b4d495 6/6 + conta",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "mafia-ai-benchmark",
+    "message": "fc3e036 fix(server): wire real token/cost/latency recording into the legacy engine path \u2014 cost-tra",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "muster",
+    "message": "ad17d5ac board: tick 129 \u2014 PRODUCTIVE: DF-005 complete (worker 2a416a3c, judge PASS 9789cb81 7/7); ",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "muster",
+    "message": "2a416a3c feat: add --version flag to openapi-mcp and openapi-daemon \u2014 surface binaries can now repo",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "muster",
+    "message": "111bca6d board: tick 128 \u2014 PRODUCTIVE: GAP-013 + GAP-014 complete (worker aa837071/a7efcb66, judges",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "muster",
+    "message": "a7efcb66 fix(wasm): modules run lists available exports + --fn hint, auto-selects sole export. Addr",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "muster",
+    "message": "aa837071 fix(demo): make demo honest \u2014 no false-green \"production-ready\" while 5/10 mocked, AGENTS.",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "muster",
+    "message": "4062f991 board: stand-in PM cycle 2026-08-09 \u2014 GAP-013/014 (make demo false-green, wasm --fn hint)",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "muster",
+    "message": "d1cc82c3 board: tick 127 \u2014 STEWARD/AUDIT (idle #4): billing block persists (CI-BILLING-002), no pen",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "muster",
+    "message": "c9c2bf1c board: tick 126 \u2014 STEWARD/AUDIT (idle #3): billing block persists (CI-BILLING-002), no pen",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "muster",
+    "message": "09fa8d17 board: tick 125 \u2014 STEWARD/AUDIT (idle #2): billing block persists (CI-BILLING-002), no pen",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "musterflow",
+    "message": "0c71930 board: tick 95 \u2014 IDLE #1 post-E2E-reset: gates green (build/vet, 11/11 pkgs serial -p 1, g",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "musterflow",
+    "message": "14c4167 board: tick 94 \u2014 E2E-001 full battery 35/35 PASS (window 94-99 opener, 4th consecutive cle",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "musterflow",
+    "message": "1b315f9 board: tick 93 \u2014 IDLE #8 post-E2E-reset: gates green (build/vet, 11/11 pkgs serial -p 1, g",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "musterflow",
+    "message": "2f24ef5 board: tick 92 \u2014 IDLE #7 post-E2E-reset: gates green (build/vet, 11/11 pkgs serial -p 1, g",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "musterflow",
+    "message": "1215149 board: tick 91 \u2014 IDLE #6 post-E2E-reset: gates green (build/vet, 11/11 pkgs serial -p 1, g",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "musterflow",
+    "message": "2b4b489 board: tick 90 \u2014 IDLE #5 post-E2E-reset: gates green (build/vet, 11/11 pkgs serial -p 1, g",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "my-project",
+    "message": "39aeadc chore: record idle smoke tick 2026-08-09-07-42 \u2014 JSONL-board tick 16 (overall 39): event i",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "my-project",
+    "message": "6acc0eb chore: record idle smoke tick 2026-08-09-05-29 \u2014 JSONL-board tick 15 (overall 38): event i",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "my-project",
+    "message": "b72a078 chore: record idle smoke tick 2026-08-09-03-12 \u2014 JSONL-board tick 14 (overall 37): event i",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "my-project",
+    "message": "8f8a6de chore: record idle smoke tick 2026-08-09-01-05 \u2014 JSONL-board tick 13 (overall 36): event i",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "my-project",
+    "message": "dc0c83e chore: record idle smoke tick 2026-08-08-22-51 \u2014 JSONL-board tick 12 (overall 35): event i",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "off-by-one",
+    "message": "adbbc40 docs: Tick 278 foreman audit \u2014 IDLE, board empty (discovery sweep clean), solver productiv",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "off-by-one",
+    "message": "0f1059f data: sync answer corpus \u2014 41 files changed",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "off-by-one",
+    "message": "ee848d9 docs: Tick 277 foreman audit \u2014 WORKING, OB-GAP-004 shipped (d5243c4), docs suite complete,",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "off-by-one",
+    "message": "d5243c4 docs: add integration guide + API reference \u2014 OB-GAP-004. Addresses OB-GAP-004.",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "off-by-one",
+    "message": "3b5c641 docs: Tick 276 foreman audit \u2014 IDLE, solver productive (771/901), OB-GAP-004 parked, CI gr",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "off-by-one",
+    "message": "43c3616 docs: Tick 275 foreman audit \u2014 IDLE, solver productive (758/885), OB-GAP-006 binary live, ",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "off-by-one",
+    "message": "bf20c01 data: sync answer corpus \u2014 43 files changed",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "rabbit-hole",
+    "message": "17fa415 board: tick #182 \u2014 phase-2 header last_commit sync (5d99470->93afa38)",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "rabbit-hole",
+    "message": "93afa38 board: tick #182 \u2014 DF-005 done (worker de2fc71, judge 9bd75cd1 5/5); SKILL.md wire format ",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "rabbit-hole",
+    "message": "de2fc71 docs: refresh rabbit-hole-usage SKILL.md wire-format examples to snake_case \u2014 DF-003 made ",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "rabbit-hole",
+    "message": "5d99470 board: tick #181 \u2014 phase-2 header last_commit sync (8bfc187->f8c0663)",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "rabbit-hole",
+    "message": "f8c0663 board: tick #181 \u2014 fixture rows (E2E-001 not due ~#183-188, NEVER-DONE light audit notes)",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "rabbit-hole",
+    "message": "8bfc187 board: tick #181 \u2014 phase-2 header last_commit sync (04bdc19->6ae4c4a)",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "rabbit-hole",
+    "message": "6ae4c4a board: tick #181 \u2014 DF-004 done (worker 0121d48, judge 33d58add 5/5); demo URL hint uses cf",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "rabbit-hole",
+    "message": "0121d48 fix: demo prints configured listen addr instead of hardcoded :8080 \u2014 real port from cfg.Li",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "rabbit-hole",
+    "message": "04bdc19 board: tick #180 \u2014 phase-2 header last_commit sync (c85ec4d->d9102ba)",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "rabbit-hole",
+    "message": "d9102ba board: tick #180 \u2014 add DF-005 (P3 SKILL.md stale PascalCase keys follow-up from DF-003 wor",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "rabbit-hole",
+    "message": "8570030 board: tick #180 \u2014 phase-2 header last_commit sync (2497768->c85ec4d)",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "rabbit-hole",
+    "message": "c85ec4d board: tick #180 \u2014 DF-003 done (worker 2497768, judge 8f578890 7/7); snake_case wire forma",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "rabbit-hole",
+    "message": "2497768 fix: snake_case JSON wire format on Flow/ChatResponse/Session \u2014 spec + docs/integration.md",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "rabbit-hole",
+    "message": "a394225 board: tick #179 \u2014 phase-2 header last_commit sync (9280ac2->48355ab)",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "rabbit-hole",
+    "message": "48355ab board: tick #179 \u2014 DF-002 done (worker 9280ac2, judge 28a19020 5/5) + DF-001 completion fo",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "rethinkdb",
+    "message": "21c13d5b48 dogfood: rethinkdb PROMISING-BUT-ROUGH \u2014 CDC streaming unwired (RT-GAP-010), driver next()",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "rethinkdb",
+    "message": "e976ab6a9c board: stand-in PM cycle 2026-08-09 \u2014 RT-GAP-007/008/009 (stale pause request, CI stub, te",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "rethinkdb",
+    "message": "18ab22810d chore(board): tick #112 \u2014 TS-6 fix worker stewardship \u2014 dead worker 2796041 root-caused (P",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "ring-runner",
+    "message": "305d331 chore(board): tick 138 \u2014 idle audit #4 (cheapest tier) \u2014 typecheck PASS + validate:configs",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "ring-runner",
+    "message": "7c9dabd chore(board): tick 137 \u2014 idle audit #3 (cheapest tier) \u2014 typecheck PASS + validate:configs",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "ring-runner",
+    "message": "0be8c92 chore(board): tick 136 \u2014 idle audit #2 (cheapest tier) \u2014 typecheck PASS + validate:configs",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "ring-runner",
+    "message": "dc94dae chore(board): tick 135 \u2014 E2E fixture RUN (17th window, first tick of 135-140) \u2014 18/18 PASS",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "ring-runner",
+    "message": "0e7ff7a chore(board): tick 134 \u2014 RR-GAP-008/011/012 complete (docs scoped co-author rule + Three.j",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "ring-runner",
+    "message": "3e04ed6 docs: scope co-author rule to fleet worker commits, correct renderer claims to Three.js We",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "ring-runner",
+    "message": "148bb3a chore(board): tick 133 \u2014 RR-VIS-003 complete (enemy sprite frames buzz/badnik-turret/spike",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "ring-runner",
+    "message": "bb0cfe7 chore(gitreins): commit RR-VIS-003 PASS verdict (6ed18930) \u2014 enemy sprite frames wired via",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "ring-runner",
+    "message": "af011a1 feat: sprite frames for buzz, badnik-turret, spikeball \u2014 generated via repo pipeline (gene",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "speclang",
+    "message": "3a43b269 chore: board \u2014 Foreman #169 idle tick (3rd consecutive, 0 pending, cooldown 7200 stable 7t",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "speclang",
+    "message": "f755d7fe chore: board \u2014 Foreman #168 idle tick (2nd consecutive, 0 pending, cooldown 7200 stable 6t",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "speclang",
+    "message": "86bb8278 chore: board \u2014 Foreman #167 idle tick (1st post-light-fix post-#166, 0 pending, cooldown 7",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "speclang",
+    "message": "c9d99470 chore: board \u2014 Foreman #166 light-fix tick (prettier tests gate restored foreman-direct vi",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "speclang",
+    "message": "76ca64ec style: prettier format tests/cli.test.ts \u2014 restore prettier-clean tests gate (2-line drift",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "speclang",
+    "message": "10c197ba chore: board \u2014 Foreman #165 idle tick (3rd post-productive post-#162, 0 pending, cooldown ",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "speclang",
+    "message": "127cca81 chore: board \u2014 Foreman #164 idle tick (2nd post-productive post-#162, 0 pending, cooldown ",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "terminal-jail",
+    "message": "f0c0d1e board: tick #171 \u2014 post-commit header last_commit sync cb8bcfa (JSONL canonical phase-2)",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "terminal-jail",
+    "message": "cb8bcfa board: tick #171 \u2014 cheap idle audit (idle #102), all signals green, idle (0 real pending, ",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "terminal-jail",
+    "message": "ad4254c board: tick #170 \u2014 post-commit header last_commit sync c71f51e (JSONL canonical phase-2)",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "terminal-jail",
+    "message": "c71f51e board: tick #170 \u2014 cheap idle audit (idle #101), all signals green, idle (0 real pending, ",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "terminal-jail",
+    "message": "b58b755 board: tick #169 \u2014 post-commit header last_commit sync 334b14e (JSONL canonical phase-2)",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "terminal-jail",
+    "message": "334b14e board: tick #169 \u2014 cheap idle audit (idle #100), all signals green, idle (0 real pending, ",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "terminal-jail",
+    "message": "0a21d35 board: tick #168 \u2014 post-commit header last_commit sync 71a3a2c (JSONL canonical phase-2)",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "terminal-jail",
+    "message": "71a3a2c board: tick #168 \u2014 cheap idle audit (idle #99), all signals green, idle (0 real pending, f",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "terminal-jail",
+    "message": "928d165 board: tick #167 \u2014 post-commit header last_commit sync 673ab8e (JSONL canonical phase-2)",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "terminal-jail",
+    "message": "673ab8e board: tick #167 \u2014 E2E-001 27th run, 23/23 verdicts PASS, GAP-01..05 hold, 0 new gaps",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "totalstack",
+    "message": "fbaf0667d7 chore(foreman): tick #156 \u2014 NEVER-DONE audit, all gates PASS (guard 5/5, validator 76/76, ",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "totalstack",
+    "message": "8ed7a42dcd chore(foreman): tick #155 \u2014 NEVER-DONE audit, all gates PASS (guard 5/5, validator 76/76, ",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "totalstack",
+    "message": "b970741203 chore(foreman): tick #154 \u2014 NEVER-DONE audit, all gates PASS (guard 5/5, validator 76/76, ",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "totalstack",
+    "message": "93ecaf5e61 chore(foreman): tick #153 \u2014 NEVER-DONE audit, all gates PASS (guard 5/5, validator 76/76, ",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "totalstack",
+    "message": "369de9fc59 chore(foreman): tick #152 \u2014 NEVER-DONE audit, all gates PASS (guard 5/5, validator 76/76, ",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "totalstack",
+    "message": "dd095c5047 chore(foreman): tick #151 \u2014 NEVER-DONE audit, all gates PASS (guard 5/5, validator 76/76, ",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "uhlp",
+    "message": "1fd09ce chore(board): tick #182 \u2014 IDLE light audit, all gates green (17/17 pkgs, guard PASS tier1 ",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "uhlp",
+    "message": "b1343a5 chore(board): tick #181 \u2014 E2E-001 window #176-181 close battery, all gates green (17/17 pk",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "uhlp",
+    "message": "7800006 chore(board): tick #180 \u2014 IDLE light audit, all gates green (17/17 pkgs, guard PASS tier1 ",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "uhlp",
+    "message": "226024e chore(board): tick #179 \u2014 IDLE light audit, all gates green (17/17 pkgs, guard PASS tier1 ",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "uhlp",
+    "message": "9dcf101 chore(board): tick #178 \u2014 IDLE light audit, all gates green (17/17 pkgs, guard PASS tier1 ",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "uhlp",
+    "message": "b0053af chore(board): tick #177 \u2014 U-GAP-009/010/011 (PM-added docs/claims) CLOSED foreman-direct: ",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "uhlp",
+    "message": "e793473 docs: add canonical API reference docs/api.md (27-route table + schemas) \u2014 sync SPEC-01 \u00a76",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "uhlp",
+    "message": "bf1b0b0 docs: rewrite NL-claim to manifest-authoring workflow (U-GAP-009) + fix example walkthroug",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "warpfs",
+    "message": "91e9c42 chore(board): foreman tick 92 \u2014 idle audit #44 (cheapest tier), all gates green, no PUT (B",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "warpfs",
+    "message": "271c970 chore(board): foreman tick 91 \u2014 idle audit #43 (cheapest tier), all gates green, no PUT (B",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "warpfs",
+    "message": "3110952 chore(board): foreman tick 90 \u2014 idle audit #42 (cheapest tier), all gates green, no PUT (B",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "warpfs",
+    "message": "7f08b81 chore(board): foreman tick 89 \u2014 idle audit #41 (cheapest tier), all gates green, no PUT (B",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "warpfs",
+    "message": "3c79278 chore(board): foreman tick 88 \u2014 idle audit #40 (cheapest tier), all gates green, no PUT (B",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "wojons-mythos",
+    "message": "909a73978 board: add GAP-012/013 (stand-in PM cycle 2026-08-09)",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "wojons-mythos",
+    "message": "e8087ec55 chore(board): tick #205 \u2014 QUALITY-LF-103 complete (backend providers/llm/base.ts 449L -> b",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "wojons-mythos",
+    "message": "8bdf4dfd6 refactor(backend): split providers/llm/base.ts (449L) into base/ module dir \u2014 types/core/f",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "wojons-mythos",
+    "message": "fcd5f9aa7 chore(board): tick #205 \u2014 QUALITY-LF-102 completion carried from interrupted sibling tick ",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "wojons-mythos",
+    "message": "0e22f1962 refactor(core): split image/compose.ts (449L) into compose/ module dir - 102nd barrel spli",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "wojons-mythos",
+    "message": "26e84b14a chore(board): tick #204 \u2014 QUALITY-LF-101 complete (backend api/routes/import.ts 465L -> im",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "wojons-mythos",
+    "message": "719f5523b refactor(backend): split api/routes/import.ts (465L) into import/ module dir \u2014 default-exp",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "wojons-mythos",
+    "message": "836e6002b chore(board): tick #203 \u2014 QUALITY-LF-100 complete (backend services/decision-log.service.t",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "wojons-mythos",
+    "message": "8b50a73c1 refactor(backend): split decision-log.service.ts (468L) into decision-log.service/ module ",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "wojons-mythos",
+    "message": "4c5405e29 chore(board): tick #202 \u2014 QUALITY-LF-099 complete (backend providers/failure-handler.ts 47",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "wojons-mythos",
+    "message": "132068b0c refactor(backend): split providers/failure-handler.ts (476L) into failure-handler/ module ",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "wojons-mythos",
+    "message": "380a03d3b chore(board): tick #201 \u2014 QUALITY-LF-098 complete (backend utils/sanitize.ts 477L pure-fn ",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "wojons-mythos",
+    "message": "193be024f refactor(backend): split sanitize.ts (477L) into sanitize/ module dir \u2014 pure-fn 24-symbol ",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "wojons-mythos",
+    "message": "da6d6c8f9 chore(board): tick #200 \u2014 close GAP-010 (repo-wide bare-mythos docs cleanup, commits 4a66b",
+    "author": "totalwindupflightsystems"
+   },
+   {
+    "project": "wojons-mythos",
+    "message": "fa4ae42b9 docs(cli): add pnpm exec mythos invocation note to all remaining tutorial + user-guide doc",
+    "author": "totalwindupflightsystems"
+   }
+  ]
+ },
+ "issues_detected": [
+  "CI blocked \u2014 fleet-wide GitHub Actions billing wall persists across 3 orgs: dexdat (dexdat-memory since 07-15, helios CI-001 pending, eduos CI-001 human-blocked), wojons (wojons-mythos CI-INFRA-MAIN-2; escalation-doctrine NEW diagnosis 08-09: Godot CI fails at job-setup ~11s with steps:[] = billing signature \u2014 CI-BILLING-001 monitor row added), totalwindupflightsystems (Kobayashi-Maru CI-001 monitor-only billing block re-verified on 08-09 03:23/03:38 nightly runs). All tracked \u2014 no duplicate tasks.",
+  "CI red \u2014 musterflow docker workflow 'Build and push' fails (GHCR auth insufficient_scope, GITHUB_TOKEN + GH_PAT lack packages:write); tracked DOCKER-GHCR-001 blocked, human action. ci workflow itself passes.",
+  "CI gap \u2014 rethinkdb Build workflow: only 2 workflow_dispatch runs ever (07-19/07-21), both failed at configure on ALL compilers (gcc-14/15, clang-18/19, arm64); push-triggered CI never fires despite daily pushes. Board tracks RT-GAP-008 (CI stub, 08-09 stand-in PM cycle)."
+ ],
+ "changes_made": [
+  "fleet-cooldown-policy.py --apply: h3 21600->7200 (55 pending; API + fleet.toml pin verified \u2014 durable across restarts).",
+  "escalation-doctrine board: CI-BILLING-001 monitor row appended + committed (d0a2a91) \u2014 job-setup billing signature diagnosis so foreman stops chasing Godot regression.",
+  "Daemon health verified: HTTP 200, evaluation_age 567s, systemd user unit active; enforce-foreman-models cron healthy (ran 07:46, ok); dual-copy scripts identical; all 44 enabled projects on deepseek-v4-flash/deepseek-foreman (PAYG).",
+  "Skill frontmatter audit: 640 valid, 0 broken. GitReins judge fleet audit: 40/41 OK (my-project = smoke fixture, NO-CONFIG expected \u2014 no injection).",
+  "Firing report: all 44 enabled projects ticked within window, all ticks completed; no duplicate workdirs, no missing workdirs."
+ ]
+}
