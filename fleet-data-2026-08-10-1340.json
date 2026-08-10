@@ -1,0 +1,452 @@
+{
+  "generated": "2026-08-10 13:40 UTC",
+  "metrics": {
+    "healthy": 44,
+    "warn": 0,
+    "error": 0,
+    "paused": 25,
+    "total_pending_tasks": 55
+  },
+  "fleet": [
+    {
+      "project": "9router",
+      "workdir": "/home/kara/9router",
+      "model": "deepseek-v4-flash",
+      "provider": "deepseek-foreman",
+      "cooldown_s": 900,
+      "pending": 0,
+      "last_commit": "18 minutes ago",
+      "status": "healthy"
+    },
+    {
+      "project": "Kobayashi-Maru",
+      "workdir": "/home/kara/Kobayashi-Maru",
+      "model": "deepseek-v4-flash",
+      "provider": "deepseek-foreman",
+      "cooldown_s": 7200,
+      "pending": 0,
+      "last_commit": "32 minutes ago",
+      "status": "healthy"
+    },
+    {
+      "project": "ai-plays-poke",
+      "workdir": "/home/kara/ai_plays_poke",
+      "model": "deepseek-v4-flash",
+      "provider": "deepseek-foreman",
+      "cooldown_s": 7200,
+      "pending": 3,
+      "last_commit": "2 minutes ago",
+      "status": "healthy"
+    },
+    {
+      "project": "asce",
+      "workdir": "/home/kara/asce",
+      "model": "deepseek-v4-flash",
+      "provider": "deepseek-foreman",
+      "cooldown_s": 7200,
+      "pending": 0,
+      "last_commit": "76 minutes ago",
+      "status": "healthy"
+    },
+    {
+      "project": "bunker",
+      "workdir": "/home/kara/bunker",
+      "model": "deepseek-v4-flash",
+      "provider": "deepseek-foreman",
+      "cooldown_s": 7200,
+      "pending": 0,
+      "last_commit": "42 minutes ago",
+      "status": "healthy"
+    },
+    {
+      "project": "chimera-v2",
+      "workdir": "/home/kara/chimera-v2",
+      "model": "deepseek-v4-flash",
+      "provider": "deepseek-foreman",
+      "cooldown_s": 7200,
+      "pending": 0,
+      "last_commit": "67 minutes ago",
+      "status": "healthy"
+    },
+    {
+      "project": "coding-hermes-scheduler",
+      "workdir": "/home/kara/coding-hermes-scheduler/coding-herms-scheduler",
+      "model": "deepseek-v4-flash",
+      "provider": "deepseek-foreman",
+      "cooldown_s": 7200,
+      "pending": 3,
+      "last_commit": "40 minutes ago",
+      "status": "healthy"
+    },
+    {
+      "project": "consensus",
+      "workdir": "/home/kara/consensus",
+      "model": "deepseek-v4-flash",
+      "provider": "deepseek-foreman",
+      "cooldown_s": 7200,
+      "pending": 1,
+      "last_commit": "39 minutes ago",
+      "status": "healthy"
+    },
+    {
+      "project": "crier",
+      "workdir": "/home/kara/crier",
+      "model": "deepseek-v4-flash",
+      "provider": "deepseek-foreman",
+      "cooldown_s": 7200,
+      "pending": 2,
+      "last_commit": "2 hours ago",
+      "status": "healthy"
+    },
+    {
+      "project": "deepseek-dashboard",
+      "workdir": "/home/kara/deepseek-dashboard",
+      "model": "deepseek-v4-flash",
+      "provider": "deepseek-foreman",
+      "cooldown_s": 7200,
+      "pending": 2,
+      "last_commit": "61 minutes ago",
+      "status": "healthy"
+    },
+    {
+      "project": "dexdat-core",
+      "workdir": "/home/kara/dexdat-core",
+      "model": "deepseek-v4-flash",
+      "provider": "deepseek-foreman",
+      "cooldown_s": 7200,
+      "pending": 1,
+      "last_commit": "21 minutes ago",
+      "status": "healthy"
+    },
+    {
+      "project": "dexdat-memory",
+      "workdir": "/home/kara/dexdat-memory",
+      "model": "deepseek-v4-flash",
+      "provider": "deepseek-foreman",
+      "cooldown_s": 7200,
+      "pending": 0,
+      "last_commit": "2 hours ago",
+      "status": "healthy"
+    },
+    {
+      "project": "duckbrain",
+      "workdir": "/home/kara/duckbrain",
+      "model": "deepseek-v4-flash",
+      "provider": "deepseek-foreman",
+      "cooldown_s": 7200,
+      "pending": 0,
+      "last_commit": "46 minutes ago",
+      "status": "healthy"
+    },
+    {
+      "project": "eduos.dexdat.com.co",
+      "workdir": "/home/kara/eduos.dexdat.com.co",
+      "model": "deepseek-v4-flash",
+      "provider": "deepseek-foreman",
+      "cooldown_s": 7200,
+      "pending": 1,
+      "last_commit": "85 minutes ago",
+      "status": "healthy"
+    },
+    {
+      "project": "escalation-doctrine",
+      "workdir": "/home/kara/escalation-doctrine",
+      "model": "deepseek-v4-flash",
+      "provider": "deepseek-foreman",
+      "cooldown_s": 7200,
+      "pending": 1,
+      "last_commit": "18 minutes ago",
+      "status": "healthy"
+    },
+    {
+      "project": "gitreins-poc",
+      "workdir": "/home/kara/gitreins-poc",
+      "model": "deepseek-v4-flash",
+      "provider": "deepseek-foreman",
+      "cooldown_s": 7200,
+      "pending": 0,
+      "last_commit": "2 hours ago",
+      "status": "healthy"
+    },
+    {
+      "project": "h3",
+      "workdir": "/home/kara/get-h3/h3",
+      "model": "deepseek-v4-flash",
+      "provider": "deepseek-foreman",
+      "cooldown_s": 7200,
+      "pending": 0,
+      "last_commit": "53 minutes ago",
+      "status": "healthy"
+    },
+    {
+      "project": "h3-sdk-go-foreman",
+      "workdir": "/home/kara/get-h3/sdk-go",
+      "model": "deepseek-v4-flash",
+      "provider": "deepseek-foreman",
+      "cooldown_s": 7200,
+      "pending": 1,
+      "last_commit": "2 hours ago",
+      "status": "healthy"
+    },
+    {
+      "project": "h3-sdk-python-foreman",
+      "workdir": "/home/kara/get-h3/sdk-python",
+      "model": "deepseek-v4-flash",
+      "provider": "deepseek-foreman",
+      "cooldown_s": 7200,
+      "pending": 0,
+      "last_commit": "38 minutes ago",
+      "status": "healthy"
+    },
+    {
+      "project": "h3-sdk-typescript-foreman",
+      "workdir": "/home/kara/get-h3/sdk-typescript",
+      "model": "deepseek-v4-flash",
+      "provider": "deepseek-foreman",
+      "cooldown_s": 900,
+      "pending": 0,
+      "last_commit": "9 minutes ago",
+      "status": "healthy"
+    },
+    {
+      "project": "h3-shim-foreman",
+      "workdir": "/home/kara/get-h3/shim",
+      "model": "deepseek-v4-flash",
+      "provider": "deepseek-foreman",
+      "cooldown_s": 7200,
+      "pending": 1,
+      "last_commit": "43 minutes ago",
+      "status": "healthy"
+    },
+    {
+      "project": "heading",
+      "workdir": "/home/kara/heading",
+      "model": "deepseek-v4-flash",
+      "provider": "deepseek-foreman",
+      "cooldown_s": 7200,
+      "pending": 1,
+      "last_commit": "28 minutes ago",
+      "status": "healthy"
+    },
+    {
+      "project": "helios",
+      "workdir": "/home/kara/helios-work",
+      "model": "deepseek-v4-flash",
+      "provider": "deepseek-foreman",
+      "cooldown_s": 7200,
+      "pending": 4,
+      "last_commit": "2 hours ago",
+      "status": "healthy"
+    },
+    {
+      "project": "helix",
+      "workdir": "/home/kara/helix",
+      "model": "deepseek-v4-flash",
+      "provider": "deepseek-foreman",
+      "cooldown_s": 7200,
+      "pending": 1,
+      "last_commit": "43 minutes ago",
+      "status": "healthy"
+    },
+    {
+      "project": "hermes-canopy",
+      "workdir": "/home/kara/hermes-canopy",
+      "model": "deepseek-v4-flash",
+      "provider": "deepseek-foreman",
+      "cooldown_s": 7200,
+      "pending": 0,
+      "last_commit": "54 minutes ago",
+      "status": "healthy"
+    },
+    {
+      "project": "hermes-dagger",
+      "workdir": "/home/kara/hermes-dagger",
+      "model": "deepseek-v4-flash",
+      "provider": "deepseek-foreman",
+      "cooldown_s": 900,
+      "pending": 0,
+      "last_commit": "12 minutes ago",
+      "status": "healthy"
+    },
+    {
+      "project": "hermes4friends-infra",
+      "workdir": "/home/kara/hermes4friends-infra",
+      "model": "deepseek-v4-flash",
+      "provider": "deepseek-foreman",
+      "cooldown_s": 7200,
+      "pending": 1,
+      "last_commit": "34 minutes ago",
+      "status": "healthy"
+    },
+    {
+      "project": "hivemind-work",
+      "workdir": "/home/kara/hivemind-work",
+      "model": "deepseek-v4-flash",
+      "provider": "deepseek-foreman",
+      "cooldown_s": 7200,
+      "pending": 5,
+      "last_commit": "64 minutes ago",
+      "status": "healthy"
+    },
+    {
+      "project": "imhotep",
+      "workdir": "/home/kara/imhotep",
+      "model": "deepseek-v4-flash",
+      "provider": "deepseek-foreman",
+      "cooldown_s": 7200,
+      "pending": 2,
+      "last_commit": "70 minutes ago",
+      "status": "healthy"
+    },
+    {
+      "project": "inference-estimator",
+      "workdir": "/home/kara/inference-estimator",
+      "model": "deepseek-v4-flash",
+      "provider": "deepseek-foreman",
+      "cooldown_s": 900,
+      "pending": 0,
+      "last_commit": "16 minutes ago",
+      "status": "healthy"
+    },
+    {
+      "project": "mafia-ai-benchmark",
+      "workdir": "/home/kara/mafia-ai-benchmark",
+      "model": "deepseek-v4-flash",
+      "provider": "deepseek-foreman",
+      "cooldown_s": 7200,
+      "pending": 1,
+      "last_commit": "14 minutes ago",
+      "status": "healthy"
+    },
+    {
+      "project": "muster",
+      "workdir": "/home/kara/muster",
+      "model": "deepseek-v4-flash",
+      "provider": "deepseek-foreman",
+      "cooldown_s": 7200,
+      "pending": 4,
+      "last_commit": "2 hours ago",
+      "status": "healthy"
+    },
+    {
+      "project": "musterflow",
+      "workdir": "/home/kara/musterflow",
+      "model": "deepseek-v4-flash",
+      "provider": "deepseek-foreman",
+      "cooldown_s": 7200,
+      "pending": 3,
+      "last_commit": "42 minutes ago",
+      "status": "healthy"
+    },
+    {
+      "project": "my-project",
+      "workdir": "/home/kara/my-project",
+      "model": "deepseek-v4-flash",
+      "provider": "deepseek-foreman",
+      "cooldown_s": 7200,
+      "pending": 0,
+      "last_commit": "31 minutes ago",
+      "status": "healthy"
+    },
+    {
+      "project": "off-by-one",
+      "workdir": "/home/kara/off-by-one",
+      "model": "deepseek-v4-flash",
+      "provider": "deepseek-foreman",
+      "cooldown_s": 7200,
+      "pending": 1,
+      "last_commit": "33 seconds ago",
+      "status": "healthy"
+    },
+    {
+      "project": "rabbit-hole",
+      "workdir": "/home/kara/rabbit-hole",
+      "model": "deepseek-v4-flash",
+      "provider": "deepseek-foreman",
+      "cooldown_s": 7200,
+      "pending": 3,
+      "last_commit": "49 minutes ago",
+      "status": "healthy"
+    },
+    {
+      "project": "rethinkdb",
+      "workdir": "/home/kara/rethinkdb",
+      "model": "deepseek-v4-flash",
+      "provider": "deepseek-foreman",
+      "cooldown_s": 7200,
+      "pending": 1,
+      "last_commit": "2 minutes ago",
+      "status": "healthy"
+    },
+    {
+      "project": "ring-runner",
+      "workdir": "/home/kara/ring-runner",
+      "model": "deepseek-v4-flash",
+      "provider": "deepseek-foreman",
+      "cooldown_s": 7200,
+      "pending": 0,
+      "last_commit": "50 minutes ago",
+      "status": "healthy"
+    },
+    {
+      "project": "speclang",
+      "workdir": "/home/kara/speclang",
+      "model": "deepseek-v4-flash",
+      "provider": "deepseek-foreman",
+      "cooldown_s": 7200,
+      "pending": 0,
+      "last_commit": "2 hours ago",
+      "status": "healthy"
+    },
+    {
+      "project": "terminal-jail",
+      "workdir": "/home/kara/terminal-jail",
+      "model": "deepseek-v4-flash",
+      "provider": "deepseek-foreman",
+      "cooldown_s": 7200,
+      "pending": 8,
+      "last_commit": "46 minutes ago",
+      "status": "healthy"
+    },
+    {
+      "project": "totalstack",
+      "workdir": "/home/kara/totalstack",
+      "model": "deepseek-v4-flash",
+      "provider": "deepseek-foreman",
+      "cooldown_s": 7200,
+      "pending": 1,
+      "last_commit": "58 minutes ago",
+      "status": "healthy"
+    },
+    {
+      "project": "uhlp",
+      "workdir": "/home/kara/uhlp",
+      "model": "deepseek-v4-flash",
+      "provider": "deepseek-foreman",
+      "cooldown_s": 7200,
+      "pending": 1,
+      "last_commit": "35 minutes ago",
+      "status": "healthy"
+    },
+    {
+      "project": "warpfs",
+      "workdir": "/home/kara/warpfs",
+      "model": "deepseek-v4-flash",
+      "provider": "deepseek-foreman",
+      "cooldown_s": 7200,
+      "pending": 1,
+      "last_commit": "2 hours ago",
+      "status": "healthy"
+    },
+    {
+      "project": "wojons-mythos",
+      "workdir": "/home/kara/wojons-mythos",
+      "model": "deepseek-v4-flash",
+      "provider": "deepseek-foreman",
+      "cooldown_s": 7200,
+      "pending": 1,
+      "last_commit": "2 hours ago",
+      "status": "healthy"
+    }
+  ]
+}
